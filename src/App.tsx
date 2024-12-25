@@ -1,7 +1,7 @@
 import './App.css';
 
 function App() {
-  return <div>EatMate</div>;
+  return <div>EatM ate</div>;
 }
 
 export default App;
