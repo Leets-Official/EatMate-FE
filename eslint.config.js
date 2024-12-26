@@ -1,12 +1,12 @@
-import js from '@eslint/js'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import globals from 'globals'
-import tseslint from 'typescript-eslint'
-import prettier from 'eslint-plugin-prettier'
-import react from 'eslint-plugin-react'
-import jsxA11y from 'eslint-plugin-jsx-a11y'
-import importPlugin from 'eslint-plugin-import'
+import js from '@eslint/js';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+import prettier from 'eslint-plugin-prettier';
+import react from 'eslint-plugin-react';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import importPlugin from 'eslint-plugin-import';
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -24,20 +24,20 @@ export default tseslint.config(
         ecmaVersion: 'latest',
         sourceType: 'module',
         ecmaFeatures: {
-          jsx: true
-        }
-      }
+          jsx: true,
+        },
+      },
     },
     settings: {
-      react: {
+      'react': {
         version: '18.2',
-        runtime: 'automatic'
+        runtime: 'automatic',
       },
       'import/resolver': {
         node: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx', '.css']
-        }
-      }
+          extensions: ['.js', '.jsx', '.ts', '.tsx', '.css'],
+        },
+      },
     },
     plugins: {
       'react-hooks': reactHooks,
@@ -57,16 +57,19 @@ export default tseslint.config(
       'react/jsx-no-target-blank': 'off',
       'react-refresh/only-export-components': [
         'warn',
-        { allowConstantExport: true }
+        { allowConstantExport: true },
       ],
       'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': ['warn', {
-      'varsIgnorePattern': '^_',
-      'argsIgnorePattern': '^_',
-      'ignoreRestSiblings': true
-      }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          varsIgnorePattern: '^_',
+          argsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
       // 일치 연산자 강제 (==, != 대신 ===, !== 사용)
       'eqeqeq': ['error', 'always'],
-    }
+    },
   }
-)
+);
