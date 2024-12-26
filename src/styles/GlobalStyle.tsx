@@ -17,8 +17,8 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-color: #fff; /* 배경색 설정 */
-    color: #000; /* 기본 텍스트 색상 */
+    background-color: #fff;
+    color: #000;
     margin: 0;
     line-height: 1.5;
     overflow-x: hidden; /* 수평 스크롤 방지 */
