@@ -8,7 +8,6 @@ function App() {
       <GlobalStyle />
       <Home />
     </ThemeProvider>
-  ) 
+  );
 }
-// 
 export default App;

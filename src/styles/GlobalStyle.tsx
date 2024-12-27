@@ -1,8 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 const GlobalStyle = createGlobalStyle`
-
-${reset}
+  ${reset}
 
   *,
   *::before,
@@ -10,6 +9,9 @@ ${reset}
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    list-style: none;
+    font-family: 'Pretendard-Medium', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
   html {
@@ -18,7 +20,7 @@ ${reset}
   }
 
   body {
-    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    font-family: 'Pretendard-Medium', -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: #fff;
     color: #000;
@@ -32,6 +34,18 @@ ${reset}
     max-width: 390px;
     margin: 0 auto;
   }
+
+  @font-face {
+  font-family: 'Pretendard-Medium';
+  font-display: swap;
+  src: url('/font/Pretendard-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'AppleSDGothicNeoM';
+  font-display: swap;
+  src: url('/font/AppleSDGothicNeoM.ttf') format('ttf');
+}
 
 `;
 

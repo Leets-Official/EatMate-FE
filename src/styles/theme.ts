@@ -10,8 +10,8 @@ const theme = {
   },
 
   font: {
-    pretendard: 'Pretendard',
-    SDG: 'AppleSDGothicNeo',
+    pretendard: 'Pretendard-Medium',
+    SDG: 'AppleSDGothicNeoM',
   },
 };
 
