@@ -1,15 +1,18 @@
 const theme = {
-  color: {
-    main: '#ff9d01',
-    yellow: '#f5f378',
-    red: '#fe4600',
-    orange: '#f8b116',
-    ivory: '#faf2df',
-    purple: '#dcc1ff',
-    black: '#1a1a1a',
+  COLORS: {
+    primary: {
+      main: '#FF9D01',
+      yellow: '#F5F378',
+      red: '#FE4600',
+      orange: '#F8B116',
+    },
+    secondary: {
+      ivory: '#FAF2DF',
+      purple: '#DCC1FF',
+      black: '#1A1A1A',
+    },
   },
-
-  font: {
+  FONT: {
     pretendard: 'Pretendard-Medium',
     SDG: 'AppleSDGothicNeoM',
   },
