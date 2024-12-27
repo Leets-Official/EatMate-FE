@@ -1,4 +1,4 @@
-const Login = () => {
-  return <div>로그인페이지</div>;
+const SignUp = () => {
+  return <div>회원가입폼</div>;
 };
-export default Login;
+export default SignUp;

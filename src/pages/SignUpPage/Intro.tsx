@@ -1,4 +1,4 @@
 const Intro: React.FC = () => {
-  return <div></div>;
+  return <div>진입화면</div>;
 };
 export default Intro;
