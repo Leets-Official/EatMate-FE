@@ -121,11 +121,11 @@ export const CompareSvgIcon: Story = {
       }}
     >
       <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-        <Button variant="primary" size="sm" rounded="md" svgIcon={false}>
+        <Button variant="primary" size="md" rounded="md" svgIcon={false}>
           참여하기
         </Button>
-        <Button variant="primary-outline" size="sm" rounded="md" svgIcon={true}>
-          <img src={GoogleIcon} alt="google-icon" width="28px" />
+        <Button variant="primary-outline" size="md" rounded="md" svgIcon={true}>
+          <img src={GoogleIcon} alt="google-icon" />
           초대하기
         </Button>
       </div>
