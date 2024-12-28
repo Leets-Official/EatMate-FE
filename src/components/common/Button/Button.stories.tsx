@@ -29,6 +29,15 @@ const meta: Meta<typeof Button> = {
       control: 'text',
       description: '버튼 내부의 내용을 설정합니다.',
     },
+    color: {
+      control: 'select',
+      options: ['main', 'black'],
+      description: '버튼 내부 텍스트의 색상을 설정합니다.',
+    },
+    svgIcon: {
+      control: 'boolean',
+      description: '버튼 내부의 svg를 비활성화할지 여부를 결정합니다.', // 버튼 내부에 svg 아이콘이 들어가는 경우가 있어서 추가했음
+    },
   },
 };
 
@@ -43,6 +52,8 @@ export const Default: Story = {
     rounded: 'md',
     children: 'Default Button',
     disabled: false,
+    color: 'main',
+    svgIcon: false,
   },
 };
 
