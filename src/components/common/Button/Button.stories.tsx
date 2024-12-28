@@ -31,12 +31,8 @@ const meta: Meta<typeof Button> = {
     },
     color: {
       control: 'select',
-      options: ['main', 'black'],
-      description: '버튼 내부 텍스트의 색상을 설정합니다.',
-    },
-    svgIcon: {
-      control: 'boolean',
-      description: '버튼 내부의 svg를 비활성화할지 여부를 결정합니다.', // 버튼 내부에 svg 아이콘이 들어가는 경우가 있어서 추가했음
+      options: ['white', 'black'],
+      description: '버튼 내부 텍스트의 색상을 설정합니다.', // primary - white, primary-outline - main 으로 설정되어있긴 한데, 구글 로그인 버튼 처럼 텍스트가 black인 경우가 있어서 추가.
     },
   },
 };
@@ -52,8 +48,6 @@ export const Default: Story = {
     rounded: 'md',
     children: 'Default Button',
     disabled: false,
-    color: 'main',
-    svgIcon: false,
   },
 };
 
