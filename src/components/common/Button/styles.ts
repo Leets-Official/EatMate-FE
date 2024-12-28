@@ -44,6 +44,9 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
     background-color: white;
     color: ${({ theme }) => theme.COLORS.primary.main};
     border: 1px solid ${({ theme }) => theme.COLORS.primary.main};
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `,
 };
 

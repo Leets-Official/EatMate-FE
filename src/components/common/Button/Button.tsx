@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import {
   ButtonVariant,
   ButtonSize,
@@ -13,6 +13,7 @@ interface ButtonProps extends React.ComponentProps<'button'> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   rounded?: ButtonRounded;
+  color?: 'main' | 'black';
   children?: React.ReactNode;
 }
 
@@ -27,6 +28,12 @@ const StyledButton = styled.button<ButtonProps>`
   ${({ rounded }) => rounded && roundedStyles[rounded]}
   ${({ variant }) => variant && variantStyles[variant]}
 
+  ${({ color }) =>
+    color === 'black' &&
+    css`
+      color: black;
+    `}
+    
   &:hover {
     opacity: 0.9;
   }
@@ -39,7 +46,14 @@ const StyledButton = styled.button<ButtonProps>`
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { variant = 'primary', size = 'md', rounded = 'md', children, ...props },
+    {
+      variant = 'primary',
+      size = 'md',
+      rounded = 'md',
+      color = 'main',
+      children,
+      ...props
+    },
     ref
   ) => {
     return (
@@ -48,6 +62,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         variant={variant}
         size={size}
         rounded={rounded}
+        color={color}
         {...props}
       >
         {children}
