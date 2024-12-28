@@ -8,16 +8,16 @@ const sizeStyles: Record<ButtonSize, ReturnType<typeof css>> = {
   sm: css`
     width: 100px;
     font-size: 10px;
-    padding: 0.3rem 1rem;
+    padding: 0.5rem 1.2rem;
   `,
   md: css`
     width: 200px;
     font-size: 16px;
-    padding: 0.3rem 1.5rem;
+    padding: 0.7rem 1.5rem;
   `,
   lg: css`
     width: 400px;
-    padding: 0.3rem 1.7rem;
+    padding: 0.9rem 1.7rem;
     font-size: 18px;
   `,
 };

@@ -32,7 +32,7 @@ const ContentWrapper = styled.div`
   align-items: center;
 `;
 
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.span`
   position: absolute;
   bottom: 20px;
   padding: 20px;
