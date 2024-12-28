@@ -13,7 +13,7 @@ const meta: Meta<typeof Button> = {
     },
     size: {
       control: 'select',
-      options: ['sm', 'md'], // ButtonSize 타입에 따른 옵션
+      options: ['sm', 'md', 'lg'], // ButtonSize 타입에 따른 옵션
       description: '버튼의 크기를 설정합니다.',
     },
     rounded: {
