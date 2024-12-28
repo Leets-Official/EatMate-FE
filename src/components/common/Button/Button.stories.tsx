@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Button from './Button'; // Button 컴포넌트 import
+import GoogleIcon from '../../../assets/images/GoogleIcon.svg';
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button', // Storybook의 버튼 카테고리
@@ -29,10 +30,17 @@ const meta: Meta<typeof Button> = {
       control: 'text',
       description: '버튼 내부의 내용을 설정합니다.',
     },
+    svgIcon: {
+      control: 'boolean',
+      description: '버튼 내부에 아이콘을 포함할지 여부를 설정합니다.',
+    },
     color: {
       control: 'select',
       options: ['white', 'black'],
-      description: '버튼 내부 텍스트의 색상을 설정합니다.', // primary - white, primary-outline - main 으로 설정되어있긴 한데, 구글 로그인 버튼 처럼 텍스트가 black인 경우가 있어서 추가.
+      description: '버튼 내부 텍스트의 색상을 설정합니다.',
+      // primary: white, primary-outline: #EB5916 으로 설정되어있긴 한데,
+      // 구글 로그인 버튼 처럼 텍스트가 black인 경우가 있어서 추가.
+      // 텍스트 색상을 black으로 바꿔야되는 것이 아니면 굳이 설정하지 않아도 됨.
     },
   },
 };
@@ -47,6 +55,7 @@ export const Default: Story = {
     size: 'md',
     rounded: 'md',
     children: 'Default Button',
+    svgIcon: false,
     disabled: false,
   },
 };
@@ -92,6 +101,29 @@ export const Rounded: Story = {
       <Button variant="primary" size="md" rounded="md">
         Medium Rounded
       </Button>
+    </div>
+  ),
+};
+
+export const CompareSvgIcon: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '2rem',
+        alignItems: 'center',
+      }}
+    >
+      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+        <Button variant="primary" size="sm" rounded="md" svgIcon={false}>
+          참여하기
+        </Button>
+        <Button variant="primary-outline" size="sm" rounded="md" svgIcon={true}>
+          <img src={GoogleIcon} alt="google-icon" />
+          초대하기
+        </Button>
+      </div>
     </div>
   ),
 };

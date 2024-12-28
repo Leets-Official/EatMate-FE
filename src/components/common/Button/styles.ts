@@ -11,12 +11,12 @@ const sizeStyles: Record<
   sm: (svgIcon) => css`
     width: 100px;
     font-size: 10px;
-    padding: ${svgIcon ? '0.3rem 1.2rem' : '0.8rem 1rem'};
+    padding: ${svgIcon ? '0.08rem 0.5rem' : '1.2rem 1.2rem'};
   `,
   md: (svgIcon) => css`
     width: 200px;
     font-size: 16px;
-    padding: ${svgIcon ? '0.3rem 1.5rem' : '0.7rem 1.5rem'};
+    padding: ${svgIcon ? '0.1rem 1.5rem' : '1rem 2rem'};
   `,
   lg: (svgIcon) => css`
     width: 400px;
