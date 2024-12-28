@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import mainLogo from '../../assets/images/EatMate_main_Logo.svg';
+import Button from '../../components/common/Button/Button';
 
 export const Container = styled.div`
   min-height: 100vh;
@@ -32,7 +33,11 @@ const IntroPage: React.FC = () => {
         <div>혼밥도,혼술도,배달비도 걱정 끝!</div>
         <div>가천대생을 위한 안전하고 편리한 모임 시작해보세요.</div>
       </SubText>
+      <Button variant="primary-outline" size="md" rounded="md">
+        Google로 가입
+      </Button>
     </Container>
   );
 };
+
 export default IntroPage;
