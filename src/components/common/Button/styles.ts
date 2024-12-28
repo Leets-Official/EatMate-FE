@@ -1,49 +1,31 @@
-import { css } from '@emotion/react';
+import { css } from 'styled-components';
 
 export type ButtonVariant = 'primary' | 'primary-outline';
 export type ButtonSize = 'sm' | 'md';
 export type ButtonRounded = 'none' | 'sm' | 'md';
 
-const styles = {
-  button: (
-    variant: ButtonVariant,
-    size: ButtonSize,
-    rounded: ButtonRounded
-  ) => css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-items: center;
-    padding: ${sizeStyles[size]};
-    border-radius: ${roundedStyles[rounded]};
-    transition: all 0.2s ease;
-    cursor: pointer;
-
-    ${variantStyles[variant]}
-
-    &:hover {
-      opacity: 0.9;
-    }
-
-    &:disabled {
-      cursor: not-allowed;
-      opacity: 0.6;
-    }
+const sizeStyles: Record<ButtonSize, ReturnType<typeof css>> = {
+  sm: css`
+    padding: 0.5rem 1rem;
+  `,
+  md: css`
+    padding: 0.75rem 1.5rem;
   `,
 };
 
-const sizeStyles = {
-  sm: '0.5rem 1rem',
-  md: '0.75rem 1.5rem',
+const roundedStyles: Record<ButtonRounded, ReturnType<typeof css>> = {
+  none: css`
+    border-radius: 0px;
+  `,
+  sm: css`
+    border-radius: 0.5rem;
+  `,
+  md: css`
+    border-radius: 1rem;
+  `,
 };
 
-const roundedStyles = {
-  none: '0px',
-  sm: '0.5rem',
-  md: '1rem',
-};
-
-const variantStyles = {
+const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
   'primary': css`
     background-color: ${({ theme }) => theme.COLORS.primary.main};
     color: white;
@@ -56,4 +38,4 @@ const variantStyles = {
   `,
 };
 
-export default styles;
+export { sizeStyles, roundedStyles, variantStyles };
