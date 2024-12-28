@@ -1,5 +1,5 @@
-import { forwardRef } from 'react';
-import styles, { BUttonVariant, ButtonSize, ButtonRounded } from './styles';
+import React, { forwardRef } from 'react';
+import styles, { ButtonVariant, ButtonSize, ButtonRounded } from './styles';
 
 interface ButtonProps extends React.ComponentProps<'button'> {
   variant?: ButtonVariant;
