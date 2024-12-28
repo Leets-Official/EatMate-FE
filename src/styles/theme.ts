@@ -21,9 +21,9 @@ const FONT_FAMILY = {
 };
 
 const FONT_WEIGHT = {
-  light: 300,
-  regular: 400,
-  semiBold: 500,
+  light: 400,
+  regular: 500,
+  semiBold: 600,
   bold: 700,
   extraBold: 800,
 };

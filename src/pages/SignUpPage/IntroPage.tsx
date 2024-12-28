@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import mainLogo from '../../assets/images/EatMate_main_Logo.svg';
 import Button from '../../components/common/Button/Button';
+import GoogleIcon from '../../assets/images/GoogleIcon.svg';
 
 export const Container = styled.div`
   min-height: 100vh;
@@ -19,6 +20,7 @@ const MainText = styled.div`
 
 const SubText = styled.div`
   font-size: 14px;
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
   margin-top: 15px;
 `;
 
@@ -34,6 +36,7 @@ const IntroPage: React.FC = () => {
         <div>가천대생을 위한 안전하고 편리한 모임 시작해보세요.</div>
       </SubText>
       <Button variant="primary-outline" size="lg" color="black" rounded="md">
+        <img src={GoogleIcon} alt="google-icon" />
         Google로 가입
       </Button>
     </Container>
