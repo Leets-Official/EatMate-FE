@@ -1,15 +1,24 @@
 import { css } from 'styled-components';
 
 export type ButtonVariant = 'primary' | 'primary-outline';
-export type ButtonSize = 'sm' | 'md';
+export type ButtonSize = 'sm' | 'md' | 'lg';
 export type ButtonRounded = 'none' | 'sm' | 'md';
 
 const sizeStyles: Record<ButtonSize, ReturnType<typeof css>> = {
   sm: css`
-    padding: 0.5rem 1rem;
+    width: 50%;
+    font-size: 10px;
+    padding: 0.6rem 1.2rem;
   `,
   md: css`
-    padding: 0.75rem 1.5rem;
+    width: 75%;
+    font-size: 16px;
+    padding: 0.9rem 1.7rem;
+  `,
+  lg: css`
+    width: 100%;
+    padding: 1rem 2rem;
+    font-size: 18px;
   `,
 };
 
@@ -18,10 +27,10 @@ const roundedStyles: Record<ButtonRounded, ReturnType<typeof css>> = {
     border-radius: 0px;
   `,
   sm: css`
-    border-radius: 0.5rem;
+    border-radius: 8px;
   `,
   md: css`
-    border-radius: 1rem;
+    border-radius: 12px;
   `,
 };
 
