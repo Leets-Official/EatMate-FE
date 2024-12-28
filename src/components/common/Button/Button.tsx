@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { ButtonProps } from '../../../stories/Button';
+import styles, { BUttonVariant, ButtonSize, ButtonRounded } from './styles';
 
 interface ButtonProps extends React.ComponentProps<'button'> {
   variant?: ButtonVariant;

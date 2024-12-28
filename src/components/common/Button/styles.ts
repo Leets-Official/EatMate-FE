@@ -1,12 +1,12 @@
 import { css } from 'styled-components';
 
-export type BUttonVariant = 'primary' | 'primary-outline';
+export type ButtonVariant = 'primary' | 'primary-outline';
 export type ButtonSize = 'sm' | 'md';
 export type ButtonRounded = 'none' | 'sm' | 'md';
 
 const styles = {
   button: (
-    variant: BUttonVariant,
+    variant: ButtonVariant,
     size: ButtonSize,
     rounded: ButtonRounded
   ) => css`
@@ -18,6 +18,8 @@ const styles = {
     border-radius: ${roundedStyles[rounded]};
     transition: all 0.2s ease;
     cursor: pointer;
+
+    ${variantStyles[variant]}
 
     &:hover {
       opacity: 0.9;
