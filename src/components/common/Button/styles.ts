@@ -6,18 +6,18 @@ export type ButtonRounded = 'none' | 'sm' | 'md';
 
 const sizeStyles: Record<ButtonSize, ReturnType<typeof css>> = {
   sm: css`
-    width: 50%;
+    width: 100px;
     font-size: 10px;
-    padding: 0.3rem 1.2rem;
+    padding: 0.5rem 1rem;
   `,
   md: css`
-    width: 75%;
+    width: 200px;
     font-size: 16px;
-    padding: 0.3rem 1.5rem;
+    padding: 0.7rem 1.5rem;
   `,
   lg: css`
-    width: 100%;
-    padding: 0.3rem 1.5rem;
+    width: 400px;
+    padding: 0.7rem 1.7rem;
     font-size: 18px;
   `,
 };

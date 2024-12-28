@@ -68,6 +68,9 @@ export const Sizes: Story = {
       <Button variant="primary" size="md" rounded="md">
         Medium Button
       </Button>
+      <Button variant="primary" size="lg" rounded="md">
+        Large Button
+      </Button>
     </div>
   ),
 };
