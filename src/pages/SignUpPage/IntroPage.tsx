@@ -32,7 +32,7 @@ const ContentWrapper = styled.div`
   align-items: center;
 `;
 
-const ButtonWrapper = styled.span`
+const ButtonWrapper = styled.div`
   position: absolute;
   bottom: 20px;
   padding: 20px;
@@ -55,7 +55,13 @@ const IntroPage: React.FC = () => {
         </SubText>
       </ContentWrapper>
       <ButtonWrapper>
-        <Button variant="primary-outline" size="lg" color="black" rounded="md">
+        <Button
+          variant="primary-outline"
+          size="lg"
+          color="black"
+          rounded="md"
+          svgIcon
+        >
           <img src={GoogleIcon} alt="google-icon" />
           Google로 가입
         </Button>

@@ -4,20 +4,23 @@ export type ButtonVariant = 'primary' | 'primary-outline';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 export type ButtonRounded = 'none' | 'sm' | 'md';
 
-const sizeStyles: Record<ButtonSize, ReturnType<typeof css>> = {
-  sm: css`
+const sizeStyles: Record<
+  ButtonSize,
+  (svgIcon: boolean) => ReturnType<typeof css>
+> = {
+  sm: (svgIcon) => css`
     width: 100px;
     font-size: 10px;
-    padding: 0.5rem 1.2rem;
+    padding: ${svgIcon ? '0.3rem 1.2rem' : '0.8rem 1rem'};
   `,
-  md: css`
+  md: (svgIcon) => css`
     width: 200px;
     font-size: 16px;
-    padding: 0.7rem 1.5rem;
+    padding: ${svgIcon ? '0.3rem 1.5rem' : '0.7rem 1.5rem'};
   `,
-  lg: css`
+  lg: (svgIcon) => css`
     width: 400px;
-    padding: 0.9rem 1.7rem;
+    padding: ${svgIcon ? '0.3rem 1.5rem' : '1rem 1.5rem'};
     font-size: 18px;
   `,
 };

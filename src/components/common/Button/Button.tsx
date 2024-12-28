@@ -14,6 +14,7 @@ interface ButtonProps extends React.ComponentProps<'button'> {
   size?: ButtonSize;
   rounded?: ButtonRounded;
   color?: 'white' | 'black';
+  svgIcon?: boolean; // svg아이콘 여부
   children?: React.ReactNode;
 }
 
@@ -24,7 +25,7 @@ const StyledButton = styled.button<ButtonProps>`
   transition: all 0.2s ease;
   cursor: pointer;
 
-  ${({ size }) => size && sizeStyles[size]}
+  ${({ size, svgIcon }) => size && sizeStyles[size](!!svgIcon)}
   ${({ rounded }) => rounded && roundedStyles[rounded]}
   ${({ variant }) => variant && variantStyles[variant]}
 
@@ -53,6 +54,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       size = 'md',
       rounded = 'md',
       color = 'white',
+      svgIcon = false,
       children,
       ...props
     },
@@ -65,6 +67,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         size={size}
         rounded={rounded}
         color={color}
+        svgIcon={svgIcon}
         {...props}
       >
         {children}
