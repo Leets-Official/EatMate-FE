@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import { css } from '@emotion/react';
 
 export type ButtonVariant = 'primary' | 'primary-outline';
 export type ButtonSize = 'sm' | 'md';
