@@ -11,7 +11,7 @@ const sizeStyles: Record<
   sm: (svgIcon) => css`
     width: 100px;
     font-size: 10px;
-    padding: ${svgIcon ? '0.08rem 0.5rem' : '1.2rem 1.2rem'};
+    padding: ${svgIcon ? '0.2rem 0.5rem' : '0.7rem 0.5rem'};
   `,
   md: (svgIcon) => css`
     width: 200px;

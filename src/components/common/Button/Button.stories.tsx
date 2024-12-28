@@ -34,6 +34,11 @@ const meta: Meta<typeof Button> = {
       control: 'boolean',
       description: '버튼 내부에 아이콘을 포함할지 여부를 설정합니다.',
     },
+    // 버튼 내부에 svg 아이콘이 포함되는 경우가 있는데 ,
+    // svg img와 버튼 컴포넌트를 다시 div 태그로 묶을 경우 아이콘과 텍스트가 차지하는 상하 공간 때문에
+    // svg 아이콘이 없을 때와 동일한 padding 적용시 padding 값이 지나치게 커지게 되어
+    // svgIcon 여부에 따라 동적으로 padding 값을 설정하기 위해 추가함.
+
     color: {
       control: 'select',
       options: ['white', 'black'],
@@ -120,7 +125,7 @@ export const CompareSvgIcon: Story = {
           참여하기
         </Button>
         <Button variant="primary-outline" size="sm" rounded="md" svgIcon={true}>
-          <img src={GoogleIcon} alt="google-icon" />
+          <img src={GoogleIcon} alt="google-icon" width="28px" />
           초대하기
         </Button>
       </div>
