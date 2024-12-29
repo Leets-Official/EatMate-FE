@@ -8,7 +8,7 @@ export const ProgressBarContainer = styled.div`
   margin: 1rem 0;
 `;
 
-export const ProgressBar = styled.div<{ progress: number }>`
+export const StyledProgressBar = styled.div<{ progress: number }>`
   width: ${({ progress }) => `${progress}%`};
   height: 100%;
   background-color: ${({ theme }) => theme.COLORS.primary.main};
@@ -20,12 +20,12 @@ interface ProgressBarProps {
   progress: number;
 }
 
-const ProgressBarComponent: React.FC<ProgressBarProps> = ({ progress }) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({ progress }) => {
   return (
     <ProgressBarContainer>
-      <ProgressBar progress={progress} />
+      <StyledProgressBar progress={progress} />
     </ProgressBarContainer>
   );
 };
 
-export default ProgressBarComponent;
+export default ProgressBar;

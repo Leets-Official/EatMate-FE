@@ -1,6 +1,4 @@
-import ProgressBarComponent, {
-  ProgressBar,
-} from '../../components/SignUp/ProgressBar';
+import ProgressBar from '../../components/SignUp/ProgressBar';
 import BirthdayGenderStep from '../../components/SignUp/BirthdayGenderStep';
 import { useState } from 'react';
 import MbtiStep from '../../components/SignUp/MbtiStep';
@@ -23,7 +21,7 @@ const SignUp = () => {
   const progress = ((currentStep + 1) / steps.length) * 100;
   return (
     <div>
-      <ProgressBarComponent progress={progress} />
+      <ProgressBar progress={progress} />
       {steps[currentStep]}
     </div>
   );
