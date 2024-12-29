@@ -18,6 +18,7 @@ const COLORS = {
     purple: '#DCC1FF', // 연한 보라색
     black: '#1A1A1A', // 검정색
   },
+  error: '#FF6D6D',
 };
 
 const FONT_FAMILY = {

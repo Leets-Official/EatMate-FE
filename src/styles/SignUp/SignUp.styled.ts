@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface InputFieldProps {
   error: boolean;
+  width?: string;
 }
 
 export const MainTitle = styled.div`
@@ -20,8 +21,8 @@ export const Description = styled.div`
 `;
 
 export const InputField = styled.input<InputFieldProps>`
-  width: 100%;
-  padding: 12px 16px;
+  width: ${({ width }) => width || '100%'};
+  padding: 8px;
   font-size: 16px;
   border: none;
   border-bottom: 2px solid
@@ -39,6 +40,15 @@ export const InputField = styled.input<InputFieldProps>`
   }
 `;
 
+export const InputContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const Text = styled.div`
+  font-size: 20px;
+`;
 export const ErrorMessage = styled.span`
   margin-top: 4px;
   font-size: 12px;

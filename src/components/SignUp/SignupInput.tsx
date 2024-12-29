@@ -8,6 +8,7 @@ interface InputProps {
   maxLength?: number;
   error?: boolean;
   errorMessage?: string;
+  width?: string;
 }
 
 const SignUpInput: React.FC<InputProps> = ({
@@ -18,6 +19,7 @@ const SignUpInput: React.FC<InputProps> = ({
   maxLength,
   error = false,
   errorMessage,
+  width,
 }) => {
   return (
     <div>
@@ -28,8 +30,9 @@ const SignUpInput: React.FC<InputProps> = ({
         onChange={onChange}
         maxLength={maxLength}
         error={error}
+        width={width}
       />
-      {error && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      {error && errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </div>
   );
 };
