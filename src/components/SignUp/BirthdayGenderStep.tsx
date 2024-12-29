@@ -1,15 +1,6 @@
-import { useRecoilState } from 'recoil';
-import { signupAtom } from '../../recoil/atoms/userAtom';
-import useInput from '../../hooks/use-input';
 import Button from '../common/Button/Button';
 
-const BirthdayGenderStep: React.FC = () => {
-  const [formState, setFormState] = useRecoilState(signupAtom);
-
-  const year = useInput(formState.year || '');
-  const month = useInput(formState.month || '');
-  const day = useInput(formState.day || '');
-
+const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
     <div>
       <div>조금만 알려주시면 준비가 끝나요!</div>
@@ -26,7 +17,7 @@ const BirthdayGenderStep: React.FC = () => {
       <Button variant="primary-outline" size="lg" rounded="sm">
         여성
       </Button>
-      <Button variant="primary" size="lg" rounded="sm" disabled>
+      <Button onClick={onNext} variant="primary" size="lg" rounded="sm">
         다음
       </Button>
     </div>
