@@ -1,6 +1,6 @@
 import * as S from './styles';
-import mainLogo from '../../../assets/images/EatMate_main_Logo.svg';
-import backArrow from '../../../assets/images/backButton.svg';
+import mainLogo from '@/@/assets/images/EatMate_main_Logo.svg';
+import backArrow from '@/@/assets/images/backButton.svg';
 
 interface HeaderProps {
   title?: string;

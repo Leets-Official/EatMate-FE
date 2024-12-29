@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Button from './Button'; // Button 컴포넌트 import
-import GoogleIcon from '../../../assets/images/GoogleIcon.svg';
+import GoogleIcon from '@/@/assets/images/GoogleIcon.svg';
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button', // Storybook의 버튼 카테고리

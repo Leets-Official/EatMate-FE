@@ -1,4 +1,4 @@
-import Button from '../common/Button/Button';
+import Button from '@/common/Button/Button';
 import {
   MainTitle,
   Description,
@@ -6,7 +6,7 @@ import {
   InputContainer,
   ButtonContainer,
   SelectButtonContainer,
-} from '../../styles/SignUp/SignUp.styled';
+} from '@/styles/SignUp/SignUp.styled';
 import SignUpInput from './SignupInput';
 import { useState } from 'react';
 

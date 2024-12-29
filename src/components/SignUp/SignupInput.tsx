@@ -1,4 +1,4 @@
-import { InputField, ErrorMessage } from '../../styles/SignUp/SignUp.styled';
+import { InputField, ErrorMessage } from '@/styles/SignUp/SignUp.styled';
 
 interface InputProps {
   type?: string;

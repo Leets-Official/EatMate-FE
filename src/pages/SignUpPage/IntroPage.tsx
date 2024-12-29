@@ -1,7 +1,7 @@
-import mainLogo from '../../assets/images/EatMate_main_Logo.svg';
-import Button from '../../components/common/Button/Button';
-import GoogleIcon from '../../assets/images/GoogleIcon.svg';
-import * as S from '../../styles/SignUp/IntroPage.styled';
+import mainLogo from '@/assets/images/EatMate_main_Logo.svg';
+import Button from '@/components/common/Button/Button';
+import GoogleIcon from '@/assets/images/GoogleIcon.svg';
+import * as S from '@/styles/SignUp/IntroPage.styled';
 
 const IntroPage: React.FC = () => {
   return (

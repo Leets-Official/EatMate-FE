@@ -3,8 +3,8 @@ import {
   Description,
   InputContainer,
   MainTitle,
-} from '../../styles/SignUp/SignUp.styled';
-import Button from '../common/Button/Button';
+} from '@/styles/SignUp/SignUp.styled';
+import Button from '@/common/Button/Button';
 import SignUpInput from './SignupInput';
 
 const StudentIdStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
