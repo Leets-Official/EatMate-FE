@@ -20,9 +20,15 @@ const SignUp = () => {
     <ProfileImgStep onNext={() => setCurrentStep((prev) => prev + 1)} />,
   ];
   const progress = ((currentStep + 1) / steps.length) * 100;
+
+  const HandleBackClick = () => {
+    if (currentStep > 0) {
+      setCurrentStep((prev) => prev - 1);
+    }
+  };
   return (
     <div>
-      <Header showBackButton={true} />
+      <Header showBackButton={true} onBackClick={HandleBackClick} />
       <ProgressBar progress={progress} />
       {steps[currentStep]}
     </div>
