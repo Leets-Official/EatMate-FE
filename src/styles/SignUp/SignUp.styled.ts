@@ -46,6 +46,17 @@ export const InputContainer = styled.div`
   align-items: center;
 `;
 
+export const ButtonContainer = styled.div`
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  padding: 0 16px;
+  transform: translateX(-50%);
+`;
+
+export const SelectButtonContainer = styled.div`
+  margin-bottom: 24px;
+`;
 export const Text = styled.div`
   font-size: 20px;
 `;
