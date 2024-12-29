@@ -28,9 +28,7 @@ export const InputField = styled.input<InputFieldProps>`
   padding: 8px;
   font-size: 20px;
   border: none;
-  border-bottom: 2px solid
-    ${({ theme, error }) =>
-      error ? theme.COLORS.error : theme.COLORS.gray[100]};
+  border-bottom: 2px solid ${({ theme }) => theme.COLORS.black};
   outline: none;
   transition: border-color 0.3s;
 
