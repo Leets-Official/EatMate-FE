@@ -1,6 +1,6 @@
 import mainLogo from '../../../assets/images/EatMate_main_Logo.svg';
 import * as S from './styles';
-
+import backArrow from '../../../assets/images/backButton.svg';
 interface HeaderProps {
   title?: string;
   showBackButton?: boolean;
@@ -17,7 +17,9 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <S.HeaderContainer showBackButton={showBackButton}>
       {showBackButton && (
-        <S.BackButton onClick={onBackClick}>{'<'}</S.BackButton>
+        <S.BackButton onClick={onBackClick}>
+          <img src={backArrow} alt="뒤로가기" />
+        </S.BackButton>
       )}
       <S.CenterContainer>
         {title ? (

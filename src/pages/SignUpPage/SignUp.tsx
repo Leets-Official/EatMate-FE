@@ -26,6 +26,7 @@ const SignUp = () => {
       setCurrentStep((prev) => prev - 1);
     }
   };
+
   return (
     <div>
       <Header showBackButton={true} onBackClick={HandleBackClick} />
