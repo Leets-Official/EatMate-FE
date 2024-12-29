@@ -5,6 +5,9 @@ interface InputFieldProps {
   width?: string;
 }
 
+interface InputContainerProps {
+  isSingleInput: boolean;
+}
 export const MainTitle = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
   font-size: 24px;
@@ -40,12 +43,16 @@ export const InputField = styled.input<InputFieldProps>`
   }
 `;
 
-export const InputContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+export const InputContainer = styled.div<InputContainerProps>`
+  ${({ isSingleInput }) =>
+    !isSingleInput &&
+    `
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  `}
   margin: 3rem 0 7.5rem 0;
-  gap: 1rem;
 `;
 
 export const ButtonContainer = styled.div`

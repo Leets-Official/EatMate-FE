@@ -15,7 +15,9 @@ const PhoneNumStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         입력된 정보는 외부에 공개되지 않으니 안심하세요.
       </Description>
 
-      <SignUpInput placeholder="010-0000-0000" />
+      <InputContainer isSingleInput={true}>
+        <SignUpInput placeholder="010-0000-0000" />
+      </InputContainer>
 
       <ButtonContainer>
         <Button onClick={onNext} variant="primary" size="lg" rounded="sm">

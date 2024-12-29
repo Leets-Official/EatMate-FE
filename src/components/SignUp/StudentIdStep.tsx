@@ -1,6 +1,7 @@
 import {
   ButtonContainer,
   Description,
+  InputContainer,
   MainTitle,
 } from '../../styles/SignUp/SignUp.styled';
 import Button from '../common/Button/Button';
@@ -14,7 +15,10 @@ const StudentIdStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       <Description>
         입력한 학번은 인증 용도로만 사용되며, 안전하게 보호됩니다.
       </Description>
-      <SignUpInput />
+
+      <InputContainer isSingleInput={true}>
+        <SignUpInput />
+      </InputContainer>
 
       <ButtonContainer>
         <Button onClick={onNext} variant="primary" size="lg" rounded="sm">
