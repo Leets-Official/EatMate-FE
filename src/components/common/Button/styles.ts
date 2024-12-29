@@ -39,7 +39,7 @@ const roundedStyles: Record<ButtonRounded, ReturnType<typeof css>> = {
 
 const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
   'primary': css`
-    background-color: ${({ theme }) => theme.COLORS.primary.main};
+    background-color: ${({ theme }) => theme.COLORS.main};
     color: white;
     border: none;
     font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
@@ -47,8 +47,8 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
   'primary-outline': css`
     background-color: white;
     font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
-    color: ${({ theme }) => theme.COLORS.primary.main};
-    border: 1px solid ${({ theme }) => theme.COLORS.primary.main};
+    color: ${({ theme }) => theme.COLORS.main};
+    border: 1px solid ${({ theme }) => theme.COLORS.main};
     display: flex;
     justify-content: center;
     align-items: center;

@@ -29,17 +29,18 @@ export const InputField = styled.input<InputFieldProps>`
   font-size: 20px;
   border: none;
   border-bottom: 2px solid
-    ${({ theme, error }) => (error ? theme.COLORS.error : theme.COLORS.gray)};
+    ${({ theme, error }) =>
+      error ? theme.COLORS.error : theme.COLORS.gray[100]};
   outline: none;
   transition: border-color 0.3s;
 
   &::placeholder {
-    color: ${({ theme }) => theme.COLORS.primary.gray[100]};
+    color: ${({ theme }) => theme.COLORS.gray[100]};
     font-size: 20px;
   }
 
   &:focus {
-    border-bottom-color: ${({ theme }) => theme.COLORS.primary.main};
+    border-bottom-color: ${({ theme }) => theme.COLORS.main};
   }
 `;
 

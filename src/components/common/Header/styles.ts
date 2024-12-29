@@ -19,7 +19,7 @@ export const BackButton = styled.button`
   background: none;
   border: none;
   font-size: 1.2rem;
-  color: ${({ theme }) => theme.COLORS.primary.main};
+  color: ${({ theme }) => theme.COLORS.main};
   cursor: pointer;
 `;
 

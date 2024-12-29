@@ -11,7 +11,7 @@ export const ProgressBarContainer = styled.div`
 export const StyledProgressBar = styled.div<{ progress: number }>`
   width: ${({ progress }) => `${progress}%`};
   height: 100%;
-  background-color: ${({ theme }) => theme.COLORS.primary.main};
+  background-color: ${({ theme }) => theme.COLORS.main};
   border-radius: 4px;
   transition: width 0.3s ease-in-out;
 `;
