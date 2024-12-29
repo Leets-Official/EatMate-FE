@@ -7,6 +7,10 @@ const COLORS = {
     },
     yellow: '#F5F378', // 밝은 노란색
     red: '#FE4600', // 밝은 빨간색
+    gray: {
+      100: '#D9D9D9',
+      200: '#ACACAC',
+    },
   },
   secondary: {
     ivory: '#FAF2DF', // 밝은 아이보리
