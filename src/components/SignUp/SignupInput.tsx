@@ -1,3 +1,5 @@
+import { InputField, ErrorMessage } from '../../styles/SignUp/SignUp.styled';
+
 interface InputProps {
   type?: string;
   placeholder?: string;
@@ -19,7 +21,7 @@ const SignUpInput: React.FC<InputProps> = ({
 }) => {
   return (
     <div>
-      <input
+      <InputField
         type={type}
         placeholder={placeholder}
         value={value}
@@ -27,7 +29,7 @@ const SignUpInput: React.FC<InputProps> = ({
         maxLength={maxLength}
         error={error}
       />
-      {error && <ErroMessage>{errorMessage}</ErroMessage>}
+      {error && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </div>
   );
 };

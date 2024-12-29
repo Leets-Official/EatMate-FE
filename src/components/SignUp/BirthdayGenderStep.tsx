@@ -1,20 +1,7 @@
-import styled from 'styled-components';
 import Button from '../common/Button/Button';
+import { MainTitle, Description } from '../../styles/SignUp/SignUp.styled';
+import SignUpInput from './SignupInput';
 
-export const MainTitle = styled.div`
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
-  font-size: 24px;
-  padding: 10px;
-`;
-
-export const Description = styled.div`
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
-  font-size: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 10px;
-`;
 const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
     <div>
@@ -24,9 +11,9 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         <div>간단히 입력 후 다음으로 넘어갈 수 있어요. </div>
       </Description>
       <div>
-        <input type="text" placeholder="년" />
-        <input type="text" placeholder="월" />
-        <input type="text" placeholder="일" />
+        <SignUpInput type="text" placeholder="년" />
+        <SignUpInput type="text" placeholder="월" />
+        <SignUpInput type="text" placeholder="일" />
       </div>
       <Button variant="primary-outline" size="lg" rounded="sm">
         남성
