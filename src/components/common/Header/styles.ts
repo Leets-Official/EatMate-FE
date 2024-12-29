@@ -39,7 +39,7 @@ export const Title = styled.h1`
 `;
 
 export const SubText = styled.span`
-  margin-top: 4px;
+  margin-top: 10px;
   font-size: 1rem;
   color: ${({ theme }) => theme.COLORS.textSecondary};
 `;
