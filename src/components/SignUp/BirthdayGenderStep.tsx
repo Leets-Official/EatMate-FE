@@ -32,21 +32,12 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           placeholder="1999"
         />
         <Text>년</Text>
-        <SignUpInput
-          type="text"
-          maxLength={2}
-          width="40px"
-          placeholder="9"
-        />{' '}
+        <SignUpInput type="text" maxLength={2} width="40px" placeholder="9" />
         <Text>월</Text>
-        <SignUpInput
-          type="text"
-          maxLength={2}
-          width="40px"
-          placeholder="9"
-        />{' '}
+        <SignUpInput type="text" maxLength={2} width="40px" placeholder="9" />
         <Text>일</Text>
       </InputContainer>
+
       <SelectButtonContainer>
         <Button
           onClick={() => handleGenderClick('남성')}
@@ -65,6 +56,7 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           여성
         </Button>
       </SelectButtonContainer>
+
       <ButtonContainer>
         <Button onClick={onNext} variant="primary" size="lg" rounded="sm">
           다음

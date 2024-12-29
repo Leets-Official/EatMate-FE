@@ -23,7 +23,8 @@ export const Description = styled.div`
 export const InputField = styled.input<InputFieldProps>`
   width: ${({ width }) => width || '100%'};
   padding: 8px;
-  font-size: 16px;
+  font-size: 20px;
+  text-align: center;
   border: none;
   border-bottom: 2px solid
     ${({ theme, error }) => (error ? theme.COLORS.error : theme.COLORS.gray)};
@@ -44,6 +45,8 @@ export const InputContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 3rem 0 7.5rem 0;
+  gap: 1rem;
 `;
 
 export const ButtonContainer = styled.div`
@@ -55,7 +58,10 @@ export const ButtonContainer = styled.div`
 `;
 
 export const SelectButtonContainer = styled.div`
-  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
 `;
 export const Text = styled.div`
   font-size: 20px;
