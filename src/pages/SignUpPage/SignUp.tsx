@@ -6,6 +6,7 @@ import NicknameStep from '../../components/SignUp/NicknameStep';
 import PhoneNumStep from '../../components/SignUp/PhoneNumStep';
 import ProfileImgStep from '../../components/SignUp/ProfileImgStep';
 import StudentIdStep from '../../components/SignUp/StudentIdStep';
+import Header from '../../components/common/Header/Header';
 
 const SignUp = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -21,6 +22,7 @@ const SignUp = () => {
   const progress = ((currentStep + 1) / steps.length) * 100;
   return (
     <div>
+      <Header showBackButton={true} />
       <ProgressBar progress={progress} />
       {steps[currentStep]}
     </div>
