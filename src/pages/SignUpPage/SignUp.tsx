@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import ProgressBar from '../../components/SignUp/ProgressBar';
 import BirthdayGenderStep from '../../components/SignUp/BirthdayGenderStep';
-import { useState } from 'react';
 import MbtiStep from '../../components/SignUp/MbtiStep';
 import NicknameStep from '../../components/SignUp/NicknameStep';
 import PhoneNumStep from '../../components/SignUp/PhoneNumStep';
