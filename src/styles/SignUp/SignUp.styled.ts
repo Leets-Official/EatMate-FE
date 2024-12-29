@@ -69,9 +69,11 @@ export const SelectButtonContainer = styled.div`
   gap: 1rem;
   margin-top: 1rem;
 `;
+
 export const Text = styled.div`
   font-size: 20px;
 `;
+
 export const ErrorMessage = styled.span`
   margin-top: 4px;
   font-size: 12px;

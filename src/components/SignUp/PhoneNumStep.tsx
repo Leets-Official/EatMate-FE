@@ -4,7 +4,7 @@ import {
   InputContainer,
   MainTitle,
 } from '@/styles/SignUp/SignUp.styled';
-import Button from '@/common/Button/Button';
+import Button from '@/components/common/Button/Button';
 import SignUpInput from './SignupInput';
 
 const PhoneNumStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {

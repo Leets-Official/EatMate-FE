@@ -3,7 +3,7 @@ import {
   Description,
   MainTitle,
 } from '@/styles/SignUp/SignUp.styled';
-import Button from '@/common/Button/Button';
+import Button from '@/components/common/Button/Button';
 
 const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   return (
