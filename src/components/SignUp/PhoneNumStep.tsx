@@ -1,4 +1,9 @@
-import { Description, MainTitle } from '../../styles/SignUp/SignUp.styled';
+import {
+  ButtonContainer,
+  Description,
+  InputContainer,
+  MainTitle,
+} from '../../styles/SignUp/SignUp.styled';
 import Button from '../common/Button/Button';
 import SignUpInput from './SignupInput';
 
@@ -9,10 +14,14 @@ const PhoneNumStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       <Description>
         입력된 정보는 외부에 공개되지 않으니 안심하세요.
       </Description>
+
       <SignUpInput placeholder="010-0000-0000" />
-      <Button onClick={onNext} variant="primary" size="lg" rounded="sm">
-        다음
-      </Button>
+
+      <ButtonContainer>
+        <Button onClick={onNext} variant="primary" size="lg" rounded="sm">
+          다음
+        </Button>
+      </ButtonContainer>
     </div>
   );
 };

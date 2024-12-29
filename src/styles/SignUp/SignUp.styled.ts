@@ -24,7 +24,6 @@ export const InputField = styled.input<InputFieldProps>`
   width: ${({ width }) => width || '100%'};
   padding: 8px;
   font-size: 20px;
-  text-align: center;
   border: none;
   border-bottom: 2px solid
     ${({ theme, error }) => (error ? theme.COLORS.error : theme.COLORS.gray)};
