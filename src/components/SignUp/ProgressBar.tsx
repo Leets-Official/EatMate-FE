@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 export const ProgressBarContainer = styled.div`
   width: 100%;
+  max-width: 330px;
   height: 8px;
   background-color: #d9d9d9;
   border-radius: 4px;
-  margin: 1rem 0;
+  margin: 1rem auto;
 `;
 
 export const StyledProgressBar = styled.div<{ progress: number }>`

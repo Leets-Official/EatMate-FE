@@ -35,6 +35,14 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0 auto;
   }
 
+  input {
+  -webkit-appearance: none; /* iOS 기본 스타일 제거 */
+  -moz-appearance: none; /* Firefox 기본 스타일 제거 */
+  appearance: none;
+  border-radius: 0; /* 둥근 테두리 제거 */
+  box-shadow: none; /* 그림자 제거 */
+}
+
   @font-face {
   font-family: 'Pretendard-Medium';
   font-display: swap;
