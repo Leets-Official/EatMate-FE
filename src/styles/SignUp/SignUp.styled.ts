@@ -11,7 +11,7 @@ interface InputContainerProps {
 export const MainTitle = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
   font-size: 24px;
-  padding: 10px;
+  padding: 10px 30px;
 `;
 
 export const Description = styled.div`
@@ -20,7 +20,7 @@ export const Description = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 10px;
+  padding: 10px 28px;
 `;
 
 export const InputField = styled.input<InputFieldProps>`
@@ -58,11 +58,9 @@ export const ButtonContainer = styled.div`
   position: absolute;
   bottom: 20px;
   left: 50%;
-  padding: 0 16px;
+  /* padding: 0 16px; */
   transform: translateX(-50%);
-  /* width: calc(100% - 32px); */
-  /* width: 100%; */
-  /* max-width: 320px; */
+  max-width: 320px;
 `;
 
 export const SelectButtonContainer = styled.div`
