@@ -1,7 +1,7 @@
 ---
 name: feature
 about: feature 이슈 생성
-title: 'feat: 구현 설명'
+title: "[Feat] 구현 설명"
 labels: ''
 assignees: ''
 
