@@ -24,7 +24,7 @@ export const Description = styled.div`
 `;
 
 export const InputField = styled.input<InputFieldProps>`
-  width: ${({ width }) => width || '100%'};
+  width: ${({ width }) => width || '75%'};
   padding: 8px;
   font-size: 20px;
   border: none;
@@ -58,9 +58,7 @@ export const ButtonContainer = styled.div`
   position: absolute;
   bottom: 20px;
   left: 50%;
-  /* padding: 0 16px; */
   transform: translateX(-50%);
-  max-width: 320px;
 `;
 
 export const SelectButtonContainer = styled.div`
@@ -68,6 +66,8 @@ export const SelectButtonContainer = styled.div`
   flex-direction: column;
   gap: 1rem;
   margin-top: 1rem;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const Text = styled.div`

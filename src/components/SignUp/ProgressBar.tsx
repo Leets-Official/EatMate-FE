@@ -6,8 +6,6 @@ export const ProgressBarContainer = styled.div`
   height: 8px;
   background-color: #d9d9d9;
   border-radius: 4px;
-  /* padding: 0 16px; */
-  /* margin: 1rem 0; */
   margin: 1rem auto;
 `;
 
