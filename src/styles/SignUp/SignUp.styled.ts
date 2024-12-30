@@ -55,11 +55,14 @@ export const InputContainer = styled.div<InputContainerProps>`
 `;
 
 export const ButtonContainer = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 20px;
   left: 50%;
   padding: 0 16px;
   transform: translateX(-50%);
+  /* width: calc(100% - 32px); */
+  /* width: 100%; */
+  /* max-width: 320px; */
 `;
 
 export const SelectButtonContainer = styled.div`
