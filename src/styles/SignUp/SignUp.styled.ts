@@ -5,9 +5,6 @@ interface InputFieldProps {
   width?: string;
 }
 
-interface InputContainerProps {
-  isSingleInput: boolean;
-}
 export const MainTitle = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
   font-size: 24px;
@@ -24,17 +21,19 @@ export const Description = styled.div`
 `;
 
 export const InputField = styled.input<InputFieldProps>`
-  width: ${({ width }) => width || '75%'};
+  width: ${({ width }) => width || '300px'};
   padding: 8px;
   font-size: 20px;
   border: none;
   border-bottom: 2px solid ${({ theme }) => theme.COLORS.black};
   outline: none;
   transition: border-color 0.3s;
+  text-align: center;
 
   &::placeholder {
     color: ${({ theme }) => theme.COLORS.gray[100]};
     font-size: 20px;
+    text-align: left;
   }
 
   &:focus {
@@ -42,15 +41,11 @@ export const InputField = styled.input<InputFieldProps>`
   }
 `;
 
-export const InputContainer = styled.div<InputContainerProps>`
-  ${({ isSingleInput }) =>
-    !isSingleInput &&
-    `
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-  `}
+export const InputContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
   margin: 3rem 0 7.5rem 0;
 `;
 

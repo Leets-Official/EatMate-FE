@@ -19,7 +19,7 @@ const sizeStyles: Record<
     padding: ${svgIcon ? '0.1rem 1.5rem' : '1rem 2rem'};
   `,
   lg: (svgIcon) => css`
-    width: 300px;
+    width: 330px;
     padding: ${svgIcon ? '0.3rem 1.5rem' : '1rem 1.5rem'};
     font-size: 18px;
   `,

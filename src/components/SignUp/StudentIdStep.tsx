@@ -16,7 +16,7 @@ const StudentIdStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         입력한 학번은 인증 용도로만 사용되며, 안전하게 보호됩니다.
       </Description>
 
-      <InputContainer isSingleInput={true}>
+      <InputContainer>
         <SignUpInput />
       </InputContainer>
 

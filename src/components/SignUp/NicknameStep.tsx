@@ -13,7 +13,7 @@ const NicknameStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       <MainTitle>당신을 더 알고 싶어요!</MainTitle>
       <Description>뭐라고 불러드리면 될까요?</Description>
 
-      <InputContainer isSingleInput={true}>
+      <InputContainer>
         <SignUpInput />
       </InputContainer>
 

@@ -24,7 +24,7 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         <div>나이와 성별을 선택해주세요.</div>
         <div>간단히 입력 후 다음으로 넘어갈 수 있어요. </div>
       </Description>
-      <InputContainer isSingleInput={false}>
+      <InputContainer>
         <SignUpInput type="text" maxLength={4} width="100px" />
         <Text>년</Text>
         <SignUpInput type="text" maxLength={2} width="40px" />
