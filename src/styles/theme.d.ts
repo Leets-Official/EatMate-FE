@@ -29,6 +29,15 @@ declare module 'src/styles/theme' {
       bold: number;
       extraBold: number;
     };
+
+    FONT_SIZE: {
+      xs: string;
+      sm: string;
+      smMd: string;
+      md: string;
+      lg: string;
+      xl: string;
+    };
   }
 
   const theme: Theme;
