@@ -7,13 +7,13 @@ interface InputFieldProps {
 
 export const MainTitle = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
-  font-size: 24px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.xl};
   padding: 10px 30px;
 `;
 
 export const Description = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -23,7 +23,7 @@ export const Description = styled.div`
 export const InputField = styled.input<InputFieldProps>`
   width: ${({ width }) => width || '300px'};
   padding: 8px;
-  font-size: 20px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.lg};
   border: none;
   border-bottom: 2px solid ${({ theme }) => theme.COLORS.black};
   outline: none;
@@ -32,7 +32,7 @@ export const InputField = styled.input<InputFieldProps>`
 
   &::placeholder {
     color: ${({ theme }) => theme.COLORS.gray[100]};
-    font-size: 20px;
+    font-size: ${({ theme }) => theme.FONT_SIZE.lg};
     text-align: left;
   }
 
@@ -66,11 +66,11 @@ export const SelectButtonContainer = styled.div`
 `;
 
 export const Text = styled.div`
-  font-size: 20px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.lg};
 `;
 
 export const ErrorMessage = styled.span`
   margin-top: 4px;
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   color: ${({ theme }) => theme.COLORS.error};
 `;
