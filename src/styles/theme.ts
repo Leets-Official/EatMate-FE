@@ -11,8 +11,7 @@ const COLORS = {
     200: '#D9D9D9',
     300: '#ACACAC',
   },
-  ivory: '#FAF2DF', // 밝은 아이보리
-  purple: '#DCC1FF', // 연한 보라색
+  white: '#FFFFFF',
   black: '#1A1A1A', // 검정색
   error: '#FF6D6D',
 };
@@ -27,7 +26,6 @@ const FONT_WEIGHT = {
   regular: 500,
   semiBold: 600,
   bold: 700,
-  extraBold: 800,
 };
 
 const FONT_SIZE = {

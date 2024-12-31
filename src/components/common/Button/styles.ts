@@ -1,6 +1,9 @@
 import { css } from 'styled-components';
 
-export type ButtonVariant = 'primary' | 'primary-outline';
+export type ButtonVariant =
+  | 'primary'
+  | 'primary-outline'
+  | 'primary-outlineless';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 export type ButtonRounded = 'none' | 'sm' | 'md';
 
@@ -40,12 +43,12 @@ const roundedStyles: Record<ButtonRounded, ReturnType<typeof css>> = {
 const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
   'primary': css`
     background-color: ${({ theme }) => theme.COLORS.main};
-    color: white;
+    color: ${({ theme }) => theme.COLORS.white};
     border: none;
     font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
   `,
   'primary-outline': css`
-    background-color: white;
+    background-color: ${({ theme }) => theme.COLORS.white};
     font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
     color: ${({ theme }) => theme.COLORS.main};
     border: 1px solid ${({ theme }) => theme.COLORS.main};
@@ -53,6 +56,12 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
     justify-content: center;
     align-items: center;
     gap: 8px;
+  `,
+  'primary-outlineless': css`
+    background-color: ${({ theme }) => theme.COLORS.white};
+    color: ${({ theme }) => theme.COLORS.main};
+    border: none;
+    font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
   `,
 };
 
