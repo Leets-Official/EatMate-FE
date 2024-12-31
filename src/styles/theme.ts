@@ -30,10 +30,20 @@ const FONT_WEIGHT = {
   extraBold: 800,
 };
 
+const FONT_SIZE = {
+  xs: '8px',
+  sm: '12px',
+  smMd: '14px', // sm과 md 사이
+  md: '16px',
+  lg: '20px',
+  xl: '24px',
+};
+
 const theme = {
   COLORS,
   FONT_FAMILY,
   FONT_WEIGHT,
+  FONT_SIZE,
 };
 
 export default theme;
