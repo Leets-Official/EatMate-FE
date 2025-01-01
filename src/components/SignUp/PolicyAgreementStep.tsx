@@ -1,5 +1,7 @@
 import Button from '@/components/common/Button/Button';
 import styled, { keyframes } from 'styled-components';
+import { policyContents } from '@/constants/policycontents';
+import { useNavigate } from 'react-router-dom';
 
 const SlideUp = keyframes`
     from {
@@ -38,19 +40,35 @@ export const StyledModal = styled.div`
   border-top-left-radius: 20px;
   animation: ${SlideUp} 0.3s ease-out;
 `;
+
+export const TermItems = styled.div`
+  cursor: pointer;
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
+  color: ${({ theme }) => theme.COLORS.white};
+  display: flex;
+  flex-direction: column;
+`;
 const PolicyAgreementStep: React.FC<{ onAgree: () => void }> = ({
   onAgree,
 }) => {
+  const nav = useNavigate();
+  const onClickToDetail = (termId: number) => {
+    nav(`/policy-details/${termId}`);
+  };
   return (
     <>
       <Overlay />
       <ModalContainer>
         <StyledModal>
           <div>모두 동의</div>
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
-          <div>4</div>
+          {policyContents.map((content) => (
+            <TermItems
+              key={content.id}
+              onClick={() => onClickToDetail(content.id)}
+            >
+              {content.title}
+            </TermItems>
+          ))}
           <Button
             onClick={onAgree}
             variant="primary-outlineless"

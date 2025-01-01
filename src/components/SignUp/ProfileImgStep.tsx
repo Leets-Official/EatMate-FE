@@ -81,7 +81,7 @@ export const ProfileImage = styled.div<{ imageUrl: string }>`
   justify-content: center;
   align-items: center;
   font-size: ${({ theme }) => theme.FONT_SIZE.xl};
-  color: ${({ theme }) => theme.COLORS.gray[500]};
+  color: ${({ theme }) => theme.COLORS.gray[100]};
   cursor: pointer;
 `;
 
