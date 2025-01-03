@@ -4,8 +4,9 @@ interface InputProps {
   type?: string;
   placeholder?: string;
   value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   maxLength?: number;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   error?: boolean;
   errorMessage?: string;
   width?: string;
@@ -15,8 +16,9 @@ const SignUpInput: React.FC<InputProps> = ({
   type = 'text',
   placeholder = '',
   value,
-  onChange,
   maxLength,
+  onChange,
+  onBlur,
   error = false,
   errorMessage,
   width,
@@ -27,8 +29,9 @@ const SignUpInput: React.FC<InputProps> = ({
         type={type}
         placeholder={placeholder}
         value={value}
-        onChange={onChange}
         maxLength={maxLength}
+        onChange={onChange}
+        onBlur={onBlur}
         error={error}
         width={width}
       />
