@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-interface InputFieldProps {
+interface InputFieldProps extends React.ComponentProps<'input'> {
   error: boolean;
   width?: string;
 }

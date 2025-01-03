@@ -46,7 +46,8 @@ const PhoneNumStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
 
       <InputContainer>
         <SignUpInput
-          type="text"
+          type="tel"
+          maxLength={13}
           placeholder="010-0000-0000"
           value={signupState.phoneNumber}
           onChange={(e) => handleInputChange(e.target.value)}

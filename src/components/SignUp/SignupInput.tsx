@@ -22,6 +22,7 @@ const SignUpInput: React.FC<InputProps> = ({
   error = false,
   errorMessage,
   width,
+  ...props
 }) => {
   return (
     <div>
@@ -34,6 +35,7 @@ const SignUpInput: React.FC<InputProps> = ({
         onBlur={onBlur}
         error={error}
         width={width}
+        {...props}
       />
       {error && errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </div>
