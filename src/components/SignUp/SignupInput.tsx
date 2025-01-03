@@ -5,6 +5,15 @@ interface InputProps {
   placeholder?: string;
   value?: string;
   maxLength?: number;
+  inputMode?:
+    | 'none'
+    | 'text'
+    | 'tel'
+    | 'url'
+    | 'email'
+    | 'numeric'
+    | 'decimal'
+    | undefined;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   error?: boolean;
@@ -17,6 +26,7 @@ const SignUpInput: React.FC<InputProps> = ({
   placeholder = '',
   value,
   maxLength,
+  inputMode,
   onChange,
   onBlur,
   error = false,
@@ -31,6 +41,7 @@ const SignUpInput: React.FC<InputProps> = ({
         placeholder={placeholder}
         value={value}
         maxLength={maxLength}
+        inputMode={inputMode}
         onChange={onChange}
         onBlur={onBlur}
         error={error}
