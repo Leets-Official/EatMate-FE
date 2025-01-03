@@ -7,17 +7,20 @@ import {
   ButtonContainer,
   SelectButtonContainer,
 } from '@/styles/SignUp/SignUp.styled';
+import { useEffect } from 'react';
 import SignUpInput from './SignupInput';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
-import useInput from '@/hooks/use-input';
 
 const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [signupState, setSignupState] = useRecoilState(signupAtom);
 
-  const year = useInput(signupState.year);
-  const month = useInput(signupState.month);
-  const day = useInput(signupState.day);
+  const handleInputChange = (key: string, value: string) => {
+    setSignupState((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
 
   const handleGenderClick = (gender: string) => {
     setSignupState((prev) => ({ ...prev, gender }));
@@ -25,24 +28,30 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
 
   const validateYear = () => {
     return (
-      /^\d{4}$/.test(year.value) &&
-      +year.value >= 1900 &&
-      +year.value <= new Date().getFullYear()
+      /^\d{4}$/.test(signupState.year) &&
+      +signupState.year >= 1900 &&
+      +signupState.year <= new Date().getFullYear()
     );
   };
 
   const validateMonth = () => {
     return (
-      /^\d{1,2}$/.test(month.value) && +month.value >= 1 && +month.value <= 12
+      /^\d{1,2}$/.test(signupState.month) &&
+      +signupState.month >= 1 &&
+      +signupState.month <= 12
     );
   };
 
   const validateDay = () => {
-    const daysInMonth = new Date(+year.value, +month.value, 0).getDate();
+    const daysInMonth = new Date(
+      +signupState.year,
+      +signupState.month,
+      0
+    ).getDate();
     return (
-      /^\d{1,2}$/.test(day.value) &&
-      +day.value >= 1 &&
-      +day.value <= daysInMonth
+      /^\d{1,2}$/.test(signupState.day) &&
+      +signupState.day >= 1 &&
+      +signupState.day <= daysInMonth
     );
   };
 
@@ -54,6 +63,11 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       signupState.gender! == ''
     );
   };
+
+  useEffect(() => {
+    console.log('signupState updated:', signupState);
+  }, [signupState]);
+
   return (
     <div>
       <MainTitle>조금만 알려주시면 준비가 끝나요!</MainTitle>
@@ -66,16 +80,17 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           type="text"
           maxLength={4}
           width="100px"
-          {...year}
+          onChange={(e) => handleInputChange('year', e.target.value)}
           error={!validateYear()}
           errorMessage="올바른 년도를 입력해주세요"
         />
         <Text>년</Text>
+
         <SignUpInput
           type="text"
           maxLength={2}
           width="40px"
-          {...month}
+          onChange={(e) => handleInputChange('month', e.target.value)}
           error={!validateMonth()}
           errorMessage="1에서 12 사이의 숫자를 입력해주세요"
         />
@@ -84,7 +99,7 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           type="text"
           maxLength={2}
           width="40px"
-          {...day}
+          onChange={(e) => handleInputChange('day', e.target.value)}
           error={!validateDay()}
           errorMessage="1에서 31 사이의 숫자를 입력해주세요"
         />
