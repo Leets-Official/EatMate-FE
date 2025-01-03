@@ -60,7 +60,7 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       validateYear() &&
       validateMonth() &&
       validateDay() &&
-      signupState.gender! == ''
+      signupState.gender !== ''
     );
   };
 
