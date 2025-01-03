@@ -8,7 +8,7 @@ export const signupAtom = atom({
     day: '',
     gender: '',
     phoneNumber: '',
-    mbti: '',
+    mbti: ['', '', '', ''],
     nickname: '',
     studentId: '',
     profilePhoto: null,
