@@ -1,3 +1,6 @@
+{
+  /* 생년월일 */
+}
 export const validateYear = (year: string): string | true => {
   if (!/^\d{4}$/.test(year)) return '올바른 년도를 입력해주세요.';
   const yearNumber = +year;
@@ -26,4 +29,21 @@ export const validateDay = (
   if (dayNumber < 1 || dayNumber > daysInMonth)
     return '1에서 31 사이의 숫자를 입력해주세요.';
   return true;
+};
+
+{
+  /* 전화번호 */
+}
+export const formatPhoneNumber = (value: string) => {
+  const cleaned = value.replace(/\D+/g, ''); // 숫자만 남김
+  const match = cleaned.match(/^(\d{3})(\d{0,4})(\d{0,4})$/); // 전화번호 형태로 포맷팅
+  if (match) {
+    return [match[1], match[2], match[3]].filter(Boolean).join('-');
+  }
+  return value;
+};
+
+export const validatePhoneNumber = (value: string) => {
+  const numericValue = value.replace(/-/g, '');
+  return numericValue.length === 11;
 };
