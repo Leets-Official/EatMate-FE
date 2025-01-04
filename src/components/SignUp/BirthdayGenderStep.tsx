@@ -30,6 +30,17 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
 
   const { year, month, day, gender } = signupState;
 
+  const birthInputFields: {
+    label: string;
+    key: keyof typeof signupState;
+    maxLength: number;
+    width: string;
+  }[] = [
+    { label: '년', key: 'year', maxLength: 4, width: '100px' },
+    { label: '월', key: 'month', maxLength: 2, width: '40px' },
+    { label: '일', key: 'day', maxLength: 2, width: '40px' },
+  ];
+
   const handleInputChange = (key: string, value: string) => {
     setSignupState((prev) => ({
       ...prev,
@@ -41,7 +52,7 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     setSignupState((prev) => ({ ...prev, gender }));
   };
 
-  const handleBlur = (key: string) => {
+  const handleBlur = (key: keyof typeof signupState) => {
     setTouched((prev) => ({
       ...prev,
       [key]: true,
@@ -78,31 +89,19 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       </Description>
       <InputWrapper>
         <InputContainer>
-          <SignUpInput
-            type="text"
-            maxLength={4}
-            width="100px"
-            onChange={(e) => handleInputChange('year', e.target.value)}
-            onBlur={() => handleBlur('year')}
-          />
-          <Text>년</Text>
-
-          <SignUpInput
-            type="text"
-            maxLength={2}
-            width="40px"
-            onChange={(e) => handleInputChange('month', e.target.value)}
-            onBlur={() => handleBlur('month')}
-          />
-          <Text>월</Text>
-          <SignUpInput
-            type="text"
-            maxLength={2}
-            width="40px"
-            onChange={(e) => handleInputChange('day', e.target.value)}
-            onBlur={() => handleBlur('day')}
-          />
-          <Text>일</Text>
+          {birthInputFields.map(({ label, key, maxLength, width }) => (
+            <>
+              <SignUpInput
+                type="text"
+                maxLength={maxLength}
+                width={width}
+                value={signupState[key]}
+                onChange={(e) => handleInputChange(key, e.target.value)}
+                onBlur={() => handleBlur(key)}
+              />
+              <Text>{label}</Text>
+            </>
+          ))}
         </InputContainer>
         {errorMessage && <InputErrorMessage message={errorMessage} />}
       </InputWrapper>

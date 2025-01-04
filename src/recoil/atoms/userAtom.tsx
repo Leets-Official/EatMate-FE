@@ -11,6 +11,6 @@ export const signupAtom = atom({
     mbti: '',
     nickname: '',
     studentId: '',
-    profilePhoto: null,
+    profilePhoto: undefined,
   },
 });
