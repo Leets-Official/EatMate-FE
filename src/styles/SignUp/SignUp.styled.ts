@@ -69,8 +69,11 @@ export const Text = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.lg};
 `;
 
-export const ErrorMessage = styled.span`
-  margin-top: 4px;
+export const ErrorContainer = styled.span`
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   color: ${({ theme }) => theme.COLORS.error};
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;

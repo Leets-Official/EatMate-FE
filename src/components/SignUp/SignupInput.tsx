@@ -17,7 +17,6 @@ interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   error?: boolean;
-  errorMessage?: string;
   width?: string;
 }
 
@@ -30,7 +29,6 @@ const SignUpInput: React.FC<InputProps> = ({
   onChange,
   onBlur,
   error = false,
-  errorMessage,
   width,
   ...props
 }) => {
@@ -48,7 +46,6 @@ const SignUpInput: React.FC<InputProps> = ({
         width={width}
         {...props}
       />
-      {error && errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </div>
   );
 };

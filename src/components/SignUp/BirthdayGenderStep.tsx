@@ -6,11 +6,13 @@ import {
   InputContainer,
   ButtonContainer,
   SelectButtonContainer,
+  ErrorContainer,
 } from '@/styles/SignUp/SignUp.styled';
 import { useEffect } from 'react';
 import SignUpInput from './SignupInput';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
+import errorCheck from '@/assets/images/error_check.svg';
 
 const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [signupState, setSignupState] = useRecoilState(signupAtom);
@@ -55,6 +57,15 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     );
   };
 
+  const getErrorMessage = () => {
+    if (!validateYear()) return '올바른 년도를 입력해주세요.';
+    if (!validateMonth()) return '1에서 12 사이의 숫자를 입력해주세요.';
+    if (!validateDay()) return '1에서 31 사이의 숫자를 입력해주세요.';
+    return '';
+  };
+
+  const errorMessage = getErrorMessage();
+
   const isFormValid = () => {
     return (
       validateYear() &&
@@ -82,7 +93,6 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           width="100px"
           onChange={(e) => handleInputChange('year', e.target.value)}
           error={!validateYear()}
-          errorMessage="올바른 년도를 입력해주세요"
         />
         <Text>년</Text>
 
@@ -92,7 +102,6 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           width="40px"
           onChange={(e) => handleInputChange('month', e.target.value)}
           error={!validateMonth()}
-          errorMessage="1에서 12 사이의 숫자를 입력해주세요"
         />
         <Text>월</Text>
         <SignUpInput
@@ -101,11 +110,16 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           width="40px"
           onChange={(e) => handleInputChange('day', e.target.value)}
           error={!validateDay()}
-          errorMessage="1에서 31 사이의 숫자를 입력해주세요"
         />
         <Text>일</Text>
       </InputContainer>
 
+      {errorMessage && (
+        <ErrorContainer>
+          <img src={errorCheck} alt="check" />
+          <span>{errorMessage}</span>
+        </ErrorContainer>
+      )}
       <SelectButtonContainer>
         <Button
           onClick={() => handleGenderClick('남성')}
