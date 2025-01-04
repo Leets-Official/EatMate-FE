@@ -65,7 +65,6 @@ const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       <ActionModal
         isOpen={isModalOpen}
         onClose={handleModalClose}
-        title="프로필 사진 설정"
         actions={[
           {
             label: '앨범에서 선택',

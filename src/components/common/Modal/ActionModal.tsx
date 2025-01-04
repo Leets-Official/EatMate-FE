@@ -1,3 +1,4 @@
+import { NONAME } from 'dns';
 import React from 'react';
 
 interface Action {
@@ -28,12 +29,10 @@ const ActionModal: React.FC<ActionModalProps> = ({
           {actions.map((action, index) => (
             <button key={index} onClick={action.onClick} style={styles.button}>
               {action.label}
+              {index < actions.length - 1 && <div style={styles.divider} />}
             </button>
           ))}
         </div>
-        <button onClick={onClose} style={styles.closeButton}>
-          닫기
-        </button>
       </div>
     </div>
   );
@@ -58,13 +57,18 @@ const styles: { [key: string]: React.CSSProperties } = {
   modal: {
     width: '90%',
     maxWidth: '400px',
-    backgroundColor: '#fff',
+    backgroundColor: '#f1f1f1',
     borderRadius: '12px',
     padding: '20px',
     display: 'flex',
     flexDirection: 'column',
     gap: '10px',
     position: 'relative',
+  },
+  divider: {
+    height: '1px',
+    backgroundColor: '#ccc',
+    margin: '0',
   },
   title: {
     fontSize: '18px',
@@ -75,13 +79,11 @@ const styles: { [key: string]: React.CSSProperties } = {
   actions: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '10px',
   },
   button: {
     padding: '10px',
-    fontSize: '14px',
-    backgroundColor: '#f9f9f9',
-    border: '1px solid #ccc',
+    fontSize: '20px',
+    border: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
     textAlign: 'center',
