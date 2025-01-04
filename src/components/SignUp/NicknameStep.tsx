@@ -10,29 +10,20 @@ import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 import { useState } from 'react';
 import InputErrorMessage from '../common/Error/InputErrorMessage';
+import { isNicknameValid, validateNickname } from '@/utils/validate-input';
 
 const NicknameStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const nicknameRegex = /^[가-힣a-zA-Z0-9]+$/;
-
   const handleInputChange = (value: string) => {
     setSignupState((prev) => ({ ...prev, nickname: value }));
 
-    if (value.length < 2 || value.length > 12) {
-      setErrorMessage('2-12자 이내로 입력해주세요.');
-    } else if (!nicknameRegex.test(value)) {
-      setErrorMessage('띄어쓰기 없이 한글,영문,숫자만 가능해요.');
-    } else {
-      setErrorMessage('');
-    }
+    const validationError = validateNickname(value);
+    setErrorMessage(validationError || '');
   };
 
-  const isFormValid =
-    signupState.nickname.length >= 2 &&
-    signupState.nickname.length <= 12 &&
-    nicknameRegex.test(signupState.nickname);
+  const isFormValid = isNicknameValid(signupState.nickname);
 
   return (
     <div>
@@ -42,7 +33,7 @@ const NicknameStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       <InputContainer>
         <SignUpInput
           type="text"
-          placeholder="닉네임"
+          placeholder="ex) 무한이"
           value={signupState.nickname}
           onChange={(e) => handleInputChange(e.target.value)}
         />

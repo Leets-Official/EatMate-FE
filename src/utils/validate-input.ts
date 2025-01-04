@@ -47,3 +47,47 @@ export const validatePhoneNumber = (value: string) => {
   const numericValue = value.replace(/-/g, '');
   return numericValue.length === 11;
 };
+
+{
+  /* MBTI */
+}
+export const validateMbtiInput = (value: string, index: number): boolean => {
+  const constraints = [
+    /^[EIei]$/, // 첫 번째 input: E, I
+    /^[NSns]$/, // 두 번째 input: N, S
+    /^[FTft]$/, // 세 번째 input: F, T
+    /^[PJpj]$/, // 네 번째 input: P, J
+  ];
+
+  return constraints[index].test(value.toUpperCase());
+};
+
+export const isAllMbtiInputsValid = (mbti: string): boolean => {
+  const constraints = [/^[EIei]$/, /^[NSns]$/, /^[FTft]$/, /^[PJpj]$/];
+
+  if (mbti.length !== 4) return false;
+
+  return mbti
+    .split('')
+    .every((char, index) => constraints[index].test(char.toUpperCase()));
+};
+
+{
+  /* 닉네임 */
+}
+
+export const validateNickname = (value: string): string | null => {
+  const nicknameRegex = /^[가-힣a-zA-Z0-9]+$/;
+
+  if (value.length < 2 || value.length > 12) {
+    return '2-12자 이내로 입력해주세요.';
+  }
+  if (!nicknameRegex.test(value)) {
+    return '띄어쓰기 없이 한글,영문,숫자만 가능해요.';
+  }
+  return null;
+};
+
+export const isNicknameValid = (value: string): boolean => {
+  return validateNickname(value) === null;
+};
