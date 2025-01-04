@@ -36,9 +36,16 @@ const MbtiStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     }
   };
 
+  // 모든 입력란이 올바르게 입력되었는지 확인
   const allInputsFilled =
-    signupState.mbti.length === 4 && !errors.includes(true);
-  const anyInputFilled = signupState.mbti.length > 0;
+    signupState.mbti.length === 4 &&
+    !errors.includes(true) &&
+    signupState.mbti.split('').every((char) => char !== '');
+
+  // 하나 이상의 입력란이 선택되었는지 확인
+  const anyInputSelected = signupState.mbti
+    .split('')
+    .some((char) => char !== '');
 
   const mbtiLetters = ['E/I', 'N/S', 'F/T', 'P/J'];
 
@@ -67,9 +74,9 @@ const MbtiStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           variant="primary"
           size="lg"
           rounded="sm"
-          disabled={!allInputsFilled && !anyInputFilled}
+          disabled={!allInputsFilled && anyInputSelected}
         >
-          {allInputsFilled ? '다음' : '나중에 하기'}
+          {anyInputSelected ? '다음' : '나중에 하기'}
         </Button>
       </ButtonContainer>
     </div>
