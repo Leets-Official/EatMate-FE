@@ -13,16 +13,22 @@ import SignUpInput from './SignupInput';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 import InputErrorMessage from '../common/Error/InputErrorMessage';
+import {
+  validateDay,
+  validateMonth,
+  validateYear,
+} from '@/utils/validate-input';
 
 const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [signupState, setSignupState] = useRecoilState(signupAtom);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [touched, setTouched] = useState({
     year: false,
     month: false,
     day: false,
   });
 
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const { year, month, day, gender } = signupState;
 
   const handleInputChange = (key: string, value: string) => {
     setSignupState((prev) => ({
@@ -31,70 +37,33 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     }));
   };
 
+  const handleGenderClick = (gender: string) => {
+    setSignupState((prev) => ({ ...prev, gender }));
+  };
+
   const handleBlur = (key: string) => {
     setTouched((prev) => ({
       ...prev,
       [key]: true,
     }));
-  };
 
-  const handleGenderClick = (gender: string) => {
-    setSignupState((prev) => ({ ...prev, gender }));
-  };
+    let error: string | true = '';
+    if (key === 'year') error = validateYear(year);
+    else if (key === 'month') error = validateMonth(month);
+    else if (key === 'day') error = validateDay(day, year, month);
 
-  const validateYear = () => {
-    return (
-      /^\d{4}$/.test(signupState.year) &&
-      +signupState.year >= 1900 &&
-      +signupState.year <= new Date().getFullYear()
-    );
-  };
-
-  const validateMonth = () => {
-    return (
-      /^\d{1,2}$/.test(signupState.month) &&
-      +signupState.month >= 1 &&
-      +signupState.month <= 12
-    );
-  };
-
-  const validateDay = () => {
-    const daysInMonth = new Date(
-      +signupState.year,
-      +signupState.month,
-      0
-    ).getDate();
-    return (
-      /^\d{1,2}$/.test(signupState.day) &&
-      +signupState.day >= 1 &&
-      +signupState.day <= daysInMonth
-    );
+    if (error !== true) setErrorMessage(error as string);
+    else setErrorMessage('');
   };
 
   const isFormValid = () => {
     return (
-      validateYear() &&
-      validateMonth() &&
-      validateDay() &&
-      signupState.gender !== ''
+      validateYear(year) === true &&
+      validateMonth(month) === true &&
+      validateDay(day, year, month) === true &&
+      gender !== ''
     );
   };
-
-  const updateErrorMessage = () => {
-    if (!validateYear() && touched.year) {
-      setErrorMessage('올바른 년도를 입력해주세요');
-    } else if (!validateMonth() && touched.month) {
-      setErrorMessage('1에서 12 사이의 숫자를 입력해주세요.');
-    } else if (!validateDay() && touched.day) {
-      setErrorMessage('1에서 31 사이의 숫자를 입력해주세요.');
-    } else {
-      setErrorMessage('');
-    }
-  };
-
-  useEffect(() => {
-    updateErrorMessage();
-  }, [signupState, touched]);
 
   useEffect(() => {
     console.log('signupState updated:', signupState);
