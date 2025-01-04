@@ -1,100 +1,37 @@
-import { NONAME } from 'dns';
-import React from 'react';
+// import * as S from '../Modal/styles';
+// interface Action {
+//   label: string;
+//   onClick: () => void;
+// }
 
-interface Action {
-  label: string;
-  onClick: () => void;
-}
+// interface ActionModalProps {
+//   isOpen: boolean;
+//   onClose: () => void;
+//   actions: Action[];
+// }
 
-interface ActionModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  title?: string;
-  actions: Action[];
-}
+// const ActionModal: React.FC<ActionModalProps> = ({
+//   isOpen,
+//   onClose,
+//   actions,
+// }) => {
+//   if (!isOpen) return null;
 
-const ActionModal: React.FC<ActionModalProps> = ({
-  isOpen,
-  onClose,
-  title,
-  actions,
-}) => {
-  if (!isOpen) return null;
+//   return (
+//     <S.Overlay onClick={onClose}>
+//       <S.Container onClick={(e) => e.stopPropagation()}>
+//         {actions.map((action, index) => (
+//           <React.Fragment key={index}>
+//             <S.ActionButton onClick={action.onClick}>
+//               {action.label}
+//             </S.ActionButton>
+//             {index === 0 && <S.Divider />}
+//           </React.Fragment>
+//         ))}
+//         <S.CloseButton onClick={onClose}>닫기</S.CloseButton>
+//       </S.Container>
+//     </S.Overlay>
+//   );
+// };
 
-  return (
-    <div style={styles.overlay} onClick={onClose}>
-      <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
-        {title && <h2 style={styles.title}>{title}</h2>}
-        <div style={styles.actions}>
-          {actions.map((action, index) => (
-            <button key={index} onClick={action.onClick} style={styles.button}>
-              {action.label}
-              {index < actions.length - 1 && <div style={styles.divider} />}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default ActionModal;
-
-// 간단한 인라인 스타일
-const styles: { [key: string]: React.CSSProperties } = {
-  overlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1000,
-  },
-  modal: {
-    width: '90%',
-    maxWidth: '400px',
-    backgroundColor: '#f1f1f1',
-    borderRadius: '12px',
-    padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-    position: 'relative',
-  },
-  divider: {
-    height: '1px',
-    backgroundColor: '#ccc',
-    margin: '0',
-  },
-  title: {
-    fontSize: '18px',
-    fontWeight: 'bold',
-    marginBottom: '15px',
-    textAlign: 'center',
-  },
-  actions: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  button: {
-    padding: '10px',
-    fontSize: '20px',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    textAlign: 'center',
-  },
-  closeButton: {
-    marginTop: '15px',
-    padding: '10px',
-    fontSize: '14px',
-    backgroundColor: 'lightgray',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  },
-};
+// export default ActionModal;

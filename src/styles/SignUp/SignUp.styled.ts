@@ -69,16 +69,6 @@ export const Text = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.lg};
 `;
 
-export const ErrorContainer = styled.span`
-  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-  color: ${({ theme }) => theme.COLORS.error};
-  margin-top: 10px;
-  padding-left: 2.5rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
-
 export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;

@@ -14,7 +14,7 @@ const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     defaultprofileImage
   );
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -28,30 +28,16 @@ const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       reader.readAsDataURL(file);
     }
   };
-  const handleImageClick = () => {
-    setIsModalOpen(true); // 이미지 클릭 시 모달 열기
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false); // 모달 닫기
-  };
-
-  const handleDeleteImage = () => {
-    setProfileImage(defaultprofileImage); // 프로필 이미지 삭제
-    setIsModalOpen(false);
-  };
 
   return (
     <div>
       <MainTitle>이제 마지막이에요!</MainTitle>
       <Description>EatMate에서 사용할 프로필 사진을 추가해주세요.</Description>
 
+      {/* 프로필 사진 */}
       <ProfileImageContainer>
         <label>
-          <ProfileImage
-            onClick={handleImageClick}
-            imageUrl={profileImage || ''}
-          >
+          <ProfileImage imageUrl={profileImage || ''}>
             {!profileImage && <span>+</span>}
           </ProfileImage>
           <HiddenFileInput
@@ -62,32 +48,14 @@ const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         </label>
       </ProfileImageContainer>
 
-      <ActionModal
-        isOpen={isModalOpen}
-        onClose={handleModalClose}
-        actions={[
-          {
-            label: '앨범에서 선택',
-            onClick: () => {
-              document
-                .querySelector<HTMLInputElement>('input[type="file"]')
-                ?.click(); // 파일 선택 트리거
-              setIsModalOpen(false);
-            },
-          },
-          {
-            label: '사진 삭제',
-            onClick: handleDeleteImage,
-          },
-        ]}
-      />
+      {/* 회원가입 진행 버튼 */}
       <ButtonContainer>
         <Button
           onClick={onNext}
           variant="primary"
           size="lg"
           rounded="sm"
-          disabled={!profileImage} // 이미지 업로드 시에만 활성화
+          disabled={!profileImage} // 프로필 이미지가 없으면 버튼 비활성화
         >
           회원가입 진행하기
         </Button>
