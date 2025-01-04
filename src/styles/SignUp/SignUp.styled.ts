@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 interface InputFieldProps extends React.ComponentProps<'input'> {
   error: boolean;
@@ -46,7 +46,7 @@ export const InputContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  margin: 3rem 0 7.5rem 0;
+  margin-top: 3rem;
 `;
 
 export const ButtonContainer = styled.div`
@@ -72,8 +72,15 @@ export const Text = styled.div`
 export const ErrorContainer = styled.span`
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   color: ${({ theme }) => theme.COLORS.error};
-  margin-top: 8px;
+  margin-top: 10px;
+  padding-left: 2.5rem;
   display: flex;
   align-items: center;
   gap: 10px;
+`;
+
+export const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5rem;
 `;

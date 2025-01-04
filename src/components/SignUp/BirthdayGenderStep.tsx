@@ -7,6 +7,7 @@ import {
   ButtonContainer,
   SelectButtonContainer,
   ErrorContainer,
+  InputWrapper,
 } from '@/styles/SignUp/SignUp.styled';
 import { useEffect, useState } from 'react';
 import SignUpInput from './SignupInput';
@@ -106,40 +107,42 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         <div>나이와 성별을 선택해주세요.</div>
         <div>간단히 입력 후 다음으로 넘어갈 수 있어요. </div>
       </Description>
-      <InputContainer>
-        <SignUpInput
-          type="text"
-          maxLength={4}
-          width="100px"
-          onChange={(e) => handleInputChange('year', e.target.value)}
-          onBlur={() => handleBlur('year')}
-        />
-        <Text>년</Text>
+      <InputWrapper>
+        <InputContainer>
+          <SignUpInput
+            type="text"
+            maxLength={4}
+            width="100px"
+            onChange={(e) => handleInputChange('year', e.target.value)}
+            onBlur={() => handleBlur('year')}
+          />
+          <Text>년</Text>
 
-        <SignUpInput
-          type="text"
-          maxLength={2}
-          width="40px"
-          onChange={(e) => handleInputChange('month', e.target.value)}
-          onBlur={() => handleBlur('month')}
-        />
-        <Text>월</Text>
-        <SignUpInput
-          type="text"
-          maxLength={2}
-          width="40px"
-          onChange={(e) => handleInputChange('day', e.target.value)}
-          onBlur={() => handleBlur('day')}
-        />
-        <Text>일</Text>
-      </InputContainer>
+          <SignUpInput
+            type="text"
+            maxLength={2}
+            width="40px"
+            onChange={(e) => handleInputChange('month', e.target.value)}
+            onBlur={() => handleBlur('month')}
+          />
+          <Text>월</Text>
+          <SignUpInput
+            type="text"
+            maxLength={2}
+            width="40px"
+            onChange={(e) => handleInputChange('day', e.target.value)}
+            onBlur={() => handleBlur('day')}
+          />
+          <Text>일</Text>
+        </InputContainer>
 
-      {errorMessage && (
-        <ErrorContainer>
-          <img src={errorCheck} alt="check" />
-          <span>{errorMessage}</span>
-        </ErrorContainer>
-      )}
+        {errorMessage && (
+          <ErrorContainer>
+            <img src={errorCheck} alt="check" />
+            <span>{errorMessage}</span>
+          </ErrorContainer>
+        )}
+      </InputWrapper>
       <SelectButtonContainer>
         <Button
           onClick={() => handleGenderClick('남성')}
