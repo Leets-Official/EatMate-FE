@@ -1,7 +1,6 @@
 import {
   ButtonContainer,
   Description,
-  ErrorContainer,
   InputContainer,
   MainTitle,
 } from '@/styles/SignUp/SignUp.styled';
@@ -10,24 +9,20 @@ import SignUpInput from './SignupInput';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 import { useState, useEffect } from 'react';
-import errorCheck from '@/assets/images/error_check.svg';
 import InputErrorMessage from '../common/Error/InputErrorMessage';
+import {
+  isAllMbtiInputsValid,
+  validateMbtiInput,
+} from '@/utils/validate-input';
 
 const MbtiStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [errors, setErrors] = useState([false, false, false, false]);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const constraints = [
-    /^[EIei]$/, // 첫 번째 input: E, I
-    /^[NSns]$/, // 두 번째 input: N, S
-    /^[FTft]$/, // 세 번째 input: F, T
-    /^[PJpj]$/, // 네 번째 input: P, J
-  ];
-
   const handleInputChange = (index: number, value: string) => {
     const upperValue = value.toUpperCase();
-    const isValid = constraints[index].test(upperValue);
+    const isValid = validateMbtiInput(upperValue, index);
 
     const newErrors = [...errors];
     newErrors[index] = !isValid;
@@ -42,20 +37,11 @@ const MbtiStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     } else setErrorMessage('');
   };
 
-  // 모든 입력란이 올바르게 입력되었는지 확인
-  const allInputsValid =
-    signupState.mbti.length === 4 &&
-    !errors.includes(true) &&
-    signupState.mbti
-      .split('')
-      .every((char, index) => constraints[index].test(char));
-
-  // 하나 이상의 입력란이 선택되었는지 확인
+  const mbtiLetters = ['E/I', 'N/S', 'F/T', 'P/J'];
+  const allInputsValid = isAllMbtiInputsValid(signupState.mbti);
   const anyInputSelected = signupState.mbti
     .split('')
     .some((char) => char !== '');
-
-  const mbtiLetters = ['E/I', 'N/S', 'F/T', 'P/J'];
 
   useEffect(() => {
     console.log('signupState updated:', signupState);
@@ -79,8 +65,8 @@ const MbtiStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           />
         ))}
       </InputContainer>
-
       {errorMessage && <InputErrorMessage message={errorMessage} />}
+
       <ButtonContainer>
         <Button
           onClick={onNext}
