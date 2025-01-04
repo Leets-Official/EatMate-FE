@@ -1,6 +1,7 @@
 import {
   ButtonContainer,
   Description,
+  ErrorContainer,
   InputContainer,
   MainTitle,
 } from '@/styles/SignUp/SignUp.styled';
@@ -8,11 +9,13 @@ import Button from '@/components/common/Button/Button';
 import SignUpInput from './SignupInput';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import errorCheck from '@/assets/images/error_check.svg';
 
 const MbtiStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [errors, setErrors] = useState([false, false, false, false]);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const constraints = [
     /^[EIei]$/, // 첫 번째 input: E, I
@@ -29,18 +32,22 @@ const MbtiStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     newErrors[index] = !isValid;
     setErrors(newErrors);
 
-    if (isValid || value === '') {
-      const newMbti = [...signupState.mbti];
-      newMbti[index] = upperValue;
-      setSignupState((prev) => ({ ...prev, mbti: newMbti.join('') }));
-    }
+    const newMbti = [...signupState.mbti];
+    newMbti[index] = upperValue;
+    setSignupState((prev) => ({ ...prev, mbti: newMbti.join('') }));
+
+    if (!isValid && value !== '') {
+      setErrorMessage('다시 입력해주세요.');
+    } else setErrorMessage('');
   };
 
   // 모든 입력란이 올바르게 입력되었는지 확인
-  const allInputsFilled =
+  const allInputsValid =
     signupState.mbti.length === 4 &&
     !errors.includes(true) &&
-    signupState.mbti.split('').every((char) => char !== '');
+    signupState.mbti
+      .split('')
+      .every((char, index) => constraints[index].test(char));
 
   // 하나 이상의 입력란이 선택되었는지 확인
   const anyInputSelected = signupState.mbti
@@ -48,6 +55,10 @@ const MbtiStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     .some((char) => char !== '');
 
   const mbtiLetters = ['E/I', 'N/S', 'F/T', 'P/J'];
+
+  useEffect(() => {
+    console.log('signupState updated:', signupState);
+  }, [signupState]);
 
   return (
     <div>
@@ -58,15 +69,22 @@ const MbtiStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         {mbtiLetters.map((letters, index) => (
           <SignUpInput
             type="text"
-            key={letters}
+            inputMode="text"
+            maxLength={1}
             value={signupState.mbti[index] || ''}
             width="50px"
             onChange={(e) => handleInputChange(index, e.target.value)}
             error={errors[index]}
-            errorMessage="다시 입력해주세요"
           />
         ))}
       </InputContainer>
+
+      {errorMessage && (
+        <ErrorContainer>
+          <img src={errorCheck} alt="check" />
+          <span>{errorMessage}</span>
+        </ErrorContainer>
+      )}
 
       <ButtonContainer>
         <Button
@@ -74,7 +92,7 @@ const MbtiStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           variant="primary"
           size="lg"
           rounded="sm"
-          disabled={!allInputsFilled && anyInputSelected}
+          disabled={!allInputsValid}
         >
           {anyInputSelected ? '다음' : '나중에 하기'}
         </Button>
