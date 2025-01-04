@@ -7,11 +7,14 @@ import {
 import Button from '@/components/common/Button/Button';
 import styled from 'styled-components';
 import defaultprofileImage from '@/assets/images/defaultprofile.svg';
+import ActionModal from '../common/Modal/ActionModal';
 
 const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [profileImage, setProfileImage] = useState<string | null>(
     defaultprofileImage
   );
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -25,6 +28,18 @@ const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       reader.readAsDataURL(file);
     }
   };
+  const handleImageClick = () => {
+    setIsModalOpen(true); // 이미지 클릭 시 모달 열기
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false); // 모달 닫기
+  };
+
+  const handleDeleteImage = () => {
+    setProfileImage(defaultprofileImage); // 프로필 이미지 삭제
+    setIsModalOpen(false);
+  };
 
   return (
     <div>
@@ -33,7 +48,10 @@ const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
 
       <ProfileImageContainer>
         <label>
-          <ProfileImage imageUrl={profileImage || ''}>
+          <ProfileImage
+            onClick={handleImageClick}
+            imageUrl={profileImage || ''}
+          >
             {!profileImage && <span>+</span>}
           </ProfileImage>
           <HiddenFileInput
@@ -44,6 +62,26 @@ const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         </label>
       </ProfileImageContainer>
 
+      <ActionModal
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        title="프로필 사진 설정"
+        actions={[
+          {
+            label: '앨범에서 선택',
+            onClick: () => {
+              document
+                .querySelector<HTMLInputElement>('input[type="file"]')
+                ?.click(); // 파일 선택 트리거
+              setIsModalOpen(false);
+            },
+          },
+          {
+            label: '사진 삭제',
+            onClick: handleDeleteImage,
+          },
+        ]}
+      />
       <ButtonContainer>
         <Button
           onClick={onNext}
