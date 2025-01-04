@@ -30,7 +30,7 @@ const SignUpInput: React.FC<InputProps> = ({
   onChange,
   onBlur,
   error = false,
-  errorMessage = '올바른 값을 입력해주세요',
+  errorMessage = '',
   width,
   ...props
 }) => {
