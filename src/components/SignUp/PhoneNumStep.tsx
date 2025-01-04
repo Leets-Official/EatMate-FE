@@ -10,24 +10,11 @@ import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 import { useState, useEffect } from 'react';
 import InputErrorMessage from '../common/Error/InputErrorMessage';
+import { formatPhoneNumber, validatePhoneNumber } from '@/utils/validate-input';
 
 const PhoneNumStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [errorMessage, setErrorMessage] = useState<string>('');
-
-  const formatPhoneNumber = (value: string) => {
-    const cleaned = value.replace(/\D+/g, ''); // 숫자만 남김
-    const match = cleaned.match(/^(\d{3})(\d{0,4})(\d{0,4})$/); // 전화번호 형태로 포맷팅
-    if (match) {
-      return [match[1], match[2], match[3]].filter(Boolean).join('-');
-    }
-    return value;
-  };
-
-  const validatePhoneNumber = (value: string) => {
-    const numericValue = value.replace(/-/g, '');
-    return numericValue.length === 11;
-  };
 
   const handleInputChange = (value: string) => {
     const formatted = formatPhoneNumber(value);
@@ -49,6 +36,7 @@ const PhoneNumStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const isFormValid = () => {
     return validatePhoneNumber(signupState.phoneNumber);
   };
+
   return (
     <div>
       <MainTitle>전화번호를 입력해주세요.</MainTitle>
