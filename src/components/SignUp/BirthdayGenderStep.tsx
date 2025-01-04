@@ -6,14 +6,13 @@ import {
   InputContainer,
   ButtonContainer,
   SelectButtonContainer,
-  ErrorContainer,
   InputWrapper,
 } from '@/styles/SignUp/SignUp.styled';
 import { useEffect, useState } from 'react';
 import SignUpInput from './SignupInput';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
-import errorCheck from '@/assets/images/error_check.svg';
+import InputErrorMessage from '../common/Error/InputErrorMessage';
 
 const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [signupState, setSignupState] = useRecoilState(signupAtom);
@@ -38,6 +37,7 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       [key]: true,
     }));
   };
+
   const handleGenderClick = (gender: string) => {
     setSignupState((prev) => ({ ...prev, gender }));
   };
@@ -135,14 +135,9 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           />
           <Text>일</Text>
         </InputContainer>
-
-        {errorMessage && (
-          <ErrorContainer>
-            <img src={errorCheck} alt="check" />
-            <span>{errorMessage}</span>
-          </ErrorContainer>
-        )}
+        {errorMessage && <InputErrorMessage message={errorMessage} />}
       </InputWrapper>
+
       <SelectButtonContainer>
         <Button
           onClick={() => handleGenderClick('남성')}

@@ -2,7 +2,6 @@ import {
   ButtonContainer,
   Description,
   InputContainer,
-  ErrorContainer,
   MainTitle,
 } from '@/styles/SignUp/SignUp.styled';
 import Button from '@/components/common/Button/Button';
@@ -10,7 +9,7 @@ import SignUpInput from './SignupInput';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 import { useState } from 'react';
-import errorCheck from '@/assets/images/error_check.svg';
+import InputErrorMessage from '../common/Error/InputErrorMessage';
 
 const NicknameStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [signupState, setSignupState] = useRecoilState(signupAtom);
@@ -48,13 +47,8 @@ const NicknameStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           onChange={(e) => handleInputChange(e.target.value)}
         />
       </InputContainer>
+      {errorMessage && <InputErrorMessage message={errorMessage} />}
 
-      {errorMessage && (
-        <ErrorContainer>
-          <img src={errorCheck} alt="check" />
-          <span>{errorMessage}</span>
-        </ErrorContainer>
-      )}
       <ButtonContainer>
         <Button
           onClick={onNext}

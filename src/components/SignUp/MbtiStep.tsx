@@ -11,6 +11,7 @@ import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 import { useState, useEffect } from 'react';
 import errorCheck from '@/assets/images/error_check.svg';
+import InputErrorMessage from '../common/Error/InputErrorMessage';
 
 const MbtiStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [signupState, setSignupState] = useRecoilState(signupAtom);
@@ -79,13 +80,7 @@ const MbtiStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         ))}
       </InputContainer>
 
-      {errorMessage && (
-        <ErrorContainer>
-          <img src={errorCheck} alt="check" />
-          <span>{errorMessage}</span>
-        </ErrorContainer>
-      )}
-
+      {errorMessage && <InputErrorMessage message={errorMessage} />}
       <ButtonContainer>
         <Button
           onClick={onNext}
