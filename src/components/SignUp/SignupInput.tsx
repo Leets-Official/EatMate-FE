@@ -1,4 +1,4 @@
-import { InputField, ErrorMessage } from '@/styles/SignUp/SignUp.styled';
+import { InputField } from '@/styles/SignUp/SignUp.styled';
 
 interface InputProps {
   type?: string;
@@ -17,6 +17,7 @@ interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   error?: boolean;
+  errorMessage?: string;
   width?: string;
 }
 
@@ -29,6 +30,7 @@ const SignUpInput: React.FC<InputProps> = ({
   onChange,
   onBlur,
   error = false,
+  errorMessage = '올바른 값을 입력해주세요',
   width,
   ...props
 }) => {

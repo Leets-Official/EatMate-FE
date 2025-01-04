@@ -8,7 +8,7 @@ import {
   SelectButtonContainer,
   ErrorContainer,
 } from '@/styles/SignUp/SignUp.styled';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import SignUpInput from './SignupInput';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
@@ -16,6 +16,13 @@ import errorCheck from '@/assets/images/error_check.svg';
 
 const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [signupState, setSignupState] = useRecoilState(signupAtom);
+  const [touched, setTouched] = useState({
+    year: false,
+    month: false,
+    day: false,
+  });
+
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleInputChange = (key: string, value: string) => {
     setSignupState((prev) => ({
@@ -24,6 +31,12 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     }));
   };
 
+  const handleBlur = (key: string) => {
+    setTouched((prev) => ({
+      ...prev,
+      [key]: true,
+    }));
+  };
   const handleGenderClick = (gender: string) => {
     setSignupState((prev) => ({ ...prev, gender }));
   };
@@ -57,15 +70,6 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     );
   };
 
-  const getErrorMessage = () => {
-    if (!validateYear()) return '올바른 년도를 입력해주세요.';
-    if (!validateMonth()) return '1에서 12 사이의 숫자를 입력해주세요.';
-    if (!validateDay()) return '1에서 31 사이의 숫자를 입력해주세요.';
-    return '';
-  };
-
-  const errorMessage = getErrorMessage();
-
   const isFormValid = () => {
     return (
       validateYear() &&
@@ -74,6 +78,22 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       signupState.gender !== ''
     );
   };
+
+  const updateErrorMessage = () => {
+    if (!validateYear() && touched.year) {
+      setErrorMessage('올바른 년도를 입력해주세요');
+    } else if (!validateMonth() && touched.month) {
+      setErrorMessage('1에서 12 사이의 숫자를 입력해주세요.');
+    } else if (!validateDay() && touched.day) {
+      setErrorMessage('1에서 31 사이의 숫자를 입력해주세요.');
+    } else {
+      setErrorMessage('');
+    }
+  };
+
+  useEffect(() => {
+    updateErrorMessage();
+  }, [signupState, touched]);
 
   useEffect(() => {
     console.log('signupState updated:', signupState);
@@ -92,7 +112,7 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           maxLength={4}
           width="100px"
           onChange={(e) => handleInputChange('year', e.target.value)}
-          error={!validateYear()}
+          onBlur={() => handleBlur('year')}
         />
         <Text>년</Text>
 
@@ -101,7 +121,7 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           maxLength={2}
           width="40px"
           onChange={(e) => handleInputChange('month', e.target.value)}
-          error={!validateMonth()}
+          onBlur={() => handleBlur('month')}
         />
         <Text>월</Text>
         <SignUpInput
@@ -109,7 +129,7 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
           maxLength={2}
           width="40px"
           onChange={(e) => handleInputChange('day', e.target.value)}
-          error={!validateDay()}
+          onBlur={() => handleBlur('day')}
         />
         <Text>일</Text>
       </InputContainer>
