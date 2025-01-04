@@ -1,6 +1,11 @@
 {
   /* 생년월일 */
 }
+/**
+ * 년도 유효성 검사
+ * @param year - 입력된 년도 값
+ * @returns 에러 메세지 또는 true ( 유효한 경우 )
+ */
 export const validateYear = (year: string): string | true => {
   if (!/^\d{4}$/.test(year)) return '올바른 년도를 입력해주세요.';
   const yearNumber = +year;
@@ -10,6 +15,11 @@ export const validateYear = (year: string): string | true => {
   return true;
 };
 
+/**
+ * 월 유효성 검사
+ * @param month - 입력된 월 값
+ * @returns 에러 메세지 또는 true ( 유효한 경우 )
+ */
 export const validateMonth = (month: string): string | true => {
   if (!/^\d{1,2}$/.test(month)) return '1에서 12 사이의 숫자를 입력해주세요.';
   const monthNumber = +month;
@@ -23,11 +33,19 @@ export const validateDay = (
   year: string,
   month: string
 ): string | true => {
-  if (!/^\d{1,2}$/.test(day)) return '1에서 31 사이의 숫자를 입력해주세요.';
   const daysInMonth = new Date(+year, +month, 0).getDate();
   const dayNumber = +day;
+
+  if (!/^\d{1,2}$/.test(day)) {
+    return '올바른 숫자를 입력해주세요.';
+  }
+
+  if (dayNumber < 1) {
+    return '날짜는 1 이상이어야 합니다.';
+  }
+
   if (dayNumber < 1 || dayNumber > daysInMonth)
-    return '1에서 31 사이의 숫자를 입력해주세요.';
+    return `${month}월은 ${daysInMonth}일까지입니다.`;
   return true;
 };
 
