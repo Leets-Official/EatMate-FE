@@ -10,6 +10,7 @@ import { useRecoilState } from 'recoil';
 import { useState } from 'react';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 import InputErrorMessage from '../common/Error/InputErrorMessage';
+import { isStudentIdValid, validateStudentId } from '@/utils/validate-input';
 
 const StudentIdStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [signupState, setSignupState] = useRecoilState(signupAtom);
@@ -18,17 +19,11 @@ const StudentIdStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const handleInputChange = (value: string) => {
     setSignupState((prev) => ({ ...prev, studentId: value }));
 
-    if (!/^\d*$/.test(value)) {
-      setErrorMessage('숫자만 입력 가능합니다.');
-    } else if (value.length < 9) {
-      setErrorMessage('올바른 학번을 입력해주세요.');
-    } else {
-      setErrorMessage('');
-    }
+    const validationError = validateStudentId(value);
+    setErrorMessage(validationError || '');
   };
 
-  const isFormValid =
-    signupState.studentId.length === 9 && /^\d+$/.test(signupState.studentId);
+  const isFormValid = isStudentIdValid(signupState.studentId);
   return (
     <div>
       <MainTitle>학교 인증을 위해</MainTitle>

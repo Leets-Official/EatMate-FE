@@ -91,3 +91,21 @@ export const validateNickname = (value: string): string | null => {
 export const isNicknameValid = (value: string): boolean => {
   return validateNickname(value) === null;
 };
+
+{
+  /* 학번 */
+}
+
+export const validateStudentId = (value: string): string | null => {
+  if (!/^\d*$/.test(value)) {
+    return '숫자만 입력 가능합니다.';
+  }
+  if (!/^20[12]\d{6}$/.test(value)) {
+    return '올바른 학번을 입력해주세요.';
+  }
+  return null;
+};
+
+export const isStudentIdValid = (value: string): boolean => {
+  return validateStudentId(value) === null;
+};
