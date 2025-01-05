@@ -17,7 +17,9 @@ const meta: Meta<typeof SortingButton> = {
 
 export default meta;
 
-const Template: StoryFn = (args) => <SortingButton text={''} iconType={'upDown'} {...args} />;
+const Template: StoryFn = (args) => (
+  <SortingButton text={''} iconType={'upDown'} {...args} />
+);
 
 export const Default = Template.bind({});
 Default.args = {

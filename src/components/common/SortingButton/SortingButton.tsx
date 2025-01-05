@@ -28,8 +28,8 @@ const StyledButton = styled.button<{ isSelected: boolean }>`
           background-color: #fff;
         `
       : css`
-          border: 0.5px #F3F4F5;
-          background-color: #F7F8FA;
+          border: 0.5px #f3f4f5;
+          background-color: #f7f8fa;
         `}
 
   &:hover {
