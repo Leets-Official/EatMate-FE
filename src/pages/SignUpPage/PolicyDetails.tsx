@@ -1,5 +1,5 @@
 import Header from '@/components/common/Header/Header';
-import { policyContents } from '@/constants/policycontents';
+import { policyContents } from '@/constants/policyContents';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const PolicyDetails: React.FC = () => {

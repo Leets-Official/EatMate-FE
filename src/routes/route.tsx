@@ -1,13 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Home from '@/pages/Home';
 import SignUp from '@/pages/SignUpPage/SignUp';
-import IntroPage from '@/pages/SignUpPage/IntroPage';
+import Intro from '@/pages/SignUpPage/Intro';
 import PolicyDetails from '@/pages/SignUpPage/PolicyDetails';
 
 const router = createBrowserRouter([
   {
     path: '',
-    element: <IntroPage />,
+    element: <Intro />,
   },
   {
     path: '/signup',

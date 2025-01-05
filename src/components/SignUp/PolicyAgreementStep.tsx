@@ -1,6 +1,6 @@
 import Button from '@/components/common/Button/Button';
 import styled, { keyframes } from 'styled-components';
-import { policyContents } from '@/constants/policycontents';
+import { policyContents } from "@/constants/policyContents";
 import { useNavigate } from 'react-router-dom';
 
 const SlideUp = keyframes`
