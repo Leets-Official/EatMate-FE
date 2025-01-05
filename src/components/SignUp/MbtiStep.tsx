@@ -14,8 +14,11 @@ import {
   isAllMbtiInputsValid,
   validateMbtiInput,
 } from '@/utils/validate-input';
+import { useNavigate } from 'react-router-dom';
 
-const MbtiStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
+const MbtiStep: React.FC = () => {
+  const nav = useNavigate();
+
   const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [errors, setErrors] = useState([false, false, false, false]);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -43,6 +46,12 @@ const MbtiStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     .split('')
     .some((char) => char !== '');
 
+  const handleNext = () => {
+    if (allInputsValid) {
+      nav('/signup/nickname');
+    }
+  };
+
   useEffect(() => {
     console.log('signupState updated:', signupState);
   }, [signupState]);
@@ -69,7 +78,7 @@ const MbtiStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
 
       <ButtonContainer>
         <Button
-          onClick={onNext}
+          onClick={handleNext}
           variant="primary"
           size="lg"
           rounded="sm"

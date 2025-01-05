@@ -11,8 +11,11 @@ import { signupAtom } from '@/recoil/atoms/userAtom';
 import { useState } from 'react';
 import InputErrorMessage from '../common/Error/InputErrorMessage';
 import { isNicknameValid, validateNickname } from '@/utils/validate-input';
+import { useNavigate } from 'react-router-dom';
 
-const NicknameStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
+const NicknameStep: React.FC = () => {
+  const nav = useNavigate();
+
   const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -21,6 +24,12 @@ const NicknameStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
 
     const validationError = validateNickname(value);
     setErrorMessage(validationError || '');
+  };
+
+  const handleNext = () => {
+    if (isFormValid) {
+      nav('/signup/student-id');
+    }
   };
 
   const isFormValid = isNicknameValid(signupState.nickname);
@@ -42,7 +51,7 @@ const NicknameStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
 
       <ButtonContainer>
         <Button
-          onClick={onNext}
+          onClick={handleNext}
           variant="primary"
           size="lg"
           rounded="sm"

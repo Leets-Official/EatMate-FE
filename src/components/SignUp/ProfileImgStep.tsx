@@ -1,58 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import ActionModal from '../common/Modal/ActionModal';
-import defaultprofileImage from '@/assets/images/defaultprofile.svg';
-import Button from '../common/Button/Button';
 import {
   ButtonContainer,
   Description,
   MainTitle,
+  Container,
+  MainContent,
+  ProfileImageContainer,
+  ProfileImage,
+  HiddenFileInput,
 } from '@/styles/SignUp/SignUp.styled';
+import ActionModal from '../common/Modal/ActionModal';
+import defaultprofileImage from '@/assets/images/defaultprofile.svg';
+import Button from '../common/Button/Button';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 
-export const Container = styled.div`
-  position: relative;
-  min-height: 780px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-`;
-
-export const MainContent = styled.div`
-  flex: 1;
-  padding-bottom: 80px;
-`;
-
-export const ProfileImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 2rem 0;
-`;
-
-export const ProfileImage = styled.div<{ imageUrl: string }>`
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.COLORS.gray[200]};
-  background-image: ${({ imageUrl }) =>
-    imageUrl ? `url(${imageUrl})` : 'none'};
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: ${({ theme }) => theme.FONT_SIZE.xl};
-  color: ${({ theme }) => theme.COLORS.gray[100]};
-  cursor: pointer;
-`;
-
-export const HiddenFileInput = styled.input`
-  display: none;
-`;
-
-const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
+const ProfileImgStep: React.FC = () => {
   const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -73,15 +36,15 @@ const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   };
 
   const handleOpenModal = () => {
-    setIsModalOpen(true); // 모달 열기
+    setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false); // 모달 닫기
+    setIsModalOpen(false);
   };
 
   const handleSelectPhoto = () => {
-    document.getElementById('fileInput')?.click(); // 파일 선택 트리거
+    document.getElementById('fileInput')?.click();
     handleCloseModal();
   };
 
@@ -89,7 +52,7 @@ const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     setSignupState((prev) => ({
       ...prev,
       profilePhoto: undefined,
-    })); // 프로필 이미지 삭제
+    }));
     handleCloseModal();
   };
 

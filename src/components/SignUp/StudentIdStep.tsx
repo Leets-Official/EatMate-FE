@@ -11,8 +11,11 @@ import { useState } from 'react';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 import InputErrorMessage from '../common/Error/InputErrorMessage';
 import { isStudentIdValid, validateStudentId } from '@/utils/validate-input';
+import { useNavigate } from 'react-router-dom';
 
-const StudentIdStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
+const StudentIdStep: React.FC = () => {
+  const nav = useNavigate();
+
   const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -21,6 +24,12 @@ const StudentIdStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
 
     const validationError = validateStudentId(value);
     setErrorMessage(validationError || '');
+  };
+
+  const handleNext = () => {
+    if (isFormValid) {
+      nav('/signup/profile-img'); // 다음 단계로 이동
+    }
   };
 
   const isFormValid = isStudentIdValid(signupState.studentId);
@@ -46,7 +55,7 @@ const StudentIdStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
 
       <ButtonContainer>
         <Button
-          onClick={onNext}
+          onClick={handleNext}
           variant="primary"
           size="lg"
           rounded="sm"

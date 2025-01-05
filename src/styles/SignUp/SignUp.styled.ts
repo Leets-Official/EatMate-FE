@@ -74,3 +74,44 @@ export const InputWrapper = styled.div`
   flex-direction: column;
   margin-bottom: 5rem;
 `;
+
+export const Container = styled.div`
+  position: relative;
+  min-height: 780px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+`;
+
+export const MainContent = styled.div`
+  flex: 1;
+  padding-bottom: 80px;
+`;
+
+export const ProfileImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+`;
+
+export const ProfileImage = styled.div<{ imageUrl: string }>`
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.COLORS.gray[200]};
+  background-image: ${({ imageUrl }) =>
+    imageUrl ? `url(${imageUrl})` : 'none'};
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: ${({ theme }) => theme.FONT_SIZE.xl};
+  color: ${({ theme }) => theme.COLORS.gray[100]};
+  cursor: pointer;
+`;
+
+export const HiddenFileInput = styled.input`
+  display: none;
+`;

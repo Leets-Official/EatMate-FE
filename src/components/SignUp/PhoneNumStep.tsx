@@ -11,8 +11,11 @@ import { signupAtom } from '@/recoil/atoms/userAtom';
 import { useState, useEffect } from 'react';
 import InputErrorMessage from '../common/Error/InputErrorMessage';
 import { formatPhoneNumber, validatePhoneNumber } from '@/utils/validate-input';
+import { useNavigate } from 'react-router-dom';
 
-const PhoneNumStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
+const PhoneNumStep: React.FC = () => {
+  const nav = useNavigate();
+
   const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -26,6 +29,12 @@ const PhoneNumStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       setErrorMessage('다시 입력해주세요.');
     } else {
       setErrorMessage('');
+    }
+  };
+
+  const handleNext = () => {
+    if (isFormValid()) {
+      nav('/signup/mbti'); // 다음 단계로 이동
     }
   };
 
@@ -59,7 +68,7 @@ const PhoneNumStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       {errorMessage && <InputErrorMessage message={errorMessage} />}
       <ButtonContainer>
         <Button
-          onClick={onNext}
+          onClick={handleNext}
           variant="primary"
           size="lg"
           rounded="sm"

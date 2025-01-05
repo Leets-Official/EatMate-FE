@@ -18,8 +18,10 @@ import {
   validateMonth,
   validateYear,
 } from '@/utils/validate-input';
+import { useNavigate } from 'react-router-dom';
 
-const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
+const BirthdayGenderStep: React.FC = () => {
+  const nav = useNavigate();
   const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [touched, setTouched] = useState({
@@ -74,6 +76,12 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       validateDay(day, year, month) === true &&
       gender !== ''
     );
+  };
+
+  const handleNext = () => {
+    if (isFormValid()) {
+      nav('/signup/phone-number');
+    }
   };
 
   useEffect(() => {
@@ -131,7 +139,7 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
 
       <ButtonContainer>
         <Button
-          onClick={onNext}
+          onClick={handleNext}
           variant="primary"
           size="lg"
           rounded="sm"
