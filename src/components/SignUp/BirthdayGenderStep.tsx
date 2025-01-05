@@ -8,9 +8,10 @@ import {
   SelectButtonContainer,
   InputWrapper,
 } from '@/styles/SignUp/SignUp.styled';
+import { useEffect, useState } from 'react';
 import SignUpInput from './SignupInput';
-import { signupAtom, SignupState } from '@/recoil/atoms/userAtom';
-import { UseInputHandler } from '@/hooks/useInputHandler';
+import { useRecoilState } from 'recoil';
+import { signupAtom } from '@/recoil/atoms/userAtom';
 import InputErrorMessage from '../common/Error/InputErrorMessage';
 import {
   validateDay,
@@ -19,23 +20,19 @@ import {
 } from '@/utils/validate-input';
 
 const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
-  const { state, handleInputChange, errorMessage, isFormValid, setState } =
-    UseInputHandler<SignupState>({
-      atom: signupAtom,
-      validate: (key, value, currentState) => {
-        if (key === 'year') return validateYear(value) as string | null;
-        if (key === 'month') return validateMonth(value) as string | null;
-        if (key === 'day')
-          return validateDay(value, currentState.year, currentState.month) as
-            | string
-            | null;
-        return null;
-      },
-    });
+  const [signupState, setSignupState] = useRecoilState(signupAtom);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [touched, setTouched] = useState({
+    year: false,
+    month: false,
+    day: false,
+  });
+
+  const { year, month, day, gender } = signupState;
 
   const birthInputFields: {
     label: string;
-    key: keyof SignupState;
+    key: keyof typeof signupState;
     maxLength: number;
     width: string;
   }[] = [
@@ -44,9 +41,44 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     { label: '일', key: 'day', maxLength: 2, width: '40px' },
   ];
 
-  const handleGenderClick = (gender: string) => {
-    setState((prev: SignupState) => ({ ...prev, gender }));
+  const handleInputChange = (key: string, value: string) => {
+    setSignupState((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
   };
+
+  const handleGenderClick = (gender: string) => {
+    setSignupState((prev) => ({ ...prev, gender }));
+  };
+
+  const handleBlur = (key: keyof typeof signupState) => {
+    setTouched((prev) => ({
+      ...prev,
+      [key]: true,
+    }));
+
+    let error: string | true = '';
+    if (key === 'year') error = validateYear(year);
+    else if (key === 'month') error = validateMonth(month);
+    else if (key === 'day') error = validateDay(day, year, month);
+
+    if (error !== true) setErrorMessage(error as string);
+    else setErrorMessage('');
+  };
+
+  const isFormValid = () => {
+    return (
+      validateYear(year) === true &&
+      validateMonth(month) === true &&
+      validateDay(day, year, month) === true &&
+      gender !== ''
+    );
+  };
+
+  useEffect(() => {
+    console.log('signupState updated:', signupState);
+  }, [signupState]);
 
   return (
     <div>
@@ -63,8 +95,9 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
                 type="text"
                 maxLength={maxLength}
                 width={width}
-                value={state[key]}
+                value={signupState[key]}
                 onChange={(e) => handleInputChange(key, e.target.value)}
+                onBlur={() => handleBlur(key)}
               />
               <Text>{label}</Text>
             </>
@@ -76,7 +109,9 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       <SelectButtonContainer>
         <Button
           onClick={() => handleGenderClick('남성')}
-          variant={state.gender === '남성' ? 'primary' : 'primary-outline'}
+          variant={
+            signupState.gender === '남성' ? 'primary' : 'primary-outline'
+          }
           size="lg"
           rounded="sm"
         >
@@ -84,7 +119,9 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         </Button>
         <Button
           onClick={() => handleGenderClick('여성')}
-          variant={state.gender === '여성' ? 'primary' : 'primary-outline'}
+          variant={
+            signupState.gender === '여성' ? 'primary' : 'primary-outline'
+          }
           size="lg"
           rounded="sm"
         >
