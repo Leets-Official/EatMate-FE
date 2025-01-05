@@ -10,7 +10,6 @@ import {
   HiddenFileInput,
 } from '@/styles/SignUp/SignUp.styled';
 import ActionModal from '../common/Modal/ActionModal';
-import defaultprofileImage from '@/assets/images/defaultprofile.svg';
 import Button from '../common/Button/Button';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';

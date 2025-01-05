@@ -62,7 +62,7 @@ const MbtiStep: React.FC = () => {
       <Description>다른 사용자들이 당신을 더 잘 이해할 수 있어요.</Description>
 
       <InputContainer>
-        {mbtiLetters.map((letters, index) => (
+        {mbtiLetters.map((_, index) => (
           <SignUpInput
             type="text"
             inputMode="text"

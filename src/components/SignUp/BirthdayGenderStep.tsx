@@ -88,6 +88,11 @@ const BirthdayGenderStep: React.FC = () => {
     console.log('signupState updated:', signupState);
   }, [signupState]);
 
+  // 빌드 에러 임시 해결
+  useEffect(() => {
+    console.log(touched);
+  }, [touched]);
+
   return (
     <div>
       <MainTitle>조금만 알려주시면 준비가 끝나요!</MainTitle>
