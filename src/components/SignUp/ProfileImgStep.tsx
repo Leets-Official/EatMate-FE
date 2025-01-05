@@ -14,10 +14,15 @@ import defaultprofileImage from '@/assets/images/defaultprofile.svg';
 import Button from '../common/Button/Button';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
+import { useNavigate } from 'react-router-dom';
+import PolicyAgreementStep from './PolicyAgreementStep';
 
 const ProfileImgStep: React.FC = () => {
+  const nav = useNavigate();
+
   const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPolicyModalOpen, setIsPolicyModalOpen] = useState(false);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -54,6 +59,17 @@ const ProfileImgStep: React.FC = () => {
       profilePhoto: undefined,
     }));
     handleCloseModal();
+  };
+
+  const handleProceedToPolicy = () => {
+    if (signupState.profilePhoto) {
+      setIsPolicyModalOpen(true);
+    }
+  };
+
+  const handleAgreePolicy = () => {
+    setIsPolicyModalOpen(false);
+    nav('/home');
   };
 
   useEffect(() => {
@@ -97,9 +113,10 @@ const ProfileImgStep: React.FC = () => {
         />
       )}
 
+      {isPolicyModalOpen && <PolicyAgreementStep onAgree={handleAgreePolicy} />}
       <ButtonContainer>
         <Button
-          onClick={onNext}
+          onClick={handleProceedToPolicy}
           size="lg"
           disabled={!signupState.profilePhoto} // 프로필 이미지가 없으면 버튼 비활성화
         >
