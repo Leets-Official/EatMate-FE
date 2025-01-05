@@ -9,8 +9,8 @@ import {
   ProfileImage,
   HiddenFileInput,
 } from '@/styles/SignUp/SignUp.styled';
-import ActionModal from '../common/Modal/ActionModal';
-import Button from '../common/Button/Button';
+import ActionModal from '@/components/common/Modal/ActionModal';
+import Button from '@/components/common/Button/Button';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 import { useNavigate } from 'react-router-dom';

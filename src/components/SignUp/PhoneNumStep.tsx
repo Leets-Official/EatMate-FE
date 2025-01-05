@@ -9,7 +9,7 @@ import SignUpInput from './SignupInput';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 import { useState, useEffect } from 'react';
-import InputErrorMessage from '../common/Error/InputErrorMessage';
+import InputErrorMessage from '@/components/common/Error/InputErrorMessage';
 import { formatPhoneNumber, validatePhoneNumber } from '@/utils/validate-input';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,7 +34,7 @@ const PhoneNumStep: React.FC = () => {
 
   const handleNext = () => {
     if (isFormValid()) {
-      nav('/signup/mbti'); // 다음 단계로 이동
+      nav('/signup/mbti');
     }
   };
 

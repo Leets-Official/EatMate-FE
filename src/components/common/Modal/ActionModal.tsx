@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import * as S from '../Modal/styles';
+import * as S from '@/components/common/Modal/styles';
 
 interface ActionModalProps {
   isOpen: boolean;
