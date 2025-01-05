@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { RecoilState, useRecoilState } from 'recoil';
 
 type UseInputHandlerProps<T> = {
-  atom: any; // recoil atom
-  validate?: (key: keyof T, value: string) => string | null; //유효성 검사 함수
+  atom: RecoilState<T>; // recoil atom
+  validate?: (key: keyof T, value: string, state: T) => string | null; //유효성 검사 함수
 };
 
 export const UseInputHandler = <T extends Record<string, any>>({
@@ -14,22 +14,22 @@ export const UseInputHandler = <T extends Record<string, any>>({
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleInputChange = (key: keyof T, value: string) => {
-    setState((prev) => ({
+    setState((prev: T) => ({
       ...prev,
       [key]: value,
     }));
 
     if (validate) {
-      const validationError = validate(key, value);
+      const validationError = validate(key, value, state);
       setErrorMessage(validationError || '');
     }
   };
 
   const isFormValid = () => {
     if (!validate) return true;
-    return Object.keys(state).every(
-      (key) => validate(key as keyof T, state[key as keyof T]) === null
-    );
+    return Object.keys(state).every((key) => {
+      return validate(key as keyof T, state[key as keyof T], state) === null;
+    });
   };
 
   return {
@@ -38,5 +38,6 @@ export const UseInputHandler = <T extends Record<string, any>>({
     handleInputChange,
     isFormValid,
     setErrorMessage,
+    setState,
   };
 };
