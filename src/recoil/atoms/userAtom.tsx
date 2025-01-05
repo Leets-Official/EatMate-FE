@@ -1,18 +1,6 @@
 import { atom } from 'recoil';
 
-export type SignupState = {
-  year: string;
-  month: string;
-  day: string;
-  gender: string;
-  phoneNumber: string;
-  mbti: string;
-  nickname: string;
-  studentId: string;
-  profilePhoto?: string;
-};
-
-export const signupAtom = atom<SignupState>({
+export const signupAtom = atom({
   key: 'signupAtom',
   default: {
     year: '',
