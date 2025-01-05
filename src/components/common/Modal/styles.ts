@@ -4,59 +4,51 @@ export const Overlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
   display: flex;
   justify-content: center;
   align-items: flex-end;
 `;
 
-export const Container = styled.div`
+export const ModalContainer = styled.div`
   width: 100%;
-  max-width: 400px;
-  background-color: #ffffff;
-  border-radius: 12px 12px 0 0;
-  padding: 16px;
-  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  max-width: 350px;
+  background: ${({ theme }) => theme.COLORS.gray[200]};
+  border-radius: 16px;
+  margin: 20px 20px 30px 20px;
+  box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
 `;
 
-export const ActionButton = styled.button<{ color: 'default' | 'red' }>`
+export const ModalButton = styled.button<{ type: 'primary' | 'delete' }>`
   width: 100%;
+  border-top-right-radius: 16px;
+  border-top-left-radius: 16px;
   padding: 16px;
-  font-size: 16px;
-  color: ${({ color }) => (color === 'red' ? 'red' : '#007bff')};
-  background: none;
+  font-size: ${({ theme }) => theme.FONT_SIZE.md};
+  background: ${({ theme }) => theme.COLORS.gray[200]};
+  color: ${({ type }) => (type === 'delete' ? '#FF4F4F' : '#615BFF')};
   border: none;
+  text-align: center;
   cursor: pointer;
 
   &:hover {
-    background-color: #f9f9f9;
+    background: ${({ theme }) => theme.COLORS.gray[300]};
   }
-`;
 
-export const Divider = styled.div`
-  width: 100%;
-  height: 1px;
-  background-color: #e0e0e0;
-`;
+  &:not(:last-child) {
+    border-bottom: 1px solid ${({ theme }) => theme.COLORS.gray[300]};
+  }
 
-export const CloseButton = styled.button`
-  width: 100%;
-  padding: 16px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-  background-color: #ff6b00;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  &:first-child {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+  }
 
-  &:hover {
-    background-color: #ff5500;
+  &:last-child {
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
   }
 `;

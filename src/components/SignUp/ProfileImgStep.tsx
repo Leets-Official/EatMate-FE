@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+import ActionModal from '../common/Modal/ActionModal';
+import defaultprofileImage from '@/assets/images/defaultprofile.svg';
+import Button from '../common/Button/Button';
 import {
   ButtonContainer,
   Description,
   MainTitle,
 } from '@/styles/SignUp/SignUp.styled';
-import Button from '@/components/common/Button/Button';
-import styled from 'styled-components';
-import defaultprofileImage from '@/assets/images/defaultprofile.svg';
-import ActionModal from '../common/Modal/ActionModal';
 
 const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   const [profileImage, setProfileImage] = useState<string | null>(
     defaultprofileImage
   );
-
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,42 +28,88 @@ const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
     }
   };
 
-  return (
-    <div>
-      <MainTitle>이제 마지막이에요!</MainTitle>
-      <Description>EatMate에서 사용할 프로필 사진을 추가해주세요.</Description>
+  const handleOpenModal = () => {
+    setIsModalOpen(true); // 모달 열기
+  };
 
-      {/* 프로필 사진 */}
-      <ProfileImageContainer>
-        <label>
-          <ProfileImage imageUrl={profileImage || ''}>
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // 모달 닫기
+  };
+
+  const handleSelectPhoto = () => {
+    document.getElementById('fileInput')?.click(); // 파일 선택 트리거
+    handleCloseModal();
+  };
+
+  const handleDeletePhoto = () => {
+    setProfileImage(null); // 프로필 이미지 삭제
+    handleCloseModal();
+  };
+
+  return (
+    <Container>
+      <MainContent>
+        <MainTitle>이제 마지막이에요!</MainTitle>
+        <Description>
+          EatMate에서 사용할 프로필 사진을 추가해주세요.
+        </Description>
+
+        {/* 프로필 사진 */}
+        <ProfileImageContainer>
+          <ProfileImage imageUrl={profileImage || ''} onClick={handleOpenModal}>
             {!profileImage && <span>+</span>}
           </ProfileImage>
           <HiddenFileInput
+            id="fileInput"
             type="file"
             accept="image/*"
             onChange={handleImageChange}
           />
-        </label>
-      </ProfileImageContainer>
+        </ProfileImageContainer>
+      </MainContent>
+
+      {/* 모달 */}
+      {isModalOpen && (
+        <ActionModal
+          isOpen={isModalOpen}
+          actions={[
+            { label: '앨범에서 선택', onClick: handleSelectPhoto },
+            { label: '사진 삭제', onClick: handleDeletePhoto, type: 'delete' },
+            { label: '닫기', onClick: handleCloseModal },
+          ]}
+          onClose={handleCloseModal}
+        />
+      )}
 
       {/* 회원가입 진행 버튼 */}
-      <ButtonContainer>
+      <SignUpButton>
         <Button
           onClick={onNext}
-          variant="primary"
           size="lg"
-          rounded="sm"
           disabled={!profileImage} // 프로필 이미지가 없으면 버튼 비활성화
         >
           회원가입 진행하기
         </Button>
-      </ButtonContainer>
-    </div>
+      </SignUpButton>
+    </Container>
   );
 };
 
 export default ProfileImgStep;
+
+// 스타일 정의
+export const Container = styled.div`
+  position: relative;
+  min-height: 720px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+`;
+
+export const MainContent = styled.div`
+  flex: 1;
+  padding-bottom: 80px; /* 버튼 높이를 고려한 여백 */
+`;
 
 export const ProfileImageContainer = styled.div`
   display: flex;
@@ -92,4 +137,14 @@ export const ProfileImage = styled.div<{ imageUrl: string }>`
 
 export const HiddenFileInput = styled.input`
   display: none;
+`;
+
+export const SignUpButton = styled.div`
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 10; /* 모달과 겹치지 않도록 설정 */
 `;

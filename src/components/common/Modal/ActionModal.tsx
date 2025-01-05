@@ -1,37 +1,46 @@
-// import * as S from '../Modal/styles';
-// interface Action {
-//   label: string;
-//   onClick: () => void;
-// }
+import React, { useRef } from 'react';
+import * as S from '../Modal/styles';
 
-// interface ActionModalProps {
-//   isOpen: boolean;
-//   onClose: () => void;
-//   actions: Action[];
-// }
+interface ActionModalProps {
+  isOpen: boolean;
+  actions: {
+    label: string;
+    onClick: () => void;
+    type?: 'primary' | 'delete';
+  }[];
+  onClose: () => void;
+}
 
-// const ActionModal: React.FC<ActionModalProps> = ({
-//   isOpen,
-//   onClose,
-//   actions,
-// }) => {
-//   if (!isOpen) return null;
+const ActionModal: React.FC<ActionModalProps> = ({
+  isOpen,
+  actions,
+  onClose,
+}) => {
+  const modalRef = useRef<HTMLDivElement>(null);
 
-//   return (
-//     <S.Overlay onClick={onClose}>
-//       <S.Container onClick={(e) => e.stopPropagation()}>
-//         {actions.map((action, index) => (
-//           <React.Fragment key={index}>
-//             <S.ActionButton onClick={action.onClick}>
-//               {action.label}
-//             </S.ActionButton>
-//             {index === 0 && <S.Divider />}
-//           </React.Fragment>
-//         ))}
-//         <S.CloseButton onClick={onClose}>닫기</S.CloseButton>
-//       </S.Container>
-//     </S.Overlay>
-//   );
-// };
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+      onClose(); // 모달 바깥 클릭 시 닫기
+    }
+  };
 
-// export default ActionModal;
+  if (!isOpen) return null;
+
+  return (
+    <S.Overlay onClick={handleBackdropClick}>
+      <S.ModalContainer ref={modalRef}>
+        {actions.map((action, index) => (
+          <S.ModalButton
+            key={index}
+            type={action.type || 'primary'}
+            onClick={action.onClick}
+          >
+            {action.label}
+          </S.ModalButton>
+        ))}
+      </S.ModalContainer>
+    </S.Overlay>
+  );
+};
+
+export default ActionModal;
