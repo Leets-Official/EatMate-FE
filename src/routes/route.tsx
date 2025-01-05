@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import Home from '@/pages/Home';
 import Intro from '@/pages/SignUpPage/Intro';
 import PolicyDetails from '@/pages/SignUpPage/PolicyDetails';
@@ -19,30 +19,13 @@ const router = createBrowserRouter([
     path: '/signup',
     element: <SignupLayout />,
     children: [
-      {
-        path: 'birthday-gender',
-        element: <BirthdayGenderStep />,
-      },
-      {
-        path: 'phone-number',
-        element: <PhoneNumStep />,
-      },
-      {
-        path: 'mbti',
-        element: <MbtiStep />,
-      },
-      {
-        path: 'nickname',
-        element: <NicknameStep />,
-      },
-      {
-        path: 'student-id',
-        element: <StudentIdStep />,
-      },
-      {
-        path: 'profile-img',
-        element: <ProfileImgStep />,
-      },
+      { index: true, element: <Navigate to="/signup/birthday-gender" /> },
+      { path: 'birthday-gender', element: <BirthdayGenderStep /> },
+      { path: 'phone-number', element: <PhoneNumStep /> },
+      { path: 'mbti', element: <MbtiStep /> },
+      { path: 'nickname', element: <NicknameStep /> },
+      { path: 'student-id', element: <StudentIdStep /> },
+      { path: 'profile-img', element: <ProfileImgStep /> },
     ],
   },
   {
