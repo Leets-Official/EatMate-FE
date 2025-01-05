@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ActionModal from '../common/Modal/ActionModal';
 import defaultprofileImage from '@/assets/images/defaultprofile.svg';
@@ -8,6 +8,8 @@ import {
   Description,
   MainTitle,
 } from '@/styles/SignUp/SignUp.styled';
+import { useRecoilState } from 'recoil';
+import { signupAtom } from '@/recoil/atoms/userAtom';
 
 export const Container = styled.div`
   position: relative;
@@ -51,7 +53,7 @@ export const HiddenFileInput = styled.input`
 `;
 
 const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +62,10 @@ const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.result) {
-          setProfileImage(reader.result as string);
+          setSignupState((prev) => ({
+            ...prev,
+            profilePhoto: reader.result as string,
+          }));
         }
       };
       reader.readAsDataURL(file);
@@ -81,9 +86,16 @@ const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
   };
 
   const handleDeletePhoto = () => {
-    setProfileImage(null); // 프로필 이미지 삭제
+    setSignupState((prev) => ({
+      ...prev,
+      profilePhoto: undefined,
+    })); // 프로필 이미지 삭제
     handleCloseModal();
   };
+
+  useEffect(() => {
+    console.log('signupState updated:', signupState);
+  }, [signupState]);
 
   return (
     <Container>
@@ -94,8 +106,11 @@ const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         </Description>
 
         <ProfileImageContainer>
-          <ProfileImage imageUrl={profileImage || ''} onClick={handleOpenModal}>
-            {!profileImage && <span>+</span>}
+          <ProfileImage
+            imageUrl={signupState.profilePhoto || ''}
+            onClick={handleOpenModal}
+          >
+            {!signupState.profilePhoto && <span>+</span>}
           </ProfileImage>
           <HiddenFileInput
             id="fileInput"
@@ -123,7 +138,7 @@ const ProfileImgStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         <Button
           onClick={onNext}
           size="lg"
-          disabled={!profileImage} // 프로필 이미지가 없으면 버튼 비활성화
+          disabled={!signupState.profilePhoto} // 프로필 이미지가 없으면 버튼 비활성화
         >
           회원가입 진행하기
         </Button>
