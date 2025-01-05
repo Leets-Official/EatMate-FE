@@ -9,7 +9,7 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'primary-outline'], // ButtonVariant 타입에 따른 옵션
+      options: ['primary', 'primary-outline', 'primary-outlineless'], // ButtonVariant 타입에 따른 옵션
       description: '버튼의 스타일을 설정합니다.',
     },
     size: {
@@ -73,6 +73,9 @@ export const Variants: Story = {
       </Button>
       <Button variant="primary-outline" size="md" rounded="md">
         Primary Outline
+      </Button>
+      <Button variant="primary-outlineless" size="md" rounded="md">
+        Primary Outlineless
       </Button>
     </div>
   ),

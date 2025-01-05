@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   min-height: 100vh;
@@ -12,13 +12,13 @@ export const Container = styled.div`
 
 export const MainText = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
-  font-size: 24px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.xl};
   margin-top: 120px;
   flex: 1;
 `;
 
 export const SubText = styled.div`
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
   margin-top: 15px;
 `;

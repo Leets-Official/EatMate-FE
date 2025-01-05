@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 
-interface InputFieldProps {
+interface InputFieldProps extends React.ComponentProps<'input'> {
   error: boolean;
   width?: string;
 }
 
 export const MainTitle = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
-  font-size: 24px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.xl};
   padding: 10px 30px;
 `;
 
 export const Description = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -23,7 +23,7 @@ export const Description = styled.div`
 export const InputField = styled.input<InputFieldProps>`
   width: ${({ width }) => width || '300px'};
   padding: 8px;
-  font-size: 20px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.lg};
   border: none;
   border-bottom: 2px solid ${({ theme }) => theme.COLORS.black};
   outline: none;
@@ -32,7 +32,7 @@ export const InputField = styled.input<InputFieldProps>`
 
   &::placeholder {
     color: ${({ theme }) => theme.COLORS.gray[100]};
-    font-size: 20px;
+    font-size: ${({ theme }) => theme.FONT_SIZE.lg};
     text-align: left;
   }
 
@@ -46,7 +46,7 @@ export const InputContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  margin: 3rem 0 7.5rem 0;
+  margin-top: 3rem;
 `;
 
 export const ButtonContainer = styled.div`
@@ -66,11 +66,52 @@ export const SelectButtonContainer = styled.div`
 `;
 
 export const Text = styled.div`
-  font-size: 20px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.lg};
 `;
 
-export const ErrorMessage = styled.span`
-  margin-top: 4px;
-  font-size: 12px;
-  color: ${({ theme }) => theme.COLORS.error};
+export const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5rem;
+`;
+
+export const Container = styled.div`
+  position: relative;
+  min-height: 780px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+`;
+
+export const MainContent = styled.div`
+  flex: 1;
+  padding-bottom: 80px;
+`;
+
+export const ProfileImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+`;
+
+export const ProfileImage = styled.div<{ imageUrl: string }>`
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.COLORS.gray[200]};
+  background-image: ${({ imageUrl }) =>
+    imageUrl ? `url(${imageUrl})` : 'none'};
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: ${({ theme }) => theme.FONT_SIZE.xl};
+  color: ${({ theme }) => theme.COLORS.gray[100]};
+  cursor: pointer;
+`;
+
+export const HiddenFileInput = styled.input`
+  display: none;
 `;
