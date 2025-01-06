@@ -26,10 +26,10 @@ const Container = styled.div<{ isSelected: boolean }>`
     isSelected
       ? css`
           border: 1px solid ${theme.COLORS.main};
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         `
       : css`
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         `}
 `;
 
