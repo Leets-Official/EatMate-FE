@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
-
+import theme from '@/styles/theme';
 interface TabProps {
-  tabs: string[]; // 탭 이름 리스트
-  onTabClick: (index: number) => void; // 탭 클릭 시 동작
-  selectedIndex: number; // 선택된 탭의 인덱스
+  tabs: string[];
+  onTabClick: (index: number) => void;
+  selectedIndex: number;
 }
 
 const TabContainer = styled.div`
@@ -19,13 +19,14 @@ const Tab = styled.div<{ isSelected: boolean }>`
   padding: 12px 0;
   font-size: 16px;
   font-weight: bold;
-  color: ${({ isSelected }) => (isSelected ? '#FF914D' : '#aaa')};
+  color: ${({ isSelected, theme }) =>
+    isSelected ? `${theme.COLORS.main}` : `${theme.COLORS.gray[300]}`};
   cursor: pointer;
 
   ${({ isSelected }) =>
     isSelected &&
     css`
-      border-bottom: 3px solid #ff914d; /* 선택된 탭의 밑줄 */
+      border-bottom: 3px solid ${theme.COLORS.main};
     `}
 `;
 

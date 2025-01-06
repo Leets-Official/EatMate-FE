@@ -6,6 +6,7 @@ import logo from '@/assets/images/EatMate_main_Logo.svg';
 import rightArrow from '@/assets/images/ic_arrow_right.svg';
 import BottomNavigation from '@/components/common/BottomNavi';
 import FloatingPostButton from '@/components/common/FloatingPostButton';
+import DeliveryCategory from '@/components/Home/DeliveryCategory';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -33,16 +34,6 @@ const NoticeContainer = styled.div`
 
 const TabsContainer = styled.div`
   margin-top: 12px;
-`;
-
-const DeliveryOptionsContainer = styled.div`
-  margin-top: 20px;
-  padding: 16px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-size: 14px;
-  color: #555;
 `;
 
 const Home = () => {
@@ -77,7 +68,7 @@ const Home = () => {
       {selectedTab === 1 && <MeetingList />}
       {selectedTab === 2 && (
         <div>
-          <DeliveryOptionsContainer>배달팟 선택지</DeliveryOptionsContainer>
+          <DeliveryCategory />
           <MeetingList />
         </div>
       )}
