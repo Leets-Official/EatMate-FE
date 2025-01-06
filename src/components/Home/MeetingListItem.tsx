@@ -21,7 +21,6 @@ const Container = styled.div<{ isSelected: boolean }>`
   flex-direction: column;
   justify-content: space-between;
   background-color: #fff;
-  border: 1px solid transparent;
 
   ${({ isSelected }) =>
     isSelected

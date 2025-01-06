@@ -13,12 +13,14 @@ const ButtonContainer = styled.div`
   flex-direction: row;
   gap: 10px;
   margin-bottom: 20px;
+  margin-left: 12px;
 `;
 
 const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  align-items: center;
 `;
 
 const MeetingList = () => {

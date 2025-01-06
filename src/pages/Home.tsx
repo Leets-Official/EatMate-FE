@@ -5,9 +5,12 @@ import styled from 'styled-components';
 import logo from '@/assets/images/EatMate_main_Logo.svg';
 import rightArrow from '@/assets/images/ic_arrow_right.svg';
 import BottomNavigation from '@/components/common/BottomNavi';
+import FloatingPostButton from '@/components/common/FloatingPostButton';
 
 const Container = styled.div`
   margin: 0 auto;
+  max-width: 390px;
+  position: relative;
 `;
 
 const Logo = styled.img`
@@ -32,10 +35,6 @@ const TabsContainer = styled.div`
   margin-top: 12px;
 `;
 
-const MeetingListContainer = styled.div`
-  margin-top: 10px;
-`;
-
 const DeliveryOptionsContainer = styled.div`
   margin-top: 20px;
   padding: 16px;
@@ -52,6 +51,9 @@ const Home = () => {
   const handleTabClick = (index: number) => {
     setSelectedTab(index);
     console.log(`선택된 탭: ${index}`);
+  };
+  const handlePostClick = () => {
+    console.log('Post button clicked');
   };
 
   return (
@@ -79,6 +81,7 @@ const Home = () => {
           <MeetingList />
         </div>
       )}
+      <FloatingPostButton onClick={handlePostClick} />
       <BottomNavigation />
     </Container>
   );
