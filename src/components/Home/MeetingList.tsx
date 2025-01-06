@@ -41,7 +41,7 @@ const MeetingList = () => {
         '마라탕 레전드 찐맛집입니다. 맛도 좋고 정문 옆이라 자주 가는데 혼자가기 빠끔하고 카메라모드로 시켜먹고 싶어서 방 팝니다!',
       location: '마라탕집 인메이트점',
       participants: '8/10',
-      time: '30분 전 대화',
+      time: '30',
       isSelected: true,
     },
     {
@@ -50,7 +50,7 @@ const MeetingList = () => {
         '삼겹살 좋아하시는 분들 같이 먹어요! 먹으면서 대화도 나누고 싶으신 분들 환영이에요. 진짜 많이 먹을거라서 n분의1은 안할 수도 있어요',
       location: '서울삼겹살 가천대점',
       participants: '4/10',
-      time: '2분 전 대화',
+      time: '2',
       isSelected: false,
     },
     {
@@ -59,7 +59,7 @@ const MeetingList = () => {
         '시험 끝났으니 스트레스 풀 겸 맛있는 밥 같이 먹어요! 스트레스도 날려버립시다!',
       location: '소쿠리소',
       participants: '6/10',
-      time: '5분 전 대화',
+      time: '5',
       isSelected: false,
     },
   ];

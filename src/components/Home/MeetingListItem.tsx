@@ -58,9 +58,10 @@ const Description = styled.div`
 const InfoContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   font-size: 12px;
-  color: #777;
+  color: #636363;
+  gap: 4px;
 `;
 
 const Location = styled.div`
@@ -68,6 +69,7 @@ const Location = styled.div`
   align-items: center;
   gap: 4px;
   flex-shrink: 1;
+  margin-right: auto;
 `;
 
 const Participants = styled.div`
@@ -78,6 +80,7 @@ const Participants = styled.div`
 
 const Time = styled.div`
   color: ${theme.COLORS.main};
+  white-space: nowrap;
 `;
 
 const MeetingListItem: React.FC<MeetingListItemProps> = ({
@@ -101,9 +104,9 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
         </Location>
         <Participants>
           <img src="/src/assets/images/ic_person.svg" alt="participants icon" />
-          {participants}
+          {participants} ㆍ
         </Participants>
-        <Time>{time}</Time>
+        <Time>{time}분 전 대화</Time>
       </InfoContainer>
     </Container>
   );

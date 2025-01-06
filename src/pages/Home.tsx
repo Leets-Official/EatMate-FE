@@ -33,7 +33,7 @@ const TabsContainer = styled.div`
 `;
 
 const MeetingListContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 10px;
 `;
 
 const DeliveryOptionsContainer = styled.div`
@@ -71,16 +71,14 @@ const Home = () => {
         />
       </TabsContainer>
 
-      <MeetingListContainer>
-        {selectedTab === 0 && <MeetingList />}
-        {selectedTab === 1 && <MeetingList />}
-        {selectedTab === 2 && (
-          <div>
-            <DeliveryOptionsContainer>배달팟 선택지</DeliveryOptionsContainer>
-            <MeetingList />
-          </div>
-        )}
-      </MeetingListContainer>
+      {selectedTab === 0 && <MeetingList />}
+      {selectedTab === 1 && <MeetingList />}
+      {selectedTab === 2 && (
+        <div>
+          <DeliveryOptionsContainer>배달팟 선택지</DeliveryOptionsContainer>
+          <MeetingList />
+        </div>
+      )}
       <BottomNavigation />
     </Container>
   );

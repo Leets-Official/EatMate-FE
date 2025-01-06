@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled, { css } from 'styled-components';
 import homeIcon from '@/assets/images/ic_home.svg';
+import homeIconActive from '@/assets/images/ic_home_color.svg';
 import participantsIcon from '@/assets/images/ic_people.svg';
+import participantsIconActive from '@/assets/images/ic_people_color.svg';
 import myPageIcon from '@/assets/images/EatMate_circle_logo.svg';
+// import myPageIconActive from '@/assets/images/EatMate_circle_logo_active.svg';
+
+import theme from '@/styles/theme';
 
 const NavContainer = styled.div`
   position: fixed;
@@ -33,18 +38,10 @@ const NavItem = styled.div<{ isActive: boolean }>`
   ${({ isActive }) =>
     isActive
       ? css`
-          color: #ff914d;
-
-          img {
-            filter: brightness(1.2) saturate(1.5); /* 선택된 상태에서 색상 강조 */
-          }
+          color: ${theme.COLORS.main};
         `
       : css`
-          color: #aaa;
-
-          img {
-            filter: brightness(0.8); /* 기본 상태에서 색상 약간 어둡게 */
-          }
+          color: ${theme.COLORS.gray[300]};
         `}
 
   font-size: 12px;
@@ -60,9 +57,13 @@ const BottomNavigation = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   const navItems = [
-    { label: '홈', icon: homeIcon },
-    { label: '참여모임', icon: participantsIcon },
-    { label: '마이페이지', icon: myPageIcon },
+    { label: '홈', icon: homeIcon, activeIcon: homeIconActive },
+    {
+      label: '참여모임',
+      icon: participantsIcon,
+      activeIcon: participantsIconActive,
+    },
+    { label: '마이페이지', icon: myPageIcon, activeIcon: myPageIcon },
   ];
 
   return (
@@ -73,7 +74,10 @@ const BottomNavigation = () => {
           isActive={activeTab === index}
           onClick={() => setActiveTab(index)}
         >
-          <Icon src={item.icon} alt={item.label} />
+          <Icon
+            src={activeTab === index ? item.activeIcon : item.icon}
+            alt={item.label}
+          />
           <span>{item.label}</span>
         </NavItem>
       ))}
