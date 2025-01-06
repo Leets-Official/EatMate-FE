@@ -4,15 +4,12 @@ import GoogleIcon from '@/assets/images/GoogleIcon.svg';
 import * as S from '@/styles/SignUp/IntroPage.styled';
 
 const onClickToLogin = () => {
-  const clientId = import.meta.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
-  const redirectUri = import.meta.env.REACT_APP_GOOGLE_AUTH_REDIRECT_URI;
+  const clientId = import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID;
+  const redirectUri = import.meta.env.VITE_GOOGLE_AUTH_REDIRECT_URI;
   console.log('client ID: ', clientId);
   console.log('Redirect URI: ', redirectUri);
 
-  const googlOAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?&response_type=code
-		&client_id=${clientId}
-		&redirect_uri=${redirectUri}
-		&scope=email profile`;
+  const googlOAuthUrl = `http://localhost:8080/oauth2/authorize/google?&redirect_uri=${redirectUri}`;
 
   window.location.href = googlOAuthUrl;
 };
