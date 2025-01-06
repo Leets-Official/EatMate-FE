@@ -4,6 +4,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import logo from '@/assets/images/EatMate_main_Logo.svg';
 import rightArrow from '@/assets/images/ic_arrow_right.svg';
+import BottomNavigation from '@/components/common/BottomNavi';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -80,6 +81,7 @@ const Home = () => {
           </div>
         )}
       </MeetingListContainer>
+      <BottomNavigation />
     </Container>
   );
 };
