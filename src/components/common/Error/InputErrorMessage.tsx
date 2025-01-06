@@ -16,7 +16,6 @@ export const ErrorContainer = styled.span`
 `;
 
 const InputErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
-  if (!message) return null;
   return (
     <ErrorContainer>
       <img src={errorCheck} alt="check-icon" />

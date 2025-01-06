@@ -3,6 +3,19 @@ import Button from '@/components/common/Button/Button';
 import GoogleIcon from '@/assets/images/GoogleIcon.svg';
 import * as S from '@/styles/SignUp/IntroPage.styled';
 
+const onClickToLogin = () => {
+  const clientId = import.meta.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID;
+  const redirectUri = import.meta.env.REACT_APP_GOOGLE_AUTH_REDIRECT_URI;
+  console.log('client ID: ', clientId);
+  console.log('Redirect URI: ', redirectUri);
+
+  const googlOAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?&response_type=code
+		&client_id=${clientId}
+		&redirect_uri=${redirectUri}
+		&scope=email profile`;
+
+  window.location.href = googlOAuthUrl;
+};
 const IntroPage: React.FC = () => {
   return (
     <S.Container>
@@ -23,9 +36,10 @@ const IntroPage: React.FC = () => {
           color="black"
           rounded="md"
           svgIcon
+          onClick={onClickToLogin}
         >
           <img src={GoogleIcon} alt="google-icon" />
-          Google로 가입
+          Google 계정으로 시작하기
         </Button>
       </S.ButtonWrapper>
     </S.Container>
