@@ -12,8 +12,9 @@ interface MeetingListItemProps {
 }
 
 const Container = styled.div<{ isSelected: boolean }>`
-  width: 334px;
-  height: 135px;
+  width: 100%;
+  max-width: 334px;
+  height: auto;
   border-radius: 8px;
   padding: 16px;
   display: flex;
@@ -37,12 +38,21 @@ const Title = styled.div`
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Description = styled.div`
   font-size: 14px;
   color: ${theme.COLORS.gray[300]};
   margin-bottom: 12px;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 const InfoContainer = styled.div`
@@ -57,6 +67,7 @@ const Location = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+  flex-shrink: 1;
 `;
 
 const Participants = styled.div`
