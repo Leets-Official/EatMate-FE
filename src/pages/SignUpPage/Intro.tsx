@@ -4,16 +4,13 @@ import GoogleIcon from '@/assets/images/GoogleIcon.svg';
 import * as S from '@/styles/SignUp/IntroPage.styled';
 
 const onClickToLogin = () => {
-  const clientId = import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID;
-  const redirectUri = import.meta.env.VITE_GOOGLE_AUTH_REDIRECT_URI;
-  console.log('client ID: ', clientId);
-  console.log('Redirect URI: ', redirectUri);
+  const baseUrl = import.meta.env.VITE_BASE_URL;
 
-  const googlOAuthUrl = `http://localhost:8080/oauth2/authorize/google?&redirect_uri=${redirectUri}`;
-
-  window.location.href = googlOAuthUrl;
+  const googleOAuthUrl = `${baseUrl}/oauth2/authorization/google`;
+  window.location.href = googleOAuthUrl;
 };
-const IntroPage: React.FC = () => {
+
+const Intro: React.FC = () => {
   return (
     <S.Container>
       <S.ContentWrapper>
@@ -43,4 +40,4 @@ const IntroPage: React.FC = () => {
   );
 };
 
-export default IntroPage;
+export default Intro;
