@@ -31,6 +31,7 @@ const Container = styled.div<{ isSelected: boolean }>`
       : css`
           box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         `}
+  cursor: pointer;
 `;
 
 const Title = styled.div`

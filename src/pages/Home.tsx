@@ -30,10 +30,14 @@ const NoticeContainer = styled.div`
   margin: 16px 0;
   font-size: 12px;
   font-weight: 400;
+  cursor: pointer;
 `;
 
-const TabsContainer = styled.div`
-  margin-top: 12px;
+const Line = styled.div`
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-top: 2px solid #ddd;
+  height: 20px;
 `;
 
 const Home = () => {
@@ -56,13 +60,12 @@ const Home = () => {
         <img src={rightArrow} alt="오른쪽 화살표" />
       </NoticeContainer>
 
-      <TabsContainer>
-        <Tabs
-          tabs={['밥약', '술약', '배달팟']}
-          onTabClick={handleTabClick}
-          selectedIndex={selectedTab}
-        />
-      </TabsContainer>
+      <Line />
+      <Tabs
+        tabs={['밥약', '술약', '배달팟']}
+        onTabClick={handleTabClick}
+        selectedIndex={selectedTab}
+      />
 
       {selectedTab === 0 && <MeetingList />}
       {selectedTab === 1 && <MeetingList />}

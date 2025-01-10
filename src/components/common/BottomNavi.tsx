@@ -4,8 +4,8 @@ import homeIcon from '@/assets/images/ic_home.svg';
 import homeIconActive from '@/assets/images/ic_home_color.svg';
 import participantsIcon from '@/assets/images/ic_people.svg';
 import participantsIconActive from '@/assets/images/ic_people_color.svg';
-import myPageIcon from '@/assets/images/EatMate_circle_logo.svg';
-// import myPageIconActive from '@/assets/images/EatMate_circle_logo_active.svg';
+import myPageIcon from '@/assets/images/ic_navi_logo.svg';
+import mypageIconActive from '@/assets/images/ic_navi_logo_color.svg';
 
 import theme from '@/styles/theme';
 
@@ -63,7 +63,7 @@ const BottomNavigation = () => {
       icon: participantsIcon,
       activeIcon: participantsIconActive,
     },
-    { label: '마이페이지', icon: myPageIcon, activeIcon: myPageIcon },
+    { label: '마이페이지', icon: myPageIcon, activeIcon: mypageIconActive },
   ];
 
   return (
