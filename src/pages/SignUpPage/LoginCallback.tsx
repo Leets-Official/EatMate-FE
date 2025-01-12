@@ -8,7 +8,7 @@ const LoginCallback: React.FC = () => {
   useEffect(() => {
     const handleLoginResponse = async () => {
       try {
-        const response = await defaultInstance.post('/api/auth/info');
+        const response = await defaultInstance.get('/api/auth/info');
         console.log('API 응답: ', response.data);
         const { role } = response.data.result;
 
