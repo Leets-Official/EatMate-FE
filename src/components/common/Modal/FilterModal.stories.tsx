@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import FilterModal from './FilterModal';
 import RangeSlider from '../RangeSlider';
-import React from 'react';
 
 const meta: Meta<typeof FilterModal> = {
   title: 'Components/Modal/FilterModal',

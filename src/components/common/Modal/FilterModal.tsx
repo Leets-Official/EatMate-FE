@@ -1,3 +1,4 @@
+import theme from '@/styles/theme';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -70,8 +71,9 @@ const CloseButton = styled.button`
   margin-top: 16px;
   padding: 12px;
   font-size: 14px;
-  color: #333;
-  background: #f5f5f5;
+  font-weight: 800;
+  color: white;
+  background: ${theme.COLORS.main};
   border: none;
   border-radius: 8px;
   cursor: pointer;
