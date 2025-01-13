@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import theme from '@/styles/theme';
 import React, { useEffect, useState } from 'react';
 
-// 슬라이더 컨테이너 스타일 정의
 const SliderContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,15 +11,13 @@ const SliderContainer = styled.div`
   border-radius: 8px;
 `;
 
-// 상단 범위 레이블 스타일 정의
-const RangeLabel = styled.div`
+const RangeLabel = styled.div<{ isColor: boolean }>`
   font-size: 18px;
   font-weight: bold;
-  color: ${({ theme }) => theme.COLORS.main};
+  color: ${({ isColor, theme }) => (isColor ? theme.COLORS.main : 'black')};
   margin-bottom: 20px;
 `;
 
-// 슬라이더 스타일 정의
 const Slider = styled.input`
   -webkit-appearance: none;
   appearance: none;
@@ -61,12 +58,13 @@ const Slider = styled.input`
   }
 `;
 
-interface ThirdQuestionProps {
+interface RangeSliderProps {
   isOpen: boolean;
+  isColor?: boolean;
 }
 
-const ThirdQuestion = ({ isOpen }: ThirdQuestionProps) => {
-  // TODO: recoil 사용하도록 수정하기
+// RangeSlider 쓸 때 isColor를 false로 해서 주면 인원 표시 검정으로 뜹니다! 기본은 main 컬러 색,,
+const RangeSlider = ({ isOpen, isColor = true }: RangeSliderProps) => {
   // 고정된 최소값 (2인)
   const [minValue] = useState(2);
   // 선택 가능한 최대값
@@ -92,7 +90,7 @@ const ThirdQuestion = ({ isOpen }: ThirdQuestionProps) => {
   return (
     <SliderContainer>
       {/* 상단 범위 레이블 */}
-      <RangeLabel>
+      <RangeLabel isColor={isColor}>
         {isTwo ? `${minValue}인` : `${minValue}인 ~ ${maxValue}인`}
       </RangeLabel>
       {/* 슬라이더 */}
@@ -108,4 +106,4 @@ const ThirdQuestion = ({ isOpen }: ThirdQuestionProps) => {
   );
 };
 
-export default ThirdQuestion;
+export default RangeSlider;
