@@ -16,7 +16,7 @@ const SliderContainer = styled.div`
 const RangeLabel = styled.div`
   font-size: 18px;
   font-weight: bold;
-  color: ${theme.COLORS.main};
+  color: ${({ theme }) => theme.COLORS.main};
   margin-bottom: 20px;
 `;
 
@@ -45,8 +45,8 @@ const Slider = styled.input`
     -webkit-appearance: none;
     width: 20px;
     height: 20px;
-    background: ${theme.COLORS.white};
-    border: 2px solid ${theme.COLORS.main};
+    background: ${({ theme }) => theme.COLORS.white};
+    border: 2px solid ${({ theme }) => theme.COLORS.main};
     border-radius: 50%;
     cursor: pointer;
   }
@@ -54,8 +54,8 @@ const Slider = styled.input`
   &::-moz-range-thumb {
     width: 20px;
     height: 20px;
-    background: ${theme.COLORS.white};
-    border: 2px solid ${theme.COLORS.main};
+    background: ${({ theme }) => theme.COLORS.white};
+    border: 2px solid ${({ theme }) => theme.COLORS.main};
     border-radius: 50%;
     cursor: pointer;
   }
@@ -66,6 +66,7 @@ interface ThirdQuestionProps {
 }
 
 const ThirdQuestion = ({ isOpen }: ThirdQuestionProps) => {
+  // TODO: recoil 사용하도록 수정하기
   // 고정된 최소값 (2인)
   const [minValue] = useState(2);
   // 선택 가능한 최대값

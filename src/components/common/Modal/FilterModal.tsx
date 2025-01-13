@@ -1,6 +1,7 @@
 import theme from '@/styles/theme';
 import React from 'react';
 import styled from 'styled-components';
+import CheckMark from '@/assets/images/ic_option_check.svg';
 
 interface ModalProps {
   isOpen: boolean;
@@ -52,11 +53,11 @@ const OptionList = styled.ul`
 
 const Option = styled.li<{ selected: boolean }>`
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  justify-content: space-between;
+  align-items: center;
   padding: 12px 16px;
   font-size: 14px;
-  color: ${({ selected }) => (selected ? '#FF6A00' : '#333')};
+  color: ${({ selected }) => (selected ? theme.COLORS.main : '#333')};
   font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')};
   cursor: pointer;
 
@@ -79,13 +80,13 @@ const CloseButton = styled.button`
   font-size: 14px;
   font-weight: 800;
   color: white;
-  background: ${theme.COLORS.main};
+  background: ${({ theme }) => theme.COLORS.main};
   border: none;
   border-radius: 8px;
   cursor: pointer;
 
   &:hover {
-    background: #e0e0e0;
+    opacity: 0.7;
   }
 `;
 
@@ -112,10 +113,14 @@ const FilterModal: React.FC<ModalProps> = ({
                 selected={selectedOption === option.value}
                 onClick={() => onSelect(option.value)}
               >
-                {option.label}
-                {selectedOption === option.value && '✔'}
-                {option.description && (
-                  <OptionDescription>{option.description}</OptionDescription>
+                <div>
+                  {option.label}
+                  {option.description && (
+                    <OptionDescription>{option.description}</OptionDescription>
+                  )}
+                </div>
+                {selectedOption === option.value && (
+                  <img src={CheckMark} alt="check" />
                 )}
               </Option>
             ))}

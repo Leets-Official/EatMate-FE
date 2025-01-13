@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import FilterModal from './FilterModal';
 import RangeSlider from '../RangeSlider';
+import { useState } from 'react';
 
 const meta: Meta<typeof FilterModal> = {
   title: 'Components/Modal/FilterModal',
@@ -36,45 +37,65 @@ type Story = StoryObj<typeof meta>;
 
 // 정렬 모달
 export const SortingModal: Story = {
-  args: {
-    isOpen: true,
-    title: '정렬',
-    options: [
-      { label: '기본순', value: 'default' },
-      { label: '최신 등록 순', value: 'latest' },
-      { label: '모임시간 임박 순', value: 'urgent' },
-    ],
-    selectedOption: 'default',
-    onSelect: (value) => alert(`선택된 옵션: ${value}`),
-    onClose: () => alert('모달 닫기'),
+  render: () => {
+    const [selectedOption, setSelectedOption] = useState('default');
+
+    const handleSelect = (value: string) => {
+      setSelectedOption(value);
+    };
+
+    return (
+      <FilterModal
+        isOpen={true}
+        title="정렬"
+        options={[
+          { label: '기본순', value: 'default' },
+          { label: '최신 등록 순', value: 'latest' },
+          { label: '모임시간 임박 순', value: 'urgent' },
+        ]}
+        selectedOption={selectedOption}
+        onSelect={handleSelect}
+        onClose={() => alert('모달 닫기')}
+      />
+    );
   },
 };
 
 // 성별 선택 모달
 export const GenderModal: Story = {
-  args: {
-    isOpen: true,
-    title: '성별',
-    options: [
-      {
-        label: '모두 보기',
-        value: 'all',
-        description: '',
-      },
-      {
-        label: '남자만',
-        value: 'male',
-        description: '남자끼리만 모여요',
-      },
-      {
-        label: '여자만',
-        value: 'female',
-        description: '여자끼리만 모여요',
-      },
-    ],
-    selectedOption: 'all',
-    onSelect: (value) => alert(`선택된 성별: ${value}`),
-    onClose: () => alert('모달 닫기'),
+  render: () => {
+    const [selectedOption, setSelectedOption] = useState('all');
+
+    const handleSelect = (value: string) => {
+      setSelectedOption(value);
+    };
+
+    return (
+      <FilterModal
+        isOpen={true}
+        title="성별"
+        options={[
+          {
+            label: '모두 보기',
+            value: 'all',
+            description: '',
+          },
+          {
+            label: '남자만',
+            value: 'male',
+            description: '남자끼리만 모여요',
+          },
+          {
+            label: '여자만',
+            value: 'female',
+            description: '여자끼리만 모여요',
+          },
+        ]}
+        selectedOption={selectedOption}
+        onSelect={handleSelect}
+        onClose={() => alert('모달 닫기')}
+      />
+    );
   },
 };
 
