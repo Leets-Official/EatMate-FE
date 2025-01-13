@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // 슬라이더 컨테이너 스타일 정의
 const SliderContainer = styled.div`
@@ -66,25 +66,33 @@ interface ThirdQuestionProps {
 }
 
 const ThirdQuestion = ({ isOpen }: ThirdQuestionProps) => {
-  const [minValue] = React.useState(2); // 고정된 최소값 (2인)
-  const [maxValue, setMaxValue] = React.useState(2); // 선택 가능한 최대값
+  // 고정된 최소값 (2인)
+  const [minValue] = useState(2);
+  // 선택 가능한 최대값
+  const [maxValue, setMaxValue] = useState(2);
+
+  // 2인만 선택된 상태인지 여부를 추적
+  const [isTwo, setIsTwo] = useState(true);
 
   useEffect(() => {
-    if (isOpen && maxValue === undefined) {
-      setMaxValue(2);
+    if (isOpen) {
+      setIsTwo(minValue === 2 && maxValue === 2);
     }
-  }, [isOpen, maxValue]);
+  }, [isOpen, minValue, maxValue]);
 
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(event.target.value);
     setMaxValue(value);
+
+    // 슬라이더 값 변경 시 isTwo 상태 업데이트
+    setIsTwo(minValue === 2 && value === 2);
   };
 
   return (
     <SliderContainer>
       {/* 상단 범위 레이블 */}
       <RangeLabel>
-        {minValue}인 ~ {maxValue}인
+        {isTwo ? `${minValue}인` : `${minValue}인 ~ ${maxValue}인`}
       </RangeLabel>
       {/* 슬라이더 */}
       <Slider
