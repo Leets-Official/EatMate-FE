@@ -54,11 +54,23 @@ export const SortingModal: Story = {
 export const GenderModal: Story = {
   args: {
     isOpen: true,
-    title: '성별 선택',
+    title: '성별',
     options: [
-      { label: '모두 보기', value: 'all' },
-      { label: '남자만', value: 'male' },
-      { label: '여자만', value: 'female' },
+      {
+        label: '모두 보기',
+        value: 'all',
+        description: '',
+      },
+      {
+        label: '남자만',
+        value: 'male',
+        description: '남자끼리만 모여요',
+      },
+      {
+        label: '여자만',
+        value: 'female',
+        description: '여자끼리만 모여요',
+      },
     ],
     selectedOption: 'all',
     onSelect: (value) => alert(`선택된 성별: ${value}`),
@@ -72,7 +84,7 @@ export const ParticipantModal: Story = {
     return (
       <FilterModal
         isOpen={true}
-        title="인원수 선택"
+        title="인원수"
         options={[]}
         selectedOption=""
         onSelect={() => {}}

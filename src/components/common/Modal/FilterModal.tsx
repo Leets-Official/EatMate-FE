@@ -5,11 +5,11 @@ import styled from 'styled-components';
 interface ModalProps {
   isOpen: boolean;
   title: string;
-  options: { label: string; value: string }[]; // 옵션은 label과 value로 구성
-  selectedOption: string; // 선택된 옵션의 value
-  onSelect: (value: string) => void; // value로 선택을 전달
+  options: { label: string; value: string; description?: string }[];
+  selectedOption: string;
+  onSelect: (value: string) => void;
   onClose: () => void;
-  children?: React.ReactNode; // children 추가
+  children?: React.ReactNode;
 }
 
 const Overlay = styled.div<{ isOpen: boolean }>`
@@ -52,8 +52,8 @@ const OptionList = styled.ul`
 
 const Option = styled.li<{ selected: boolean }>`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
   padding: 12px 16px;
   font-size: 14px;
   color: ${({ selected }) => (selected ? '#FF6A00' : '#333')};
@@ -63,6 +63,12 @@ const Option = styled.li<{ selected: boolean }>`
   &:hover {
     background: #f8f8f8;
   }
+`;
+
+const OptionDescription = styled.div`
+  font-size: 10px;
+  color: #636363;
+  margin-top: 6px;
 `;
 
 const CloseButton = styled.button`
@@ -108,6 +114,9 @@ const FilterModal: React.FC<ModalProps> = ({
               >
                 {option.label}
                 {selectedOption === option.value && '✔'}
+                {option.description && (
+                  <OptionDescription>{option.description}</OptionDescription>
+                )}
               </Option>
             ))}
           </OptionList>
