@@ -3,7 +3,7 @@ import { InputField } from '@/styles/SignUp/SignUp.styled';
 interface InputProps {
   type?: string;
   placeholder?: string;
-  value?: string;
+  value?: string | number | null | undefined;
   maxLength?: number;
   inputMode?:
     | 'none'
@@ -34,12 +34,13 @@ const SignUpInput: React.FC<InputProps> = ({
   width,
   ...props
 }) => {
+  const sanitizedValue = value !== null && value !== undefined ? value : '';
   return (
     <div>
       <InputField
         type={type}
         placeholder={placeholder}
-        value={value}
+        value={sanitizedValue.toString()}
         maxLength={maxLength}
         inputMode={inputMode}
         onChange={onChange}

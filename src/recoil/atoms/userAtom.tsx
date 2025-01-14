@@ -8,19 +8,19 @@ export const signupAtom = atom<{
   phoneNumber: string;
   mbti: string;
   nickname: string;
-  studentNumber: number;
+  studentNumber: number | null;
   profilePhoto: string | undefined;
 }>({
   key: 'signupAtom',
   default: {
-    year: 0,
-    month: 0,
-    day: 0,
+    year: null,
+    month: null,
+    day: null,
     gender: '',
     phoneNumber: '',
     mbti: '',
     nickname: '',
-    studentNumber: 0,
+    studentNumber: null,
     profilePhoto: undefined,
   },
 });
