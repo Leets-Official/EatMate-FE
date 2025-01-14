@@ -1,15 +1,12 @@
-
 /**
  * 년도 유효성 검사
  * @param year - 입력된 년도 값
  * @returns 에러 메세지 또는 true ( 유효한 경우 )
  */
-export const validateYear = (year: string): string | true => {
-  if (!/^\d{4}$/.test(year)) return '올바른 년도를 입력해주세요.';
-  const yearNumber = +year;
+export const validateYear = (year: number | null): string | true => {
+  if (year === null) return '년도를 입력해주세요.';
   const currentYear = new Date().getFullYear();
-  if (yearNumber < 1900 || yearNumber > currentYear)
-    return '올바른 년도를 입력해주세요.';
+  if (year < 1900 || year > currentYear) return '올바른 년도를 입력해주세요.';
   return true;
 };
 
@@ -18,11 +15,9 @@ export const validateYear = (year: string): string | true => {
  * @param month - 입력된 월 값
  * @returns 에러 메세지 또는 true ( 유효한 경우 )
  */
-export const validateMonth = (month: string): string | true => {
-  if (!/^\d{1,2}$/.test(month)) return '1에서 12 사이의 숫자를 입력해주세요.';
-  const monthNumber = +month;
-  if (monthNumber < 1 || monthNumber > 12)
-    return '1에서 12 사이의 숫자를 입력해주세요.';
+export const validateMonth = (month: number | null): string | true => {
+  if (month === null) return '월을 입력해주세요.';
+  if (month < 1 || month > 12) return '1에서 12 사이의 숫자를 입력해주세요.';
   return true;
 };
 
@@ -30,30 +25,23 @@ export const validateMonth = (month: string): string | true => {
  * 일 유효성 검사
  * @param day - 입력된 일 값
  * @param year - 입력된 년도 값
- * @param month - 입력된 월 값 
+ * @param month - 입력된 월 값
  * @returns - 에러 메세지 또는 true
  */
 export const validateDay = (
-  day: string,
-  year: string,
-  month: string
+  day: number | null,
+  year: number | null,
+  month: number | null
 ): string | true => {
-  const daysInMonth = new Date(+year, +month, 0).getDate();
-  const dayNumber = +day;
+  if (day === null || year === null || month === null)
+    return '날짜를 입력해주세요.';
 
-  if (!/^\d{1,2}$/.test(day)) {
-    return '올바른 숫자를 입력해주세요.';
-  }
+  const daysInMonth = new Date(year, month, 0).getDate();
 
-  if (dayNumber < 1) {
-    return '날짜는 1 이상이어야 합니다.';
-  }
-
-  if (dayNumber < 1 || dayNumber > daysInMonth)
+  if (day < 1 || day > daysInMonth)
     return `${month}월은 ${daysInMonth}일까지입니다.`;
   return true;
 };
-
 
 /**
  *  전화번호 유효성 검사
@@ -74,9 +62,8 @@ export const validatePhoneNumber = (value: string) => {
   return numericValue.length === 11;
 };
 
-
 /**
- * MBTI 단일 입력란 
+ * MBTI 단일 입력란
  * @param value - 입력된 MBTI 값
  * @param index - 입력된 위치 인덱스 (0~3)
  * @returns true or false

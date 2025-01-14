@@ -1,9 +1,9 @@
 import { atom } from 'recoil';
 
 export const signupAtom = atom<{
-  year: number;
-  month: number;
-  day: number;
+  year: number | null;
+  month: number | null;
+  day: number | null;
   gender: string;
   phoneNumber: string;
   mbti: string;
