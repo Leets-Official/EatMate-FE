@@ -42,6 +42,13 @@ export const SubText = styled.span`
   margin-top: 10px;
   font-size: 1rem;
   color: ${({ theme }) => theme.COLORS.textSecondary};
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin: 16px 0;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
 `;
 
 export const RightSpacer = styled.div`
