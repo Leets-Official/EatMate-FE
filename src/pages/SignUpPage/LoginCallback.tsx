@@ -1,4 +1,4 @@
-import defaultInstance from '@/apis/axiosInstance';
+import { getUserRole } from '@/apis/auth/auth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,9 +8,9 @@ const LoginCallback: React.FC = () => {
   useEffect(() => {
     const handleLoginResponse = async () => {
       try {
-        const response = await defaultInstance.get('/api/auth/info');
-        console.log('API 응답: ', response.data);
-        const { role } = response.data.result;
+        const response = await getUserRole();
+        console.log('API 응답: ', response);
+        const { role } = response.result;
 
         // Role에 따라 페이지 이동
         if (role === 'USER') {

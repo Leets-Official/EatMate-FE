@@ -1,5 +1,10 @@
 import defaultInstance from '@/apis/axiosInstance';
 
+export const getUserRole = async () => {
+  const response = await defaultInstance.get('/api/auth/info');
+  return response.data;
+};
+
 export const signupUser = async (signupData: {
   year: number | null;
   month: number | null;
