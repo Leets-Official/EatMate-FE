@@ -9,7 +9,7 @@ const LoginCallback: React.FC = () => {
     const handleLoginResponse = async () => {
       try {
         console.log(defaultInstance.defaults.baseURL);
-        const response = await defaultInstance.get('api/auth/info');
+        const response = await defaultInstance.get('/api/auth/info');
         console.log('API 응답: ', response.data);
         const { role } = response.data.result;
 

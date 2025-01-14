@@ -1,26 +1,26 @@
 import { atom } from 'recoil';
 
 export const signupAtom = atom<{
-  year: string;
-  month: string;
-  day: string;
+  year: number;
+  month: number;
+  day: number;
   gender: string;
   phoneNumber: string;
   mbti: string;
   nickname: string;
-  studentId: string;
-  profilePhoto: string | undefined; // 타입 수정
+  studentNumber: number;
+  profilePhoto: string | undefined;
 }>({
   key: 'signupAtom',
   default: {
-    year: '',
-    month: '',
-    day: '',
+    year: 0,
+    month: 0,
+    day: 0,
     gender: '',
     phoneNumber: '',
     mbti: '',
     nickname: '',
-    studentId: '',
+    studentNumber: 0,
     profilePhoto: undefined,
   },
 });
