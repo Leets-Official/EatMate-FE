@@ -120,16 +120,23 @@ export const isNicknameValid = (value: string): boolean => {
  * @param value - 입력된 학번 값
  * @returns 에러 메세지 또는 null
  */
-export const validateStudentId = (value: string): string | null => {
-  if (!/^\d*$/.test(value)) {
+export const validateStudentId = (value: number | null): string | null => {
+  if (value === null) {
+    return '학번을 입력해주세요.';
+  }
+  const valueAsString = value.toString();
+
+  if (!/^\d*$/.test(valueAsString)) {
     return '숫자만 입력 가능합니다.';
   }
-  if (!/^20[12]\d{6}$/.test(value)) {
+
+  if (!/^20[12]\d{6}$/.test(valueAsString)) {
     return '올바른 학번을 입력해주세요.';
   }
+
   return null;
 };
 
-export const isStudentIdValid = (value: string): boolean => {
+export const isStudentIdValid = (value: number | null): boolean => {
   return validateStudentId(value) === null;
 };
