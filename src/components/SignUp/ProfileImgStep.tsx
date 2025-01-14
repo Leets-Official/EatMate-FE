@@ -75,8 +75,7 @@ const ProfileImgStep: React.FC = () => {
       };
       const response = await signupUser(signupData);
       console.log('회원가입 성공: ', response);
-      setIsPolicyModalOpen(false);
-      nav('/home');
+      setIsPolicyModalOpen(true);
     } catch (error) {
       console.error('회원가입 실패: ', error);
     }
