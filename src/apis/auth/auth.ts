@@ -11,7 +11,15 @@ export const signupUser = async (signupData: {
   nickname: string;
 }) => {
   try {
-    const response = await defaultInstance.post('/api/auth/signup', signupData);
+    const formattedSignupData = {
+      ...signupData,
+      phoneNumber: signupData.phoneNumber.replace(/-/g, ''),
+    };
+
+    const response = await defaultInstance.post(
+      '/api/auth/signup',
+      formattedSignupData
+    );
     return response.data;
   } catch (error) {
     console.error('회원가입 요청 중 오류가 발생했습니다.', error);
