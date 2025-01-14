@@ -15,6 +15,7 @@ import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 import { useNavigate } from 'react-router-dom';
 import PolicyAgreementStep from './PolicyAgreementStep';
+import { signupUser } from '@/apis/auth/auth';
 
 const ProfileImgStep: React.FC = () => {
   const nav = useNavigate();
@@ -60,9 +61,24 @@ const ProfileImgStep: React.FC = () => {
     handleCloseModal();
   };
 
-  const handleProceedToPolicy = () => {
-    if (signupState.profilePhoto) {
-      setIsPolicyModalOpen(true);
+  const handleProceedToPolicy = async () => {
+    try {
+      const signupData = {
+        year: signupState.year,
+        month: signupState.month,
+        day: signupState.day,
+        gender: signupState.gender,
+        phoneNumber: signupState.phoneNumber,
+        mbti: signupState.mbti,
+        studentNumber: signupState.studentNumber,
+        nickname: signupState.nickname,
+      };
+      const response = await signupUser(signupData);
+      console.log('회원가입 성공: ', response);
+      setIsPolicyModalOpen(false);
+      nav('/home');
+    } catch (error) {
+      console.error('회원가입 실패: ', error);
     }
   };
 
@@ -87,9 +103,7 @@ const ProfileImgStep: React.FC = () => {
           <ProfileImage
             imageUrl={signupState.profilePhoto || ''}
             onClick={handleOpenModal}
-          >
-            {!signupState.profilePhoto && <span>+</span>}
-          </ProfileImage>
+          ></ProfileImage>
           <HiddenFileInput
             id="fileInput"
             type="file"

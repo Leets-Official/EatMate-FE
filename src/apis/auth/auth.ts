@@ -1,13 +1,13 @@
 import defaultInstance from '@/apis/axiosInstance';
 
 export const signupUser = async (signupData: {
-  year: number;
-  month: number;
-  day: number;
+  year: number | null;
+  month: number | null;
+  day: number | null;
   gender: string;
   phoneNumber: string;
   mbti: string;
-  studentNumber: number;
+  studentNumber: number | null;
   nickname: string;
 }) => {
   try {
