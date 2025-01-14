@@ -43,10 +43,11 @@ const BirthdayGenderStep: React.FC = () => {
     { label: '일', key: 'day', maxLength: 2, width: '40px' },
   ];
 
-  const handleInputChange = (key: string, value: string) => {
+  const handleInputChange = (key: keyof typeof signupState, value: string) => {
+    const numericValue = value === '' ? null : parseInt(value, 10);
     setSignupState((prev) => ({
       ...prev,
-      [key]: value,
+      [key]: numericValue,
     }));
   };
 
@@ -108,7 +109,9 @@ const BirthdayGenderStep: React.FC = () => {
                 type="text"
                 maxLength={maxLength}
                 width={width}
-                value={signupState[key]}
+                value={
+                  signupState[key] !== null ? signupState[key]?.toString() : ''
+                }
                 onChange={(e) => handleInputChange(key, e.target.value)}
                 onBlur={() => handleBlur(key)}
               />
