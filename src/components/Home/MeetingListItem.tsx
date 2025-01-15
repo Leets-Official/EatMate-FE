@@ -1,4 +1,3 @@
-import theme from '@/styles/theme';
 import React from 'react';
 import styled, { css } from 'styled-components';
 
@@ -25,7 +24,7 @@ const Container = styled.div<{ isSelected: boolean }>`
   ${({ isSelected }) =>
     isSelected
       ? css`
-          border: 1px solid ${theme.COLORS.main};
+          border: 1px solid ${({ theme }) => theme.COLORS.main};
           box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         `
       : css`
@@ -45,7 +44,7 @@ const Title = styled.div`
 
 const Description = styled.div`
   font-size: 14px;
-  color: ${theme.COLORS.gray[300]};
+  color: ${({ theme }) => theme.COLORS.gray[300]};
   margin-bottom: 12px;
   white-space: normal;
   overflow: hidden;
@@ -79,7 +78,7 @@ const Participants = styled.div`
 `;
 
 const Time = styled.div`
-  color: ${theme.COLORS.main};
+  color: ${({ theme }) => theme.COLORS.main};
   white-space: nowrap;
 `;
 

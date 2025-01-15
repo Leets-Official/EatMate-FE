@@ -22,7 +22,7 @@ const TabContainer = styled.div`
 const Tab = styled.div<{ isSelected: boolean }>`
   flex: 1;
   text-align: center;
-  padding: 12px 0;
+  padding: 6px 0;
   font-size: 16px;
   font-weight: bold;
   color: ${({ isSelected, theme }) =>
