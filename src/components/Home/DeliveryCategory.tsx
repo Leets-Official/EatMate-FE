@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -8,11 +7,10 @@ const Wrapper = styled.div`
   margin-top: 10px;
 `;
 
-const ItemsContainer = styled.div<{ expanded: boolean }>`
+const ItemsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 8px;
-  max-height: ${({ expanded }) => (expanded ? 'none' : '64px')};
   overflow: hidden;
   transition: max-height 0.3s ease-in-out;
 `;
@@ -27,22 +25,6 @@ const Item = styled.div`
 const Icon = styled.img`
   width: 30px;
   height: 30px;
-`;
-
-const MoreButton = styled.button`
-  margin-top: 8px;
-  background: none;
-  border: none;
-  color: ${({ theme }) => theme.COLORS.main};
-  font-size: 14px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-
-  &:hover {
-    text-decoration: underline;
-  }
 `;
 
 const items = [

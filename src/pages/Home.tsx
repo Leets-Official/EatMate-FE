@@ -1,4 +1,4 @@
-import Tabs from '@/components/common/Tab';
+import Tabs from '@/components/common/Tab/Tab';
 import MeetingList from '@/components/Home/MeetingList';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -19,14 +19,23 @@ const Line = styled.div`
   border-top-right-radius: 20px;
   border-top: 2px solid #ddd;
   height: 20px;
+  margin-top: 10px;
 `;
 
 const Home = () => {
-  const [selectedTab, setSelectedTab] = useState(0);
+  // 선택된 탭의 ID를 관리하는 상태
+  const [selectedTabId, setSelectedTabId] = useState('tab1');
 
-  const handleTabClick = (index: number) => {
-    setSelectedTab(index);
-    console.log(`선택된 탭: ${index}`);
+  // 탭 데이터
+  const tabs = [
+    { id: 'tab1', label: '밥약' },
+    { id: 'tab2', label: '술약' },
+    { id: 'tab3', label: '배달팟' },
+  ];
+
+  // 탭 클릭 핸들러
+  const handleTabClick = (id: string) => {
+    setSelectedTabId(id);
   };
   const handlePostClick = () => {
     console.log('Post button clicked');
@@ -37,14 +46,14 @@ const Home = () => {
       <Header subText="배달팟 실시간 모집 중" />
       <Line />
       <Tabs
-        tabs={['밥약', '술약', '배달팟']}
+        tabs={tabs}
+        selectedTabId={selectedTabId}
         onTabClick={handleTabClick}
-        selectedIndex={selectedTab}
       />
 
-      {selectedTab === 0 && <MeetingList />}
-      {selectedTab === 1 && <MeetingList />}
-      {selectedTab === 2 && (
+      {selectedTabId === 'tab1' && <MeetingList />}
+      {selectedTabId === 'tab2' && <MeetingList />}
+      {selectedTabId === 'tab3' && (
         <div>
           <DeliveryCategory />
           <MeetingList />

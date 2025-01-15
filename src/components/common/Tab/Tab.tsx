@@ -1,10 +1,16 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import theme from '@/styles/theme';
+
+interface TabItem {
+  id: string;
+  label: string;
+}
+
 interface TabProps {
-  tabs: string[];
-  onTabClick: (index: number) => void;
-  selectedIndex: number;
+  tabs: TabItem[];
+  onTabClick: (id: string) => void;
+  selectedTabId: string;
 }
 
 const TabContainer = styled.div`
@@ -30,16 +36,16 @@ const Tab = styled.div<{ isSelected: boolean }>`
     `}
 `;
 
-const Tabs: React.FC<TabProps> = ({ tabs, onTabClick, selectedIndex }) => {
+const Tabs: React.FC<TabProps> = ({ tabs, onTabClick, selectedTabId }) => {
   return (
     <TabContainer>
-      {tabs.map((tab, index) => (
+      {tabs.map((tab) => (
         <Tab
-          key={index}
-          isSelected={selectedIndex === index}
-          onClick={() => onTabClick(index)}
+          key={tab.id}
+          isSelected={selectedTabId === tab.id}
+          onClick={() => onTabClick(tab.id)}
         >
-          {tab}
+          {tab.label}
         </Tab>
       ))}
     </TabContainer>
