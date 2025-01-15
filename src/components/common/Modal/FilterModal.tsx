@@ -34,14 +34,14 @@ const ModalContainer = styled.div`
   background: #fff;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
-  padding: 16px;
   z-index: 20;
+  font-family: ${({ theme }) => theme.FONT_FAMILY.pretendard};
 `;
 
 const Title = styled.h2`
   font-size: 16px;
   font-weight: bold;
-  margin-bottom: 16px;
+  margin: 16px 0 16px 0;
   text-align: center;
 `;
 
@@ -74,12 +74,12 @@ const OptionDescription = styled.div`
 
 const CloseButton = styled.button`
   display: block;
-  width: 100%;
-  margin-top: 16px;
+  margin: 16px auto;
+  width: 85%;
   padding: 12px;
   font-size: 14px;
   font-weight: 800;
-  color: white;
+  color: ${({ theme }) => theme.COLORS.white};
   background: ${({ theme }) => theme.COLORS.main};
   border: none;
   border-radius: 8px;

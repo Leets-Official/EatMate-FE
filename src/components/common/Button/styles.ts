@@ -4,7 +4,7 @@ export type ButtonVariant =
   | 'primary'
   | 'primary-outline'
   | 'primary-outlineless';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 export type ButtonRounded = 'none' | 'sm' | 'md';
 
 const sizeStyles: Record<
@@ -25,6 +25,12 @@ const sizeStyles: Record<
     width: 330px;
     padding: ${svgIcon ? '0.3rem 1.5rem' : '1rem 1.5rem'};
     font-size: 18px;
+  `,
+  xl: (svgIcon) => css`
+    width: 349px;
+    height: 45px;
+    padding: ${svgIcon ? '0.3rem 1.5rem' : '1rem 1.5rem'};
+    font-size: 14px;
   `,
 };
 
