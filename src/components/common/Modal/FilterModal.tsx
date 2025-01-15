@@ -31,7 +31,7 @@ const ModalContainer = styled.div`
   transform: translateX(-50%);
   width: 100%;
   max-width: 390px;
-  background: #fff;
+  background: ${({ theme }) => theme.COLORS.white};
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   z-index: 20;
