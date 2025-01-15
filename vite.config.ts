@@ -7,9 +7,11 @@ export default defineConfig({
   plugins: [react(), svgr()],
   server: {
     port: 3000,
-  },
-  build: {
-    outDir: 'build',
+    host: true,
+    hmr: {
+      protocol: 'ws',
+      host: 'localhost',
+    },
   },
   resolve: {
     alias: {

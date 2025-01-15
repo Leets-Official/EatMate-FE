@@ -1,5 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import LocateIcon from '@/assets/images/ic_locate.svg?react';
+import PersonIcon from '@/assets/images/ic_person.svg?react';
 
 interface MeetingListItemProps {
   isSelected: boolean;
@@ -98,11 +100,11 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
       </div>
       <InfoContainer>
         <Location>
-          <img src="/src/assets/images/ic_locate.svg" alt="location icon" />
+          <LocateIcon />
           {location}
         </Location>
         <Participants>
-          <img src="/src/assets/images/ic_person.svg" alt="participants icon" />
+          <PersonIcon />
           {participants} ㆍ
         </Participants>
         <Time>{time}분 전 대화</Time>
