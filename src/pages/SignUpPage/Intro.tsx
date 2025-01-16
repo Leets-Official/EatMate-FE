@@ -3,7 +3,14 @@ import Button from '@/components/common/Button/Button';
 import GoogleIcon from '@/assets/images/GoogleIcon.svg';
 import * as S from '@/styles/SignUp/IntroPage.styled';
 
-const IntroPage: React.FC = () => {
+const onClickToLogin = () => {
+  const baseUrl = import.meta.env.VITE_BASE_URL;
+
+  const googleOAuthUrl = `${baseUrl}/oauth2/authorization/google`;
+  window.location.href = googleOAuthUrl;
+};
+
+const Intro: React.FC = () => {
   return (
     <S.Container>
       <S.ContentWrapper>
@@ -23,13 +30,14 @@ const IntroPage: React.FC = () => {
           color="black"
           rounded="md"
           svgIcon
+          onClick={onClickToLogin}
         >
           <img src={GoogleIcon} alt="google-icon" />
-          Google로 가입
+          Google 계정으로 시작하기
         </Button>
       </S.ButtonWrapper>
     </S.Container>
   );
 };
 
-export default IntroPage;
+export default Intro;

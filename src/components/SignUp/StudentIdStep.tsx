@@ -20,9 +20,10 @@ const StudentIdStep: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleInputChange = (value: string) => {
-    setSignupState((prev) => ({ ...prev, studentId: value }));
+    const numericValue = value === '' ? null : parseInt(value, 10);
+    setSignupState((prev) => ({ ...prev, studentNumber: numericValue }));
 
-    const validationError = validateStudentId(value);
+    const validationError = validateStudentId(numericValue);
     setErrorMessage(validationError || '');
   };
 
@@ -32,7 +33,7 @@ const StudentIdStep: React.FC = () => {
     }
   };
 
-  const isFormValid = isStudentIdValid(signupState.studentId);
+  const isFormValid = isStudentIdValid(signupState.studentNumber);
   return (
     <div>
       <MainTitle>학교 인증을 위해</MainTitle>
@@ -47,7 +48,7 @@ const StudentIdStep: React.FC = () => {
           inputMode="numeric"
           maxLength={9}
           placeholder="ex) 202534999"
-          value={signupState.studentId}
+          value={signupState.studentNumber}
           onChange={(e) => handleInputChange(e.target.value)}
         />
       </InputContainer>
