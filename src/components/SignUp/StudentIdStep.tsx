@@ -6,8 +6,34 @@ import {
 } from '@/styles/SignUp/SignUp.styled';
 import Button from '@/components/common/Button/Button';
 import SignUpInput from './SignupInput';
+import { useRecoilState } from 'recoil';
+import { useState } from 'react';
+import { signupAtom } from '@/recoil/atoms/userAtom';
+import InputErrorMessage from '@/components/common/Error/InputErrorMessage';
+import { isStudentIdValid, validateStudentId } from '@/utils/validate-input';
+import { useNavigate } from 'react-router-dom';
 
-const StudentIdStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
+const StudentIdStep: React.FC = () => {
+  const nav = useNavigate();
+
+  const [signupState, setSignupState] = useRecoilState(signupAtom);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const handleInputChange = (value: string) => {
+    const numericValue = value === '' ? null : parseInt(value, 10);
+    setSignupState((prev) => ({ ...prev, studentNumber: numericValue }));
+
+    const validationError = validateStudentId(numericValue);
+    setErrorMessage(validationError || '');
+  };
+
+  const handleNext = () => {
+    if (isFormValid) {
+      nav('/signup/profile-img');
+    }
+  };
+
+  const isFormValid = isStudentIdValid(signupState.studentNumber);
   return (
     <div>
       <MainTitle>학교 인증을 위해</MainTitle>
@@ -17,11 +43,25 @@ const StudentIdStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       </Description>
 
       <InputContainer>
-        <SignUpInput />
+        <SignUpInput
+          type="tel"
+          inputMode="numeric"
+          maxLength={9}
+          placeholder="ex) 202534999"
+          value={signupState.studentNumber}
+          onChange={(e) => handleInputChange(e.target.value)}
+        />
       </InputContainer>
+      {errorMessage && <InputErrorMessage message={errorMessage} />}
 
       <ButtonContainer>
-        <Button onClick={onNext} variant="primary" size="lg" rounded="sm">
+        <Button
+          onClick={handleNext}
+          variant="primary"
+          size="lg"
+          rounded="sm"
+          disabled={!isFormValid}
+        >
           다음
         </Button>
       </ButtonContainer>

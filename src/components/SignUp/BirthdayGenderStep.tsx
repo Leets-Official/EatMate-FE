@@ -6,16 +6,93 @@ import {
   InputContainer,
   ButtonContainer,
   SelectButtonContainer,
+  InputWrapper,
 } from '@/styles/SignUp/SignUp.styled';
+import { useEffect, useState } from 'react';
 import SignUpInput from './SignupInput';
-import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { signupAtom } from '@/recoil/atoms/userAtom';
+import InputErrorMessage from '../common/Error/InputErrorMessage';
+import {
+  validateDay,
+  validateMonth,
+  validateYear,
+} from '@/utils/validate-input';
+import { useNavigate } from 'react-router-dom';
 
-const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
-  const [selectedGender, setSelectedGender] = useState<string | null>(null);
+const BirthdayGenderStep: React.FC = () => {
+  const nav = useNavigate();
+  const [signupState, setSignupState] = useRecoilState(signupAtom);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [touched, setTouched] = useState({
+    year: false,
+    month: false,
+    day: false,
+  });
+
+  const { year, month, day, gender } = signupState;
+
+  const birthInputFields: {
+    label: string;
+    key: keyof typeof signupState;
+    maxLength: number;
+    width: string;
+  }[] = [
+    { label: '년', key: 'year', maxLength: 4, width: '100px' },
+    { label: '월', key: 'month', maxLength: 2, width: '40px' },
+    { label: '일', key: 'day', maxLength: 2, width: '40px' },
+  ];
+
+  const handleInputChange = (key: keyof typeof signupState, value: string) => {
+    const numericValue = value === '' ? null : parseInt(value, 10);
+    setSignupState((prev) => ({
+      ...prev,
+      [key]: numericValue,
+    }));
+  };
 
   const handleGenderClick = (gender: string) => {
-    setSelectedGender(gender);
+    setSignupState((prev) => ({ ...prev, gender }));
   };
+
+  const handleBlur = (key: keyof typeof signupState) => {
+    setTouched((prev) => ({
+      ...prev,
+      [key]: true,
+    }));
+
+    let error: string | true = '';
+    if (key === 'year') error = validateYear(year);
+    else if (key === 'month') error = validateMonth(month);
+    else if (key === 'day') error = validateDay(day, year, month);
+
+    if (error !== true) setErrorMessage(error as string);
+    else setErrorMessage('');
+  };
+
+  const isFormValid = () => {
+    return (
+      validateYear(year) === true &&
+      validateMonth(month) === true &&
+      validateDay(day, year, month) === true &&
+      gender !== ''
+    );
+  };
+
+  const handleNext = () => {
+    if (isFormValid()) {
+      nav('/signup/phone-number');
+    }
+  };
+
+  useEffect(() => {
+    console.log('signupState updated:', signupState);
+  }, [signupState]);
+
+  // 빌드 에러 임시 해결
+  useEffect(() => {
+    console.log(touched);
+  }, [touched]);
 
   return (
     <div>
@@ -24,27 +101,43 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
         <div>나이와 성별을 선택해주세요.</div>
         <div>간단히 입력 후 다음으로 넘어갈 수 있어요. </div>
       </Description>
-      <InputContainer>
-        <SignUpInput type="text" maxLength={4} width="100px" />
-        <Text>년</Text>
-        <SignUpInput type="text" maxLength={2} width="40px" />
-        <Text>월</Text>
-        <SignUpInput type="text" maxLength={2} width="40px" />
-        <Text>일</Text>
-      </InputContainer>
+      <InputWrapper>
+        <InputContainer>
+          {birthInputFields.map(({ label, key, maxLength, width }) => (
+            <>
+              <SignUpInput
+                type="text"
+                maxLength={maxLength}
+                width={width}
+                value={
+                  signupState[key] !== null ? signupState[key]?.toString() : ''
+                }
+                onChange={(e) => handleInputChange(key, e.target.value)}
+                onBlur={() => handleBlur(key)}
+              />
+              <Text>{label}</Text>
+            </>
+          ))}
+        </InputContainer>
+        {errorMessage && <InputErrorMessage message={errorMessage} />}
+      </InputWrapper>
 
       <SelectButtonContainer>
         <Button
-          onClick={() => handleGenderClick('남성')}
-          variant={selectedGender === '남성' ? 'primary' : 'primary-outline'}
+          onClick={() => handleGenderClick('MALE')}
+          variant={
+            signupState.gender === 'MALE' ? 'primary' : 'primary-outline'
+          }
           size="lg"
           rounded="sm"
         >
           남성
         </Button>
         <Button
-          onClick={() => handleGenderClick('여성')}
-          variant={selectedGender === '여성' ? 'primary' : 'primary-outline'}
+          onClick={() => handleGenderClick('FEMALE')}
+          variant={
+            signupState.gender === 'FEMALE' ? 'primary' : 'primary-outline'
+          }
           size="lg"
           rounded="sm"
         >
@@ -53,7 +146,13 @@ const BirthdayGenderStep: React.FC<{ onNext: () => void }> = ({ onNext }) => {
       </SelectButtonContainer>
 
       <ButtonContainer>
-        <Button onClick={onNext} variant="primary" size="lg" rounded="sm">
+        <Button
+          onClick={handleNext}
+          variant="primary"
+          size="lg"
+          rounded="sm"
+          disabled={!isFormValid()}
+        >
           다음
         </Button>
       </ButtonContainer>

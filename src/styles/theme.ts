@@ -1,19 +1,18 @@
 const COLORS = {
-  main: '#EB5916', // 메인 색상
+  main: '#EB5916',
   orange: {
-    100: '#F8B116', // 채도가 더 낮은 주황색
-    200: '#FF9D01', //        더 높은 주황색
+    100: '#F8B116',
+    200: '#FF9D01',
   },
-  yellow: '#F5F378', // 밝은 노란색
-  red: '#FE4600', // 밝은 빨간색
+  yellow: '#F5F378',
+  red: '#FE4600',
   gray: {
     100: '#D4D4D4',
     200: '#D9D9D9',
     300: '#ACACAC',
   },
-  ivory: '#FAF2DF', // 밝은 아이보리
-  purple: '#DCC1FF', // 연한 보라색
-  black: '#1A1A1A', // 검정색
+  white: '#FFFFFF',
+  black: '#1A1A1A',
   error: '#FF6D6D',
 };
 
@@ -27,13 +26,22 @@ const FONT_WEIGHT = {
   regular: 500,
   semiBold: 600,
   bold: 700,
-  extraBold: 800,
+};
+
+const FONT_SIZE = {
+  xs: '8px',
+  sm: '12px',
+  smMd: '14px', // sm과 md 사이
+  md: '16px',
+  lg: '20px',
+  xl: '24px',
 };
 
 const theme = {
   COLORS,
   FONT_FAMILY,
   FONT_WEIGHT,
+  FONT_SIZE,
 };
 
 export default theme;
