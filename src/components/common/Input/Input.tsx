@@ -1,4 +1,7 @@
+import { InputWrapper, Label, StyledInput } from './styles';
+
 interface InputProps {
+  label?: string;
   as?: 'input' | 'textarea';
   placeholder?: string;
   maxLength?: number;
@@ -7,6 +10,7 @@ interface InputProps {
 }
 
 export const Input: React.FC<InputProps> = ({
+  label,
   as = 'input',
   placeholder,
   maxLength,
@@ -14,12 +18,15 @@ export const Input: React.FC<InputProps> = ({
   type = 'text',
 }) => {
   return (
-    <StyledInput
-      as={as}
-      placeholder={placeholder}
-      maxLength={maxLength}
-      rows={as === 'textarea' ? rows : undefined}
-      type={as === 'input' ? type : undefined}
-    />
+    <InputWrapper>
+      <Label>{label}</Label>
+      <StyledInput
+        as={as}
+        placeholder={placeholder}
+        maxLength={maxLength}
+        rows={as === 'textarea' ? rows : undefined}
+        type={as === 'input' ? type : undefined}
+      />
+    </InputWrapper>
   );
 };

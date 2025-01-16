@@ -12,3 +12,15 @@ export const StyledInput = styled.input`
   border-radius: 8px;
   resize: ${({ as }) => (as === 'textarea' ? 'none' : 'initial')};
 `;
+
+export const Label = styled.div`
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
+`;
+
+export const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 30px;
+  gap: 10px;
+`;
