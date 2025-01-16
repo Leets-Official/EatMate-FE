@@ -32,8 +32,8 @@ export const CenterContainer = styled.div`
   transform: translateX(-50%);
 `;
 
-export const Title = styled.h1`
-  font-size: 20px;
+export const Title = styled.div`
+  font-size: ${({ theme }) => theme.FONT_SIZE.lg};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
   color: ${({ theme }) => theme.COLORS.text};
 `;
