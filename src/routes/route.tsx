@@ -1,15 +1,17 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import Home from '@/pages/Home';
-import Intro from '@/pages/SignUpPage/Intro';
-import PolicyDetails from '@/pages/SignUpPage/PolicyDetails';
+import Intro from '@/pages/signup/Intro';
+import PolicyDetails from '@/pages/signup/PolicyDetails';
 import BirthdayGenderStep from '@/components/SignUp/BirthdayGenderStep';
 import PhoneNumStep from '@/components/SignUp/PhoneNumStep';
 import MbtiStep from '@/components/SignUp/MbtiStep';
 import NicknameStep from '@/components/SignUp/NicknameStep';
 import StudentIdStep from '@/components/SignUp/StudentIdStep';
 import ProfileImgStep from '@/components/SignUp/ProfileImgStep';
-import SignupLayout from '@/pages/SignUpPage/SignUpLayout';
-import LoginCallback from '@/pages/SignUpPage/LoginCallback';
+import SignupLayout from '@/pages/signup/SignUpLayout';
+import LoginCallback from '@/pages/signup/LoginCallback';
+import OfflineEventCreate from '@/pages/event/OfflineEventCreate';
+import DeliveryEventCreate from '@/pages/event/DeliveryEventCreate';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +38,14 @@ const router = createBrowserRouter([
   {
     path: '/home',
     element: <Home />,
+  },
+  {
+    path: '/events/create/offline',
+    element: <OfflineEventCreate />,
+  },
+  {
+    path: '/events/create/delivery',
+    element: <DeliveryEventCreate />,
   },
   {
     path: '/policy-details/:termId',
