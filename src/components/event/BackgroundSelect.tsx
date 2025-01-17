@@ -1,6 +1,7 @@
 import defaultBgImg1 from '@/assets/images/ic_backimg_main.svg';
 import defaultBgImg2 from '@/assets/images/ic_backImg_moohan.svg';
 import SelectBgImg from '@/assets/images/ic_selectImg.svg';
+import { HiddenFileInput } from '@/styles/SignUp/SignUp.styled';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -38,6 +39,7 @@ const BackgroundItem = styled.div<{ isSelected: boolean }>`
 `;
 const BackgroundSelect: React.FC = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [uploadedImg, setUploadedImg] = useState<string | null>(null);
 
   const backImgs = [
     { id: 1, src: defaultBgImg1 },
@@ -45,8 +47,18 @@ const BackgroundSelect: React.FC = () => {
     { id: 3, src: SelectBgImg },
   ];
 
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const fileUrl = URL.createObjectURL(file);
+      setUploadedImg(fileUrl);
+      setSelectedId(3);
+    }
+  };
   const handleSelect = (id: number) => {
-    setSelectedId(id);
+    if (id === 3) {
+      document.getElementById('file-upload')?.click();
+    } else setSelectedId(id);
   };
 
   return (
@@ -59,9 +71,19 @@ const BackgroundSelect: React.FC = () => {
             isSelected={bgImg.id === selectedId}
             onClick={() => handleSelect(bgImg.id)}
           >
-            <img src={bgImg.src} alt={`backImg-${bgImg.id}`} />
+            {bgImg.id === 3 && uploadedImg ? (
+              <img src={uploadedImg} alt="uploadedImg" />
+            ) : (
+              <img src={bgImg.src} alt={`backImg-${bgImg.id}`} />
+            )}
           </BackgroundItem>
         ))}
+        <HiddenFileInput
+          id="file-upload"
+          type="file"
+          accept="image/*"
+          onChange={handleFileSelect}
+        />
       </ScrollContainer>
       모임 배경 화면에 들어갈 사진을 골라주세요
     </>
