@@ -1,15 +1,14 @@
 const COLORS = {
   main: '#EB5916',
   orange: {
-    100: '#F8B116',
-    200: '#FF9D01',
+    100: '#FFDACC',
   },
-  yellow: '#F5F378',
-  red: '#FE4600',
+  yellow: '#F3AA24',
   gray: {
     100: '#D4D4D4',
     200: '#D9D9D9',
     300: '#ACACAC',
+    400: '#5E5E5E',
   },
   white: '#FFFFFF',
   black: '#1A1A1A',
@@ -29,10 +28,9 @@ const FONT_WEIGHT = {
 };
 
 const FONT_SIZE = {
-  xxs: '8px',
-  xs: '10px',
+  xs: '8px',
   sm: '12px',
-  smMd: '14px', // sm과 md 사이
+  smMd: '14px',
   md: '16px',
   lg: '20px',
   xl: '24px',
