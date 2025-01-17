@@ -1,5 +1,6 @@
-import defaultBgImg1 from '@/assets/images/ic_backimg_main.svg';
-import defaultBgImg2 from '@/assets/images/ic_backImg_moohan.svg';
+import defaultBgImg1 from '@/assets/images/ic_backImg_default1.svg';
+import defaultBgImg2 from '@/assets/images/ic_backImg_default2.svg';
+import defaultBgImg3 from '@/assets/images/ic_backImg_moohan.svg';
 import SelectBgImg from '@/assets/images/ic_selectImg.svg';
 import { HiddenFileInput } from '@/styles/SignUp/SignUp.styled';
 import { useState } from 'react';
@@ -45,7 +46,8 @@ const BackgroundSelect: React.FC = () => {
   const backImgs = [
     { id: 1, src: defaultBgImg1 },
     { id: 2, src: defaultBgImg2 },
-    { id: 3, src: SelectBgImg },
+    { id: 3, src: defaultBgImg3 },
+    { id: 4, src: SelectBgImg },
   ];
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,11 +55,11 @@ const BackgroundSelect: React.FC = () => {
     if (file) {
       const fileUrl = URL.createObjectURL(file);
       setUploadedImg(fileUrl);
-      setSelectedId(3);
+      setSelectedId(4);
     }
   };
   const handleSelect = (id: number) => {
-    if (id === 3) {
+    if (id === 4) {
       document.getElementById('file-upload')?.click();
     } else setSelectedId(id);
   };
@@ -72,7 +74,7 @@ const BackgroundSelect: React.FC = () => {
             isSelected={bgImg.id === selectedId}
             onClick={() => handleSelect(bgImg.id)}
           >
-            {bgImg.id === 3 && uploadedImg ? (
+            {bgImg.id === 4 && uploadedImg ? (
               <img src={uploadedImg} alt="uploadedImg" />
             ) : (
               <img src={bgImg.src} alt={`backImg-${bgImg.id}`} />
