@@ -28,9 +28,17 @@ const OfflineEventCreate: React.FC = () => {
           rows={4}
         />
         <BackgroundSelect />
-        <InputGuide message="모임 배경 화면에 들어갈 사진을 골라주세요." />
-        <Input label="가게 이름" as="input" placeholder="가게명 입력" />
-
+        <InputGuide
+          message="모임 배경 화면에 들어갈 사진을 골라주세요."
+          margin="20px"
+        />
+        <div>성별제한</div>
+        <div>인원제한</div>
+        <div>약속 시간</div>
+        <div>
+          <Input label="가게 이름" as="input" placeholder="가게명 입력" />
+          <InputGuide message="가게명과 지점명을 함께 입력해주세요" />
+        </div>
         <Button variant="primary" size="lg" rounded="md">
           모임 만들기
         </Button>

@@ -6,12 +6,16 @@ export const StyledInput = styled.input`
   margin-bottom: 20px;
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
-  &::placeholder {
-    color: ${({ theme }) => theme.COLORS.gray[200]};
-  }
   border: 1px solid ${({ theme }) => theme.COLORS.gray[300]};
   border-radius: 8px;
   resize: ${({ as }) => (as === 'textarea' ? 'none' : 'initial')};
+  &::placeholder {
+    color: ${({ theme }) => theme.COLORS.gray[200]};
+  }
+  &:focus {
+    border-color: ${({ theme }) => theme.COLORS.main};
+    outline: none;
+  }
 `;
 
 export const Label = styled.div`
