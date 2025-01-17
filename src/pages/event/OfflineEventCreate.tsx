@@ -1,6 +1,7 @@
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import { Input } from '@/components/common/Input/Input';
+import InputGuide from '@/components/common/Input/InputGuide';
 import BackgroundSelect from '@/components/event/BackgroundSelect';
 import styled from 'styled-components';
 
@@ -27,6 +28,7 @@ const OfflineEventCreate: React.FC = () => {
           rows={4}
         />
         <BackgroundSelect />
+        <InputGuide message="모임 배경 화면에 들어갈 사진을 골라주세요." />
         <Input label="가게 이름" as="input" placeholder="가게명 입력" />
 
         <Button variant="primary" size="lg" rounded="md">

@@ -85,7 +85,6 @@ const BackgroundSelect: React.FC = () => {
           onChange={handleFileSelect}
         />
       </ScrollContainer>
-      모임 배경 화면에 들어갈 사진을 골라주세요
     </>
   );
 };
