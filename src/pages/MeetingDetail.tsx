@@ -1,6 +1,7 @@
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import Tabs from '@/components/common/Tab/Tab';
+import ParticipantsList from '@/components/MeetingDetail/ParticipantsList';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -22,6 +23,19 @@ const ButtonContainer = styled.div`
 `;
 
 const MeetingDetail = () => {
+  const mockParticipants = [
+    {
+      id: 1,
+      name: '참여자1',
+      imageUrl: 'https://via.placeholder.com/60', // 참가자 1의 프로필 이미지 URL
+      isLeader: true, // 방장 여부
+    },
+    {
+      id: 2,
+      name: '참여자2',
+      imageUrl: 'https://via.placeholder.com/60', // 참가자 2의 프로필 이미지 URL
+    },
+  ];
   const [selectedTabId, setSelectedTabId] = useState('tab1');
 
   const tabs = [
@@ -40,6 +54,7 @@ const MeetingDetail = () => {
         selectedTabId={selectedTabId}
         onTabClick={handleTabClick}
       />
+      <ParticipantsList participants={mockParticipants} />
       <ButtonContainer>
         <Button variant="primary-outline" size="sm" rounded="sm">
           초대하기
