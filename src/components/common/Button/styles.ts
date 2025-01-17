@@ -12,8 +12,8 @@ const sizeStyles: Record<
   (svgIcon: boolean) => ReturnType<typeof css>
 > = {
   sm: (svgIcon) => css`
-    width: 100px;
-    font-size: 10px;
+    width: 150px;
+    font-size: 14px;
     padding: ${svgIcon ? '0.2rem 0.5rem' : '0.7rem 0.5rem'};
   `,
   md: (svgIcon) => css`
