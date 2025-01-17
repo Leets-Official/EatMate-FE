@@ -9,6 +9,7 @@ import NicknameStep from '@/components/SignUp/NicknameStep';
 import StudentIdStep from '@/components/SignUp/StudentIdStep';
 import ProfileImgStep from '@/components/SignUp/ProfileImgStep';
 import SignupLayout from '@/pages/SignUpPage/SignUpLayout';
+import MeetingDetail from '@/pages/MeetingDetail';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: '/policy-details/:termId',
     element: <PolicyDetails />,
+  },
+  {
+    path: '/meeting', //나중에 뒤에 모임 Id 추가로 넣을 예정
+    element: <MeetingDetail />,
   },
 ]);
 export default router;
