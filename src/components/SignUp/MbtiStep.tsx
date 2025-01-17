@@ -9,7 +9,7 @@ import SignUpInput from './SignupInput';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 import { useState, useEffect } from 'react';
-import InputErrorMessage from '@/components/common/Error/InputErrorMessage';
+import InputErrorMessage from '@/components/common/Input/InputErrorMessage';
 import {
   isAllMbtiInputsValid,
   validateMbtiInput,

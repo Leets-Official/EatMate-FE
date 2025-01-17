@@ -1,6 +1,7 @@
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import { Input } from '@/components/common/Input/Input';
+import BackgroundSelect from '@/components/event/BackgroundSelect';
 import styled from 'styled-components';
 
 const ContentPadding = styled.div`
@@ -25,7 +26,9 @@ const OfflineEventCreate: React.FC = () => {
           maxLength={100}
           rows={4}
         />
+        <BackgroundSelect />
         <Input label="가게 이름" as="input" placeholder="가게명 입력" />
+
         <Button variant="primary" size="lg" rounded="md">
           모임 만들기
         </Button>

@@ -25,3 +25,13 @@ const InputErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
 };
 
 export default InputErrorMessage;
+
+{
+  /*
+  refactor ( props 옵션 추가 ) :
+       체크 svg 선택 여부 
+        체크 svg 색깔 
+        텍스트 색깔  
+        텍스트 크기
+  */
+}
