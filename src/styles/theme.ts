@@ -29,7 +29,8 @@ const FONT_WEIGHT = {
 };
 
 const FONT_SIZE = {
-  xs: '8px',
+  xxs: '8px',
+  xs: '10px',
   sm: '12px',
   smMd: '14px', // sm과 md 사이
   md: '16px',
