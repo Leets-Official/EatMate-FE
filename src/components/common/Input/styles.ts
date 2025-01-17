@@ -22,6 +22,15 @@ export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* padding: 20px 30px;    */
+  gap: 10px;
+`;
+
+export const ErrorContainer = styled.span`
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  color: ${({ theme }) => theme.COLORS.error};
+  margin-top: 10px;
+  padding-left: 2.5rem;
+  display: flex;
+  align-items: center;
   gap: 10px;
 `;

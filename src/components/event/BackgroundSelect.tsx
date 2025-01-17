@@ -63,9 +63,7 @@ const BackgroundSelect: React.FC = () => {
           </BackgroundItem>
         ))}
       </ScrollContainer>
-      <InputErrorMessage message={message}>
-        모임 배경 화면에 들어갈 사진을 골라주세요
-      </InputErrorMessage>
+      모임 배경 화면에 들어갈 사진을 골라주세요
     </>
   );
 };
