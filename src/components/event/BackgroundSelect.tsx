@@ -8,6 +8,7 @@ import styled from 'styled-components';
 const ScrollContainer = styled.div`
   display: flex;
   gap: 16px;
+  margin-top: 10px;
   overflow-x: auto;
   scroll-behavior: smooth;
   max-width: 100%;
@@ -63,7 +64,7 @@ const BackgroundSelect: React.FC = () => {
 
   return (
     <>
-      <div>배경 </div>
+      <div>배경</div>
       <ScrollContainer>
         {backImgs.map((bgImg) => (
           <BackgroundItem

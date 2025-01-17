@@ -1,6 +1,7 @@
 import * as S from './styles';
 import mainLogo from '@/assets/images/EatMate_main_Logo.svg';
 import backArrow from '@/assets/images/backButton.svg';
+import rightArrow from '@/assets/images/ic_arrow_right.svg';
 
 interface HeaderProps {
   title?: string;
@@ -28,7 +29,11 @@ const Header: React.FC<HeaderProps> = ({
         ) : (
           <img src={mainLogo} alt="eatmate-logo" width="72px" height="29px" />
         )}
-        {subText && <S.SubText>{subText}</S.SubText>}
+        {subText && (
+          <S.SubText>
+            {subText} <img src={rightArrow} alt="오른쪽 화살표" />
+          </S.SubText>
+        )}
       </S.CenterContainer>
       <S.RightSpacer />
     </S.HeaderContainer>
