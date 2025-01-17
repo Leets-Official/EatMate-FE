@@ -1,10 +1,8 @@
 import defaultBgImg1 from '@/assets/images/ic_backimg_main.svg';
 import defaultBgImg2 from '@/assets/images/ic_backImg_moohan.svg';
 import SelectBgImg from '@/assets/images/ic_selectImg.svg';
-
 import { useState } from 'react';
 import styled from 'styled-components';
-import InputErrorMessage from '../common/Input/InputErrorMessage';
 
 const ScrollContainer = styled.div`
   display: flex;
@@ -12,7 +10,6 @@ const ScrollContainer = styled.div`
   overflow-x: auto;
   scroll-behavior: smooth;
   max-width: 100%;
-
   &::-webkit-scrollbar {
     display: none;
   }
@@ -25,10 +22,13 @@ const BackgroundItem = styled.div<{ isSelected: boolean }>`
   height: 81px;
   overflow: hidden;
   cursor: pointer;
-  border: 3px solid ${({ theme }) => theme.COLORS.gray[300]};
+  box-sizing: border-box;
   transition: 0.3s;
-  filter: ${({ isSelected }) => (isSelected ? 'none' : 'blur(2px)')};
+  filter: ${({ isSelected }) => (isSelected ? 'none' : 'blur(0.5px)')};
   opacity: ${({ isSelected }) => (isSelected ? 1 : 0.6)};
+  border: 2px solid
+    ${({ theme, isSelected }) =>
+      isSelected ? theme.COLORS.main : theme.COLORS.gray[300]};
 
   img {
     width: 100%;
