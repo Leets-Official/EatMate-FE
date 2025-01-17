@@ -7,10 +7,11 @@ interface InputGuideProps {
 const GuideContainer = styled.div`
   display: flex;
   align-items: center;
+  gap: 6px;
   color: ${({ theme }) => theme.COLORS.gray[400]};
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
-  margin-top: 10px;
+  margin-top: 20px;
 `;
 
 const InputGuide: React.FC<InputGuideProps> = ({ message }) => {
