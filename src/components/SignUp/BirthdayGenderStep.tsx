@@ -43,10 +43,11 @@ const BirthdayGenderStep: React.FC = () => {
     { label: '일', key: 'day', maxLength: 2, width: '40px' },
   ];
 
-  const handleInputChange = (key: string, value: string) => {
+  const handleInputChange = (key: keyof typeof signupState, value: string) => {
+    const numericValue = value === '' ? null : parseInt(value, 10);
     setSignupState((prev) => ({
       ...prev,
-      [key]: value,
+      [key]: numericValue,
     }));
   };
 
@@ -108,7 +109,9 @@ const BirthdayGenderStep: React.FC = () => {
                 type="text"
                 maxLength={maxLength}
                 width={width}
-                value={signupState[key]}
+                value={
+                  signupState[key] !== null ? signupState[key]?.toString() : ''
+                }
                 onChange={(e) => handleInputChange(key, e.target.value)}
                 onBlur={() => handleBlur(key)}
               />
@@ -121,9 +124,9 @@ const BirthdayGenderStep: React.FC = () => {
 
       <SelectButtonContainer>
         <Button
-          onClick={() => handleGenderClick('남성')}
+          onClick={() => handleGenderClick('MALE')}
           variant={
-            signupState.gender === '남성' ? 'primary' : 'primary-outline'
+            signupState.gender === 'MALE' ? 'primary' : 'primary-outline'
           }
           size="lg"
           rounded="sm"
@@ -131,9 +134,9 @@ const BirthdayGenderStep: React.FC = () => {
           남성
         </Button>
         <Button
-          onClick={() => handleGenderClick('여성')}
+          onClick={() => handleGenderClick('FEMALE')}
           variant={
-            signupState.gender === '여성' ? 'primary' : 'primary-outline'
+            signupState.gender === 'FEMALE' ? 'primary' : 'primary-outline'
           }
           size="lg"
           rounded="sm"

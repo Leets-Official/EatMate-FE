@@ -9,12 +9,17 @@ import NicknameStep from '@/components/SignUp/NicknameStep';
 import StudentIdStep from '@/components/SignUp/StudentIdStep';
 import ProfileImgStep from '@/components/SignUp/ProfileImgStep';
 import SignupLayout from '@/pages/SignUpPage/SignUpLayout';
+import LoginCallback from '@/pages/SignUpPage/LoginCallback';
 import MeetingDetail from '@/pages/MeetingDetail';
 
 const router = createBrowserRouter([
   {
     path: '',
     element: <Intro />,
+  },
+  {
+    path: '/oauth2/callback',
+    element: <LoginCallback />,
   },
   {
     path: '/signup',

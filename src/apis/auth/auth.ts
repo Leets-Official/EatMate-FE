@@ -1,0 +1,33 @@
+import defaultInstance from '@/apis/axiosInstance';
+
+export const getUserRole = async () => {
+  const response = await defaultInstance.get('/api/auth/info');
+  return response.data;
+};
+
+export const signupUser = async (signupData: {
+  year: number | null;
+  month: number | null;
+  day: number | null;
+  gender: string;
+  phoneNumber: string;
+  mbti: string;
+  studentNumber: number | null;
+  nickname: string;
+}) => {
+  try {
+    const formattedSignupData = {
+      ...signupData,
+      phoneNumber: signupData.phoneNumber.replace(/-/g, ''),
+    };
+
+    const response = await defaultInstance.post(
+      '/api/auth/signup',
+      formattedSignupData
+    );
+    return response.data;
+  } catch (error) {
+    console.error('회원가입 요청 중 오류가 발생했습니다.', error);
+    throw error;
+  }
+};
