@@ -7,21 +7,20 @@ const SliderContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: white;
   padding: 20px;
   border-radius: 8px;
 `;
 
 const RangeLabel = styled.div<{ isColor: boolean; isEnabled: boolean }>`
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 700;
   color: ${({ isColor, isEnabled, theme }) =>
     isEnabled
       ? isColor
         ? theme.COLORS.main
         : 'black'
       : theme.COLORS.gray[300]};
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   text-align: left;
   width: 100%;
   max-width: 300px;
@@ -68,7 +67,7 @@ const StyledThumb = styled.div<{ disabled: boolean }>`
     height: 12px;
     width: 12px;
     background: ${({ disabled, theme }) =>
-      disabled ? theme.COLORS.gray[400] : theme.COLORS.main};
+      disabled ? theme.COLORS.gray[300] : theme.COLORS.main};
     border-radius: 50%;
   }
 
@@ -105,7 +104,7 @@ const RangeSlider = ({
       <RangeLabel isColor={isColor} isEnabled={isEnabled}>
         {range[0] === range[1]
           ? `${range[0]}인`
-          : `${range[0]}인 ~ ${range[1]}인`}
+          : `${range[0]}인~${range[1]}인`}
       </RangeLabel>
       <StyledSlider
         value={range}
