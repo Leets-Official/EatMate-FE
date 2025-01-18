@@ -2,7 +2,8 @@ import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import { Input } from '@/components/common/Input/Input';
 import InputGuide from '@/components/common/Input/InputGuide';
-import BackgroundSelect from '@/components/event/BackgroundSelect';
+import BackgroundOption from '@/components/event/BackgroundOption';
+import GenderOption from '@/components/event/GenderOption';
 import styled from 'styled-components';
 
 const ContentPadding = styled.div`
@@ -27,14 +28,12 @@ const OfflineMeetingCreate: React.FC = () => {
           maxLength={100}
           rows={4}
         />
-        <BackgroundSelect />
+        <BackgroundOption />
         <InputGuide
           message="모임 배경 화면에 들어갈 사진을 골라주세요."
           margin="20px"
         />
-        <div>성별제한</div>
-        <div>인원제한</div>
-        <div>약속 시간</div>
+        <GenderOption />
         <div>
           <Input label="가게 이름" as="input" placeholder="가게명 입력" />
           <InputGuide message="가게명과 지점명을 함께 입력해주세요" />

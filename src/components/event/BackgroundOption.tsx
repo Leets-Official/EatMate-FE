@@ -2,6 +2,7 @@ import defaultBgImg1 from '@/assets/images/ic_backImg_default1.svg';
 import defaultBgImg2 from '@/assets/images/ic_backImg_default2.svg';
 import defaultBgImg3 from '@/assets/images/ic_backImg_moohan.svg';
 import SelectBgImg from '@/assets/images/ic_selectImg.svg';
+import { Label } from '@/components/common/Input/styles';
 import { HiddenFileInput } from '@/styles/SignUp/SignUp.styled';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -39,7 +40,7 @@ const BackgroundItem = styled.div<{ isSelected: boolean }>`
     object-fit: cover;
   }
 `;
-const BackgroundSelect: React.FC = () => {
+const BackgroundOption: React.FC = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [uploadedImg, setUploadedImg] = useState<string | null>(null);
 
@@ -66,7 +67,7 @@ const BackgroundSelect: React.FC = () => {
 
   return (
     <>
-      <div>배경</div>
+      <Label>배경</Label>
       <ScrollContainer>
         {backImgs.map((bgImg) => (
           <BackgroundItem
@@ -92,4 +93,4 @@ const BackgroundSelect: React.FC = () => {
   );
 };
 
-export default BackgroundSelect;
+export default BackgroundOption;

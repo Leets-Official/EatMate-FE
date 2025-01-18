@@ -20,6 +20,7 @@ export const StyledInput = styled.input`
 
 export const Label = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
 `;
 
 export const InputWrapper = styled.div`
