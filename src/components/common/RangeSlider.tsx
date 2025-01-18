@@ -87,7 +87,10 @@ const RangeSlider = ({ isOpen, isColor = true }: RangeSliderProps) => {
   return (
     <SliderContainer>
       <RangeLabel isColor={isColor}>
-        {`${range[0]}인 ~ ${range[1]}인`}
+        {range[0] === range[1]
+          ? `${range[0]}인` // 핸들 값이 같을 때
+          : `${range[0]}인 ~ ${range[1]}인`}{' '}
+        {/* 핸들 값이 다를 때 */}
       </RangeLabel>
       <StyledSlider
         value={range}
@@ -97,18 +100,13 @@ const RangeSlider = ({ isOpen, isColor = true }: RangeSliderProps) => {
         step={1}
         renderTrack={(props, state) => {
           const [min, max] = state.value as number[];
-
-          // 전체 범위를 기준으로 활성 트랙의 `left`와 `width`를 계산
-          const leftPercentage = ((min - 2) / (10 - 2)) * 100; // 최소값 위치
-          const widthPercentage = ((max - min) / (10 - 2)) * 100; // 선택된 범위의 너비
-
           return (
             <StyledTrack
               {...props}
               style={{
                 ...props.style,
-                left: `${leftPercentage}%`,
-                width: `${widthPercentage}%`,
+                left: `${((min - 2) / (10 - 2)) * 100}%`,
+                width: `${((max - min) / (10 - 2)) * 100}%`,
               }}
             />
           );
