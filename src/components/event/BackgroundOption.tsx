@@ -29,7 +29,7 @@ const BackgroundItem = styled.div<{ isSelected: boolean }>`
   transition: 0.3s;
   filter: ${({ isSelected }) => (isSelected ? 'none' : 'blur(0.5px)')};
   opacity: ${({ isSelected }) => (isSelected ? 1 : 0.6)};
-  border: 2px solid
+  border: 3px solid
     ${({ theme, isSelected }) =>
       isSelected ? theme.COLORS.main : theme.COLORS.gray[300]};
 
