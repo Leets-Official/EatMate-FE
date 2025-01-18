@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ReactSlider from 'react-slider';
 
 const SliderContainer = styled.div`
@@ -12,42 +12,52 @@ const SliderContainer = styled.div`
   border-radius: 8px;
 `;
 
-const RangeLabel = styled.div<{ isColor: boolean }>`
+const RangeLabel = styled.div<{ isColor: boolean; isEnabled: boolean }>`
   font-size: 18px;
   font-weight: bold;
-  color: ${({ isColor, theme }) => (isColor ? theme.COLORS.main : 'black')};
+  color: ${({ isColor, isEnabled, theme }) =>
+    isEnabled
+      ? isColor
+        ? theme.COLORS.main
+        : 'black'
+      : theme.COLORS.gray[300]};
   margin-bottom: 20px;
   text-align: left;
   width: 100%;
   max-width: 300px;
 `;
 
-const StyledSlider = styled(ReactSlider)`
+const StyledSlider = styled(ReactSlider)<{ disabled: boolean }>`
   width: 100%;
   max-width: 300px;
   height: 8px;
   border-radius: 4px;
-  background: ${theme.COLORS.gray[200]};
+  background: ${({ disabled }) =>
+    disabled ? theme.COLORS.gray[300] : theme.COLORS.gray[200]};
   position: relative;
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
 `;
 
-const StyledTrack = styled.div`
-  background: ${theme.COLORS.main};
+const StyledTrack = styled.div<{ disabled: boolean }>`
+  background: ${({ disabled }) =>
+    disabled ? theme.COLORS.gray[300] : theme.COLORS.main};
   height: 100%;
   border-radius: 4px;
   position: absolute;
 `;
 
-const StyledThumb = styled.div`
+const StyledThumb = styled.div<{ disabled: boolean }>`
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  background: #fff;
-  border: 2px solid ${theme.COLORS.gray[300]};
+  background: ${({ theme }) => theme.COLORS.white};
+  border: 2px solid
+    ${({ disabled, theme }) =>
+      disabled ? theme.COLORS.gray[300] : theme.COLORS.gray[300]};
   position: relative;
   top: 50%;
   transform: translateY(-50%);
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 
   &::after {
     content: '';
@@ -57,25 +67,31 @@ const StyledThumb = styled.div`
     transform: translate(-50%, -50%);
     height: 12px;
     width: 12px;
-    background: ${theme.COLORS.main};
+    background: ${({ disabled, theme }) =>
+      disabled ? theme.COLORS.gray[400] : theme.COLORS.main};
     border-radius: 50%;
   }
 
   &:focus {
-    outline: none; /* 브라우저 기본 outline 제거 */
+    outline: none;
   }
 
   &:active {
-    border: 2px solid ${theme.COLORS.main}; /* 검은색 테두리 제거 후 main 색상으로 대체 */
+    border: ${({ disabled, theme }) =>
+      disabled ? 'none' : `2px solid ${theme.COLORS.main}`};
   }
 `;
 
 interface RangeSliderProps {
-  isOpen: boolean;
   isColor?: boolean;
+  isEnabled?: boolean;
 }
-
-const RangeSlider = ({ isOpen, isColor = true }: RangeSliderProps) => {
+// 인원수 컬러 기본은 메인 컬러 입니당 검은색으로 바꾸고 싶으면 isColor를 false로 주세요
+// RangeSldier 비활성화를 원하면 isEnabled를 false로 보내주세욤
+const RangeSlider = ({
+  isColor = true,
+  isEnabled = true,
+}: RangeSliderProps) => {
   const [range, setRange] = useState<[number, number]>([2, 10]);
 
   const handleChange = (value: number | readonly number[]) => {
@@ -86,11 +102,10 @@ const RangeSlider = ({ isOpen, isColor = true }: RangeSliderProps) => {
 
   return (
     <SliderContainer>
-      <RangeLabel isColor={isColor}>
+      <RangeLabel isColor={isColor} isEnabled={isEnabled}>
         {range[0] === range[1]
-          ? `${range[0]}인` // 핸들 값이 같을 때
-          : `${range[0]}인 ~ ${range[1]}인`}{' '}
-        {/* 핸들 값이 다를 때 */}
+          ? `${range[0]}인`
+          : `${range[0]}인 ~ ${range[1]}인`}
       </RangeLabel>
       <StyledSlider
         value={range}
@@ -103,6 +118,7 @@ const RangeSlider = ({ isOpen, isColor = true }: RangeSliderProps) => {
           return (
             <StyledTrack
               {...props}
+              disabled={!isEnabled}
               style={{
                 ...props.style,
                 left: `${((min - 2) / (10 - 2)) * 100}%`,
@@ -111,7 +127,10 @@ const RangeSlider = ({ isOpen, isColor = true }: RangeSliderProps) => {
             />
           );
         }}
-        renderThumb={(props) => <StyledThumb {...props} />}
+        renderThumb={(props) => (
+          <StyledThumb {...props} disabled={!isEnabled} />
+        )}
+        disabled={!isEnabled}
       />
     </SliderContainer>
   );
