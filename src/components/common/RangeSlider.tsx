@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import ReactSlider from 'react-slider';
 
 const SliderContainer = styled.div`
   display: flex;
@@ -21,43 +22,51 @@ const RangeLabel = styled.div<{ isColor: boolean }>`
   max-width: 300px;
 `;
 
-const Slider = styled.input`
-  -webkit-appearance: none;
-  appearance: none;
+const StyledSlider = styled(ReactSlider)`
   width: 100%;
   max-width: 300px;
   height: 8px;
   border-radius: 4px;
-  background: ${(props) => {
-    const percentage =
-      ((Number(props.value) - Number(props.min)) /
-        (Number(props.max) - Number(props.min))) *
-      100;
-    return `linear-gradient(to right, ${theme.COLORS.main} 0%, ${theme.COLORS.main} ${percentage}%, ${theme.COLORS.gray[200]} ${percentage}%, ${theme.COLORS.gray[200]} 100%)`;
-  }};
+  background: ${theme.COLORS.gray[200]};
+  position: relative;
+`;
+
+const StyledTrack = styled.div`
+  background: ${theme.COLORS.main};
+  height: 100%;
+  border-radius: 4px;
+  position: absolute;
+`;
+
+const StyledThumb = styled.div`
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid ${theme.COLORS.gray[300]};
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
   cursor: pointer;
 
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 12px;
+    width: 12px;
+    background: ${theme.COLORS.main};
+    border-radius: 50%;
+  }
+
   &:focus {
-    outline: none;
+    outline: none; /* 브라우저 기본 outline 제거 */
   }
 
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    background: ${({ theme }) => theme.COLORS.white};
-    border: 2px solid ${({ theme }) => theme.COLORS.main};
-    border-radius: 50%;
-    cursor: pointer;
-  }
-
-  &::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    background: ${({ theme }) => theme.COLORS.white};
-    border: 2px solid ${({ theme }) => theme.COLORS.main};
-    border-radius: 50%;
-    cursor: pointer;
+  &:active {
+    border: 2px solid ${theme.COLORS.main}; /* 검은색 테두리 제거 후 main 색상으로 대체 */
   }
 `;
 
@@ -67,34 +76,44 @@ interface RangeSliderProps {
 }
 
 const RangeSlider = ({ isOpen, isColor = true }: RangeSliderProps) => {
-  const [minValue] = useState(2);
-  const [maxValue, setMaxValue] = useState(2);
-  const [isTwo, setIsTwo] = useState(true);
+  const [range, setRange] = useState<[number, number]>([2, 10]);
 
-  useEffect(() => {
-    if (isOpen) {
-      setIsTwo(minValue === 2 && maxValue === 2);
+  const handleChange = (value: number | readonly number[]) => {
+    if (Array.isArray(value)) {
+      setRange([value[0], value[1]] as [number, number]);
     }
-  }, [isOpen, minValue, maxValue]);
-
-  const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(event.target.value);
-    setMaxValue(value);
-    setIsTwo(minValue === 2 && value === 2);
   };
 
   return (
     <SliderContainer>
       <RangeLabel isColor={isColor}>
-        {isTwo ? `${minValue}인` : `${minValue}인 ~ ${maxValue}인`}
+        {`${range[0]}인 ~ ${range[1]}인`}
       </RangeLabel>
-      <Slider
-        type="range"
+      <StyledSlider
+        value={range}
+        onChange={handleChange}
         min={2}
         max={10}
         step={1}
-        value={maxValue}
-        onChange={handleSliderChange}
+        renderTrack={(props, state) => {
+          const [min, max] = state.value as number[];
+
+          // 전체 범위를 기준으로 활성 트랙의 `left`와 `width`를 계산
+          const leftPercentage = ((min - 2) / (10 - 2)) * 100; // 최소값 위치
+          const widthPercentage = ((max - min) / (10 - 2)) * 100; // 선택된 범위의 너비
+
+          return (
+            <StyledTrack
+              {...props}
+              style={{
+                ...props.style,
+                left: `${leftPercentage}%`,
+                width: `${widthPercentage}%`,
+              }}
+            />
+          );
+        }}
+        renderThumb={(props) => <StyledThumb {...props} />}
       />
     </SliderContainer>
   );
