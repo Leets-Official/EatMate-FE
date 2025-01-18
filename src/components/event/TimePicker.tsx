@@ -1,16 +1,9 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const PickerContainer = styled.div`
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  align-items: center;
-`;
-
 const Wheel = styled.div`
   width: 80px;
-  height: 100px;
+  height: 120px;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
 
@@ -18,29 +11,33 @@ const Wheel = styled.div`
     display: none;
   }
 `;
+
 const TimeOption = styled.div<{ isSelected: boolean }>`
   height: 40px;
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
-  text-align: center;
   line-height: 40px;
-  color: ${({ theme, isSelected }) =>
-    isSelected ? theme.COLORS.main : theme.COLORS.gray[500]};
+  text-align: center;
   scroll-snap-align: center;
+  border-top: ${({ isSelected, theme }) =>
+    isSelected ? `1px solid ${theme.COLORS.gray[50]}` : 'none'};
+  border-bottom: ${({ isSelected, theme }) =>
+    isSelected ? `1px solid ${theme.COLORS.gray[50]}` : 'none'};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  color: ${({ theme, isSelected }) =>
+    isSelected ? theme.COLORS.main : theme.COLORS.black};
 `;
-interface TimePickerProps {
-  options: (string | number)[];
-  defaultValue: string | number;
-  onChange: (value: string | number) => void;
+
+interface TimePickerProps<T> {
+  options: T[];
+  defaultValue: T;
+  onChange: (value: T) => void;
 }
 
-const TimePicker: React.FC<TimePickerProps> = ({
+const TimePicker = <T extends string | number>({
   options,
   defaultValue,
   onChange,
-}) => {
-  const [selectedValue, setSelectedValue] = useState<string | number>(
-    defaultValue
-  );
+}: TimePickerProps<T>) => {
+  const [selectedValue, setSelectedValue] = useState<T>(defaultValue);
 
   useEffect(() => {
     onChange(selectedValue);
