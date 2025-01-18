@@ -20,11 +20,11 @@ const Wheel = styled.div`
 `;
 const TimeOption = styled.div<{ isSelected: boolean }>`
   height: 40px;
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   text-align: center;
   line-height: 40px;
   color: ${({ theme, isSelected }) =>
     isSelected ? theme.COLORS.main : theme.COLORS.gray[500]};
-  font-weight: ${({ isSelected }) => (isSelected ? 'bold' : 'normal')};
   scroll-snap-align: center;
 `;
 interface TimePickerProps {
