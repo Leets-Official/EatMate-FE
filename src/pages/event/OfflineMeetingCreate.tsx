@@ -42,8 +42,12 @@ const OfflineMeetingCreate: React.FC = () => {
         <ParticipantOption />
         <TimeOption />
         <div>
-          <Input label="가게 이름" as="input" placeholder="가게명 입력" />
-          <InputGuide message="가게명과 지점명을 함께 입력해주세요" />
+          <Input
+            label="가게 이름"
+            as="input"
+            placeholder="가게명 입력"
+            guideMessage="가게명과 지점명을 함께 입력해주세요"
+          />
         </div>
         <Button variant="primary" size="lg" rounded="md">
           모임 만들기

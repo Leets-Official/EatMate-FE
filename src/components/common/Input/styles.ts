@@ -4,7 +4,6 @@ import styled from 'styled-components';
 export const StyledInput = styled.input`
   width: 100%;
   padding: 10px;
-  margin-bottom: 20px;
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   border: 1px solid ${({ theme }) => theme.COLORS.gray[300]};
@@ -27,6 +26,7 @@ export const Label = styled.div`
 export const InputWrapper = styled.div`
   ${flexColumn}
   gap: 10px;
+  margin-bottom: 20px;
 `;
 
 export const ErrorContainer = styled.span`

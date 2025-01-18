@@ -1,3 +1,4 @@
+import InputGuide from './InputGuide';
 import { InputWrapper, Label, StyledInput } from './styles';
 
 interface InputProps {
@@ -7,6 +8,7 @@ interface InputProps {
   maxLength?: number;
   rows?: number;
   type?: string;
+  guideMessage?: string;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -16,6 +18,7 @@ export const Input: React.FC<InputProps> = ({
   maxLength,
   rows,
   type = 'text',
+  guideMessage,
 }) => {
   return (
     <InputWrapper>
@@ -27,6 +30,7 @@ export const Input: React.FC<InputProps> = ({
         rows={as === 'textarea' ? rows : undefined}
         type={as === 'input' ? type : undefined}
       />
+      {guideMessage && <InputGuide message={guideMessage} />}
     </InputWrapper>
   );
 };
