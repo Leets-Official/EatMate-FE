@@ -10,8 +10,8 @@ import StudentIdStep from '@/components/SignUp/StudentIdStep';
 import ProfileImgStep from '@/components/SignUp/ProfileImgStep';
 import SignupLayout from '@/pages/signup/SignUpLayout';
 import LoginCallback from '@/pages/signup/LoginCallback';
-import OfflineEventCreate from '@/pages/event/OfflineEventCreate';
-import DeliveryEventCreate from '@/pages/event/DeliveryEventCreate';
+import OfflineMeetingCreate from '@/pages/event/OfflineMeetingCreate';
+import DeliveryMeetingCreate from '@/pages/event/DeliveryMeetingCreate';
 
 const router = createBrowserRouter([
   {
@@ -40,12 +40,12 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: '/events/create/offline',
-    element: <OfflineEventCreate />,
+    path: '/meeting/create/offline',
+    element: <OfflineMeetingCreate />,
   },
   {
-    path: '/events/create/delivery',
-    element: <DeliveryEventCreate />,
+    path: '/meeting/create/delivery',
+    element: <DeliveryMeetingCreate />,
   },
   {
     path: '/policy-details/:termId',

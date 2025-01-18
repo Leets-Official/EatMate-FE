@@ -9,7 +9,7 @@ const ContentPadding = styled.div`
   padding: 20px 30px;
 `;
 
-const OfflineEventCreate: React.FC = () => {
+const OfflineMeetingCreate: React.FC = () => {
   return (
     <div>
       <Header onBackClick={() => {}} showBackButton title="모임 만들기" />
@@ -47,4 +47,4 @@ const OfflineEventCreate: React.FC = () => {
   );
 };
 
-export default OfflineEventCreate;
+export default OfflineMeetingCreate;
