@@ -16,6 +16,9 @@ const RangeLabel = styled.div<{ isColor: boolean }>`
   font-weight: bold;
   color: ${({ isColor, theme }) => (isColor ? theme.COLORS.main : 'black')};
   margin-bottom: 20px;
+  text-align: left;
+  width: 100%;
+  max-width: 300px;
 `;
 
 const Slider = styled.input`
@@ -63,14 +66,9 @@ interface RangeSliderProps {
   isColor?: boolean;
 }
 
-// RangeSlider 쓸 때 isColor를 false로 해서 주면 인원 표시 검정으로 뜹니다! 기본은 main 컬러 색,,
 const RangeSlider = ({ isOpen, isColor = true }: RangeSliderProps) => {
-  // 고정된 최소값 (2인)
   const [minValue] = useState(2);
-  // 선택 가능한 최대값
   const [maxValue, setMaxValue] = useState(2);
-
-  // 2인만 선택된 상태인지 여부를 추적
   const [isTwo, setIsTwo] = useState(true);
 
   useEffect(() => {
@@ -82,18 +80,14 @@ const RangeSlider = ({ isOpen, isColor = true }: RangeSliderProps) => {
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(event.target.value);
     setMaxValue(value);
-
-    // 슬라이더 값 변경 시 isTwo 상태 업데이트
     setIsTwo(minValue === 2 && value === 2);
   };
 
   return (
     <SliderContainer>
-      {/* 상단 범위 레이블 */}
       <RangeLabel isColor={isColor}>
         {isTwo ? `${minValue}인` : `${minValue}인 ~ ${maxValue}인`}
       </RangeLabel>
-      {/* 슬라이더 */}
       <Slider
         type="range"
         min={2}
