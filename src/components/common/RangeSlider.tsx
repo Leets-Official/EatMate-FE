@@ -29,7 +29,7 @@ const RangeLabel = styled.div<{ isColor: boolean; isEnabled: boolean }>`
 const StyledSlider = styled(ReactSlider)<{ disabled: boolean }>`
   width: 100%;
   max-width: 300px;
-  height: 8px;
+  height: 4px;
   border-radius: 4px;
   background: ${({ disabled }) =>
     disabled ? theme.COLORS.gray[300] : theme.COLORS.gray[200]};
@@ -41,7 +41,7 @@ const StyledTrack = styled.div<{ disabled: boolean }>`
   background: ${({ disabled }) =>
     disabled ? theme.COLORS.gray[300] : theme.COLORS.main};
   height: 100%;
-  border-radius: 4px;
+  border-radius: 8px;
   position: absolute;
 `;
 
