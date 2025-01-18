@@ -1,3 +1,4 @@
+import { flexAlignCenter, flexColumn } from '@/styles/CommonStyle';
 import styled from 'styled-components';
 
 export const StyledInput = styled.input`
@@ -24,18 +25,15 @@ export const Label = styled.div`
 `;
 
 export const InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  ${flexColumn}
   gap: 10px;
 `;
 
 export const ErrorContainer = styled.span`
+  ${flexAlignCenter}
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   color: ${({ theme }) => theme.COLORS.error};
   margin-top: 10px;
   padding-left: 2.5rem;
-  display: flex;
-  align-items: center;
   gap: 10px;
 `;

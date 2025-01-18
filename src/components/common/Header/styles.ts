@@ -1,3 +1,4 @@
+import { flexColumn } from '@/styles/CommonStyle';
 import styled from 'styled-components';
 
 interface HeaderContainerProps {
@@ -25,8 +26,7 @@ export const BackButton = styled.button`
 
 export const CenterContainer = styled.div`
   position: absolute;
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: center;
   left: 50%;
   transform: translateX(-50%);

@@ -1,3 +1,4 @@
+import { flexCenter } from '@/styles/CommonStyle';
 import { css } from 'styled-components';
 
 export type ButtonVariant =
@@ -54,13 +55,11 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
     font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
   `,
   'primary-outline': css`
+    ${flexCenter}
     background-color: ${({ theme }) => theme.COLORS.white};
     font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
     color: ${({ theme }) => theme.COLORS.main};
     border: 1px solid ${({ theme }) => theme.COLORS.main};
-    display: flex;
-    justify-content: center;
-    align-items: center;
     gap: 8px;
   `,
   'primary-outlineless': css`
