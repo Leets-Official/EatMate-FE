@@ -26,7 +26,7 @@ export const Label = styled.div`
 export const InputWrapper = styled.div`
   ${flexColumn}
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 `;
 
 export const ErrorContainer = styled.span`

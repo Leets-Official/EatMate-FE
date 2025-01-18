@@ -15,7 +15,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  margin: 20px 0;
+  margin: 30px 0;
 `;
 
 const PickerWrapper = styled.div`

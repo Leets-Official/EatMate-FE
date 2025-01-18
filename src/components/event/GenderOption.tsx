@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const GenderContainer = styled.div`
   ${flexColumn}
   gap: 7px;
-  padding: 20px 0 20px 0;
+  padding: 30px 0;
 `;
 
 const RadioInput = styled.input`
