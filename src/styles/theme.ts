@@ -5,6 +5,7 @@ const COLORS = {
   },
   yellow: '#F3AA24',
   gray: {
+    50: '#D3D3D3',
     100: '#D4D4D4',
     200: '#D9D9D9',
     300: '#ACACAC',

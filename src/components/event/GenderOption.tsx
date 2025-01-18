@@ -1,10 +1,92 @@
 import { Label } from '@/components/common/Input/styles';
+import { flexColumn } from '@/styles/CommonStyle';
+import { useState } from 'react';
+import styled from 'styled-components';
 
-const GenderOption: React.FC = () => {
+const GenderContainer = styled.div`
+  ${flexColumn}
+  gap: 7px;
+  padding: 20px 0 20px 0;
+`;
+
+const RadioInput = styled.input`
+  appearance: none;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid ${({ theme }) => theme.COLORS.gray[50]};
+  cursor: pointer;
+
+  &:checked {
+    border-color: ${({ theme }) => theme.COLORS.gray[50]};
+    background-color: transparent;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: ${({ theme }) => theme.COLORS.main};
+      border-radius: 50%;
+    }
+  }
+`;
+
+const RadioOption = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+`;
+
+const RadioLabel = styled.div`
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+`;
+
+interface GenderOptionProps {
+  onChange?: (value: string) => void;
+}
+
+const GenderOption: React.FC<GenderOptionProps> = ({ onChange }) => {
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedOption(e.target.value);
+    if (onChange) {
+      onChange(e.target.value);
+    }
+  };
+
   return (
-    <>
+    <GenderContainer>
       <Label>성별 제한</Label>
-    </>
+      <RadioOption htmlFor="gender-all">
+        <RadioInput
+          id="gender-all"
+          type="radio"
+          name="gender"
+          value="모두 참여 가능해요"
+          checked={selectedOption === '모두 참여 가능해요'}
+          onChange={handleChange}
+        />
+        <RadioLabel>모두 참여 가능해요</RadioLabel>
+      </RadioOption>
+      <RadioOption htmlFor="gender-same">
+        <RadioInput
+          id="gender-same"
+          type="radio"
+          name="gender"
+          value="같은 성별만 참여 가능해요"
+          checked={selectedOption === '같은 성별만 참여 가능해요'}
+          onChange={handleChange}
+        />
+        <RadioLabel>같은 성별만 참여 가능해요</RadioLabel>
+      </RadioOption>
+    </GenderContainer>
   );
 };
 
