@@ -13,15 +13,27 @@ const SelectedTime = styled.div`
 const Container = styled.div`
   ${flexSpaceBetween}
 `;
+
+const Wrapper = styled.div`
+  margin: 20px 0;
+`;
+
+const PickerWrapper = styled.div`
+  display: flex;
+  gap: 16px;
+  width: 100%;
+`;
+
+const DatePickerWrapper = styled.div`
+  flex: 2;
+`;
+
+const TimePickerWrapper = styled.div`
+  flex: 1;
+`;
 const TimeOption: React.FC = () => {
   const now = new Date();
   const [selectedDate, setSelectedDate] = useState<string>('오늘');
-  const [selectedHour, setSelectedHour] = useState<number>(
-    now.getMinutes() >= 30 ? now.getHours() + 1 : now.getHours()
-  );
-  const [selectedMinute, setSelectedMinute] = useState<number>(
-    (Math.ceil((now.getMinutes() + 30) / 10) * 10) % 60
-  );
 
   // 날짜 배열 생성 (오늘 ~ +7일)
   const createDates = () => {
@@ -34,12 +46,7 @@ const TimeOption: React.FC = () => {
       } else if (i === 1) {
         dates.push('내일');
       } else {
-        dates.push(
-          `${date.getMonth() + 1}.${date.getDate()} (${date.toLocaleDateString(
-            'ko-KR',
-            { weekday: 'short' }
-          )})`
-        );
+        dates.push(`${date.getDate()}일`);
       }
     }
     return dates;
@@ -49,13 +56,14 @@ const TimeOption: React.FC = () => {
 
   // 시간 배열 생성 (현재 시간 +30분 이후부터)
   const createHours = () => {
-    const startHour =
-      now.getMinutes() >= 30 ? now.getHours() + 1 : now.getHours();
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    const startHour = currentMinute >= 30 ? currentHour + 1 : currentHour; // 30분 기준
     const hours = [];
 
     for (let i = 0; i < 24; i++) {
       const hour = (startHour + i) % 24;
-      hours.push(hour);
+      hours.push(hour === 0 ? '00' : hour.toString());
     }
 
     return hours;
@@ -66,12 +74,12 @@ const TimeOption: React.FC = () => {
   // 분 배열 생성 (10분 단위)
   const createMinutes = () => {
     const currentMinute = now.getMinutes();
-    const startMinute = Math.ceil((currentMinute + 30) / 10) * 10;
+    const startMinute = Math.ceil((currentMinute + 30) / 10) * 10; // 현재 시간 +30분을 반올림
+    const minutes: string[] = [];
 
-    const minutes = [];
     for (let i = 0; i < 6; i++) {
       const minute = (startMinute + i * 10) % 60;
-      minutes.push(minute === 0 ? '00' : minute);
+      minutes.push(minute === 0 ? '00' : minute.toString());
     }
 
     return minutes;
@@ -79,35 +87,45 @@ const TimeOption: React.FC = () => {
 
   const minutes = createMinutes();
 
+  const [selectedHour, setSelectedHour] = useState<string | number>(hours[0]);
+  const [selectedMinute, setSelectedMinute] = useState<string>(minutes[0]);
+
   return (
-    <div>
+    <Wrapper>
       <Container>
         <Label>약속 시간</Label>
         <SelectedTime>
           {selectedDate} {selectedHour}시 {selectedMinute}분
         </SelectedTime>
       </Container>
-      <div style={{ display: 'flex', gap: '16px' }}>
-        {/* 날짜 선택 */}
-        <TimePicker
-          options={dates}
-          defaultValue={dates[0]}
-          onChange={setSelectedDate}
-        />
+      <PickerWrapper>
+        <DatePickerWrapper>
+          {/* 날짜 선택 */}
+          <TimePicker
+            options={dates}
+            defaultValue={dates[0]}
+            onChange={setSelectedDate}
+            isWide
+          />
+        </DatePickerWrapper>
         {/* 시간 선택 */}
-        <TimePicker
-          options={hours}
-          defaultValue={selectedHour}
-          onChange={setSelectedHour}
-        />
+        <TimePickerWrapper>
+          <TimePicker
+            options={hours}
+            defaultValue={hours[0]}
+            onChange={setSelectedHour}
+          />
+        </TimePickerWrapper>
         {/* 분 선택 */}
-        <TimePicker
-          options={minutes}
-          defaultValue={minutes[0]}
-          onChange={setSelectedMinute}
-        />
-      </div>
-    </div>
+        <TimePickerWrapper>
+          <TimePicker
+            options={minutes}
+            defaultValue={minutes[0]}
+            onChange={setSelectedMinute}
+          />
+        </TimePickerWrapper>
+      </PickerWrapper>
+    </Wrapper>
   );
 };
 

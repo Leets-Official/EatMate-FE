@@ -25,8 +25,8 @@ export const BackButton = styled.button`
 `;
 
 export const CenterContainer = styled.div`
-  position: absolute;
   ${flexColumn}
+  position: absolute;
   align-items: center;
   left: 50%;
   transform: translateX(-50%);

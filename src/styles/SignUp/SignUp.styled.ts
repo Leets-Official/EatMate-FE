@@ -90,6 +90,7 @@ export const ProfileImageContainer = styled.div`
 `;
 
 export const ProfileImage = styled.div<{ imageUrl: string }>`
+  ${flexCenter}
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -98,7 +99,6 @@ export const ProfileImage = styled.div<{ imageUrl: string }>`
     imageUrl ? `url(${imageUrl})` : 'none'};
   background-size: cover;
   background-position: center;
-  ${flexCenter}
   font-size: ${({ theme }) => theme.FONT_SIZE.xl};
   color: ${({ theme }) => theme.COLORS.gray[100]};
   cursor: pointer;

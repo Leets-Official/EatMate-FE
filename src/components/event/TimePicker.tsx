@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const Wheel = styled.div`
-  width: 80px;
+const Wheel = styled.div<{ isWide?: boolean }>`
+  width: ${({ isWide }) => (isWide ? '120px' : '80px')};
   height: 120px;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
+  padding-top: 40px;
+  padding-bottom: 40px;
 
   &::-webkit-scrollbar {
     display: none;
@@ -30,18 +32,29 @@ interface TimePickerProps<T> {
   options: T[];
   defaultValue: T;
   onChange: (value: T) => void;
+  isWide?: boolean;
 }
 
 const TimePicker = <T extends string | number>({
   options,
   defaultValue,
   onChange,
+  isWide = false,
 }: TimePickerProps<T>) => {
   const [selectedValue, setSelectedValue] = useState<T>(defaultValue);
 
   useEffect(() => {
     onChange(selectedValue);
   }, [selectedValue, onChange]);
+
+  useEffect(() => {
+    const index = options.findIndex((option) => option === defaultValue);
+    const itemHeight = 40;
+    const wheelElement = document.getElementById('time-picker-wheel');
+    if (wheelElement) {
+      wheelElement.scrollTop = index * itemHeight;
+    }
+  }, [defaultValue, options]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const element = e.currentTarget;
@@ -57,7 +70,7 @@ const TimePicker = <T extends string | number>({
   };
 
   return (
-    <Wheel onScroll={handleScroll}>
+    <Wheel id="time-picker-wheel" isWide={isWide} onScroll={handleScroll}>
       {options.map((option, idx) => (
         <TimeOption key={idx} isSelected={option === selectedValue}>
           {option}
