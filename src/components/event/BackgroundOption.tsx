@@ -5,7 +5,7 @@ import { Label } from '@/components/common/Input/styles';
 import { HiddenFileInput } from '@/styles/SignUp/SignUp.styled';
 import { useState } from 'react';
 import styled from 'styled-components';
-import InputErrorMessage from '../common/Input/InputErrorMessage';
+import InputErrorMessage from '@/components/common/Input/InputErrorMessage';
 
 const ScrollContainer = styled.div`
   display: flex;

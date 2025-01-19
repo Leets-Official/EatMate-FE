@@ -2,7 +2,7 @@ import { Label } from '@/components/common/Input/styles';
 import { flexColumn } from '@/styles/CommonStyle';
 import { useState } from 'react';
 import styled from 'styled-components';
-import InputErrorMessage from '../common/Input/InputErrorMessage';
+import InputErrorMessage from '@/components/common/Input/InputErrorMessage';
 
 const GenderContainer = styled.div`
   ${flexColumn}
