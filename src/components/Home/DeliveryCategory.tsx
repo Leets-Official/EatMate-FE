@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import { flexCenter, flexColumnCenter } from '@/styles/CommonStyle';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  ${flexCenter};
   margin-top: 10px;
 `;
 
@@ -18,10 +17,7 @@ const ItemsContainer = styled.div`
 `;
 
 const Item = styled.div<{ isSelected: boolean }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  ${flexColumnCenter};
   cursor: pointer;
   border-radius: 50%;
   padding: 10px;
@@ -47,7 +43,7 @@ const Icon = styled.img`
 const Label = styled.span<{ isSelected: boolean }>`
   margin-top: 5px;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   color: ${({ isSelected, theme }) =>
     isSelected ? theme.COLORS.main : '#636363'};
 `;

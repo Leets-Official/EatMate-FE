@@ -24,7 +24,7 @@ const Tab = styled.div<{ isSelected: boolean }>`
   text-align: center;
   padding: 6px 0;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   color: ${({ isSelected, theme }) =>
     isSelected ? `${theme.COLORS.black}` : `${theme.COLORS.gray[300]}`};
   cursor: pointer;
