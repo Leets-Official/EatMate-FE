@@ -8,7 +8,7 @@ export type ButtonVariant =
   | 'secondary-main'
   | 'secondary-white';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
-export type ButtonRounded = 'none' | 'sm' | 'md';
+export type ButtonRounded = 'none' | 'sm' | 'md' | 'lg';
 
 const sizeStyles: Record<
   ButtonSize,
@@ -16,7 +16,8 @@ const sizeStyles: Record<
 > = {
   sm: (svgIcon) => css`
     width: 100px;
-    font-size: 10px;
+    height: 43px;
+    font-size: 14px;
     padding: ${svgIcon ? '0.2rem 0.5rem' : '0.7rem 0.5rem'};
   `,
   md: (svgIcon) => css`
@@ -46,6 +47,9 @@ const roundedStyles: Record<ButtonRounded, ReturnType<typeof css>> = {
   `,
   md: css`
     border-radius: 12px;
+  `,
+  lg: css`
+    border-radius: 20px;
   `,
 };
 
@@ -78,8 +82,8 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
   'secondary-white': css`
     background-color: ${({ theme }) => theme.COLORS.white};
     color: #636363;
-    border: 1px solid ${({ theme }) => theme.COLORS.gray[300]};
-    box-shadow: -3px -3px 20px 0px rgba(0, 0, 0, 0.2);
+    border: 1px solid ${({ theme }) => theme.COLORS.gray[50]};
+    box-shadow: -3px -3px 20px 0px rgba(0, 0, 0, 0.11);
   `,
 };
 

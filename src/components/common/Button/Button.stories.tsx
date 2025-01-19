@@ -77,6 +77,12 @@ export const Variants: Story = {
       <Button variant="primary-outlineless" size="md" rounded="md">
         Primary Outlineless
       </Button>
+      <Button variant="secondary-main" size="sm" rounded="lg" svgIcon={false}>
+        Secondary Main
+      </Button>
+      <Button variant="secondary-white" size="sm" rounded="lg" svgIcon={false}>
+        Secondary White
+      </Button>
     </div>
   ),
 };
