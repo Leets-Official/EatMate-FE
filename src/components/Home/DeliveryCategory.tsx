@@ -34,9 +34,14 @@ const items = [
   { id: 4, name: '일식', icon: '/src/assets/images/delivery/ic_japan.svg' },
   { id: 5, name: '한식', icon: '/src/assets/images/delivery/ic_korea.svg' },
   { id: 6, name: '중식', icon: '/src/assets/images/delivery/ic_china.svg' },
-  { id: 7, name: '족발/보쌈', icon: '/src/assets/images/delivery/ic_pig.svg' },
-  { id: 8, name: '디저트', icon: '/src/assets/images/delivery/ic_dessert.svg' },
-  { id: 9, name: '아시안', icon: '/src/assets/images/delivery/ic_asian.svg' },
+  { id: 7, name: '아시안', icon: '/src/assets/images/delivery/ic_asian.svg' },
+  { id: 8, name: '족발/보쌈', icon: '/src/assets/images/delivery/ic_pig.svg' },
+  {
+    id: 9,
+    name: '커피/차',
+    icon: '/src/assets/images/delivery/ic_coffee.svg',
+  },
+  { id: 10, name: '아시안', icon: '/src/assets/images/delivery/ic_asian.svg' },
 ];
 
 const DeliveryCategory = () => {
