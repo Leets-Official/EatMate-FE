@@ -1,3 +1,4 @@
+import { flexColumn } from '@/styles/CommonStyle';
 import styled from 'styled-components';
 
 interface HeaderContainerProps {
@@ -24,16 +25,15 @@ export const BackButton = styled.button`
 `;
 
 export const CenterContainer = styled.div`
+  ${flexColumn}
   position: absolute;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   left: 50%;
   transform: translateX(-50%);
 `;
 
-export const Title = styled.h1`
-  font-size: 20px;
+export const Title = styled.div`
+  font-size: ${({ theme }) => theme.FONT_SIZE.lg};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
   color: ${({ theme }) => theme.COLORS.text};
 `;

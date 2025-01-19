@@ -9,7 +9,7 @@ import SignUpInput from './SignupInput';
 import { useRecoilState } from 'recoil';
 import { useState } from 'react';
 import { signupAtom } from '@/recoil/atoms/userAtom';
-import InputErrorMessage from '@/components/common/Error/InputErrorMessage';
+import InputErrorMessage from '@/components/common/Input/InputErrorMessage';
 import { isStudentIdValid, validateStudentId } from '@/utils/validate-input';
 import { useNavigate } from 'react-router-dom';
 

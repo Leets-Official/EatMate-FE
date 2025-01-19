@@ -1,0 +1,43 @@
+import { flexAlignCenter, flexColumn } from '@/styles/CommonStyle';
+import styled from 'styled-components';
+
+export const StyledInput = styled.input<{ hasError?: boolean }>`
+  width: 100%;
+  padding: 10px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  border-radius: 8px;
+  border: 1px solid
+    ${({ theme, hasError }) =>
+      hasError ? theme.COLORS.error : theme.COLORS.gray[300]};
+  resize: ${({ as }) => (as === 'textarea' ? 'none' : 'initial')};
+  &::placeholder {
+    color: ${({ theme }) => theme.COLORS.gray[200]};
+  }
+  &:focus {
+    border-color: ${({ theme }) => theme.COLORS.main};
+    outline: none;
+  }
+`;
+
+export const Label = styled.div<{ hasError?: boolean }>`
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  color: ${({ theme, hasError }) =>
+    hasError ? theme.COLORS.error : theme.COLORS.black};
+`;
+
+export const InputWrapper = styled.div`
+  ${flexColumn}
+  gap: 10px;
+  margin-bottom: 30px;
+`;
+
+export const ErrorContainer = styled.span`
+  ${flexAlignCenter}
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  color: ${({ theme }) => theme.COLORS.error};
+  margin-top: 10px;
+  /* padding-left: 2.5rem;s*/
+  gap: 10px;
+`;
