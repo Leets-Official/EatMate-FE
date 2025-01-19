@@ -1,6 +1,7 @@
 const COLORS = {
   main: '#EB5916',
   orange: {
+    50: '#FBDED0',
     100: '#FFDACC',
   },
   yellow: '#F3AA24',

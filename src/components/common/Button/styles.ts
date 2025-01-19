@@ -4,7 +4,9 @@ import { css } from 'styled-components';
 export type ButtonVariant =
   | 'primary'
   | 'primary-outline'
-  | 'primary-outlineless';
+  | 'primary-outlineless'
+  | 'secondary-main'
+  | 'secondary-white';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 export type ButtonRounded = 'none' | 'sm' | 'md';
 
@@ -67,6 +69,17 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
     color: ${({ theme }) => theme.COLORS.main};
     border: none;
     font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
+  `,
+  'secondary-main': css`
+    background-color: ${({ theme }) => theme.COLORS.orange[50]};
+    color: ${({ theme }) => theme.COLORS.main};
+    border: 1px solid ${({ theme }) => theme.COLORS.main};
+  `,
+  'secondary-white': css`
+    background-color: ${({ theme }) => theme.COLORS.white};
+    color: #636363;
+    border: 1px solid ${({ theme }) => theme.COLORS.gray[300]};
+    box-shadow: -3px -3px 20px 0px rgba(0, 0, 0, 0.2);
   `,
 };
 
