@@ -5,10 +5,10 @@ import InputGuide from '@/components/common/Input/InputGuide';
 import BackgroundOption from '@/components/Event/BackgroundOption';
 import GenderOption from '@/components/Event/GenderOption';
 import ParticipantOption from '@/components/Event/ParticipantOption';
-import TimeOption from '@/components/Event/TimeOption';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import MeetingTimeOption from '@/components/Event/MeetingTimeOption';
 
 const ContentPadding = styled.div`
   padding: 20px 30px;
@@ -78,7 +78,7 @@ const OfflineMeetingCreate: React.FC = () => {
           showError={!!errors.gender}
         />
         <ParticipantOption />
-        <TimeOption />
+        <MeetingTimeOption />
         <div>
           <Input
             label="가게 이름"
