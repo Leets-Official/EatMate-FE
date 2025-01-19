@@ -56,7 +56,10 @@ interface GenderOptionProps {
   showError?: boolean;
 }
 
-const GenderOption: React.FC<GenderOptionProps> = ({ onChange, showError }) => {
+const GenderOption: React.FC<GenderOptionProps> = ({
+  onChange,
+  showError = false,
+}) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +71,7 @@ const GenderOption: React.FC<GenderOptionProps> = ({ onChange, showError }) => {
 
   return (
     <GenderContainer>
-      <Label hasError={showError && !selectedOption}>성별 제한</Label>
+      <Label hasError={showError}>성별 제한</Label>
       <RadioOption htmlFor="gender-all">
         <RadioInput
           id="gender-all"
@@ -77,7 +80,7 @@ const GenderOption: React.FC<GenderOptionProps> = ({ onChange, showError }) => {
           value="모두 참여 가능해요"
           checked={selectedOption === '모두 참여 가능해요'}
           onChange={handleChange}
-          hasError={showError && !selectedOption}
+          hasError={showError}
         />
         <RadioLabel>모두 참여 가능해요</RadioLabel>
       </RadioOption>
@@ -89,13 +92,11 @@ const GenderOption: React.FC<GenderOptionProps> = ({ onChange, showError }) => {
           value="같은 성별만 참여 가능해요"
           checked={selectedOption === '같은 성별만 참여 가능해요'}
           onChange={handleChange}
-          hasError={showError && !selectedOption}
+          hasError={showError}
         />
         <RadioLabel>같은 성별만 참여 가능해요</RadioLabel>
       </RadioOption>
-      {showError && !selectedOption && (
-        <InputErrorMessage message="성별 제한을 선택해주세요." />
-      )}
+      {showError && <InputErrorMessage message="성별 제한을 선택해주세요." />}
     </GenderContainer>
   );
 };

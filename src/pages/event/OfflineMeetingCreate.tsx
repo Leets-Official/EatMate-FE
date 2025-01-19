@@ -7,6 +7,7 @@ import GenderOption from '@/components/Event/GenderOption';
 import ParticipantOption from '@/components/Event/ParticipantOption';
 import TimeOption from '@/components/Event/TimeOption';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const ContentPadding = styled.div`
@@ -14,32 +15,45 @@ const ContentPadding = styled.div`
 `;
 
 const OfflineMeetingCreate: React.FC = () => {
-  const [genderError, setGenderError] = useState(false);
-  const [storeNameError, setStoreNameError] = useState(false);
+  const nav = useNavigate();
+
+  const [genderSelected, setGenderSelected] = useState<boolean>(false);
+  const [errors, setErrors] = useState<{
+    gender?: Boolean;
+    storeName?: boolean;
+  }>({});
   const [storeName, setStoreName] = useState('');
+
   const handleGenderChange = (value: string) => {
-    setGenderError(false);
+    setGenderSelected(true);
+    setErrors((prev) => ({ ...prev, gender: false }));
     console.log('선택된 성별 제한:', value);
   };
 
-  const handleSubmit = () => {
-    let hasError = false;
+  const validateForm = () => {
+    const newErrors: { gender?: boolean; storeName?: boolean } = {};
+    if (!storeName.trim()) newErrors.storeName = true;
+    if (!genderSelected) newErrors.gender = true;
 
-    if (!storeName.trim()) {
-      setStoreNameError(true);
-      hasError = true;
-    }
-    if (!genderError) {
-      setGenderError(true);
-      hasError = true;
-    }
-    if (!hasError) {
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if (validateForm()) {
       console.log('모임이 정상적으로 생성되었습니다.');
     }
   };
+
   return (
     <div>
-      <Header onBackClick={() => {}} showBackButton title="모임 만들기" />
+      <Header
+        onBackClick={() => {
+          nav(-1);
+        }}
+        showBackButton
+        title="모임 만들기"
+      />
       <ContentPadding>
         <Input
           label="모임 제목"
@@ -59,7 +73,10 @@ const OfflineMeetingCreate: React.FC = () => {
           message="모임 배경 화면에 들어갈 사진을 골라주세요."
           margin="15px"
         />
-        <GenderOption onChange={handleGenderChange} showError={genderError} />
+        <GenderOption
+          onChange={handleGenderChange}
+          showError={!!errors.gender}
+        />
         <ParticipantOption />
         <TimeOption />
         <div>
@@ -68,7 +85,8 @@ const OfflineMeetingCreate: React.FC = () => {
             as="input"
             placeholder="가게명 입력"
             guideMessage="가게명과 지점명을 함께 입력해주세요"
-            hasError={storeNameError}
+            onChange={(e) => setStoreName(e.target.value)}
+            hasError={errors.storeName}
             errorMessage="다시 입력해주세요."
           />
         </div>

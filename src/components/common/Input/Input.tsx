@@ -1,3 +1,4 @@
+import React from 'react';
 import InputErrorMessage from './InputErrorMessage';
 import InputGuide from './InputGuide';
 import { InputWrapper, Label, StyledInput } from './styles';
@@ -10,9 +11,12 @@ interface InputProps {
   rows?: number;
   type?: string;
   guideMessage?: string;
-  inputRef?: React.RefObject<HTMLInputElement | HTMLTextAreaElement>;
   hasError?: boolean;
   errorMessage?: string;
+  value?: string;
+  onChange?: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -25,7 +29,8 @@ export const Input: React.FC<InputProps> = ({
   guideMessage,
   hasError = false,
   errorMessage,
-  inputRef,
+  value,
+  onChange,
 }) => {
   return (
     <InputWrapper>
@@ -36,8 +41,9 @@ export const Input: React.FC<InputProps> = ({
         maxLength={maxLength}
         rows={as === 'textarea' ? rows : undefined}
         type={as === 'input' ? type : undefined}
-        ref={inputRef}
         hasError={hasError}
+        value={value}
+        onChange={onChange}
       />
       {hasError && errorMessage && <InputErrorMessage message={errorMessage} />}
       {guideMessage && <InputGuide message={guideMessage} />}
