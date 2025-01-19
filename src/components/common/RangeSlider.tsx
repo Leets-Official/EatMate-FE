@@ -27,7 +27,7 @@ const RangeLabel = styled.div<{ isColor: boolean; isEnabled: boolean }>`
 `;
 
 const StyledSlider = styled(ReactSlider)<{ disabled: boolean }>`
-  width: calc(100% - 20px);
+  width: 100%;
   max-width: 300px;
   height: 4px;
   border-radius: 4px;
