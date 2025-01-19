@@ -5,7 +5,7 @@ const ParticipantOption: React.FC = () => {
   return (
     <>
       <Label>인원 제한</Label>
-      <RangeSlider isOpen isColor={false} />
+      <RangeSlider isColor={false} />
     </>
   );
 };
