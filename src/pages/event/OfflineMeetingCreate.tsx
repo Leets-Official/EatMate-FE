@@ -2,13 +2,13 @@ import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import { Input } from '@/components/common/Input/Input';
 import InputGuide from '@/components/common/Input/InputGuide';
-import BackgroundOption from '@/components/Event/BackgroundOption';
-import GenderOption from '@/components/Event/GenderOption';
-import ParticipantOption from '@/components/Event/ParticipantOption';
+import BackgroundOption from '@/components/event/BackgroundOption';
+import GenderOption from '@/components/event/GenderOption';
+import ParticipantOption from '@/components/event/ParticipantOption';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import MeetingTimeOption from '@/components/Event/MeetingTimeOption';
+import MeetingTimeOption from '@/components/event/MeetingTimeOption';
 
 const ContentPadding = styled.div`
   padding: 20px 30px;
