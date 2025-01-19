@@ -111,7 +111,7 @@ export const ParticipantModal: Story = {
         onSelect={() => {}}
         onClose={() => alert('모달 닫기')}
       >
-        <RangeSlider isOpen />
+        <RangeSlider />
       </FilterModal>
     );
   },
