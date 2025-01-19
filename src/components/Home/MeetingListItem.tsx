@@ -1,7 +1,8 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import LocateIcon from '@/assets/images/ic_locate.svg?react';
 import PersonIcon from '@/assets/images/ic_person.svg?react';
+import MealCover from '@/assets/images/ic_beer_cover.svg';
 
 interface MeetingListItemProps {
   isSelected: boolean;
@@ -13,56 +14,67 @@ interface MeetingListItemProps {
 }
 
 const Container = styled.div<{ isSelected: boolean }>`
-  width: 100%;
-  max-width: 334px;
-  height: auto;
-  border-radius: 8px;
-  padding: 16px;
+  width: 334px;
+  border-radius: 12px;
+  padding: 13px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  background-color: #fff;
-
-  ${({ isSelected }) =>
+  align-items: flex-start;
+  background-color: ${({ theme }) => theme.COLORS.white};
+  border: 1px solid
+    ${({ isSelected, theme }) => (isSelected ? theme.COLORS.main : '#E0E0E0')};
+  box-shadow: ${({ isSelected }) =>
     isSelected
-      ? css`
-          border: 1px solid ${({ theme }) => theme.COLORS.main};
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        `
-      : css`
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-        `}
+      ? '0 4px 10px rgba(0, 0, 0, 0.2)'
+      : '0 2px 6px rgba(0, 0, 0, 0.1)'};
   cursor: pointer;
+  gap: 12px;
+`;
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+`;
+
+const IconWrapper = styled.div`
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 5px;
+`;
+
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 12px;
 `;
 
 const Title = styled.div`
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 14px;
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  color: ${({ theme }) => theme.COLORS.textPrimary};
+  margin-bottom: 4px;
 `;
 
 const Description = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   color: ${({ theme }) => theme.COLORS.gray[300]};
-  margin-bottom: 12px;
+  line-height: 1.4;
   white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 `;
 
 const InfoContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   font-size: 12px;
-  color: #636363;
-  gap: 4px;
+  color: ${({ theme }) => theme.COLORS.gray[400]};
+  gap: 8px;
+  width: 100%;
 `;
 
 const Location = styled.div`
@@ -76,11 +88,15 @@ const Location = styled.div`
 const Participants = styled.div`
   display: flex;
   align-items: center;
-  gap: 4px;
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
 `;
 
-const Time = styled.div`
+const TimeBadge = styled.div`
   color: ${({ theme }) => theme.COLORS.main};
+  font-size: 12px;
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  border-radius: 12px;
+  padding: 4px 10px;
   white-space: nowrap;
 `;
 
@@ -94,10 +110,15 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
 }) => {
   return (
     <Container isSelected={isSelected}>
-      <div>
-        <Title>{title}</Title>
-        <Description>{description}</Description>
-      </div>
+      <MainContainer>
+        <IconWrapper>
+          <img src={MealCover} alt="모임 아이콘" width="65" height="65" />
+        </IconWrapper>
+        <TextContainer>
+          <Title>{title}</Title>
+          <Description>{description}</Description>
+        </TextContainer>
+      </MainContainer>
       <InfoContainer>
         <Location>
           <LocateIcon />
@@ -105,9 +126,9 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
         </Location>
         <Participants>
           <PersonIcon />
-          {participants} ㆍ
+          {participants}
         </Participants>
-        <Time>{time}분 전 대화</Time>
+        <TimeBadge>{time}분 전 대화</TimeBadge>
       </InfoContainer>
     </Container>
   );

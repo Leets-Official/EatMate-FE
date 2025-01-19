@@ -4,7 +4,6 @@ import SortingButton from '../common/SortingButton/SortingButton';
 import MeetingListItem from './MeetingListItem';
 
 const Container = styled.div`
-  margin-top: 12px;
   padding: 16px;
 `;
 
