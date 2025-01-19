@@ -16,7 +16,7 @@ interface TabProps {
 const TabContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid ${({ theme }) => theme.COLORS.gray[300]};
 `;
 
 const Tab = styled.div<{ isSelected: boolean }>`
@@ -24,9 +24,9 @@ const Tab = styled.div<{ isSelected: boolean }>`
   text-align: center;
   padding: 6px 0;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 400;
   color: ${({ isSelected, theme }) =>
-    isSelected ? `${theme.COLORS.main}` : `${theme.COLORS.gray[300]}`};
+    isSelected ? `${theme.COLORS.black}` : `${theme.COLORS.gray[300]}`};
   cursor: pointer;
 
   ${({ isSelected }) =>
