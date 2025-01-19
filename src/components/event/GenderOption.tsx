@@ -68,7 +68,7 @@ const GenderOption: React.FC<GenderOptionProps> = ({ onChange, showError }) => {
 
   return (
     <GenderContainer>
-      <Label>성별 제한</Label>
+      <Label hasError={showError && !selectedOption}>성별 제한</Label>
       <RadioOption htmlFor="gender-all">
         <RadioInput
           id="gender-all"

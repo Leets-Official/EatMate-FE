@@ -15,14 +15,27 @@ const ContentPadding = styled.div`
 
 const OfflineMeetingCreate: React.FC = () => {
   const [genderError, setGenderError] = useState(false);
-
+  const [storeNameError, setStoreNameError] = useState(false);
+  const [storeName, setStoreName] = useState('');
   const handleGenderChange = (value: string) => {
     setGenderError(false);
     console.log('선택된 성별 제한:', value);
   };
 
   const handleSubmit = () => {
-    setGenderError(true);
+    let hasError = false;
+
+    if (!storeName.trim()) {
+      setStoreNameError(true);
+      hasError = true;
+    }
+    if (!genderError) {
+      setGenderError(true);
+      hasError = true;
+    }
+    if (!hasError) {
+      console.log('모임이 정상적으로 생성되었습니다.');
+    }
   };
   return (
     <div>
@@ -55,6 +68,8 @@ const OfflineMeetingCreate: React.FC = () => {
             as="input"
             placeholder="가게명 입력"
             guideMessage="가게명과 지점명을 함께 입력해주세요"
+            hasError={storeNameError}
+            errorMessage="다시 입력해주세요."
           />
         </div>
         <Button variant="primary" size="lg" rounded="md" onClick={handleSubmit}>

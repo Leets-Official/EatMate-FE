@@ -1,13 +1,15 @@
 import { flexAlignCenter, flexColumn } from '@/styles/CommonStyle';
 import styled from 'styled-components';
 
-export const StyledInput = styled.input`
+export const StyledInput = styled.input<{ hasError?: boolean }>`
   width: 100%;
   padding: 10px;
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
-  border: 1px solid ${({ theme }) => theme.COLORS.gray[300]};
   border-radius: 8px;
+  border: 1px solid
+    ${({ theme, hasError }) =>
+      hasError ? theme.COLORS.error : theme.COLORS.gray[300]};
   resize: ${({ as }) => (as === 'textarea' ? 'none' : 'initial')};
   &::placeholder {
     color: ${({ theme }) => theme.COLORS.gray[200]};
