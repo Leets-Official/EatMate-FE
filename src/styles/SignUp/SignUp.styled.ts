@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { flexCenter, flexColumnCenter } from '../CommonStyle';
+import { flexCenter, flexColumnCenter } from '@/styles/CommonStyle';
 
 interface InputFieldProps extends React.ComponentProps<'input'> {
   error: boolean;
