@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import TimePicker from './TimePicker';
-import { Label } from '../common/Input/styles';
+import { Label } from '@/components/common/Input/styles';
 import styled from 'styled-components';
 import { flexSpaceBetween } from '@/styles/CommonStyle';
+import TimePicker from './TimePicker';
 
 const SelectedTime = styled.div`
   color: ${({ theme }) => theme.COLORS.main};

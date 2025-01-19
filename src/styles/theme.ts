@@ -13,7 +13,7 @@ const COLORS = {
   },
   white: '#FFFFFF',
   black: '#1A1A1A',
-  error: '#FF6D6D',
+  error: '#FF4F4F',
 };
 
 const FONT_FAMILY = {

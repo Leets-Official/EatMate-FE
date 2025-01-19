@@ -1,4 +1,4 @@
-import errorCheck from '@/assets/images/error_check.svg';
+// import errorCheck from '@/assets/images/error_check.svg';
 import { ErrorContainer } from './styles';
 
 interface ErrorMessageProps {
@@ -8,7 +8,7 @@ interface ErrorMessageProps {
 const InputErrorMessage: React.FC<ErrorMessageProps> = ({ message }) => {
   return (
     <ErrorContainer>
-      <img src={errorCheck} alt="check-icon" />
+      {/* <img src={errorCheck} alt="check-icon" /> */}
       <span>{message}</span>
     </ErrorContainer>
   );

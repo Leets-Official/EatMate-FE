@@ -5,6 +5,7 @@ import { Label } from '@/components/common/Input/styles';
 import { HiddenFileInput } from '@/styles/SignUp/SignUp.styled';
 import { useState } from 'react';
 import styled from 'styled-components';
+import InputErrorMessage from '../common/Input/InputErrorMessage';
 
 const ScrollContainer = styled.div`
   display: flex;
@@ -42,6 +43,7 @@ const BackgroundItem = styled.div<{ isSelected: boolean }>`
 const BackgroundOption: React.FC = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [uploadedImg, setUploadedImg] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const backImgs = [
     { id: 1, src: defaultBgImg1 },
@@ -52,12 +54,18 @@ const BackgroundOption: React.FC = () => {
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      if (file.size > 3 * 1024 * 1024) {
+        setError('3MB 사이즈 이하의 사진만 업로드 가능합니다.');
+        return;
+      }
+      setError(null);
       const fileUrl = URL.createObjectURL(file);
       setUploadedImg(fileUrl);
       setSelectedId(3);
     }
   };
   const handleSelect = (id: number) => {
+    setError(null);
     if (id === 3) {
       document.getElementById('file-upload')?.click();
     } else setSelectedId(id);
@@ -87,6 +95,7 @@ const BackgroundOption: React.FC = () => {
           onChange={handleFileSelect}
         />
       </ScrollContainer>
+      {error && <InputErrorMessage message={error} />}
     </>
   );
 };

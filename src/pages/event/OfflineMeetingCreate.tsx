@@ -2,10 +2,10 @@ import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import { Input } from '@/components/common/Input/Input';
 import InputGuide from '@/components/common/Input/InputGuide';
-import BackgroundOption from '@/components/event/BackgroundOption';
-import GenderOption from '@/components/event/GenderOption';
-import ParticipantOption from '@/components/event/ParticipantOption';
-import TimeOption from '@/components/event/TimeOption';
+import BackgroundOption from '@/components/Event/BackgroundOption';
+import GenderOption from '@/components/Event/GenderOption';
+import ParticipantOption from '@/components/Event/ParticipantOption';
+import TimeOption from '@/components/Event/TimeOption';
 import styled from 'styled-components';
 
 const ContentPadding = styled.div`
@@ -36,7 +36,7 @@ const OfflineMeetingCreate: React.FC = () => {
         <BackgroundOption />
         <InputGuide
           message="모임 배경 화면에 들어갈 사진을 골라주세요."
-          margin="20px"
+          margin="15px"
         />
         <GenderOption onChange={handleGenderChange} />
         <ParticipantOption />
