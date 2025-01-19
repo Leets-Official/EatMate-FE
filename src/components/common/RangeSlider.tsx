@@ -104,6 +104,7 @@ const Checkbox = styled.input`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  position: relative; /* 추가 */
   transition: all 0.3s ease-in-out;
 
   &:checked {
@@ -114,11 +115,11 @@ const Checkbox = styled.input`
   &:checked::after {
     content: '';
     display: block;
-    width: 10px;
+    width: 7px;
     height: 5px;
     border: solid white;
     border-width: 0 0 3px 3px;
-    transform: rotate(-45deg);
+    transform: translate(0px, -2px) rotate(-45deg);
   }
 `;
 
