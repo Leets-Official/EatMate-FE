@@ -1,4 +1,4 @@
-import { flexCenter, flexColumnCenter } from '@/styles/CommonStyle';
+import { flexCenter } from '@/styles/CommonStyle';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -16,11 +16,18 @@ const ItemsContainer = styled.div`
   transition: max-height 0.3s ease-in-out;
 `;
 
+const ItemWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const Item = styled.div<{ isSelected: boolean }>`
-  ${flexColumnCenter};
-  cursor: pointer;
+  ${flexCenter};
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  padding: 10px;
+  cursor: pointer;
   background-color: ${({ isSelected }) => (isSelected ? '#FBDED0' : 'white')};
   border: 1px solid
     ${({ isSelected, theme }) => (isSelected ? theme.COLORS.main : '#E0E0E0')};
@@ -41,7 +48,7 @@ const Icon = styled.img`
 `;
 
 const Label = styled.span<{ isSelected: boolean }>`
-  margin-top: 5px;
+  margin-top: 4px;
   font-size: 12px;
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   color: ${({ isSelected, theme }) =>
@@ -80,14 +87,15 @@ const DeliveryCategory = () => {
     <Wrapper>
       <ItemsContainer>
         {items.map((item) => (
-          <Item
-            key={item.id}
-            isSelected={selectedItem === item.id}
-            onClick={() => handleItemClick(item.id)}
-          >
-            <Icon src={item.icon} alt={item.name} />
+          <ItemWrapper key={item.id}>
+            <Item
+              isSelected={selectedItem === item.id}
+              onClick={() => handleItemClick(item.id)}
+            >
+              <Icon src={item.icon} alt={item.name} />
+            </Item>
             <Label isSelected={selectedItem === item.id}>{item.name}</Label>
-          </Item>
+          </ItemWrapper>
         ))}
       </ItemsContainer>
     </Wrapper>
