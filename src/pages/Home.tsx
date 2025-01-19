@@ -51,12 +51,12 @@ const Home = () => {
         onTabClick={handleTabClick}
       />
 
-      {selectedTabId === 'tab1' && <MeetingList />}
-      {selectedTabId === 'tab2' && <MeetingList />}
+      {selectedTabId === 'tab1' && <MeetingList cover="meal" />}
+      {selectedTabId === 'tab2' && <MeetingList cover="beer" />}
       {selectedTabId === 'tab3' && (
         <div>
           <DeliveryCategory />
-          <MeetingList />
+          <MeetingList cover="delivery" />
         </div>
       )}
       <FloatingPostButton onClick={handlePostClick} />

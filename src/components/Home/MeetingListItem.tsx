@@ -2,9 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import LocateIcon from '@/assets/images/ic_locate.svg?react';
 import PersonIcon from '@/assets/images/ic_person.svg?react';
-import MealCover from '@/assets/images/ic_beer_cover.svg';
-
+import MealCover from '@/assets/images/ic_meal_cover.svg';
+import BeerCover from '@/assets/images/ic_beer_cover.svg';
+import DeliveryCover from '@/assets/images/ic_delivery_cover.svg';
 interface MeetingListItemProps {
+  cover: string;
   isSelected: boolean;
   title: string;
   description: string;
@@ -101,6 +103,7 @@ const TimeBadge = styled.div`
 `;
 
 const MeetingListItem: React.FC<MeetingListItemProps> = ({
+  cover,
   isSelected,
   title,
   description,
@@ -108,11 +111,13 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
   participants,
   time,
 }) => {
+  const coverType =
+    cover === 'meal' ? MealCover : cover === 'beer' ? BeerCover : DeliveryCover;
   return (
     <Container isSelected={isSelected}>
       <MainContainer>
         <IconWrapper>
-          <img src={MealCover} alt="모임 아이콘" width="65" height="65" />
+          <img src={coverType} alt="모임 아이콘" width="65" height="65" />
         </IconWrapper>
         <TextContainer>
           <Title>{title}</Title>

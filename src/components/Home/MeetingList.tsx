@@ -22,7 +22,7 @@ const ListContainer = styled.div`
   align-items: center;
 `;
 
-const MeetingList = () => {
+const MeetingList = ({ cover }: { cover: string }) => {
   const [selectedSort, setSelectedSort] = useState(0);
 
   const handleSortClick = (index: number) => {
@@ -82,6 +82,7 @@ const MeetingList = () => {
       <ListContainer>
         {meetingData.map((meeting, index) => (
           <MeetingListItem
+            cover={cover}
             key={index}
             isSelected={meeting.isSelected}
             title={meeting.title}
