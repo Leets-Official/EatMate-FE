@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import ReactSlider from 'react-slider';
-
+import checkIcon from '@/assets/images/ic_checked_box.svg';
+import unCheckIcon from '@/assets/images/ic_unChecked_box.svg';
 const SliderContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -87,39 +88,15 @@ const CheckboxWrapper = styled.label`
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   cursor: pointer;
   margin-top: 16px;
-  margin-left: -3px;
   width: 100%;
   max-width: 300px;
   justify-content: flex-start;
 `;
 
-const Checkbox = styled.input`
-  appearance: none;
+const CheckboxIcon = styled.img`
   width: 18px;
   height: 18px;
-  border: 2px solid ${({ theme }) => theme.COLORS.gray[300]};
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
-  position: relative;
-  transition: all 0.3s ease-in-out;
-
-  &:checked {
-    background-color: ${({ theme }) => theme.COLORS.main};
-    border-color: ${({ theme }) => theme.COLORS.main};
-  }
-
-  &:checked::after {
-    content: '';
-    display: block;
-    width: 7px;
-    height: 5px;
-    border: solid white;
-    border-width: 0 0 3px 3px;
-    transform: translate(0px, -2px) rotate(-45deg);
-  }
 `;
 
 interface RangeSliderProps {
@@ -172,11 +149,10 @@ const RangeSlider = ({ isColor = true }: RangeSliderProps) => {
         )}
         disabled={!isEnabled}
       />
-      <CheckboxWrapper>
-        <Checkbox
-          type="checkbox"
-          onChange={handleCheckboxChange}
-          checked={!isEnabled}
+      <CheckboxWrapper onClick={handleCheckboxChange}>
+        <CheckboxIcon
+          src={isEnabled ? unCheckIcon : checkIcon}
+          alt="checkbox"
         />
         참여인원 상관 없어요
       </CheckboxWrapper>
