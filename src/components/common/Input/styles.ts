@@ -18,9 +18,11 @@ export const StyledInput = styled.input`
   }
 `;
 
-export const Label = styled.div`
+export const Label = styled.div<{ hasError?: boolean }>`
   font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  color: ${({ theme, hasError }) =>
+    hasError ? theme.COLORS.error : theme.COLORS.black};
 `;
 
 export const InputWrapper = styled.div`

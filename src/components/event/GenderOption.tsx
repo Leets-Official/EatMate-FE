@@ -2,6 +2,7 @@ import { Label } from '@/components/common/Input/styles';
 import { flexColumn } from '@/styles/CommonStyle';
 import { useState } from 'react';
 import styled from 'styled-components';
+import InputErrorMessage from '../common/Input/InputErrorMessage';
 
 const GenderContainer = styled.div`
   ${flexColumn}
@@ -9,14 +10,17 @@ const GenderContainer = styled.div`
   padding: 30px 0;
 `;
 
-const RadioInput = styled.input`
+const RadioInput = styled.input<{ hasError?: boolean }>`
   appearance: none;
   position: relative;
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 1px solid ${({ theme }) => theme.COLORS.gray[50]};
   cursor: pointer;
+
+  border: 1px solid
+    ${({ theme, hasError }) =>
+      hasError ? theme.COLORS.error : theme.COLORS.gray[50]};
 
   &:checked {
     border-color: ${({ theme }) => theme.COLORS.gray[50]};
@@ -49,9 +53,10 @@ const RadioLabel = styled.div`
 
 interface GenderOptionProps {
   onChange?: (value: string) => void;
+  showError?: boolean;
 }
 
-const GenderOption: React.FC<GenderOptionProps> = ({ onChange }) => {
+const GenderOption: React.FC<GenderOptionProps> = ({ onChange, showError }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,6 +77,7 @@ const GenderOption: React.FC<GenderOptionProps> = ({ onChange }) => {
           value="모두 참여 가능해요"
           checked={selectedOption === '모두 참여 가능해요'}
           onChange={handleChange}
+          hasError={showError && !selectedOption}
         />
         <RadioLabel>모두 참여 가능해요</RadioLabel>
       </RadioOption>
@@ -83,9 +89,13 @@ const GenderOption: React.FC<GenderOptionProps> = ({ onChange }) => {
           value="같은 성별만 참여 가능해요"
           checked={selectedOption === '같은 성별만 참여 가능해요'}
           onChange={handleChange}
+          hasError={showError && !selectedOption}
         />
         <RadioLabel>같은 성별만 참여 가능해요</RadioLabel>
       </RadioOption>
+      {showError && !selectedOption && (
+        <InputErrorMessage message="성별 제한을 선택해주세요." />
+      )}
     </GenderContainer>
   );
 };

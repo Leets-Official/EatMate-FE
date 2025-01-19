@@ -6,6 +6,7 @@ import BackgroundOption from '@/components/Event/BackgroundOption';
 import GenderOption from '@/components/Event/GenderOption';
 import ParticipantOption from '@/components/Event/ParticipantOption';
 import TimeOption from '@/components/Event/TimeOption';
+import { useState } from 'react';
 import styled from 'styled-components';
 
 const ContentPadding = styled.div`
@@ -13,8 +14,15 @@ const ContentPadding = styled.div`
 `;
 
 const OfflineMeetingCreate: React.FC = () => {
+  const [genderError, setGenderError] = useState(false);
+
   const handleGenderChange = (value: string) => {
+    setGenderError(false);
     console.log('선택된 성별 제한:', value);
+  };
+
+  const handleSubmit = () => {
+    setGenderError(true);
   };
   return (
     <div>
@@ -38,7 +46,7 @@ const OfflineMeetingCreate: React.FC = () => {
           message="모임 배경 화면에 들어갈 사진을 골라주세요."
           margin="15px"
         />
-        <GenderOption onChange={handleGenderChange} />
+        <GenderOption onChange={handleGenderChange} showError={genderError} />
         <ParticipantOption />
         <TimeOption />
         <div>
@@ -49,7 +57,7 @@ const OfflineMeetingCreate: React.FC = () => {
             guideMessage="가게명과 지점명을 함께 입력해주세요"
           />
         </div>
-        <Button variant="primary" size="lg" rounded="md">
+        <Button variant="primary" size="lg" rounded="md" onClick={handleSubmit}>
           모임 만들기
         </Button>
       </ContentPadding>
