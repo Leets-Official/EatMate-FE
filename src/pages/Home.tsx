@@ -80,7 +80,7 @@ const Home = () => {
           <MeetingList cover="delivery" />
         </div>
       )}
-      <FloatingPostButton onClick={handlePostClick} />
+      <FloatingPostButton />
       <BottomNavigation />
     </Container>
   );
