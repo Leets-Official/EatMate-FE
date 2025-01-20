@@ -32,9 +32,13 @@ const StyledButton = styled.button<{ isSelected?: boolean }>`
   }
 `;
 
-const Icon = styled.img`
+const Icon = styled.img<{ isSelected?: boolean }>`
   width: 13px;
   height: 13px;
+  filter: ${({ isSelected }) =>
+    isSelected
+      ? `invert(36%) sepia(98%) saturate(421%) hue-rotate(335deg) brightness(96%) contrast(94%)`
+      : 'none'};
 `;
 
 const SortingButton = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -54,7 +58,11 @@ const SortingButton = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <StyledButton ref={ref} onClick={onClick} isSelected={isSelected}>
         {text}
-        <Icon src={getIconSrc()} alt={`${iconType} icon`} />
+        <Icon
+          src={getIconSrc()}
+          alt={`${iconType} icon`}
+          isSelected={isSelected}
+        />
       </StyledButton>
     );
   }
