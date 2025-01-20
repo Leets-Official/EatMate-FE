@@ -5,6 +5,8 @@ import PersonIcon from '@/assets/images/ic_person.svg?react';
 import MealCover from '@/assets/images/ic_meal_cover.svg';
 import BeerCover from '@/assets/images/ic_beer_cover.svg';
 import DeliveryCover from '@/assets/images/ic_delivery_cover.svg';
+import Clock from '@/assets/images/ic_clock.svg';
+
 interface MeetingListItemProps {
   cover: string;
   isSelected: boolean;
@@ -13,6 +15,7 @@ interface MeetingListItemProps {
   location: string;
   participants: string;
   time: string;
+  deliveryTime?: string;
 }
 
 const Container = styled.div<{ isSelected: boolean }>`
@@ -102,6 +105,26 @@ const TimeBadge = styled.div`
   white-space: nowrap;
 `;
 
+const RemainingTimeBadge = styled.div`
+  margin-top: 3px;
+  width: 130px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: ${({ theme }) => theme.COLORS.main};
+  font-size: 12px;
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.medium};
+  border-radius: 5px;
+  padding: 2px 6px;
+  background-color: #fbded0;
+  white-space: nowrap;
+
+  img {
+    width: 14px;
+    height: 14px;
+  }
+`;
+
 const MeetingListItem: React.FC<MeetingListItemProps> = ({
   cover,
   isSelected,
@@ -110,9 +133,11 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
   location,
   participants,
   time,
+  deliveryTime,
 }) => {
   const coverType =
     cover === 'meal' ? MealCover : cover === 'beer' ? BeerCover : DeliveryCover;
+
   return (
     <Container isSelected={isSelected}>
       <MainContainer>
@@ -122,6 +147,12 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
         <TextContainer>
           <Title>{title}</Title>
           <Description>{description}</Description>
+          {cover === 'delivery' && deliveryTime && (
+            <RemainingTimeBadge>
+              <img src={Clock} alt="알람 아이콘" />
+              {deliveryTime} 남았어요
+            </RemainingTimeBadge>
+          )}
         </TextContainer>
       </MainContainer>
       <InfoContainer>

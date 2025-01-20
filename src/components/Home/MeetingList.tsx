@@ -53,6 +53,7 @@ const meetingData = [
     participants: '6/10',
     time: '5',
     isSelected: false,
+    deliveryTime: '23분 20초',
   },
 ];
 
@@ -126,6 +127,7 @@ const MeetingList = ({ cover }: { cover: string }) => {
             location={meeting.location}
             participants={meeting.participants}
             time={meeting.time}
+            deliveryTime={meeting.deliveryTime}
           />
         ))}
       </ListContainer>
