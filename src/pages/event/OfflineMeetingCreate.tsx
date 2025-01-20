@@ -118,6 +118,7 @@ const OfflineMeetingCreate: React.FC = () => {
           onChange={(value) => handleFormChange('isLimited', value)}
         />
         <MeetingTimeOption
+          value={formData.meetingDate}
           onChange={(value) => handleFormChange('meetingDate', value)}
         />
         <div>
