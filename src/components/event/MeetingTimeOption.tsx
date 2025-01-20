@@ -49,7 +49,26 @@ const MeetingTimeOption: React.FC<TimeOptionProps> = ({ value, onChange }) => {
 
   useEffect(() => {
     if (onChange) {
-      onChange(formattedTime);
+      // ISO 형식으로 변환하여 상위 컴포넌트에 전달
+      const currentDate = new Date();
+      let formattedDate;
+
+      if (selectedTime.date === '오늘') {
+        formattedDate = currentDate;
+      } else if (selectedTime.date === '내일') {
+        formattedDate = new Date(
+          currentDate.setDate(currentDate.getDate() + 1)
+        );
+      } else {
+        formattedDate = new Date(
+          currentDate.setDate(parseInt(selectedTime.date, 10))
+        );
+      }
+
+      formattedDate.setHours(parseInt(selectedTime.hour, 10));
+      formattedDate.setMinutes(parseInt(selectedTime.minute, 10));
+
+      onChange(formattedDate.toISOString());
     }
   }, [selectedTime, onChange]);
 
@@ -70,22 +89,15 @@ const MeetingTimeOption: React.FC<TimeOptionProps> = ({ value, onChange }) => {
     return dates;
   };
 
-  // 시간 배열 생성 (현재 시간 +30분 이후부터)
+  // 시간 배열 생성 (0~23시)
   const createHours = () => {
-    const currentHour = now.getHours();
-    const currentMinute = now.getMinutes();
-    const startHour = currentMinute >= 30 ? currentHour + 1 : currentHour;
-    return Array.from({ length: 24 }, (_, i) => (startHour + i) % 24).map(
-      (hour) => (hour < 10 ? `0${hour}` : `${hour}`)
-    );
+    return Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'));
   };
 
   // 분 배열 생성 (10분 단위)
   const createMinutes = () => {
-    const currentMinute = now.getMinutes();
-    const startMinute = Math.ceil((currentMinute + 30) / 10) * 10;
-    return Array.from({ length: 6 }, (_, i) => (startMinute + i * 10) % 60).map(
-      (minute) => (minute < 10 ? `0${minute}` : `${minute}`)
+    return Array.from({ length: 6 }, (_, i) =>
+      (i * 10).toString().padStart(2, '0')
     );
   };
 
@@ -104,7 +116,7 @@ const MeetingTimeOption: React.FC<TimeOptionProps> = ({ value, onChange }) => {
     <Wrapper>
       <Container>
         <Label>약속 시간</Label>
-        <SelectedTime>{value || formattedTime}</SelectedTime>
+        <SelectedTime>{formattedTime}</SelectedTime>
       </Container>
       <PickerWrapper>
         <DatePickerWrapper>

@@ -19,34 +19,6 @@ const ContentPadding = styled.div`
 const OfflineMeetingCreate: React.FC = () => {
   const nav = useNavigate();
 
-  // const [genderSelected, setGenderSelected] = useState<boolean>(false);
-  // const [errors, setErrors] = useState<{
-  //   gender?: Boolean;
-  //   storeName?: boolean;
-  // }>({});
-  // const [storeName, setStoreName] = useState('');
-
-  // const handleGenderChange = (value: string) => {
-  //   setGenderSelected(true);
-  //   setErrors((prev) => ({ ...prev, gender: false }));
-  //   console.log('선택된 성별 제한:', value);
-  // };
-
-  // const validateForm = () => {
-  //   const newErrors: { gender?: boolean; storeName?: boolean } = {};
-  //   if (!storeName.trim()) newErrors.storeName = true;
-  //   if (!genderSelected) newErrors.gender = true;
-
-  //   setErrors(newErrors);
-  //   return Object.keys(newErrors).length === 0;
-  // };
-
-  // const handleSubmit = () => {
-  //   if (validateForm()) {
-  //     console.log('모임이 정상적으로 생성되었습니다.');
-  //   }
-  // };
-
   const { formData, errors, handleChange, validateForm } = useInputHandler({
     meetingName: '',
     meetingDescription: '',
@@ -68,6 +40,7 @@ const OfflineMeetingCreate: React.FC = () => {
   };
 
   const handleSubmit = () => {
+    console.log('모임생성 데이터: ', formData);
     if (validateForm(['meetingName', 'meetingDescription', 'meetingPlace'])) {
       console.log('오프라인 모임이 정상적으로 생성되었습니다.', formData);
     } else {
@@ -122,6 +95,15 @@ const OfflineMeetingCreate: React.FC = () => {
           value={formData.meetingDate}
           onChange={(value) => handleFormChange('meetingDate', value)}
         />
+        {/* <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '50px',
+          }}
+        >
+          <WheelPicker />
+        </div> */}
         <div>
           <Input
             label="가게 이름"
@@ -132,15 +114,6 @@ const OfflineMeetingCreate: React.FC = () => {
             hasError={errors.meetingPlace}
             errorMessage="다시 입력해주세요."
           />
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginTop: '50px',
-          }}
-        >
-          <WheelPicker />
         </div>
         <Button variant="primary" size="lg" rounded="md" onClick={handleSubmit}>
           모임 만들기
