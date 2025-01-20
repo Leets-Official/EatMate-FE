@@ -8,7 +8,7 @@ interface ButtonProps extends React.ComponentProps<'button'> {
   onClick?: () => void;
 }
 
-const StyledButton = styled.button<{ isSelected: boolean }>`
+const StyledButton = styled.button`
   width: 77px;
   display: flex;
   align-items: center;
@@ -21,17 +21,6 @@ const StyledButton = styled.button<{ isSelected: boolean }>`
   cursor: pointer;
   transition: all 0.2s ease;
 
-  ${({ isSelected }) =>
-    isSelected
-      ? css`
-          border: 0.5px solid #ccc;
-          background-color: #fff;
-        `
-      : css`
-          border: 0.5px #f3f4f5;
-          background-color: #f7f8fa;
-        `}
-
   &:hover {
     opacity: 0.9;
   }
@@ -43,7 +32,7 @@ const Icon = styled.img`
 `;
 
 const SortingButton = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ isSelected = false, text, iconType, onClick }, ref) => {
+  ({ text, iconType, onClick }, ref) => {
     // 아이콘 경로 설정
     const getIconSrc = () => {
       switch (iconType) {
@@ -57,7 +46,7 @@ const SortingButton = forwardRef<HTMLButtonElement, ButtonProps>(
     };
 
     return (
-      <StyledButton ref={ref} isSelected={isSelected} onClick={onClick}>
+      <StyledButton ref={ref} onClick={onClick}>
         {text}
         <Icon src={getIconSrc()} alt={`${iconType} icon`} />
       </StyledButton>
