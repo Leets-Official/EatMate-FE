@@ -109,7 +109,7 @@ const SelectedTime = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
 `;
 
-const WheelPicker = () => {
+const WheelPicker = ({ onChange }: { onChange: (date: string) => void }) => {
   const dateItems = generateDateItems();
   const { hours, minutes, defaultHour, defaultMinute } = generateTimeItems();
 
@@ -120,6 +120,33 @@ const WheelPicker = () => {
   const dateRef = useRef<HTMLUListElement | null>(null);
   const hourRef = useRef<HTMLUListElement | null>(null);
   const minuteRef = useRef<HTMLUListElement | null>(null);
+  const isInitialMount = useRef(true);
+
+  // 선택된 값을 상위 컴포넌트로 전달 (첫 렌더링 방지)
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
+    const currentDate = new Date();
+    let formattedDate;
+
+    if (selectedDate === '오늘') {
+      formattedDate = currentDate;
+    } else if (selectedDate === '내일') {
+      formattedDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
+    } else {
+      formattedDate = new Date(currentDate.setDate(parseInt(selectedDate, 10)));
+    }
+
+    formattedDate.setHours(parseInt(selectedHour, 10));
+    formattedDate.setMinutes(parseInt(selectedMinute, 10));
+    formattedDate.setSeconds(0);
+    formattedDate.setMilliseconds(0);
+
+    onChange(formattedDate.toISOString());
+  }, [selectedDate, selectedHour, selectedMinute]);
 
   const handleScroll = (
     ref: React.RefObject<HTMLUListElement>,
@@ -139,10 +166,9 @@ const WheelPicker = () => {
   };
 
   useEffect(() => {
-    // 중앙 정렬을 위해 초기 스크롤 위치 조정
     if (dateRef.current) {
       dateRef.current.scrollTo({
-        top: 40 * 1, // '오늘'이 중앙에 위치하도록 조정
+        top: 40 * 0,
         behavior: 'smooth',
       });
     }
@@ -160,7 +186,7 @@ const WheelPicker = () => {
         behavior: 'smooth',
       });
     }
-  }, [defaultHour, defaultMinute]);
+  }, []);
 
   return (
     <TotalContainer>

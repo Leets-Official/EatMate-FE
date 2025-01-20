@@ -102,7 +102,9 @@ const OfflineMeetingCreate: React.FC = () => {
             marginTop: '50px',
           }}
         >
-          <WheelPicker />
+          <WheelPicker
+            onChange={(value) => handleFormChange('meetingDate', value)}
+          />
         </div>
         <div>
           <Input
