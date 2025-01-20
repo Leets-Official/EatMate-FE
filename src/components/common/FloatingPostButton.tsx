@@ -105,13 +105,12 @@ const FloatingPostButton = () => {
   };
 
   const handleNavigation = (type: 'meal' | 'drink' | 'delivery') => {
-    let path = '/meeting/create/offline';
-    if (type === 'delivery') {
-      path = '/meeting/create/delivery';
-    } else {
-      path += `?category=${type === 'meal' ? 'meal' : 'drink'}`;
-    }
-    navigate(path);
+    const path =
+      type === 'delivery'
+        ? '/meeting/create/delivery'
+        : '/meeting/create/offline';
+
+    navigate(path, { state: { category: type } });
     setIsMenuOpen(false);
   };
 
