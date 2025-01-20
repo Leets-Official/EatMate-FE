@@ -5,7 +5,6 @@ import closeIcon from '@/assets/images/ic_close.svg';
 import mealIcon from '@/assets/images/ic_posting_meal.svg';
 import drinkIcon from '@/assets/images/ic_posting_beer.svg';
 import deliveryIcon from '@/assets/images/ic_posting_delivery.svg';
-import theme from '@/styles/theme';
 import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
@@ -13,10 +12,10 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: end;
   bottom: 90px;
-  width: 190%;
+  width: 100%;
   max-width: 390px;
   margin: 0 auto;
-  z-index: 999;
+  z-index: 105;
 `;
 
 const ButtonContainer = styled.button<{ isMenuOpen?: boolean }>`
@@ -39,8 +38,8 @@ const ButtonContainer = styled.button<{ isMenuOpen?: boolean }>`
   }
 
   &:active {
-    background-color: ${({ isMenuOpen }) =>
-      isMenuOpen ? '#3B3B3B' : '#d66f2b'};
+    background-color: ${({ isMenuOpen, theme }) =>
+      isMenuOpen ? '#3B3B3B' : theme.COLORS.main};
   }
 `;
 
@@ -62,28 +61,30 @@ const Overlay = styled.div<{ isVisible: boolean }>`
 `;
 
 const Menu = styled.div`
-  position: fixed;
-  bottom: 140px;
-  right: 30px;
-  display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   gap: 14px;
   align-items: flex-end;
-  z-index: 999;
+  z-index: 105;
+  position: fixed;
+  display: flex;
+  justify-content: end;
+  bottom: 150px;
+  width: 100%;
+  max-width: 390px;
+  margin: 0 auto;
+  z-index: 105;
 `;
 
 const MenuItem = styled.button`
   display: flex;
-  flex-direction: row;
   align-items: center;
   gap: 12px;
   background-color: transparent;
-  color: ${theme.COLORS.white};
-  padding: 10px 16px;
+  color: ${({ theme }) => theme.COLORS.white};
   border-radius: 30px;
   border: none;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   cursor: pointer;
   transition: all 0.2s ease;
 
@@ -92,8 +93,8 @@ const MenuItem = styled.button`
   }
 
   img {
-    width: 22px;
-    height: 22px;
+    width: 25px;
+    height: 25px;
   }
 `;
 
@@ -120,22 +121,23 @@ const FloatingPostButton = () => {
       <Overlay isVisible={isMenuOpen} onClick={handleButtonClick} />
       {isMenuOpen && (
         <Menu>
+          <MenuItem onClick={() => handleNavigation('/delivery')}>
+            배달팟
+            <ButtonContainer onClick={handleButtonClick}>
+              <Icon src={deliveryIcon} alt="배달팟" />
+            </ButtonContainer>
+          </MenuItem>
+
+          <MenuItem onClick={() => handleNavigation('/drink')}>
+            술약
+            <ButtonContainer onClick={handleButtonClick}>
+              <Icon src={drinkIcon} alt="술약" />
+            </ButtonContainer>
+          </MenuItem>
           <MenuItem onClick={() => handleNavigation('/meal')}>
             밥약
             <ButtonContainer onClick={handleButtonClick}>
               <Icon src={mealIcon} alt="밥약" />
-            </ButtonContainer>
-          </MenuItem>
-          <MenuItem onClick={() => handleNavigation('/drink')}>
-            밥약
-            <ButtonContainer onClick={handleButtonClick}>
-              <Icon src={drinkIcon} alt="술약약" />
-            </ButtonContainer>
-          </MenuItem>
-          <MenuItem onClick={() => handleNavigation('/delivery')}>
-            배달팟
-            <ButtonContainer onClick={handleButtonClick}>
-              <Icon src={deliveryIcon} alt="술약약" />
             </ButtonContainer>
           </MenuItem>
         </Menu>
