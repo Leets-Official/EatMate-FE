@@ -74,7 +74,7 @@ const OptionDescription = styled.div`
 
 const CloseButton = styled.button`
   display: block;
-  margin: 16px auto;
+  margin: 13px auto;
   width: 85%;
   padding: 12px;
   font-size: 14px;
