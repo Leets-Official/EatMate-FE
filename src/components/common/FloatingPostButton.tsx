@@ -6,6 +6,7 @@ import mealIcon from '@/assets/images/ic_posting_meal.svg';
 import drinkIcon from '@/assets/images/ic_posting_beer.svg';
 import deliveryIcon from '@/assets/images/ic_posting_delivery.svg';
 import { useNavigate } from 'react-router-dom';
+import { flexAlignCenter, flexCenter } from '@/styles/CommonStyle';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -25,9 +26,7 @@ const ButtonContainer = styled.button<{ isMenuOpen?: boolean }>`
   border-radius: 50%;
   background-color: ${({ isMenuOpen, theme }) =>
     isMenuOpen ? '#4B4B4B' : theme.COLORS.main};
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${flexCenter}
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   border: none;
   cursor: pointer;
@@ -76,14 +75,13 @@ const Menu = styled.div`
 `;
 
 const MenuItem = styled.button`
-  display: flex;
-  align-items: center;
+  ${flexAlignCenter}
   gap: 12px;
   background-color: transparent;
   color: ${({ theme }) => theme.COLORS.white};
   border-radius: 30px;
   border: none;
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.md};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   cursor: pointer;
   transition: all 0.2s ease;

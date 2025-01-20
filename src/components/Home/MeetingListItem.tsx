@@ -55,7 +55,7 @@ const TextContainer = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   color: ${({ theme }) => theme.COLORS.textPrimary};
   margin-bottom: 4px;
@@ -71,8 +71,7 @@ const Description = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  display: flex;
-  align-items: center;
+  ${flexAlignCenter}
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   color: ${({ theme }) => theme.COLORS.gray[400]};
   gap: 8px;
@@ -107,7 +106,7 @@ const RemainingTimeBadge = styled.div`
   gap: 3px;
   color: ${({ theme }) => theme.COLORS.main};
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.medium};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   border-radius: 5px;
   padding: 2px 6px;
   background-color: #fbded0;

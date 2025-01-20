@@ -1,3 +1,4 @@
+import { flexCenter } from '@/styles/CommonStyle';
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
@@ -10,13 +11,11 @@ interface ButtonProps extends React.ComponentProps<'button'> {
 
 const StyledButton = styled.button<{ isSelected?: boolean }>`
   height: 27px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${flexCenter}
   gap: 4px;
   padding: 0 12px;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.regular};
   border-radius: 13.5px;
   cursor: pointer;
   white-space: nowrap;
