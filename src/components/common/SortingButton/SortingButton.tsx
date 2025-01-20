@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 interface ButtonProps extends React.ComponentProps<'button'> {
   isSelected?: boolean;

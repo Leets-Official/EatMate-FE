@@ -64,6 +64,9 @@ const MeetingList = ({ cover }: { cover: string }) => {
   const [genderOption, setGenderOption] = useState('모든성별');
   const [participantOption, setParticipantOption] = useState('인원수');
 
+  // RangeLabel 및 체크박스 상태를 저장할 state
+  const [rangeLabel, setRangeLabel] = useState('2인~10인');
+
   const handleSortClick = (value: string) => {
     setIsModalOpen(value);
   };
@@ -80,6 +83,12 @@ const MeetingList = ({ cover }: { cover: string }) => {
     } else if (isModalOpen === 'participant') {
       setParticipantOption(value);
     }
+    handleModalClose();
+  };
+
+  // 모달 닫을 때 RangeSlider 값 반영
+  const handleParticipantConfirm = () => {
+    setParticipantOption(rangeLabel);
     handleModalClose();
   };
 
@@ -155,16 +164,12 @@ const MeetingList = ({ cover }: { cover: string }) => {
         <FilterModal
           isOpen={true}
           title="인원수"
-          options={[
-            { label: '전체', value: '전체' },
-            { label: '2~6명', value: '2~6명' },
-            { label: '6명이상', value: '6명 이상' },
-          ]}
-          selectedOption={participantOption}
-          onSelect={handleSelectSortOption}
-          onClose={handleModalClose}
+          options={[]}
+          selectedOption=""
+          onSelect={() => {}}
+          onClose={handleParticipantConfirm}
         >
-          <RangeSlider />
+          <RangeSlider isCheck={false} onLabelChange={setRangeLabel} />
         </FilterModal>
       )}
     </Container>
