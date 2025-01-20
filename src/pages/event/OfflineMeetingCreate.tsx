@@ -91,11 +91,11 @@ const OfflineMeetingCreate: React.FC = () => {
         <ParticipantOption
           onChange={(value) => handleFormChange('isLimited', value)}
         />
-        <MeetingTimeOption
+        {/* <MeetingTimeOption
           value={formData.meetingDate}
           onChange={(value) => handleFormChange('meetingDate', value)}
-        />
-        {/* <div
+        /> */}
+        <div
           style={{
             display: 'flex',
             justifyContent: 'center',
@@ -103,7 +103,7 @@ const OfflineMeetingCreate: React.FC = () => {
           }}
         >
           <WheelPicker />
-        </div> */}
+        </div>
         <div>
           <Input
             label="가게 이름"
