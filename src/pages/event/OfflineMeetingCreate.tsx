@@ -5,11 +5,12 @@ import InputGuide from '@/components/common/Input/InputGuide';
 import BackgroundOption from '@/components/event/BackgroundOption';
 import GenderOption from '@/components/event/GenderOption';
 import ParticipantOption from '@/components/event/ParticipantOption';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import MeetingTimeOption from '@/components/event/MeetingTimeOption';
 import { useInputHandler } from '@/hooks/useInputHandler';
+
+import WheelPicker from '@/components/event/WheelPicker';
 
 const ContentPadding = styled.div`
   padding: 20px 30px;
@@ -131,6 +132,15 @@ const OfflineMeetingCreate: React.FC = () => {
             hasError={errors.meetingPlace}
             errorMessage="다시 입력해주세요."
           />
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '50px',
+          }}
+        >
+          <WheelPicker />
         </div>
         <Button variant="primary" size="lg" rounded="md" onClick={handleSubmit}>
           모임 만들기
