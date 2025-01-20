@@ -5,7 +5,7 @@ import InputGuide from '@/components/common/Input/InputGuide';
 import BackgroundOption from '@/components/event/BackgroundOption';
 import GenderOption from '@/components/event/GenderOption';
 import ParticipantOption from '@/components/event/ParticipantOption';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 // import MeetingTimeOption from '@/components/event/MeetingTimeOption';
 import { useInputHandler } from '@/hooks/useInputHandler';
@@ -15,6 +15,7 @@ import {
   CreateMeetingRequest,
   createOfflineMeeting,
 } from '@/apis/meetings/createOfflineMeeting';
+import { useEffect } from 'react';
 
 const ContentPadding = styled.div`
   padding: 20px 30px;
@@ -22,7 +23,10 @@ const ContentPadding = styled.div`
 
 const OfflineMeetingCreate: React.FC = () => {
   const nav = useNavigate();
-
+  const location = useLocation();
+  useEffect(() => {
+    console.log('location 값: ', location);
+  }, []);
   const { formData, errors, handleChange, validateForm } = useInputHandler({
     meetingName: '',
     meetingDescription: '',
