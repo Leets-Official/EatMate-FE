@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import SortingButton from '../common/SortingButton/SortingButton';
-import MeetingListItem from './MeetingListItem';
-import FilterModal from '../common/Modal/FilterModal';
-import RangeSlider from '../common/RangeSlider';
+import SortingButton from '@/components/common/SortingButton/SortingButton';
+import MeetingListItem from '@/components/Home/MeetingListItem';
+import FilterModal from '@/components/common/Modal/FilterModal';
+import RangeSlider from '@/components/common/RangeSlider';
 
 const Container = styled.div`
   padding: 16px;
