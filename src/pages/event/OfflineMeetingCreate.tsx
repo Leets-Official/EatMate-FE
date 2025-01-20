@@ -7,10 +7,14 @@ import GenderOption from '@/components/event/GenderOption';
 import ParticipantOption from '@/components/event/ParticipantOption';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import MeetingTimeOption from '@/components/event/MeetingTimeOption';
+// import MeetingTimeOption from '@/components/event/MeetingTimeOption';
 import { useInputHandler } from '@/hooks/useInputHandler';
 
 import WheelPicker from '@/components/event/WheelPicker';
+import {
+  CreateMeetingRequest,
+  createOfflineMeeting,
+} from '@/apis/meetings/createOfflineMeeting';
 
 const ContentPadding = styled.div`
   padding: 20px 30px;
@@ -39,10 +43,25 @@ const OfflineMeetingCreate: React.FC = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log('모임생성 데이터: ', formData);
     if (validateForm(['meetingName', 'meetingDescription', 'meetingPlace'])) {
-      console.log('오프라인 모임이 정상적으로 생성되었습니다.', formData);
+      try {
+        const meetingData: CreateMeetingRequest = {
+          meetingName: formData.meetingName,
+          meetingDescription: formData.meetingDescription,
+          isLimited: formData.isLimited,
+          maxParticipants: formData.isLimited ? formData.maxParticipants : null,
+          meetingPlace: formData.meetingPlace,
+          meetingDate: formData.meetingDate,
+        };
+
+        const response = await createOfflineMeeting(meetingData);
+        console.log('오프라인 모임이 정상적으로 생성되었습니다.', response);
+        nav('/home');
+      } catch (error) {
+        console.error('오프라인 모임 생성중 오류 발생: ', error);
+      }
     } else {
       console.log('필수 입력값이 누락되었습니다.');
     }

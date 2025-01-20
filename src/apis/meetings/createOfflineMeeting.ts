@@ -2,7 +2,7 @@ import defaultInstance from '@/apis/axiosInstance';
 
 const PATH = '/api/meetings';
 
-interface CreateMeetingRequest {
+export interface CreateMeetingRequest {
   meetingName: string;
   meetingDescription: string;
   // "genderRestriction": "MALE",
