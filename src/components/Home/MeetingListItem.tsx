@@ -6,6 +6,7 @@ import MealCover from '@/assets/images/ic_meal_cover.svg';
 import BeerCover from '@/assets/images/ic_beer_cover.svg';
 import DeliveryCover from '@/assets/images/ic_delivery_cover.svg';
 import Clock from '@/assets/images/ic_clock.svg';
+import { flexAlignCenter, flexCenter, flexColumn } from '@/styles/CommonStyle';
 
 interface MeetingListItemProps {
   cover: string;
@@ -22,8 +23,7 @@ const Container = styled.div<{ isSelected: boolean }>`
   width: 334px;
   border-radius: 12px;
   padding: 13px;
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: flex-start;
   background-color: ${({ theme }) => theme.COLORS.white};
   border: 1px solid
@@ -44,16 +44,13 @@ const MainContainer = styled.div`
 
 const IconWrapper = styled.div`
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${flexCenter}
   flex-shrink: 0;
   margin-top: 5px;
 `;
 
 const TextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   margin-left: 12px;
 `;
 
@@ -65,7 +62,7 @@ const Title = styled.div`
 `;
 
 const Description = styled.div`
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   color: ${({ theme }) => theme.COLORS.gray[300]};
   line-height: 1.4;
   white-space: normal;
@@ -76,29 +73,27 @@ const Description = styled.div`
 const InfoContainer = styled.div`
   display: flex;
   align-items: center;
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   color: ${({ theme }) => theme.COLORS.gray[400]};
   gap: 8px;
   width: 100%;
 `;
 
 const Location = styled.div`
-  display: flex;
-  align-items: center;
+  ${flexAlignCenter}
   gap: 4px;
   flex-shrink: 1;
   margin-right: auto;
 `;
 
 const Participants = styled.div`
-  display: flex;
-  align-items: center;
+  ${flexAlignCenter}
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
 `;
 
 const TimeBadge = styled.div`
   color: ${({ theme }) => theme.COLORS.main};
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   border-radius: 12px;
   padding: 4px 10px;
@@ -108,11 +103,10 @@ const TimeBadge = styled.div`
 const RemainingTimeBadge = styled.div`
   margin-top: 3px;
   width: 130px;
-  display: flex;
-  align-items: center;
+  ${flexAlignCenter}
   gap: 3px;
   color: ${({ theme }) => theme.COLORS.main};
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.medium};
   border-radius: 5px;
   padding: 2px 6px;

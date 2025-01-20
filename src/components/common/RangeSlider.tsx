@@ -3,9 +3,9 @@ import { useState } from 'react';
 import ReactSlider from 'react-slider';
 import checkIcon from '@/assets/images/ic_checked_box.svg';
 import unCheckIcon from '@/assets/images/ic_unChecked_box.svg';
+import { flexAlignCenter, flexColumn } from '@/styles/CommonStyle';
 const SliderContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: left;
   border-radius: 8px;
   margin-top: 10px;
@@ -83,8 +83,7 @@ const StyledThumb = styled.div<{ disabled: boolean }>`
 `;
 
 const CheckboxWrapper = styled.label`
-  display: flex;
-  align-items: center;
+  ${flexAlignCenter}
   gap: 8px;
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   cursor: pointer;

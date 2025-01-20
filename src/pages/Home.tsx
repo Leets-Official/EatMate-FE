@@ -7,6 +7,7 @@ import BottomNavigation from '@/components/common/BottomNavi';
 import FloatingPostButton from '@/components/common/FloatingPostButton';
 import DeliveryCategory from '@/components/Home/DeliveryCategory';
 import Header from '@/components/common/Header/Header';
+import { flexAlignCenter } from '@/styles/CommonStyle';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -31,12 +32,11 @@ const Badge = styled.div`
   right: 25px;
   background-color: ${({ theme }) => theme.COLORS.main};
   color: ${({ theme }) => theme.COLORS.white};
-  font-size: 8px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.xs};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   padding: 3px 8px;
   border-radius: 20px;
-  display: flex;
-  align-items: center;
+  ${flexAlignCenter}
   white-space: nowrap;
   z-index: 10;
 `;
@@ -55,9 +55,6 @@ const Home = () => {
   // 탭 클릭 핸들러
   const handleTabClick = (id: string) => {
     setSelectedTabId(id);
-  };
-  const handlePostClick = () => {
-    console.log('Post button clicked');
   };
 
   return (
