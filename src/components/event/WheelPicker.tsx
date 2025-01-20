@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 
-// 날짜 데이터 생성: 오늘, 내일, 나머지는 날짜 숫자만 표시
 const generateDateItems = () => {
   return Array.from({ length: 7 }, (_, index) => {
     const date = dayjs().add(index, 'day');
@@ -10,7 +9,7 @@ const generateDateItems = () => {
     let label;
     if (index === 0) label = '오늘';
     else if (index === 1) label = '내일';
-    else label = date.format('DD');
+    else label = `${date.date()}일`;
 
     return {
       value: date.format('YYYY-MM-DD'),
@@ -19,40 +18,73 @@ const generateDateItems = () => {
   });
 };
 
-// 시간 및 분 데이터 생성
-const hourItems = Array.from({ length: 24 }, (_, index) => ({
-  value: index.toString().padStart(2, '0'),
-  label: index.toString().padStart(2, '0'),
-}));
+// 현재 시간 기준으로 30분 후부터 시간을 설정하는 함수
+const generateTimeItems = () => {
+  const now = dayjs();
+  const currentMinute = now.minute();
+  const roundedMinute = Math.ceil(currentMinute / 10) * 10;
+  const startTime = now.minute(roundedMinute).add(30, 'minute'); // 30분 후
 
-const minuteItems = Array.from({ length: 6 }, (_, index) => ({
-  value: `${index * 10}`.padStart(2, '0'),
-  label: `${index * 10}`,
-}));
+  // 시간 및 분 생성 (0~23시, 00~50분)
+  const hours = [];
+  for (let i = startTime.hour(); i < 24; i++) {
+    hours.push(i.toString().padStart(2, '0'));
+  }
+
+  const minutes = [];
+  for (let m = 0; m < 60; m += 10) {
+    minutes.push(m.toString().padStart(2, '0'));
+  }
+
+  return {
+    hours,
+    minutes,
+    defaultHour: startTime.format('HH'),
+    defaultMinute: startTime.format('mm'),
+  };
+};
 
 // 스타일 정의
-const Container = styled.div`
+const TotalContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px; /* 날짜, 시간, 분 간 간격 */
+  flex-direction: column;
+  gap: 10px;
   width: 100%;
-  max-width: 400px; /* 원하는 최대 너비 */
+  max-width: 500px;
   margin: 0 auto;
-  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.regular};
 `;
 
 const PickerWrapper = styled.div`
+  position: relative;
   display: flex;
-  flex-direction: column;
+  gap: 16px;
+  width: 100%;
   align-items: center;
-  width: 100px;
-  overflow: hidden;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: ${({ theme }) => theme.COLORS.border};
+    z-index: 1;
+  }
+
+  &::before {
+    top: 50%;
+    transform: translateY(-50px);
+  }
+
+  &::after {
+    top: 50%;
+    transform: translateY(50px);
+  }
 `;
 
 const Items = styled.ul`
-  height: 96px; /* 3개 아이템만 보이도록 설정 */
+  height: 96px;
   padding: 50% 0;
   margin: 0;
   overflow-y: scroll;
@@ -60,99 +92,146 @@ const Items = styled.ul`
   -ms-overflow-style: none;
   scrollbar-width: none;
   text-align: center;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.regular};
 
   &::-webkit-scrollbar {
     display: none;
   }
 `;
 
-const Item = styled.li`
+const Item = styled.li<{ isSelected: boolean }>`
   list-style-type: none;
-  height: 32px;
+  height: 40px;
   line-height: 32px;
   scroll-snap-align: center;
-  color: #222;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  color: ${({ isSelected, theme }) =>
+    isSelected ? theme.COLORS.main : '#000'};
+  font-weight: ${({ isSelected, theme }) =>
+    isSelected ? theme.FONT_WEIGHT.bold : theme.FONT_WEIGHT.regular};
+  background-color: ${({ isSelected, theme }) =>
+    isSelected ? '#fbded08f' : 'transparent'};
+  border-radius: ${({ isSelected }) => (isSelected ? '8px' : '0')};
+  padding: ${({ isSelected }) => (isSelected ? '0 10px' : '0')};
+  border: ${({ isSelected, theme }) =>
+    isSelected ? `1px solid ${theme.COLORS.border}` : 'none'};
+  transition: all 0.3s ease;
 
   div {
     display: inline-block;
     width: 100%;
   }
+`;
 
-  &:nth-child(n + 2) {
-    color: #aaa; /* 흐린 효과 */
-  }
+const Label = styled.label`
+  font-size: ${({ theme }) => theme.FONT_SIZE.md};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
-  &:nth-child(3) {
-    color: ${({ theme }) => theme.COLORS.main}; /* 선택된 항목 강조 */
-  }
+const SelectedTime = styled.div`
+  color: ${({ theme }) => theme.COLORS.main};
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
 `;
 
 const WheelPicker = () => {
   const dateItems = generateDateItems();
-  const [selectedDate, setSelectedDate] = useState(dateItems[0].value);
-  const [selectedHour, setSelectedHour] = useState(hourItems[0].value);
-  const [selectedMinute, setSelectedMinute] = useState(minuteItems[0].value);
+  const { hours, minutes, defaultHour, defaultMinute } = generateTimeItems();
 
-  const dateRef = useRef<HTMLLIElement | null>(null);
-  const hourRef = useRef<HTMLLIElement | null>(null);
-  const minuteRef = useRef<HTMLLIElement | null>(null);
+  const [selectedDate, setSelectedDate] = useState(dateItems[0].label);
+  const [selectedHour, setSelectedHour] = useState(defaultHour);
+  const [selectedMinute, setSelectedMinute] = useState(defaultMinute);
+
+  const dateRef = useRef<HTMLUListElement | null>(null);
+  const hourRef = useRef<HTMLUListElement | null>(null);
+  const minuteRef = useRef<HTMLUListElement | null>(null);
+
+  const handleScroll = (
+    ref: React.RefObject<HTMLUListElement>,
+    setValue: React.Dispatch<React.SetStateAction<string>>,
+    items: any[],
+    isDate = false
+  ) => {
+    if (ref.current) {
+      const index = Math.max(
+        0,
+        Math.min(items.length - 1, Math.round(ref.current.scrollTop / 32))
+      );
+      const selectedItem = items[index];
+      setValue(isDate ? dateItems[index].label : selectedItem);
+    }
+  };
 
   useEffect(() => {
-    dateRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
-    hourRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
-    minuteRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
-  }, [selectedDate, selectedHour, selectedMinute]);
+    if (dateRef.current) {
+      dateRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    if (hourRef.current) {
+      hourRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    if (minuteRef.current) {
+      minuteRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
 
   return (
-    <div style={{ textAlign: 'center' }}>
-      <h3 style={{ fontWeight: 'bold' }}>
-        약속 시간{' '}
-        <span
-          style={{ color: '#ff6600' }}
-        >{`${selectedDate} ${selectedHour}:${selectedMinute}`}</span>
-      </h3>
-      <Container>
-        <PickerWrapper>
-          <Items>
-            {dateItems.map((item, index) => (
-              <Item
-                key={item.value}
-                ref={index === 0 ? dateRef : null}
-                onClick={() => setSelectedDate(item.value)}
-              >
+    <TotalContainer>
+      <Label>
+        약속 시간
+        <SelectedTime>{`${selectedDate} ${selectedHour}시 ${selectedMinute}분`}</SelectedTime>
+      </Label>
+      <PickerWrapper>
+        <div style={{ flex: 2 }}>
+          <Items
+            ref={dateRef}
+            onScroll={() =>
+              handleScroll(
+                dateRef,
+                setSelectedDate,
+                dateItems.map((item) => item.label),
+                true
+              )
+            }
+          >
+            {dateItems.map((item) => (
+              <Item key={item.value} isSelected={selectedDate === item.label}>
                 <div>{item.label}</div>
               </Item>
             ))}
           </Items>
-        </PickerWrapper>
-        <PickerWrapper>
-          <Items>
-            {hourItems.map((item, index) => (
-              <Item
-                key={item.value}
-                ref={index === 0 ? hourRef : null}
-                onClick={() => setSelectedHour(item.value)}
-              >
-                <div>{item.label}</div>
+        </div>
+        <div style={{ flex: 1 }}>
+          <Items
+            ref={hourRef}
+            onScroll={() => handleScroll(hourRef, setSelectedHour, hours)}
+          >
+            {hours.map((hour) => (
+              <Item key={hour} isSelected={selectedHour === hour}>
+                <div>{hour}</div>
               </Item>
             ))}
           </Items>
-        </PickerWrapper>
-        <PickerWrapper>
-          <Items>
-            {minuteItems.map((item, index) => (
-              <Item
-                key={item.value}
-                ref={index === 0 ? minuteRef : null}
-                onClick={() => setSelectedMinute(item.value)}
-              >
-                <div>{item.label}</div>
+        </div>
+        <div style={{ flex: 1 }}>
+          <Items
+            ref={minuteRef}
+            onScroll={() => handleScroll(minuteRef, setSelectedMinute, minutes)}
+          >
+            {minutes.map((minute) => (
+              <Item key={minute} isSelected={selectedMinute === minute}>
+                <div>{minute}</div>
               </Item>
             ))}
           </Items>
-        </PickerWrapper>
-      </Container>
-    </div>
+        </div>
+      </PickerWrapper>
+    </TotalContainer>
   );
 };
 

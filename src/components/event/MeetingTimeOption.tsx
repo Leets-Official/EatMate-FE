@@ -10,7 +10,7 @@ const SelectedTime = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
 `;
 
-const Container = styled.div`
+export const Container = styled.div`
   ${flexSpaceBetween}
 `;
 
