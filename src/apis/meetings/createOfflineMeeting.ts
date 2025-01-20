@@ -17,10 +17,10 @@ export const createOfflineMeeting = async (
   OfflineCreateData: CreateMeetingRequest
 ) => {
   try {
-    const response = await defaultInstance.post(
-      PATH + '/offline',
-      OfflineCreateData
-    );
+    const response = await defaultInstance.post(PATH + '/offline', {
+      ...OfflineCreateData,
+      meetingDate: new Date(OfflineCreateData.meetingDate).toISOString(),
+    });
     return response.data;
   } catch (error) {
     console.error('오프라인 모임 생성 실패:  ', error);
