@@ -60,6 +60,7 @@ const OfflineMeetingCreate: React.FC = () => {
           as="textarea"
           placeholder="30자 이내"
           maxLength={30}
+          onChange={(e) => setMeetingName(e.target.value)}
         />
         <Input
           label="모임 설명"
