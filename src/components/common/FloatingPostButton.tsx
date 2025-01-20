@@ -106,7 +106,13 @@ const FloatingPostButton = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
-  const handleNavigation = (path: string) => {
+  const handleNavigation = (type: 'meal' | 'drink' | 'delivery') => {
+    let path = '/meeting/create/offline';
+    if (type === 'delivery') {
+      path = '/meeting/create/delivery';
+    } else {
+      path += `?category=${type === 'meal' ? 'meal' : 'drink'}`;
+    }
     navigate(path);
     setIsMenuOpen(false);
   };
@@ -121,20 +127,19 @@ const FloatingPostButton = () => {
       <Overlay isVisible={isMenuOpen} onClick={handleButtonClick} />
       {isMenuOpen && (
         <Menu>
-          <MenuItem onClick={() => handleNavigation('/delivery')}>
+          <MenuItem onClick={() => handleNavigation('delivery')}>
             배달팟
             <ButtonContainer onClick={handleButtonClick}>
               <Icon src={deliveryIcon} alt="배달팟" />
             </ButtonContainer>
           </MenuItem>
-
-          <MenuItem onClick={() => handleNavigation('/drink')}>
+          <MenuItem onClick={() => handleNavigation('drink')}>
             술약
             <ButtonContainer onClick={handleButtonClick}>
               <Icon src={drinkIcon} alt="술약" />
             </ButtonContainer>
           </MenuItem>
-          <MenuItem onClick={() => handleNavigation('/meal')}>
+          <MenuItem onClick={() => handleNavigation('meal')}>
             밥약
             <ButtonContainer onClick={handleButtonClick}>
               <Icon src={mealIcon} alt="밥약" />
