@@ -21,7 +21,7 @@ const Overlay = styled.div<{ isOpen: boolean }>`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 10;
+  z-index: 15;
 `;
 
 const ModalContainer = styled.div`

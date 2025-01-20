@@ -89,16 +89,19 @@ const MeetingList = ({ cover }: { cover: string }) => {
         <SortingButton
           text={sortOption}
           iconType="upDown"
+          isSelected={sortOption !== '기본순'}
           onClick={() => handleSortClick('default')}
         />
         <SortingButton
           text={genderOption}
           iconType="downArrow"
+          isSelected={genderOption !== '모든성별'}
           onClick={() => handleSortClick('gender')}
         />
         <SortingButton
           text={participantOption}
           iconType="downArrow"
+          isSelected={participantOption !== '인원수'}
           onClick={() => handleSortClick('participant')}
         />
       </ButtonContainer>
@@ -124,8 +127,8 @@ const MeetingList = ({ cover }: { cover: string }) => {
           title="정렬"
           options={[
             { label: '기본순', value: '기본순' },
-            { label: '최신 등록 순', value: '최신 등록 순' },
-            { label: '모임시간 임박 순', value: '모임시간 임박 순' },
+            { label: '최신등록순', value: '최신 등록 순' },
+            { label: '모임임박순', value: '모임시간 임박 순' },
           ]}
           selectedOption={sortOption}
           onSelect={handleSelectSortOption}
@@ -155,7 +158,7 @@ const MeetingList = ({ cover }: { cover: string }) => {
           options={[
             { label: '전체', value: '전체' },
             { label: '2~6명', value: '2~6명' },
-            { label: '6명 이상', value: '6명 이상' },
+            { label: '6명이상', value: '6명 이상' },
           ]}
           selectedOption={participantOption}
           onSelect={handleSelectSortOption}
