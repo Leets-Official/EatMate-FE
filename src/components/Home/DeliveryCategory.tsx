@@ -1,4 +1,4 @@
-import { flexCenter } from '@/styles/CommonStyle';
+import { flexCenter, flexColumnCenter } from '@/styles/CommonStyle';
 import { useState } from 'react';
 import styled from 'styled-components';
 
@@ -17,8 +17,7 @@ const ItemsContainer = styled.div`
 `;
 
 const ItemWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumnCenter}
   align-items: center;
 `;
 
@@ -49,7 +48,7 @@ const Icon = styled.img`
 
 const Label = styled.span<{ isSelected: boolean }>`
   margin-top: 4px;
-  font-size: 12px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   color: ${({ isSelected, theme }) =>
     isSelected ? theme.COLORS.main : '#636363'};

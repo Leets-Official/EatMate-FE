@@ -7,6 +7,7 @@ import BottomNavigation from '@/components/common/BottomNavi';
 import FloatingPostButton from '@/components/common/FloatingPostButton';
 import DeliveryCategory from '@/components/Home/DeliveryCategory';
 import Header from '@/components/common/Header/Header';
+import { flexAlignCenter } from '@/styles/CommonStyle';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -14,12 +15,30 @@ const Container = styled.div`
   position: relative;
   padding-top: 25px;
 `;
+
 const Line = styled.div`
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
   border-top: 2px solid #ddd;
-  height: 20px;
+  height: 10px;
   margin-top: 10px;
+  position: relative;
+  z-index: 1;
+`;
+
+const Badge = styled.div`
+  position: absolute;
+  top: 90px;
+  right: 25px;
+  background-color: ${({ theme }) => theme.COLORS.main};
+  color: ${({ theme }) => theme.COLORS.white};
+  font-size: ${({ theme }) => theme.FONT_SIZE.xs};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  padding: 3px 8px;
+  border-radius: 20px;
+  ${flexAlignCenter}
+  white-space: nowrap;
+  z-index: 10;
 `;
 
 const Home = () => {
@@ -37,29 +56,28 @@ const Home = () => {
   const handleTabClick = (id: string) => {
     setSelectedTabId(id);
   };
-  const handlePostClick = () => {
-    console.log('Post button clicked');
-  };
 
   return (
     <Container>
       <Header subText="배달팟 실시간 모집 중" />
       <Line />
+      <Badge>배달비가 부담될 때</Badge>
+
       <Tabs
         tabs={tabs}
         selectedTabId={selectedTabId}
         onTabClick={handleTabClick}
       />
 
-      {selectedTabId === 'tab1' && <MeetingList />}
-      {selectedTabId === 'tab2' && <MeetingList />}
+      {selectedTabId === 'tab1' && <MeetingList cover="meal" />}
+      {selectedTabId === 'tab2' && <MeetingList cover="beer" />}
       {selectedTabId === 'tab3' && (
         <div>
           <DeliveryCategory />
-          <MeetingList />
+          <MeetingList cover="delivery" />
         </div>
       )}
-      <FloatingPostButton onClick={handlePostClick} />
+      <FloatingPostButton />
       <BottomNavigation />
     </Container>
   );

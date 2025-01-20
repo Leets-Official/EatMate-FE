@@ -3,9 +3,9 @@ import { useState } from 'react';
 import ReactSlider from 'react-slider';
 import checkIcon from '@/assets/images/ic_checked_box.svg';
 import unCheckIcon from '@/assets/images/ic_unChecked_box.svg';
+import { flexAlignCenter, flexColumn } from '@/styles/CommonStyle';
 const SliderContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: left;
   border-radius: 8px;
   margin-top: 10px;
@@ -27,6 +27,7 @@ const RangeLabel = styled.div<{ isColor: boolean; isEnabled: boolean }>`
 `;
 
 const StyledSlider = styled(ReactSlider)<{ disabled: boolean }>`
+  margin-bottom: 16px;
   width: 100%;
   max-width: 300px;
   height: 4px;
@@ -82,12 +83,10 @@ const StyledThumb = styled.div<{ disabled: boolean }>`
 `;
 
 const CheckboxWrapper = styled.label`
-  display: flex;
-  align-items: center;
+  ${flexAlignCenter}
   gap: 8px;
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   cursor: pointer;
-  margin-top: 16px;
   width: 100%;
   max-width: 300px;
   justify-content: flex-start;
@@ -100,29 +99,45 @@ const CheckboxIcon = styled.img`
 `;
 
 interface RangeSliderProps {
+  onLabelChange?: (label: string) => void;
   isColor?: boolean;
+  isCheck?: boolean;
 }
 
-const RangeSlider = ({ isColor = true }: RangeSliderProps) => {
+const RangeSlider = ({
+  onLabelChange,
+  isColor = true,
+  isCheck = true,
+}: RangeSliderProps) => {
   const [range, setRange] = useState<[number, number]>([2, 10]);
   const [isEnabled, setIsEnabled] = useState(true);
 
   const handleChange = (value: number | readonly number[]) => {
     if (Array.isArray(value)) {
       setRange([value[0], value[1]] as [number, number]);
+
+      // onLabelChange가 존재하는 경우에만 호출
+      if (onLabelChange) {
+        onLabelChange(`${value[0]}인~${value[1]}인`);
+      }
     }
   };
 
   const handleCheckboxChange = () => {
-    setIsEnabled((prev) => !prev);
+    const newValue = !isEnabled;
+    setIsEnabled(newValue);
+
+    if (!newValue) {
+      onLabelChange?.('상관없음');
+    } else {
+      onLabelChange?.(`${range[0]}인~${range[1]}인`);
+    }
   };
 
   return (
     <SliderContainer>
       <RangeLabel isColor={isColor} isEnabled={isEnabled}>
-        {range[0] === range[1]
-          ? `${range[0]}인`
-          : `${range[0]}인~${range[1]}인`}
+        {isEnabled ? `${range[0]}인~${range[1]}인` : '상관없음'}
       </RangeLabel>
       <StyledSlider
         value={range}
@@ -149,13 +164,15 @@ const RangeSlider = ({ isColor = true }: RangeSliderProps) => {
         )}
         disabled={!isEnabled}
       />
-      <CheckboxWrapper onClick={handleCheckboxChange}>
-        <CheckboxIcon
-          src={isEnabled ? unCheckIcon : checkIcon}
-          alt="checkbox"
-        />
-        참여인원 상관 없어요
-      </CheckboxWrapper>
+      {isCheck && (
+        <CheckboxWrapper onClick={handleCheckboxChange}>
+          <CheckboxIcon
+            src={isEnabled ? unCheckIcon : checkIcon}
+            alt="checkbox"
+          />
+          참여인원 상관 없어요
+        </CheckboxWrapper>
+      )}
     </SliderContainer>
   );
 };

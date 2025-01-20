@@ -2,11 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 import FilterModal from './FilterModal';
 import RangeSlider from '../RangeSlider';
 import { useState } from 'react';
-import styled from 'styled-components';
-
-const RangeSliderContainer = styled.div`
-  margin: 32px;
-`;
 const meta: Meta<typeof FilterModal> = {
   title: 'Components/Modal/FilterModal',
   component: FilterModal,
@@ -115,9 +110,7 @@ export const ParticipantModal: Story = {
         onSelect={() => {}}
         onClose={() => alert('모달 닫기')}
       >
-        <RangeSliderContainer>
-          <RangeSlider />
-        </RangeSliderContainer>
+        <RangeSlider />
       </FilterModal>
     );
   },
