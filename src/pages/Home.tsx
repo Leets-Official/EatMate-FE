@@ -14,12 +14,31 @@ const Container = styled.div`
   position: relative;
   padding-top: 25px;
 `;
+
 const Line = styled.div`
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
   border-top: 2px solid #ddd;
-  height: 20px;
+  height: 10px;
   margin-top: 10px;
+  position: relative;
+  z-index: 1;
+`;
+
+const Badge = styled.div`
+  position: absolute;
+  top: 90px;
+  right: 25px;
+  background-color: ${({ theme }) => theme.COLORS.main};
+  color: ${({ theme }) => theme.COLORS.white};
+  font-size: 8px;
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  padding: 3px 8px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  z-index: 10;
 `;
 
 const Home = () => {
@@ -45,6 +64,8 @@ const Home = () => {
     <Container>
       <Header subText="배달팟 실시간 모집 중" />
       <Line />
+      <Badge>배달비가 부담될 때</Badge>
+
       <Tabs
         tabs={tabs}
         selectedTabId={selectedTabId}
