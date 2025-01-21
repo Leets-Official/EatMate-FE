@@ -10,7 +10,7 @@ export interface CreateMeetingRequest {
   maxParticipants: number | null;
   meetingPlace: string;
   meetingDate: string;
-  // "offlineMeetingCategory": string;         // 밥약인지 술약인지
+  offlineMeetingCategory: string; // 밥약인지 술약인지
 }
 
 export const createOfflineMeeting = async (

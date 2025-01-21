@@ -24,9 +24,6 @@ const ContentPadding = styled.div`
 const OfflineMeetingCreate: React.FC = () => {
   const nav = useNavigate();
   const location = useLocation();
-  useEffect(() => {
-    console.log('location 값: ', location);
-  }, []);
   const { formData, errors, handleChange, validateForm } = useInputHandler({
     meetingName: '',
     meetingDescription: '',
@@ -35,8 +32,15 @@ const OfflineMeetingCreate: React.FC = () => {
     meetingPlace: '',
     meetingDate: '',
     // gender:''
-    // offlineMeetingCategory: ""
+    offlineMeetingCategory: '',
   });
+
+  useEffect(() => {
+    console.log('location 값: ', location);
+    if (location.state?.category) {
+      handleChange('offlineMeetingCategory', location.state.category);
+    }
+  }, [location.state?.category]);
 
   const handleFormChange = (key: string, value: any) => {
     handleChange(key, value);
@@ -49,7 +53,14 @@ const OfflineMeetingCreate: React.FC = () => {
 
   const handleSubmit = async () => {
     console.log('모임생성 데이터: ', formData);
-    if (validateForm(['meetingName', 'meetingDescription', 'meetingPlace'])) {
+    if (
+      validateForm([
+        'meetingName',
+        'meetingDescription',
+        'meetingPlace',
+        'offlineMeetingCategory',
+      ])
+    ) {
       try {
         const meetingData: CreateMeetingRequest = {
           meetingName: formData.meetingName,
@@ -58,6 +69,7 @@ const OfflineMeetingCreate: React.FC = () => {
           maxParticipants: formData.isLimited ? formData.maxParticipants : null,
           meetingPlace: formData.meetingPlace,
           meetingDate: formData.meetingDate,
+          offlineMeetingCategory: formData.offlineMeetingCategory,
         };
 
         const response = await createOfflineMeeting(meetingData);

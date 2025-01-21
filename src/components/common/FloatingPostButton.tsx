@@ -104,7 +104,7 @@ const FloatingPostButton = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
-  const handleNavigation = (type: 'meal' | 'drink' | 'delivery') => {
+  const handleNavigation = (type: 'meal' | 'beverage' | 'delivery') => {
     const path =
       type === 'delivery'
         ? '/meeting/create/delivery'
