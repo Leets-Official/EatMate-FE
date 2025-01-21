@@ -5,12 +5,13 @@ const PATH = '/api/meetings';
 export interface CreateMeetingRequest {
   meetingName: string;
   meetingDescription: string;
-  // "genderRestriction": "MALE",
+  // genderRestriction: string;
   isLimited: boolean;
   maxParticipants: number | null;
   meetingPlace: string;
   meetingDate: string;
   offlineMeetingCategory: string; // 밥약인지 술약인지
+  // backgroundImage: string;
 }
 
 export const createOfflineMeeting = async (

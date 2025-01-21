@@ -51,6 +51,14 @@ const OfflineMeetingCreate: React.FC = () => {
     }
   };
 
+  const handleParticipantChange = (
+    isLimited: boolean,
+    maxParticipants: number | null
+  ) => {
+    handleChange('isLimited', isLimited);
+    handleChange('maxParticipants', maxParticipants);
+  };
+
   const handleSubmit = async () => {
     console.log('모임생성 데이터: ', formData);
     if (
@@ -123,9 +131,7 @@ const OfflineMeetingCreate: React.FC = () => {
           // onChange={(e) => handleFormChange('gender', e.target.value)}
           showError={!!errors.gender}
         />
-        <ParticipantOption
-          onChange={(value) => handleFormChange('isLimited', value)}
-        />
+        <ParticipantOption onChange={handleParticipantChange} />
         <div
           style={{
             display: 'flex',
