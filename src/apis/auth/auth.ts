@@ -1,8 +1,21 @@
 import defaultInstance from '@/apis/axiosInstance';
 
-export const getUserRole = async () => {
-  const response = await defaultInstance.get('/api/auth/info');
-  return response.data;
+interface UserInfo {
+  email: string;
+  role: string;
+  gender: 'MALE' | 'FEMALE';
+}
+
+export const getUserInfo = async (): Promise<UserInfo | null> => {
+  try {
+    const response = await defaultInstance.get<{ result: UserInfo }>(
+      '/api/auth/info'
+    );
+    return response.data.result;
+  } catch (error) {
+    console.error('유저 정보 불러오기 실패: ', error);
+    return null;
+  }
 };
 
 export const signupUser = async (signupData: {

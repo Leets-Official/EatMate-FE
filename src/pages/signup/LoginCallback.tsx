@@ -1,4 +1,4 @@
-import { getUserRole } from '@/apis/auth/auth';
+import { getUserInfo } from '@/apis/auth/auth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,9 +8,15 @@ const LoginCallback: React.FC = () => {
   useEffect(() => {
     const handleLoginResponse = async () => {
       try {
-        const response = await getUserRole();
+        const response = await getUserInfo();
+
+        if (!response) {
+          console.error('유저 정보를 가져올 수 없습니다.');
+          nav('/intro');
+          return;
+        }
         console.log('API 응답: ', response);
-        const { role } = response.result;
+        const { role } = response;
 
         // Role에 따라 페이지 이동
         if (role === 'USER') {

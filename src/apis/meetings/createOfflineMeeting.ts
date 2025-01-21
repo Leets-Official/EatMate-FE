@@ -5,7 +5,7 @@ const PATH = '/api/meetings';
 export interface CreateMeetingRequest {
   meetingName: string;
   meetingDescription: string;
-  // genderRestriction: string;
+  genderRestriction: string;
   isLimited: boolean;
   maxParticipants: number | null;
   meetingPlace: string;

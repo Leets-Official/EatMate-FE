@@ -31,8 +31,9 @@ const OfflineMeetingCreate: React.FC = () => {
     maxParticipants: null,
     meetingPlace: '',
     meetingDate: '',
-    // gender:''
+    genderRestriction: '',
     offlineMeetingCategory: '',
+    //backgroundImage
   });
 
   useEffect(() => {
