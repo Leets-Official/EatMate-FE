@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 // import MeetingTimeOption from '@/components/event/MeetingTimeOption';
 import { useInputHandler } from '@/hooks/useInputHandler';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import WheelPicker from '@/components/event/WheelPicker';
 import {
   createOfflineMeeting,
@@ -25,6 +25,7 @@ const ContentPadding = styled.div`
 const OfflineMeetingCreate: React.FC = () => {
   const nav = useNavigate();
   const location = useLocation();
+  // const [accessToken, setAccessToken] = useState<string | undefined>(undefined);
 
   const [userGender, setUserGender] = useState<string | null>(null);
 
@@ -41,10 +42,14 @@ const OfflineMeetingCreate: React.FC = () => {
   });
 
   useEffect(() => {
-    const accessToken = Cookies.get('AccessToken');
-    if (!accessToken) {
-      nav('/');
-    }
+    // const token = Cookies.get('AccessToken');
+    // console.log('토큰  ', accessToken);
+    // if (!token) {
+    //   nav('/');
+    //   return;
+    // }
+
+    // setAccessToken(token);
 
     console.log('location 값: ', location);
     if (location.state?.category) {
