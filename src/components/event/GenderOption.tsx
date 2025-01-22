@@ -53,7 +53,7 @@ const RadioLabel = styled.div`
 
 interface GenderOptionProps {
   userGender: 'MALE' | 'FEMALE';
-  onChange?: (value: 'ALL' | 'MALE' | 'FEMALE') => void;
+  onChange: (value: 'ALL' | 'MALE' | 'FEMALE') => void;
   showError?: boolean;
 }
 
@@ -62,16 +62,15 @@ const GenderOption: React.FC<GenderOptionProps> = ({
   onChange,
   showError = false,
 }) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<'ALL' | 'SAME' | null>(
+    null
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value as 'ALL' | 'SAME';
     setSelectedOption(newValue);
-
-    if (onChange) {
-      onChange(newValue === 'SAME' ? userGender : 'ALL');
-      console.log('선택한 값 : ', newValue);
-    }
+    onChange(newValue === 'SAME' ? userGender : 'ALL');
+    console.log('선택된 성별 : ', newValue);
   };
 
   return (

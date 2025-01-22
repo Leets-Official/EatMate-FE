@@ -37,7 +37,7 @@ const OfflineMeetingCreate: React.FC = () => {
     meetingDate: '',
     genderRestriction: '',
     offlineMeetingCategory: '',
-    //backgroundImage
+    backgroundImage: '',
   });
 
   useEffect(() => {
@@ -78,6 +78,10 @@ const OfflineMeetingCreate: React.FC = () => {
     handleChange('maxParticipants', maxParticipants);
   };
 
+  const handleBackgroundChange = (imageUrl: string) => {
+    handleChange('backgroundImage', imageUrl);
+  };
+
   const handleSubmit = async () => {
     console.log('모임생성 데이터: ', formData);
     if (
@@ -99,6 +103,7 @@ const OfflineMeetingCreate: React.FC = () => {
           meetingPlace: formData.meetingPlace,
           meetingDate: formData.meetingDate,
           offlineMeetingCategory: formData.offlineMeetingCategory,
+          backgroundImage: formData.backgroundImage,
         };
 
         const response = await createOfflineMeeting(meetingData);
@@ -142,7 +147,9 @@ const OfflineMeetingCreate: React.FC = () => {
           hasError={errors.meetingDescription}
         />
 
-        <BackgroundOption />
+        <BackgroundOption
+          onSelectImage={(imageUrl) => handleBackgroundChange}
+        />
         <InputGuide
           message="모임 배경 화면에 들어갈 사진을 골라주세요."
           margin="15px"
@@ -150,10 +157,7 @@ const OfflineMeetingCreate: React.FC = () => {
 
         <GenderOption
           userGender={(userGender as 'MALE' | 'FEMALE') || 'MALE'}
-          onChange={(value: string) => {
-            const genderValue = value === 'SAME' ? userGender : 'ALL';
-            handleChange('genderRestriction', genderValue || '');
-          }}
+          onChange={(value) => handleFormChange('genderRestriction', value)}
           showError={!!errors.genderRestriction}
         />
         <ParticipantOption onChange={handleParticipantChange} />
