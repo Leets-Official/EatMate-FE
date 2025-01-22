@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 // import MeetingTimeOption from '@/components/event/MeetingTimeOption';
 import { useInputHandler } from '@/hooks/useInputHandler';
-
+import Cookies from 'js-cookie';
 import WheelPicker from '@/components/event/WheelPicker';
 import {
   createOfflineMeeting,
@@ -41,6 +41,11 @@ const OfflineMeetingCreate: React.FC = () => {
   });
 
   useEffect(() => {
+    const accessToken = Cookies.get('AccessToken');
+    if (!accessToken) {
+      nav('/');
+    }
+
     console.log('location 값: ', location);
     if (location.state?.category) {
       handleChange('offlineMeetingCategory', location.state.category);
@@ -59,7 +64,7 @@ const OfflineMeetingCreate: React.FC = () => {
     };
 
     fetchUserGender();
-  }, [location.state?.category]);
+  }, [location.state?.category, nav]);
 
   const handleFormChange = (key: string, value: any) => {
     handleChange(key, value);
