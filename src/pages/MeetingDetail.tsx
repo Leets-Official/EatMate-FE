@@ -1,8 +1,5 @@
 import Button from '@/components/common/Button/Button';
-import Header from '@/components/common/Header/Header';
-import Tabs from '@/components/common/Tab/Tab';
-import ParticipantsList from '@/components/MeetingDetail/ParticipantsList';
-import { useState } from 'react';
+import Header from '@/components/Header/Header';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -18,43 +15,24 @@ const ButtonContainer = styled.div`
   flex-direction: row;
   gap: 21px;
   margin: 10px auto;
-  justify-content: center; /* 버튼들을 수평으로 가운데 정렬 */
-  align-items: center; /* 버튼들이 수직으로도 정렬되도록 설정 (선택 사항) */
+  justify-content: center;
+  align-items: center;
 `;
 
 const MeetingDetail = () => {
-  const mockParticipants = [
-    {
-      id: 1,
-      name: '참여자1',
-      imageUrl: 'https://via.placeholder.com/60', // 참가자 1의 프로필 이미지 URL
-      isLeader: true, // 방장 여부
-    },
-    {
-      id: 2,
-      name: '참여자2',
-      imageUrl: 'https://via.placeholder.com/60', // 참가자 2의 프로필 이미지 URL
-    },
-  ];
-  const [selectedTabId, setSelectedTabId] = useState('tab1');
-
-  const tabs = [
-    { id: 'tab1', label: '홈' },
-    { id: 'tab2', label: '채팅' },
-  ];
-
-  const handleTabClick = (id: string) => {
-    setSelectedTabId(id);
+  const handleLeave = () => {
+    alert('모임에서 나갔습니다.');
   };
+
   return (
     <Container>
-      <Header title="어쩌구" />
-      <Tabs
-        tabs={tabs}
-        selectedTabId={selectedTabId}
-        onTabClick={handleTabClick}
+      <Header
+        title="모임 상세"
+        showBackButton={true}
+        onBackClick={() => console.log('뒤로가기 클릭')}
+        isJoin={true}
+        onLeaveClick={handleLeave}
       />
-      <ParticipantsList participants={mockParticipants} />
       <ButtonContainer>
         <Button variant="primary-outline" size="sm" rounded="sm">
           초대하기
