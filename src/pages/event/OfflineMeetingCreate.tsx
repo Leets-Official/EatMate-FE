@@ -149,7 +149,7 @@ const OfflineMeetingCreate: React.FC = () => {
         />
 
         <GenderOption
-          userGender={userGender || ''}
+          userGender={(userGender as 'MALE' | 'FEMALE') || 'MALE'}
           onChange={(value: string) => {
             const genderValue = value === 'SAME' ? userGender : 'ALL';
             handleChange('genderRestriction', genderValue || '');
