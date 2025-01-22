@@ -147,9 +147,7 @@ const OfflineMeetingCreate: React.FC = () => {
           hasError={errors.meetingDescription}
         />
 
-        <BackgroundOption
-          onSelectImage={(imageUrl) => handleBackgroundChange}
-        />
+        <BackgroundOption onChange={handleFormChange} />
         <InputGuide
           message="모임 배경 화면에 들어갈 사진을 골라주세요."
           margin="15px"
