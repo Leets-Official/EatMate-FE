@@ -1,56 +1,68 @@
 import styled from 'styled-components';
 
-interface HeaderContainerProps {
-  showBackButton: boolean;
-}
-
-export const HeaderContainer = styled.header<HeaderContainerProps>`
-  position: relative;
+export const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
   height: 60px;
+  padding: 0 16px;
+  background-color: ${({ theme }) => theme.COLORS.white};
+  position: relative;
 `;
 
 export const BackButton = styled.button`
-  position: relative;
-  z-index: 10;
   background: none;
   border: none;
-  font-size: 1.2rem;
-  color: ${({ theme }) => theme.COLORS.main};
   cursor: pointer;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
 `;
 
 export const CenterContainer = styled.div`
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  left: 50%;
-  transform: translateX(-50%);
 `;
 
 export const Title = styled.h1`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
   color: ${({ theme }) => theme.COLORS.text};
 `;
 
 export const SubText = styled.span`
-  margin-top: 10px;
-  font-size: 1rem;
+  margin-top: 4px;
+  font-size: 14px;
   color: ${({ theme }) => theme.COLORS.textSecondary};
   display: flex;
-  flex-direction: row;
-  gap: 8px;
-  margin: 16px 0;
-  font-size: 12px;
-  font-weight: 400;
+  align-items: center;
+  gap: 5px;
   cursor: pointer;
+
+  img {
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 export const RightSpacer = styled.div`
   width: 40px;
+`;
+
+export const LeaveButton = styled.button`
+  font-size: 14px;
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.large};
+  color: ${({ theme }) => theme.COLORS.main};
+  background-color: transparent;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
 `;

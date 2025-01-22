@@ -71,3 +71,12 @@ export const OnlyLogoWithBackButton: Story = {
     subText: undefined,
   },
 };
+
+export const LeaveButton: Story = {
+  args: {
+    title: ' ',
+    showBackButton: true,
+    subText: undefined,
+    isJoin: true,
+  },
+};
