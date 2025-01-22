@@ -79,7 +79,6 @@ const OfflineMeetingCreate: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    console.log('모임생성 데이터: ', formData);
     if (
       validateForm([
         'meetingName',
@@ -90,6 +89,9 @@ const OfflineMeetingCreate: React.FC = () => {
       ])
     ) {
       try {
+        const formattedDate = formData.meetingDate.replace(/Z$/, ''); // Z 제거
+        const isoDateWithoutMillis = formattedDate.replace(/\.\d{3}$/, ''); // 밀리초 제거
+
         const formDataToSend: OfflineMeetingFormData = {
           meetingName: formData.meetingName,
           meetingDescription: formData.meetingDescription,
@@ -97,10 +99,11 @@ const OfflineMeetingCreate: React.FC = () => {
           isLimited: formData.isLimited,
           maxParticipants: formData.isLimited ? formData.maxParticipants : null,
           meetingPlace: formData.meetingPlace,
-          meetingDate: formData.meetingDate,
+          meetingDate: isoDateWithoutMillis,
           offlineMeetingCategory: formData.offlineMeetingCategory,
           backgroundImage: formData.backgroundImage, // 이미 null 허용된 상태
         };
+        console.log('모임생성 데이터: ', formData);
         const response = await createOfflineMeeting(formDataToSend);
         console.log('오프라인 모임이 정상적으로 생성되었습니다.', response);
         nav('/home');
