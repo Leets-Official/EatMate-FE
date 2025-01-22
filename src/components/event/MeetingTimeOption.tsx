@@ -68,9 +68,8 @@ const MeetingTimeOption: React.FC<TimeOptionProps> = ({ value, onChange }) => {
       formattedDate.setHours(parseInt(selectedTime.hour, 10));
       formattedDate.setMinutes(parseInt(selectedTime.minute, 10));
 
-      // ISO 형식으로 변환 후 Z 제거
-      const isoDate = formattedDate.toISOString();
-      const formattedDateWithoutZ = isoDate.replace(/Z$/, '');
+      // 날짜를 수동으로 포맷팅하여 ISO 형식처럼 전송 (Z 제거)
+      const formattedDateWithoutZ = formattedDate.toISOString().slice(0, -1); // Z 제거
 
       onChange(formattedDateWithoutZ);
     }
