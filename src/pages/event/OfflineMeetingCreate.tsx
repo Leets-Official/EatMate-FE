@@ -12,8 +12,8 @@ import { useInputHandler } from '@/hooks/useInputHandler';
 
 import WheelPicker from '@/components/event/WheelPicker';
 import {
-  CreateMeetingRequest,
   createOfflineMeeting,
+  OfflineMeetingFormData,
 } from '@/apis/meetings/createOfflineMeeting';
 import { useEffect, useState } from 'react';
 import { getUserInfo } from '@/apis/auth/auth';
@@ -37,7 +37,7 @@ const OfflineMeetingCreate: React.FC = () => {
     meetingDate: '',
     genderRestriction: '',
     offlineMeetingCategory: '',
-    backgroundImage: '',
+    backgroundImage: null as File | null,
   });
 
   useEffect(() => {
@@ -78,10 +78,6 @@ const OfflineMeetingCreate: React.FC = () => {
     handleChange('maxParticipants', maxParticipants);
   };
 
-  const handleBackgroundChange = (imageUrl: string) => {
-    handleChange('backgroundImage', imageUrl);
-  };
-
   const handleSubmit = async () => {
     console.log('모임생성 데이터: ', formData);
     if (
@@ -94,7 +90,7 @@ const OfflineMeetingCreate: React.FC = () => {
       ])
     ) {
       try {
-        const meetingData: CreateMeetingRequest = {
+        const formDataToSend: OfflineMeetingFormData = {
           meetingName: formData.meetingName,
           meetingDescription: formData.meetingDescription,
           genderRestriction: formData.genderRestriction,
@@ -103,10 +99,9 @@ const OfflineMeetingCreate: React.FC = () => {
           meetingPlace: formData.meetingPlace,
           meetingDate: formData.meetingDate,
           offlineMeetingCategory: formData.offlineMeetingCategory,
-          backgroundImage: formData.backgroundImage,
+          backgroundImage: formData.backgroundImage, // 이미 null 허용된 상태
         };
-
-        const response = await createOfflineMeeting(meetingData);
+        const response = await createOfflineMeeting(formDataToSend);
         console.log('오프라인 모임이 정상적으로 생성되었습니다.', response);
         nav('/home');
       } catch (error) {
