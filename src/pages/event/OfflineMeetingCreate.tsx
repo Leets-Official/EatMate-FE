@@ -15,7 +15,8 @@ import {
   CreateMeetingRequest,
   createOfflineMeeting,
 } from '@/apis/meetings/createOfflineMeeting';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { getUserInfo } from '@/apis/auth/auth';
 
 const ContentPadding = styled.div`
   padding: 20px 30px;
@@ -24,6 +25,9 @@ const ContentPadding = styled.div`
 const OfflineMeetingCreate: React.FC = () => {
   const nav = useNavigate();
   const location = useLocation();
+
+  const [userGender, setUserGender] = useState<string | null>(null);
+
   const { formData, errors, handleChange, validateForm } = useInputHandler({
     meetingName: '',
     meetingDescription: '',
@@ -41,6 +45,20 @@ const OfflineMeetingCreate: React.FC = () => {
     if (location.state?.category) {
       handleChange('offlineMeetingCategory', location.state.category);
     }
+
+    const fetchUserGender = async () => {
+      try {
+        const userInfo = await getUserInfo();
+        if (userInfo) {
+          console.log('사용자의 성별 정보: ', userInfo.gender);
+          setUserGender(userInfo.gender);
+        }
+      } catch (error) {
+        console.error('사용자 성별을 가져오는 중 오류 발생: ', error);
+      }
+    };
+
+    fetchUserGender();
   }, [location.state?.category]);
 
   const handleFormChange = (key: string, value: any) => {
@@ -68,12 +86,14 @@ const OfflineMeetingCreate: React.FC = () => {
         'meetingDescription',
         'meetingPlace',
         'offlineMeetingCategory',
+        'genderRestriction',
       ])
     ) {
       try {
         const meetingData: CreateMeetingRequest = {
           meetingName: formData.meetingName,
           meetingDescription: formData.meetingDescription,
+          genderRestriction: formData.genderRestriction,
           isLimited: formData.isLimited,
           maxParticipants: formData.isLimited ? formData.maxParticipants : null,
           meetingPlace: formData.meetingPlace,
@@ -129,8 +149,12 @@ const OfflineMeetingCreate: React.FC = () => {
         />
 
         <GenderOption
-          // onChange={(e) => handleFormChange('gender', e.target.value)}
-          showError={!!errors.gender}
+          userGender={userGender || ''}
+          onChange={(value: string) => {
+            const genderValue = value === 'SAME' ? userGender : 'ALL';
+            handleChange('genderRestriction', genderValue || '');
+          }}
+          showError={!!errors.genderRestriction}
         />
         <ParticipantOption onChange={handleParticipantChange} />
         <div

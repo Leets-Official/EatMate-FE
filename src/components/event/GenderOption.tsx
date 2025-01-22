@@ -52,20 +52,25 @@ const RadioLabel = styled.div`
 `;
 
 interface GenderOptionProps {
-  onChange?: (value: string) => void;
+  userGender: 'MALE' | 'FEMALE';
+  onChange?: (value: 'ALL' | 'MALE' | 'FEMALE') => void;
   showError?: boolean;
 }
 
 const GenderOption: React.FC<GenderOptionProps> = ({
+  userGender,
   onChange,
   showError = false,
 }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(e.target.value);
+    const newValue = e.target.value as 'ALL' | 'SAME';
+    setSelectedOption(newValue);
+
     if (onChange) {
-      onChange(e.target.value);
+      onChange(newValue === 'SAME' ? userGender : 'ALL');
+      console.log('선택한 값 : ', newValue);
     }
   };
 
@@ -77,8 +82,8 @@ const GenderOption: React.FC<GenderOptionProps> = ({
           id="gender-all"
           type="radio"
           name="gender"
-          value="모두 참여 가능해요"
-          checked={selectedOption === '모두 참여 가능해요'}
+          value="ALL"
+          checked={selectedOption === 'ALL'}
           onChange={handleChange}
           hasError={showError}
         />
@@ -89,8 +94,8 @@ const GenderOption: React.FC<GenderOptionProps> = ({
           id="gender-same"
           type="radio"
           name="gender"
-          value="같은 성별만 참여 가능해요"
-          checked={selectedOption === '같은 성별만 참여 가능해요'}
+          value="SAME"
+          checked={selectedOption === 'SAME'}
           onChange={handleChange}
           hasError={showError}
         />
