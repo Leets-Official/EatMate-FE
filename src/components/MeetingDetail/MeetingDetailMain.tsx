@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import MockImage from '@/assets/images/ic_mock_img.svg';
 import MeetingInfo from './MeetingInfo';
+import ParticipantsList from './ParticipantsList';
 
 const Container = styled.div`
   width: 100%;
@@ -67,6 +68,7 @@ const MeetingDetailMain = () => {
           <br />
           빠끔해서 방 팝니다!
         </Description>
+        <ParticipantsList />
       </ContentWrapper>
     </Container>
   );
