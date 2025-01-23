@@ -1,5 +1,6 @@
 import Button from '@/components/common/Button/Button';
-import Header from '@/components/Header/Header';
+import Header from '@/components/common/Header/Header';
+import MeetingDetailMain from '@/components/MeetingDetail/MeetingDetailMain';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -33,6 +34,7 @@ const MeetingDetail = () => {
         isJoin={true}
         onLeaveClick={handleLeave}
       />
+      <MeetingDetailMain />
       <ButtonContainer>
         <Button variant="primary-outline" size="sm" rounded="sm">
           초대하기
