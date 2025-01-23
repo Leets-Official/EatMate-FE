@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import ParticipantIcon1 from '@/assets/images/ic_participant1.png';
-import ParticipantIcon2 from '@/assets/images/ic_participant2.png';
-import ParticipantIcon3 from '@/assets/images/ic_participant3.png';
-import ParticipantIcon4 from '@/assets/images/ic_participant4.png';
+import ParticipantIcon1 from '@/assets/images/ic_participant1.svg';
+import ParticipantIcon2 from '@/assets/images/ic_participant2.svg';
+import ParticipantIcon3 from '@/assets/images/ic_participant3.svg';
+import ParticipantIcon4 from '@/assets/images/ic_participant4.svg';
 import CrownIcon from '@/assets/images/ic_crown_check.svg';
 
 interface Participant {

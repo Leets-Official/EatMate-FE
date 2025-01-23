@@ -1,9 +1,9 @@
 // src/components/MeetingDetail/MeetingDetailInfo.tsx
 import styled from 'styled-components';
-import PeopleIcon from '@/assets/icons/people.svg?react';
-import LocationIcon from '@/assets/icons/ic_location.svg?react';
-import CalendarIcon from '@/assets/icons/ic_calendar.svg?react';
-import ChatIcon from '@/assets/icons/ic_chat.svg?react';
+import PeopleIcon from '@/assets/images/ic_people_line.svg';
+import LocationIcon from '@/assets/images/ic_locate.svg';
+import CalendarIcon from '@/assets/images/ic_calendar.svg';
+import ChatIcon from '@/assets/images/ic_chat.svg';
 
 const InfoContainer = styled.div`
   display: flex;
@@ -24,6 +24,7 @@ const InfoItem = styled.div`
 const InfoTitle = styled.div`
   font-size: 12px;
   margin-top: 4px;
+  text-align: center;
 `;
 
 const HighlightedText = styled.div`
@@ -32,27 +33,32 @@ const HighlightedText = styled.div`
   font-weight: 600;
 `;
 
+const Icon = styled.img`
+  width: 24px;
+  height: 24px;
+`;
+
 const MeetingInfo = () => {
   return (
     <InfoContainer>
       <InfoItem>
-        <PeopleIcon />
+        <Icon src={PeopleIcon} alt="참가자 아이콘" />
         <InfoTitle>여자만</InfoTitle>
       </InfoItem>
       <InfoItem>
-        <LocationIcon />
+        <Icon src={LocationIcon} alt="위치 아이콘" />
         <InfoTitle>
           마라탕집 <br /> 맛있겠어요점
         </InfoTitle>
       </InfoItem>
       <InfoItem>
-        <CalendarIcon />
+        <Icon src={CalendarIcon} alt="캘린더 아이콘" />
         <InfoTitle>
           오후 <br /> 6시 10분
         </InfoTitle>
       </InfoItem>
       <InfoItem>
-        <ChatIcon />
+        <Icon src={ChatIcon} alt="채팅 아이콘" />
         <HighlightedText>30분 전 대화</HighlightedText>
       </InfoItem>
     </InfoContainer>

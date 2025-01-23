@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import MockImage from '@/assets/images/ic_mock_img.svg';
 import MeetingInfo from './MeetingInfo';
 import ParticipantsList from './ParticipantsList';
+import MailIcon from '@/assets/images/ic_mail.svg';
 
 const Container = styled.div`
   width: 100%;
@@ -58,7 +59,7 @@ const MeetingDetailMain = () => {
         <Title>마라탕 맛나게 냠냠냠 ٩( ᐛ )و 모임</Title>
         <MeetingInfo />
         <SectionTitle>
-          <Icon src="/icons/ic_note.svg" alt="설명 아이콘" />
+          <Icon src={MailIcon} alt="설명 아이콘" />
           모임 설명
         </SectionTitle>
         <Description>
