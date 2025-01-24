@@ -45,13 +45,27 @@ const Icon = styled.img`
   height: 18px;
 `;
 
+const meetingMockData = {
+  gender: '여자만',
+  location: '마라탕집',
+  placeName: '맛있겠어요점',
+  time: '오후 6시 10분',
+  chatTime: '30분',
+};
+
 const MeetingDetailMain = () => {
   return (
     <Container>
       <ImgContainer src={MockImage} alt="메인 이미지" />
 
       <Title>마라탕 맛나게 냠냠냠 ٩( ᐛ )و 모임</Title>
-      <MeetingInfo />
+      <MeetingInfo
+        gender={meetingMockData.gender}
+        location={meetingMockData.location}
+        placeName={meetingMockData.placeName}
+        time={meetingMockData.time}
+        chatTime={meetingMockData.chatTime}
+      />
       <SectionTitle>
         <Icon src={MailIcon} alt="설명 아이콘" />
         모임 설명

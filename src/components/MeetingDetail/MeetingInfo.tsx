@@ -1,15 +1,22 @@
-// src/components/MeetingDetail/MeetingDetailInfo.tsx
 import styled from 'styled-components';
 import PeopleIcon from '@/assets/images/ic_people_line.svg';
 import LocationIcon from '@/assets/images/ic_locate.svg';
 import CalendarIcon from '@/assets/images/ic_calendar.svg';
 import ChatIcon from '@/assets/images/ic_chat.svg';
 
+interface MeetingInfoProps {
+  gender: string;
+  location: string;
+  placeName: string;
+  time: string;
+  chatTime: string;
+}
+
 const InfoContainer = styled.div`
   display: flex;
   justify-content: space-around;
-  align-items: center;
-  padding: 16px 0;
+  align-items: flex-start;
+  margin-top: 36px;
 `;
 
 const InfoItem = styled.div`
@@ -17,48 +24,57 @@ const InfoItem = styled.div`
   flex-direction: column;
   align-items: center;
   font-size: 14px;
-  color: ${({ theme }) => theme.COLORS.gray[400]};
+  min-width: 80px;
+  text-align: center;
 `;
 
 const InfoTitle = styled.div`
-  font-size: 12px;
-  margin-top: 4px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  color: ${({ theme }) => theme.COLORS.gray[600]};
+  margin-top: 9px;
   text-align: center;
 `;
 
 const HighlightedText = styled.div`
   color: ${({ theme }) => theme.COLORS.main};
-  font-size: 12px;
-  font-weight: 600;
+  font-size: ${({ theme }) => theme.FONT_SIZE.xs};
 `;
 
 const Icon = styled.img`
   width: 24px;
   height: 24px;
+  display: block;
 `;
 
-const MeetingInfo = () => {
+const MeetingInfo: React.FC<MeetingInfoProps> = ({
+  gender,
+  location,
+  placeName,
+  time,
+  chatTime,
+}) => {
   return (
     <InfoContainer>
       <InfoItem>
         <Icon src={PeopleIcon} alt="참가자 아이콘" />
-        <InfoTitle>여자만</InfoTitle>
+        <InfoTitle>{gender}</InfoTitle>
       </InfoItem>
       <InfoItem>
         <Icon src={LocationIcon} alt="위치 아이콘" />
         <InfoTitle>
-          마라탕집 <br /> 맛있겠어요점
+          {location} <br /> {placeName}
         </InfoTitle>
       </InfoItem>
       <InfoItem>
         <Icon src={CalendarIcon} alt="캘린더 아이콘" />
         <InfoTitle>
-          오후 <br /> 6시 10분
+          {time.split(' ')[0]} <br /> {time.split(' ')[1]}
         </InfoTitle>
       </InfoItem>
       <InfoItem>
         <Icon src={ChatIcon} alt="채팅 아이콘" />
-        <HighlightedText>30분 전 대화</HighlightedText>
+        <InfoTitle>채팅</InfoTitle>
+        <HighlightedText>{chatTime} 전 대화</HighlightedText>
       </InfoItem>
     </InfoContainer>
   );
