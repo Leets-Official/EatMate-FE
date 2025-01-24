@@ -1,12 +1,12 @@
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
+import * as S from '@/styles/event/MeetingCreate.styled';
 import { Input } from '@/components/common/Input/Input';
 import InputGuide from '@/components/common/Input/InputGuide';
 import BackgroundOption from '@/components/event/BackgroundOption';
 import GenderOption from '@/components/event/GenderOption';
 import ParticipantOption from '@/components/event/ParticipantOption';
 import { useLocation, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import { useInputHandler } from '@/hooks/useInputHandler';
 import WheelPicker from '@/components/event/WheelPicker';
 import {
@@ -14,20 +14,9 @@ import {
   OfflineMeetingFormData,
 } from '@/apis/meetings/createOfflineMeeting';
 import { useEffect } from 'react';
-import dayjs from 'dayjs';
 import { useUserGender } from '@/hooks/useUserGender';
 import { offlineMeetingFormFields } from '@/constants/MeetingFields';
 import { formatMeetingDate } from '@/utils/dateUtils';
-
-const ContentPadding = styled.div`
-  padding: 20px 30px;
-`;
-
-const WheelPickerContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-`;
 
 const OfflineMeetingCreate: React.FC = () => {
   const nav = useNavigate();
@@ -117,7 +106,7 @@ const OfflineMeetingCreate: React.FC = () => {
         showBackButton
         title="모임 만들기"
       />
-      <ContentPadding>
+      <S.ContentPadding>
         {offlineMeetingFormFields.map((field) =>
           field.key !== 'meetingPlace' ? (
             <Input
@@ -147,11 +136,11 @@ const OfflineMeetingCreate: React.FC = () => {
 
         <ParticipantOption onChange={handleParticipantChange} />
 
-        <WheelPickerContainer>
+        <S.WheelPickerContainer>
           <WheelPicker
             onChange={(value) => handleFormChange('meetingDate', value)}
           />
-        </WheelPickerContainer>
+        </S.WheelPickerContainer>
 
         {offlineMeetingFormFields.map(
           (field) =>
@@ -172,7 +161,7 @@ const OfflineMeetingCreate: React.FC = () => {
         <Button variant="primary" size="lg" rounded="md" onClick={handleSubmit}>
           모임 만들기
         </Button>
-      </ContentPadding>
+      </S.ContentPadding>
     </div>
   );
 };
