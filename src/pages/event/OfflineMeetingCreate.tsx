@@ -22,6 +22,12 @@ const ContentPadding = styled.div`
   padding: 20px 30px;
 `;
 
+const WheelPickerContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+`;
+
 const OfflineMeetingCreate: React.FC = () => {
   const nav = useNavigate();
   const location = useLocation();
@@ -143,17 +149,11 @@ const OfflineMeetingCreate: React.FC = () => {
           showError={!!errors.genderRestriction}
         />
         <ParticipantOption onChange={handleParticipantChange} />
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginTop: '50px',
-          }}
-        >
+        <WheelPickerContainer>
           <WheelPicker
             onChange={(value) => handleFormChange('meetingDate', value)}
           />
-        </div>
+        </WheelPickerContainer>
         <div>
           <Input
             label="가게 이름"
