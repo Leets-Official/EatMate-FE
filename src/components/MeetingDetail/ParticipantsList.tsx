@@ -32,7 +32,6 @@ const Title = styled.div`
   gap: 6px;
   color: ${({ theme }) => theme.COLORS.black};
 `;
-
 const ParticipantsContainer = styled.div`
   display: flex;
   gap: 24px;
@@ -47,15 +46,6 @@ const ParticipantWrapper = styled.div`
   position: relative;
 `;
 
-const ParticipantImageWrapper = styled.div`
-  position: relative;
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  overflow: visible;
-  background-color: ${({ theme }) => theme.COLORS.white};
-`;
-
 const ParticipantImage = styled.img`
   width: 45px;
   height: 45px;
@@ -64,15 +54,14 @@ const ParticipantImage = styled.img`
 
 const Crown = styled.img`
   position: absolute;
-  top: -1px;
-  right: 15px;
+  top: -3px;
+  right: -3px;
   width: 15px;
   height: 15px;
-  z-index: 10;
 `;
 
 const ParticipantName = styled.div`
-  margin-top: 10px;
+  margin-top: 6px;
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.regular};
   color: ${({ theme }) => theme.COLORS.black};
@@ -101,13 +90,9 @@ const ParticipantsList = () => {
       <ParticipantsContainer>
         {participants.map((participant) => (
           <ParticipantWrapper key={participant.id}>
-            <ParticipantImageWrapper>
-              <ParticipantImage
-                src={participant.image}
-                alt={participant.name}
-              />
-              {participant.isHost && <Crown src={CrownIcon} alt="방장" />}
-            </ParticipantImageWrapper>
+            <ParticipantImage src={participant.image} alt={participant.name} />
+            {participant.isHost && <Crown src={CrownIcon} alt="방장" />}
+
             <ParticipantName>
               {participant.isMe && <Badge>나</Badge>}
               <span>{participant.name}</span>
