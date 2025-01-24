@@ -24,3 +24,16 @@ export const flexColumnCenter = css`
   justify-content: center;
   align-items: center;
 `;
+
+export const flexColumn = css`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const FlexAll = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;

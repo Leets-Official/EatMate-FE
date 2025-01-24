@@ -1,107 +1,178 @@
 import styled from 'styled-components';
-import theme from '@/styles/theme';
-import React, { useEffect, useState } from 'react';
-
+import { useState } from 'react';
+import ReactSlider from 'react-slider';
+import checkIcon from '@/assets/images/ic_checked_box.svg';
+import unCheckIcon from '@/assets/images/ic_unChecked_box.svg';
+import { flexAlignCenter, flexColumn } from '@/styles/CommonStyle';
 const SliderContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-  padding: 20px;
+  ${flexColumn}
+  align-items: left;
   border-radius: 8px;
+  margin-top: 10px;
 `;
 
-const RangeLabel = styled.div<{ isColor: boolean }>`
+const RangeLabel = styled.div<{ isColor: boolean; isEnabled: boolean }>`
   font-size: 18px;
-  font-weight: bold;
-  color: ${({ isColor, theme }) => (isColor ? theme.COLORS.main : 'black')};
-  margin-bottom: 20px;
-`;
-
-const Slider = styled.input`
-  -webkit-appearance: none;
-  appearance: none;
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  color: ${({ isColor, isEnabled, theme }) =>
+    isEnabled
+      ? isColor
+        ? theme.COLORS.main
+        : 'black'
+      : theme.COLORS.gray[300]};
+  margin-bottom: 15px;
+  text-align: left;
   width: 100%;
   max-width: 300px;
-  height: 8px;
+`;
+
+const StyledSlider = styled(ReactSlider)<{ disabled: boolean }>`
+  margin-bottom: 16px;
+  width: 100%;
+  max-width: 300px;
+  height: 4px;
   border-radius: 4px;
-  background: ${(props) => {
-    const percentage =
-      ((Number(props.value) - Number(props.min)) /
-        (Number(props.max) - Number(props.min))) *
-      100;
-    return `linear-gradient(to right, ${theme.COLORS.main} 0%, ${theme.COLORS.main} ${percentage}%, ${theme.COLORS.gray[200]} ${percentage}%, ${theme.COLORS.gray[200]} 100%)`;
-  }};
-  cursor: pointer;
+  background: ${({ disabled, theme }) =>
+    disabled ? theme.COLORS.gray[300] : theme.COLORS.gray[200]};
+  position: relative;
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
+`;
+
+const StyledTrack = styled.div<{ disabled: boolean }>`
+  background: ${({ disabled, theme }) =>
+    disabled ? theme.COLORS.gray[300] : theme.COLORS.main};
+  height: 100%;
+  border-radius: 8px;
+  position: absolute;
+`;
+
+const StyledThumb = styled.div<{ disabled: boolean }>`
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: ${({ theme }) => theme.COLORS.white};
+  border: 1px solid
+    ${({ disabled, theme }) =>
+      disabled ? theme.COLORS.gray[300] : theme.COLORS.gray[300]};
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 8px;
+    width: 8px;
+    background: ${({ disabled, theme }) =>
+      disabled ? theme.COLORS.gray[300] : theme.COLORS.main};
+    border-radius: 50%;
+  }
 
   &:focus {
     outline: none;
   }
 
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    background: ${({ theme }) => theme.COLORS.white};
-    border: 2px solid ${({ theme }) => theme.COLORS.main};
-    border-radius: 50%;
-    cursor: pointer;
-  }
-
-  &::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    background: ${({ theme }) => theme.COLORS.white};
-    border: 2px solid ${({ theme }) => theme.COLORS.main};
-    border-radius: 50%;
-    cursor: pointer;
+  &:active {
+    border: ${({ disabled, theme }) =>
+      disabled ? 'none' : `2px solid ${theme.COLORS.main}`};
   }
 `;
 
+const CheckboxWrapper = styled.label`
+  ${flexAlignCenter}
+  gap: 8px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  justify-content: flex-start;
+`;
+
+const CheckboxIcon = styled.img`
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+`;
+
 interface RangeSliderProps {
-  isOpen: boolean;
+  onLabelChange?: (label: string) => void;
   isColor?: boolean;
+  isCheck?: boolean;
 }
 
-// RangeSlider 쓸 때 isColor를 false로 해서 주면 인원 표시 검정으로 뜹니다! 기본은 main 컬러 색,,
-const RangeSlider = ({ isOpen, isColor = true }: RangeSliderProps) => {
-  // 고정된 최소값 (2인)
-  const [minValue] = useState(2);
-  // 선택 가능한 최대값
-  const [maxValue, setMaxValue] = useState(2);
+const RangeSlider = ({
+  onLabelChange,
+  isColor = true,
+  isCheck = true,
+}: RangeSliderProps) => {
+  const [range, setRange] = useState<[number, number]>([2, 10]);
+  const [isEnabled, setIsEnabled] = useState(true);
 
-  // 2인만 선택된 상태인지 여부를 추적
-  const [isTwo, setIsTwo] = useState(true);
+  const handleChange = (value: number | readonly number[]) => {
+    if (Array.isArray(value)) {
+      setRange([value[0], value[1]] as [number, number]);
 
-  useEffect(() => {
-    if (isOpen) {
-      setIsTwo(minValue === 2 && maxValue === 2);
+      // onLabelChange가 존재하는 경우에만 호출
+      if (onLabelChange) {
+        onLabelChange(`${value[0]}인~${value[1]}인`);
+      }
     }
-  }, [isOpen, minValue, maxValue]);
+  };
 
-  const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(event.target.value);
-    setMaxValue(value);
+  const handleCheckboxChange = () => {
+    const newValue = !isEnabled;
+    setIsEnabled(newValue);
 
-    // 슬라이더 값 변경 시 isTwo 상태 업데이트
-    setIsTwo(minValue === 2 && value === 2);
+    if (!newValue) {
+      onLabelChange?.('상관없음');
+    } else {
+      onLabelChange?.(`${range[0]}인~${range[1]}인`);
+    }
   };
 
   return (
     <SliderContainer>
-      {/* 상단 범위 레이블 */}
-      <RangeLabel isColor={isColor}>
-        {isTwo ? `${minValue}인` : `${minValue}인 ~ ${maxValue}인`}
+      <RangeLabel isColor={isColor} isEnabled={isEnabled}>
+        {isEnabled ? `${range[0]}인~${range[1]}인` : '상관없음'}
       </RangeLabel>
-      {/* 슬라이더 */}
-      <Slider
-        type="range"
+      <StyledSlider
+        value={range}
+        onChange={handleChange}
         min={2}
         max={10}
         step={1}
-        value={maxValue}
-        onChange={handleSliderChange}
+        renderTrack={(props, state) => {
+          const [min, max] = state.value as number[];
+          return (
+            <StyledTrack
+              {...props}
+              disabled={!isEnabled}
+              style={{
+                ...props.style,
+                left: `${((min - 2) / (10 - 2)) * 100}%`,
+                width: `${((max - min) / (10 - 2)) * 100}%`,
+              }}
+            />
+          );
+        }}
+        renderThumb={(props) => (
+          <StyledThumb {...props} disabled={!isEnabled} />
+        )}
+        disabled={!isEnabled}
       />
+      {isCheck && (
+        <CheckboxWrapper onClick={handleCheckboxChange}>
+          <CheckboxIcon
+            src={isEnabled ? unCheckIcon : checkIcon}
+            alt="checkbox"
+          />
+          참여인원 상관 없어요
+        </CheckboxWrapper>
+      )}
     </SliderContainer>
   );
 };

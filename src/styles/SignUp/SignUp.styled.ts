@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { flexCenter, flexColumnCenter } from '@/styles/CommonStyle';
 
 interface InputFieldProps extends React.ComponentProps<'input'> {
   error: boolean;
@@ -42,9 +43,7 @@ export const InputField = styled.input<InputFieldProps>`
 `;
 
 export const InputContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${flexCenter}
   gap: 1rem;
   margin-top: 3rem;
 `;
@@ -57,12 +56,9 @@ export const ButtonContainer = styled.div`
 `;
 
 export const SelectButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumnCenter}
   gap: 1rem;
   margin-top: 1rem;
-  align-items: center;
-  justify-content: center;
 `;
 
 export const Text = styled.div`
@@ -89,13 +85,12 @@ export const MainContent = styled.div`
 `;
 
 export const ProfileImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${flexCenter}
   margin: 2rem 0;
 `;
 
 export const ProfileImage = styled.div<{ imageUrl: string }>`
+  ${flexCenter}
   width: 120px;
   height: 120px;
   border-radius: 50%;
@@ -104,9 +99,6 @@ export const ProfileImage = styled.div<{ imageUrl: string }>`
     imageUrl ? `url(${imageUrl})` : 'none'};
   background-size: cover;
   background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-size: ${({ theme }) => theme.FONT_SIZE.xl};
   color: ${({ theme }) => theme.COLORS.gray[100]};
   cursor: pointer;

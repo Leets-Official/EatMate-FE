@@ -21,7 +21,7 @@ const Overlay = styled.div<{ isOpen: boolean }>`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 10;
+  z-index: 999;
 `;
 
 const ModalContainer = styled.div`
@@ -40,15 +40,17 @@ const ModalContainer = styled.div`
 
 const Title = styled.h2`
   font-size: 16px;
-  font-weight: bold;
-  margin: 16px 0 16px 0;
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  margin-top: 16px;
   text-align: center;
+`;
+
+const MainContainer = styled.div`
+  margin: 15px 32px;
 `;
 
 const OptionList = styled.ul`
   list-style: none;
-  margin: 0;
-  padding: 0;
 `;
 
 const Option = styled.li<{ selected: boolean }>`
@@ -74,7 +76,7 @@ const OptionDescription = styled.div`
 
 const CloseButton = styled.button`
   display: block;
-  margin: 16px auto;
+  margin: 13px auto;
   width: 85%;
   padding: 12px;
   font-size: 14px;
@@ -105,27 +107,31 @@ const FilterModal: React.FC<ModalProps> = ({
     <Overlay isOpen={isOpen}>
       <ModalContainer>
         <Title>{title}</Title>
-        {children || (
-          <OptionList>
-            {options.map((option) => (
-              <Option
-                key={option.value}
-                selected={selectedOption === option.value}
-                onClick={() => onSelect(option.value)}
-              >
-                <div>
-                  {option.label}
-                  {option.description && (
-                    <OptionDescription>{option.description}</OptionDescription>
+        <MainContainer>
+          {children || (
+            <OptionList>
+              {options.map((option) => (
+                <Option
+                  key={option.value}
+                  selected={selectedOption === option.value}
+                  onClick={() => onSelect(option.value)}
+                >
+                  <div>
+                    {option.label}
+                    {option.description && (
+                      <OptionDescription>
+                        {option.description}
+                      </OptionDescription>
+                    )}
+                  </div>
+                  {selectedOption === option.value && (
+                    <img src={CheckMark} alt="check" />
                   )}
-                </div>
-                {selectedOption === option.value && (
-                  <img src={CheckMark} alt="check" />
-                )}
-              </Option>
-            ))}
-          </OptionList>
-        )}
+                </Option>
+              ))}
+            </OptionList>
+          )}
+        </MainContainer>
         <CloseButton onClick={onClose}>닫기</CloseButton>
       </ModalContainer>
     </Overlay>

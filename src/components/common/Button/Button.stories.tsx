@@ -9,7 +9,13 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'primary-outline', 'primary-outlineless'], // ButtonVariant 타입에 따른 옵션
+      options: [
+        'primary',
+        'primary-outline',
+        'primary-outlineless',
+        'secondary-main',
+        'secondary-white',
+      ], // ButtonVariant 타입에 따른 옵션
       description: '버튼의 스타일을 설정합니다.',
     },
     size: {
@@ -19,7 +25,7 @@ const meta: Meta<typeof Button> = {
     },
     rounded: {
       control: 'select',
-      options: ['none', 'sm', 'md'], // ButtonRounded 타입에 따른 옵션
+      options: ['none', 'sm', 'md', 'lg'], // ButtonRounded 타입에 따른 옵션
       description: '버튼의 모서리 둥근 정도를 설정합니다.',
     },
     disabled: {
@@ -66,6 +72,14 @@ export const Default: Story = {
 };
 
 export const Variants: Story = {
+  args: {
+    variant: 'secondary-main',
+    size: 'lg',
+    rounded: 'sm',
+    color: 'white',
+    children: '차단중',
+  },
+
   render: () => (
     <div style={{ display: 'flex', gap: '1rem' }}>
       <Button variant="primary" size="md" rounded="md">
@@ -76,6 +90,12 @@ export const Variants: Story = {
       </Button>
       <Button variant="primary-outlineless" size="md" rounded="md">
         Primary Outlineless
+      </Button>
+      <Button variant="secondary-main" size="sm" rounded="lg" svgIcon={false}>
+        Secondary Main
+      </Button>
+      <Button variant="secondary-white" size="sm" rounded="lg" svgIcon={false}>
+        Secondary White
       </Button>
     </div>
   ),

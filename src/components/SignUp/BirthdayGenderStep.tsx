@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import SignUpInput from './SignupInput';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
-import InputErrorMessage from '../common/Error/InputErrorMessage';
+import InputErrorMessage from '@/components/common/Input/InputErrorMessage';
 import {
   validateDay,
   validateMonth,

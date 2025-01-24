@@ -1,11 +1,14 @@
+import { flexCenter } from '@/styles/CommonStyle';
 import { css } from 'styled-components';
 
 export type ButtonVariant =
   | 'primary'
   | 'primary-outline'
-  | 'primary-outlineless';
+  | 'primary-outlineless'
+  | 'secondary-main'
+  | 'secondary-white';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
-export type ButtonRounded = 'none' | 'sm' | 'md';
+export type ButtonRounded = 'none' | 'sm' | 'md' | 'lg';
 
 const sizeStyles: Record<
   ButtonSize,
@@ -45,6 +48,9 @@ const roundedStyles: Record<ButtonRounded, ReturnType<typeof css>> = {
   md: css`
     border-radius: 12px;
   `,
+  lg: css`
+    border-radius: 20px;
+  `,
 };
 
 const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
@@ -55,13 +61,11 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
     font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
   `,
   'primary-outline': css`
+    ${flexCenter}
     background-color: ${({ theme }) => theme.COLORS.white};
     font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
     color: ${({ theme }) => theme.COLORS.main};
     border: 1px solid ${({ theme }) => theme.COLORS.main};
-    display: flex;
-    justify-content: center;
-    align-items: center;
     gap: 8px;
   `,
   'primary-outlineless': css`
@@ -69,6 +73,17 @@ const variantStyles: Record<ButtonVariant, ReturnType<typeof css>> = {
     color: ${({ theme }) => theme.COLORS.main};
     border: none;
     font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
+  `,
+  'secondary-main': css`
+    background-color: ${({ theme }) => theme.COLORS.orange[50]};
+    color: ${({ theme }) => theme.COLORS.main};
+    border: 1px solid ${({ theme }) => theme.COLORS.main};
+  `,
+  'secondary-white': css`
+    background-color: ${({ theme }) => theme.COLORS.white};
+    color: #636363;
+    border: 1px solid ${({ theme }) => theme.COLORS.gray[50]};
+    box-shadow: -3px -3px 20px 0px rgba(0, 0, 0, 0.11);
   `,
 };
 

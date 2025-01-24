@@ -1,13 +1,10 @@
 import styled from 'styled-components';
+import { FlexAll, flexColumn } from '@/styles/CommonStyle';
 
 export const Container = styled.div`
   min-height: 100vh;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  ${FlexAll}
 `;
 
 export const MainText = styled.div`
@@ -24,8 +21,7 @@ export const SubText = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: center;
 `;
 

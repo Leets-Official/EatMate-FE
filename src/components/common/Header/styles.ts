@@ -1,3 +1,4 @@
+import { flexColumn } from '@/styles/CommonStyle';
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
@@ -22,6 +23,7 @@ export const BackButton = styled.button`
 `;
 
 export const CenterContainer = styled.div`
+  ${flexColumn}
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
