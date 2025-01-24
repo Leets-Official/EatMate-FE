@@ -52,14 +52,6 @@ const OfflineMeetingCreate: React.FC = () => {
     }
   };
 
-  const handleParticipantChange = (
-    isLimited: boolean,
-    maxParticipants: number | null
-  ) => {
-    handleChange('isLimited', isLimited);
-    handleChange('maxParticipants', maxParticipants);
-  };
-
   const updateFormData = (): OfflineMeetingFormData => ({
     meetingName: formData.meetingName,
     meetingDescription: formData.meetingDescription,
@@ -134,7 +126,12 @@ const OfflineMeetingCreate: React.FC = () => {
           showError={!!errors.genderRestriction}
         />
 
-        <ParticipantOption onChange={handleParticipantChange} />
+        <ParticipantOption
+          onChange={(isLimited, maxParticipants) => {
+            handleFormChange('isLimited', isLimited);
+            handleFormChange('maxParticipants', maxParticipants);
+          }}
+        />
 
         <S.WheelPickerContainer>
           <WheelPicker
