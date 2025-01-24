@@ -18,8 +18,8 @@ const ImgContainer = styled.img`
 const Title = styled.h1`
   font-size: 20px;
   font-weight: bold;
-  text-align: center;
-  margin-top: 10px;
+  text-align: start;
+  margin: 16px 0 0 28px;
   color: ${({ theme }) => theme.COLORS.black};
 `;
 
