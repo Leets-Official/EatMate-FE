@@ -18,8 +18,8 @@ const ModalOverlay = styled.div`
 const ModalContainer = styled.div`
   background: ${({ theme }) => theme.COLORS.white};
   border-radius: 16px;
-  padding: 24px 20px;
-  width: 300px;
+  padding: 24px 30px;
+  max-width: 300px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   position: relative;
@@ -28,11 +28,12 @@ const ModalContainer = styled.div`
 const Title = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.md};
   color: ${({ theme }) => theme.COLORS.black};
+  margin-bottom: 5px;
 `;
 
 const Icon = styled.img`
   width: 100px;
-  margin-top: 10px;
+  margin-top: 5px;
 `;
 
 const RuleList = styled.ul`
@@ -56,7 +57,7 @@ const RuleItem = styled.li`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 30px;
 `;
 
 interface MeetingGuidModalProps {
@@ -72,12 +73,10 @@ const MeetingGuidModal: React.FC<MeetingGuidModalProps> = ({ onClose }) => {
         <RuleList>
           <RuleItem>
             <Title>1. 존중과 예의를 지켜주세요</Title>
-            <br />
             상대방에게 예의를 갖추고, 비방이나 공격적인 언행을 삼가주세요.
           </RuleItem>
           <RuleItem>
             <Title>2. 약속 시간을 반드시 지켜주세요</Title>
-            <br />
             모임 시작 시간에 늦지 않도록 하고, 불참 시 미리 주최자에게
             알려주세요.
           </RuleItem>
