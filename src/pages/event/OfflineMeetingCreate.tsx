@@ -64,11 +64,18 @@ const OfflineMeetingCreate: React.FC = () => {
     handleChange('maxParticipants', maxParticipants);
   };
 
-  const updateFormData = () => ({
-    ...formData,
-    meetingDate: dayjs(formData.meetingDate).format('YYYY-MM-DDTHH:mm:ss'),
+  const updateFormData = (): OfflineMeetingFormData => ({
+    meetingName: formData.meetingName,
+    meetingDescription: formData.meetingDescription,
+    genderRestriction: formData.genderRestriction,
+    isLimited: formData.isLimited,
     maxParticipants: formData.isLimited ? formData.maxParticipants : null,
+    meetingPlace: formData.meetingPlace,
+    meetingDate: dayjs(formData.meetingDate).format('YYYY-MM-DDTHH:mm:ss'),
+    offlineMeetingCategory: formData.offlineMeetingCategory,
+    backgroundImage: formData.backgroundImage,
   });
+
   const handleSubmit = async () => {
     if (
       validateForm([
@@ -80,24 +87,9 @@ const OfflineMeetingCreate: React.FC = () => {
       ])
     ) {
       try {
-        const formattedDate = dayjs(formData.meetingDate).format(
-          'YYYY-MM-DDTHH:mm:ss'
-        );
-
-        console.log('변환된 KST 시간:', formattedDate);
-
-        const formDataToSend: OfflineMeetingFormData = {
-          meetingName: formData.meetingName,
-          meetingDescription: formData.meetingDescription,
-          genderRestriction: formData.genderRestriction,
-          isLimited: formData.isLimited,
-          maxParticipants: formData.isLimited ? formData.maxParticipants : null,
-          meetingPlace: formData.meetingPlace,
-          meetingDate: formattedDate,
-          offlineMeetingCategory: formData.offlineMeetingCategory,
-          backgroundImage: formData.backgroundImage, // 이미 null 허용된 상태
-        };
+        const formDataToSend: OfflineMeetingFormData = updateFormData();
         console.log('모임생성 데이터: ', formDataToSend);
+
         const response = await createOfflineMeeting(formDataToSend);
         console.log('오프라인 모임이 정상적으로 생성되었습니다.', response);
         nav('/home');
