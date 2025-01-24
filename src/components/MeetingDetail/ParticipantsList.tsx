@@ -25,8 +25,8 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 16px;
-  font-weight: bold;
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   display: flex;
   align-items: center;
   gap: 6px;

@@ -11,6 +11,7 @@ const COLORS = {
     100: '#D4D4D4',
     200: '#D9D9D9',
     300: '#ACACAC',
+    600: '#757575',
   },
   white: '#FFFFFF',
   black: '#1A1A1A',

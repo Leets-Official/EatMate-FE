@@ -10,7 +10,6 @@ const InfoContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   padding: 16px 0;
-  border-top: 1px solid ${({ theme }) => theme.COLORS.gray[200]};
 `;
 
 const InfoItem = styled.div`

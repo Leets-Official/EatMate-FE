@@ -28,7 +28,7 @@ const MeetingDetail = () => {
   return (
     <Container>
       <Header
-        title="모임 상세"
+        title="  "
         showBackButton={true}
         onBackClick={() => console.log('뒤로가기 클릭')}
         isJoin={true}

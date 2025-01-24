@@ -13,12 +13,6 @@ const ImgContainer = styled.img`
   width: 100%;
   max-height: 200px;
   object-fit: cover;
-  border-bottom-left-radius: 16px;
-  border-bottom-right-radius: 16px;
-`;
-
-const ContentWrapper = styled.div`
-  padding: 20px;
 `;
 
 const Title = styled.h1`
@@ -55,22 +49,21 @@ const MeetingDetailMain = () => {
   return (
     <Container>
       <ImgContainer src={MockImage} alt="메인 이미지" />
-      <ContentWrapper>
-        <Title>마라탕 맛나게 냠냠냠 ٩( ᐛ )و 모임</Title>
-        <MeetingInfo />
-        <SectionTitle>
-          <Icon src={MailIcon} alt="설명 아이콘" />
-          모임 설명
-        </SectionTitle>
-        <Description>
-          마라탕 레전드 찐맛집입니다.
-          <br />
-          맛도 좋고 정문 옆이라 자주 가기
-          <br />
-          빠끔해서 방 팝니다!
-        </Description>
-        <ParticipantsList />
-      </ContentWrapper>
+
+      <Title>마라탕 맛나게 냠냠냠 ٩( ᐛ )و 모임</Title>
+      <MeetingInfo />
+      <SectionTitle>
+        <Icon src={MailIcon} alt="설명 아이콘" />
+        모임 설명
+      </SectionTitle>
+      <Description>
+        마라탕 레전드 찐맛집입니다.
+        <br />
+        맛도 좋고 정문 옆이라 자주 가기
+        <br />
+        빠끔해서 방 팝니다!
+      </Description>
+      <ParticipantsList />
     </Container>
   );
 };
