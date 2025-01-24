@@ -13,10 +13,11 @@ import {
   createOfflineMeeting,
   OfflineMeetingFormData,
 } from '@/apis/meetings/createOfflineMeeting';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import dayjs from 'dayjs';
 import { useUserGender } from '@/hooks/useUserGender';
 import { offlineMeetingFormFields } from '@/constants/MeetingFields';
+import { formatMeetingDate } from '@/utils/dateUtils';
 
 const ContentPadding = styled.div`
   padding: 20px 30px;
@@ -77,7 +78,7 @@ const OfflineMeetingCreate: React.FC = () => {
     isLimited: formData.isLimited,
     maxParticipants: formData.isLimited ? formData.maxParticipants : null,
     meetingPlace: formData.meetingPlace,
-    meetingDate: dayjs(formData.meetingDate).format('YYYY-MM-DDTHH:mm:ss'),
+    meetingDate: formatMeetingDate(formData.meetingDate),
     offlineMeetingCategory: formData.offlineMeetingCategory,
     backgroundImage: formData.backgroundImage,
   });
@@ -143,29 +144,31 @@ const OfflineMeetingCreate: React.FC = () => {
           onChange={(value) => handleFormChange('genderRestriction', value)}
           showError={!!errors.genderRestriction}
         />
+
         <ParticipantOption onChange={handleParticipantChange} />
+
         <WheelPickerContainer>
           <WheelPicker
             onChange={(value) => handleFormChange('meetingDate', value)}
           />
         </WheelPickerContainer>
-        <div>
-          {offlineMeetingFormFields.map(
-            (field) =>
-              field.key === 'meetingPlace' && (
-                <Input
-                  key={field.key}
-                  label={field.label}
-                  as={field.as}
-                  placeholder={field.placeholder}
-                  guideMessage={field.guideMessage}
-                  hasError={errors[field.key]}
-                  errorMessage={field.errorMessage}
-                  onChange={(e) => handleFormChange(field.key, e.target.value)}
-                />
-              )
-          )}
-        </div>
+
+        {offlineMeetingFormFields.map(
+          (field) =>
+            field.key === 'meetingPlace' && (
+              <Input
+                key={field.key}
+                label={field.label}
+                as={field.as}
+                placeholder={field.placeholder}
+                guideMessage={field.guideMessage}
+                hasError={errors[field.key]}
+                errorMessage={field.errorMessage}
+                onChange={(e) => handleFormChange(field.key, e.target.value)}
+              />
+            )
+        )}
+
         <Button variant="primary" size="lg" rounded="md" onClick={handleSubmit}>
           모임 만들기
         </Button>
