@@ -21,7 +21,7 @@ const participants: Participant[] = [
 ];
 
 const Container = styled.div`
-  margin-top: 20px;
+  margin: 20px 0 0 31px;
 `;
 
 const Title = styled.div`

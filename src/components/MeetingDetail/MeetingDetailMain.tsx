@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import MockImage from '@/assets/images/ic_mock_img.svg';
-import MeetingInfo from './MeetingInfo';
-import ParticipantsList from './ParticipantsList';
+import MeetingInfo from '@/components/MeetingDetail/MeetingInfo';
+import ParticipantsList from '@/components/MeetingDetail/ParticipantsList';
 import MailIcon from '@/assets/images/ic_mail.svg';
 
 const Container = styled.div`
@@ -29,7 +29,7 @@ const SectionTitle = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 20px;
+  margin: 20px 0 0 31px;
   color: ${({ theme }) => theme.COLORS.black};
 `;
 
@@ -37,46 +37,57 @@ const Description = styled.p`
   font-size: 14px;
   color: ${({ theme }) => theme.COLORS.gray[500]};
   line-height: 1.5;
-  margin-top: 10px;
+  margin: 10px 0 0 31px;
 `;
 
 const Icon = styled.img`
   width: 18px;
   height: 18px;
 `;
+const Divider = styled.div`
+  width: 100%;
+  height: 10px;
+  background-color: #f9f9fc;
+  margin: 20px 0;
+`;
+interface MeetingDetailMainProps {
+  title: string;
+  description: string;
+  gender: string;
+  location: string;
+  placeName: string;
+  time: string;
+  chatTime: string;
+}
 
-const meetingMockData = {
-  gender: '여자만',
-  location: '마라탕집',
-  placeName: '맛있겠어요점',
-  time: '오후 6시 10분',
-  chatTime: '30분',
-};
-
-const MeetingDetailMain = () => {
+const MeetingDetailMain: React.FC<MeetingDetailMainProps> = ({
+  title,
+  description,
+  gender,
+  location,
+  placeName,
+  time,
+  chatTime,
+}) => {
   return (
     <Container>
       <ImgContainer src={MockImage} alt="메인 이미지" />
 
-      <Title>마라탕 맛나게 냠냠냠 ٩( ᐛ )و 모임</Title>
+      <Title>{title}</Title>
       <MeetingInfo
-        gender={meetingMockData.gender}
-        location={meetingMockData.location}
-        placeName={meetingMockData.placeName}
-        time={meetingMockData.time}
-        chatTime={meetingMockData.chatTime}
+        gender={gender}
+        location={location}
+        placeName={placeName}
+        time={time}
+        chatTime={chatTime}
       />
+      <Divider />
       <SectionTitle>
         <Icon src={MailIcon} alt="설명 아이콘" />
         모임 설명
       </SectionTitle>
-      <Description>
-        마라탕 레전드 찐맛집입니다.
-        <br />
-        맛도 좋고 정문 옆이라 자주 가기
-        <br />
-        빠끔해서 방 팝니다!
-      </Description>
+      <Description>{description}</Description>
+      <Divider />
       <ParticipantsList />
     </Container>
   );
