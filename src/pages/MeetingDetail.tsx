@@ -1,7 +1,8 @@
+import { useState } from 'react';
+import styled from 'styled-components';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import MeetingDetailMain from '@/components/MeetingDetail/MeetingDetailMain';
-import styled from 'styled-components';
 import MailIcon from '@/assets/images/ic_invite_mail.svg';
 
 const Container = styled.div`
@@ -21,10 +22,27 @@ const ButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 const Icon = styled.img`
   width: 24px;
   height: 24px;
   display: block;
+`;
+
+const ToastMessage = styled.div<{ show: boolean }>`
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fbded0;
+  color: ${({ theme }) => theme.COLORS.main};
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
+  opacity: ${({ show }) => (show ? '1' : '0')};
+  transition: opacity 0.3s ease-in-out;
 `;
 
 const meetingMockData = {
@@ -39,10 +57,19 @@ const meetingMockData = {
 };
 
 interface MeetingDetailProps {
-  isOwner: boolean; // 게시물 소유 여부를 판별할 prop 추가
+  isOwner: boolean;
 }
 
 const MeetingDetail = ({ isOwner }: MeetingDetailProps) => {
+  const [showToast, setShowToast] = useState(false);
+
+  const handleInviteClick = () => {
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+    }, 2000);
+  };
+
   const handleLeave = () => {
     alert('모임에서 나갔습니다.');
   };
@@ -65,8 +92,14 @@ const MeetingDetail = ({ isOwner }: MeetingDetailProps) => {
         time={meetingMockData.time}
         chatTime={meetingMockData.chatTime}
       />
+
       <ButtonContainer>
-        <Button variant="primary-outline" size="sm" rounded="sm">
+        <Button
+          variant="primary-outline"
+          size="sm"
+          rounded="sm"
+          onClick={handleInviteClick}
+        >
           <Icon src={MailIcon} alt="초대" />
           초대하기
         </Button>
@@ -82,6 +115,8 @@ const MeetingDetail = ({ isOwner }: MeetingDetailProps) => {
           </Button>
         )}
       </ButtonContainer>
+
+      <ToastMessage show={showToast}>모임링크가 복사되었어요!</ToastMessage>
     </Container>
   );
 };
