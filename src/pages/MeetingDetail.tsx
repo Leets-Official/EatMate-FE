@@ -4,6 +4,7 @@ import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
 import MeetingDetailMain from '@/components/MeetingDetail/MeetingDetailMain';
 import MailIcon from '@/assets/images/ic_invite_mail.svg';
+import MeetingGuidModal from '@/components/common/Modal/MeetingGuideModal';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -62,6 +63,7 @@ interface MeetingDetailProps {
 
 const MeetingDetail = ({ isOwner }: MeetingDetailProps) => {
   const [showToast, setShowToast] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleInviteClick = () => {
     setShowToast(true);
@@ -110,12 +112,14 @@ const MeetingDetail = ({ isOwner }: MeetingDetailProps) => {
             </Button>
           </>
         ) : (
-          <Button size="sm" rounded="sm">
+          <Button size="sm" rounded="sm" onClick={() => setIsModalOpen(true)}>
             참여하기
           </Button>
         )}
       </ButtonContainer>
-
+      {isModalOpen && (
+        <MeetingGuidModal onClose={() => setIsModalOpen(false)} />
+      )}
       <ToastMessage show={showToast}>모임링크가 복사되었어요!</ToastMessage>
     </Container>
   );
