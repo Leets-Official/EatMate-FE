@@ -14,9 +14,9 @@ import {
   OfflineMeetingFormData,
 } from '@/apis/meetings/createOfflineMeeting';
 import { useEffect, useState } from 'react';
-import { getUserInfo } from '@/apis/auth/auth';
 import dayjs from 'dayjs';
 import { useUserGender } from '@/hooks/useUserGender';
+import { offlineMeetingFormFields } from '@/constants/MeetingFields';
 
 const ContentPadding = styled.div`
   padding: 20px 30px;
@@ -117,25 +117,20 @@ const OfflineMeetingCreate: React.FC = () => {
         title="모임 만들기"
       />
       <ContentPadding>
-        <Input
-          label="모임 제목"
-          as="textarea"
-          placeholder="30자 이내"
-          maxLength={30}
-          onChange={(e) => handleFormChange('meetingName', e.target.value)}
-          hasError={errors.meetingName}
-        />
-        <Input
-          label="모임 설명"
-          as="textarea"
-          placeholder="무엇을 하는 어떤 모임인가요?  100자 이내"
-          maxLength={100}
-          rows={4}
-          onChange={(e) =>
-            handleFormChange('meetingDescription', e.target.value)
-          }
-          hasError={errors.meetingDescription}
-        />
+        {offlineMeetingFormFields.map((field) =>
+          field.key !== 'meetingPlace' ? (
+            <Input
+              key={field.key}
+              label={field.label}
+              as={field.as}
+              placeholder={field.placeholder}
+              maxLength={field.maxLength}
+              rows={field.rows}
+              hasError={errors[field.key]}
+              onChange={(e) => handleFormChange(field.key, e.target.value)}
+            />
+          ) : null
+        )}
 
         <BackgroundOption onChange={handleFormChange} />
         <InputGuide
@@ -155,15 +150,21 @@ const OfflineMeetingCreate: React.FC = () => {
           />
         </WheelPickerContainer>
         <div>
-          <Input
-            label="가게 이름"
-            as="input"
-            placeholder="가게명 입력"
-            guideMessage="가게명과 지점명을 함께 입력해주세요"
-            onChange={(e) => handleFormChange('meetingPlace', e.target.value)}
-            hasError={errors.meetingPlace}
-            errorMessage="다시 입력해주세요."
-          />
+          {offlineMeetingFormFields.map(
+            (field) =>
+              field.key === 'meetingPlace' && (
+                <Input
+                  key={field.key}
+                  label={field.label}
+                  as={field.as}
+                  placeholder={field.placeholder}
+                  guideMessage={field.guideMessage}
+                  hasError={errors[field.key]}
+                  errorMessage={field.errorMessage}
+                  onChange={(e) => handleFormChange(field.key, e.target.value)}
+                />
+              )
+          )}
         </div>
         <Button variant="primary" size="lg" rounded="md" onClick={handleSubmit}>
           모임 만들기
