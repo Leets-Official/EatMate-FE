@@ -35,60 +35,63 @@ const Title = styled.div`
 
 const ParticipantsContainer = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 24px;
   margin-top: 12px;
+  align-items: center;
 `;
 
 const ParticipantWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 `;
 
-const ParticipantImageWrapper = styled.div<{ isMe?: boolean }>`
+const ParticipantImageWrapper = styled.div`
   position: relative;
-  width: 60px;
-  height: 60px;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
-  overflow: hidden;
-  background-color: ${({ isMe, theme }) =>
-    isMe ? theme.COLORS.primary : 'transparent'};
+  overflow: visible;
+  background-color: ${({ theme }) => theme.COLORS.white};
 `;
 
 const ParticipantImage = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
 `;
 
 const Crown = styled.img`
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 18px;
-  height: 18px;
+  top: -1px;
+  right: 15px;
+  width: 15px;
+  height: 15px;
+  z-index: 10;
 `;
 
 const ParticipantName = styled.div`
-  margin-top: 6px;
-  font-size: 14px;
-  font-weight: 500;
+  margin-top: 10px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.regular};
   color: ${({ theme }) => theme.COLORS.black};
+  display: flex;
+  align-items: center;
+  gap: 6px;
 `;
 
 const Badge = styled.div`
-  position: absolute;
-  bottom: -5px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: ${({ theme }) => theme.COLORS.gray[800]};
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  padding: 2px 8px;
-  border-radius: 12px;
+  background: #636363;
+  color: ${({ theme }) => theme.COLORS.white};
+  font-size: ${({ theme }) => theme.FONT_SIZE.xs};
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
-
 const ParticipantsList = () => {
   return (
     <Container>
@@ -98,15 +101,17 @@ const ParticipantsList = () => {
       <ParticipantsContainer>
         {participants.map((participant) => (
           <ParticipantWrapper key={participant.id}>
-            <ParticipantImageWrapper isMe={participant.isMe}>
+            <ParticipantImageWrapper>
               <ParticipantImage
                 src={participant.image}
                 alt={participant.name}
               />
               {participant.isHost && <Crown src={CrownIcon} alt="방장" />}
-              {participant.isMe && <Badge>나</Badge>}
             </ParticipantImageWrapper>
-            <ParticipantName>{participant.name}</ParticipantName>
+            <ParticipantName>
+              {participant.isMe && <Badge>나</Badge>}
+              <span>{participant.name}</span>
+            </ParticipantName>
           </ParticipantWrapper>
         ))}
       </ParticipantsContainer>
