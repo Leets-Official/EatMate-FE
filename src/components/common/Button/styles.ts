@@ -7,13 +7,19 @@ export type ButtonVariant =
   | 'primary-outlineless'
   | 'secondary-main'
   | 'secondary-white';
-export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
+export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type ButtonRounded = 'none' | 'sm' | 'md' | 'lg';
 
 const sizeStyles: Record<
   ButtonSize,
   (svgIcon: boolean) => ReturnType<typeof css>
 > = {
+  xs: (svgIcon) => css`
+    width: 108px;
+    height: 43px;
+    font-size: 14px;
+    padding: ${svgIcon ? '0.2rem 0.5rem' : '0.7rem 0.5rem'};
+  `,
   sm: (svgIcon) => css`
     width: 154px;
     height: 49px;
