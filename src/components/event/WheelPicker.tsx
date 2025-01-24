@@ -27,7 +27,6 @@ const generateTimeItems = () => {
     (i * 10).toString().padStart(2, '0')
   );
 
-  const roundedMinutes = Math.ceil(now.minute() / 10) * 10;
   const adjustedTime =
     now.minute() % 10 === 0 ? now : now.add(10 - (now.minute() % 10), 'minute');
 
@@ -66,7 +65,6 @@ const Items = styled.ul`
   -ms-overflow-style: none;
   scrollbar-width: none;
   text-align: center;
-
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.regular};
 
@@ -145,7 +143,13 @@ const WheelPicker = ({ onChange }: { onChange: (date: string) => void }) => {
     formattedDate.setSeconds(0);
     formattedDate.setMilliseconds(0);
 
-    onChange(formattedDate.toISOString());
+    // KST로 변환 (UTC+9 시간 추가)
+    const formattedDateByKST = dayjs(formattedDate).format(
+      'YYYY-MM-DDTHH:mm:ss'
+    );
+    console.log('KST 변환된 시간:', formattedDateByKST);
+
+    onChange(formattedDateByKST);
   }, [selectedDate, selectedHour, selectedMinute]);
 
   const handleScroll = (

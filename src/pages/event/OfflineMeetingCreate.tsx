@@ -7,9 +7,7 @@ import GenderOption from '@/components/event/GenderOption';
 import ParticipantOption from '@/components/event/ParticipantOption';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-// import MeetingTimeOption from '@/components/event/MeetingTimeOption';
 import { useInputHandler } from '@/hooks/useInputHandler';
-// import Cookies from 'js-cookie';
 import WheelPicker from '@/components/event/WheelPicker';
 import {
   createOfflineMeeting,
@@ -17,6 +15,7 @@ import {
 } from '@/apis/meetings/createOfflineMeeting';
 import { useEffect, useState } from 'react';
 import { getUserInfo } from '@/apis/auth/auth';
+import dayjs from 'dayjs';
 
 const ContentPadding = styled.div`
   padding: 20px 30px;
@@ -25,7 +24,6 @@ const ContentPadding = styled.div`
 const OfflineMeetingCreate: React.FC = () => {
   const nav = useNavigate();
   const location = useLocation();
-  // const [accessToken, setAccessToken] = useState<string | undefined>(undefined);
 
   const [userGender, setUserGender] = useState<string | null>(null);
 
@@ -42,15 +40,6 @@ const OfflineMeetingCreate: React.FC = () => {
   });
 
   useEffect(() => {
-    // const token = Cookies.get('AccessToken');
-    // console.log('토큰  ', accessToken);
-    // if (!token) {
-    //   nav('/');
-    //   return;
-    // }
-
-    // setAccessToken(token);
-
     console.log('location 값: ', location);
     if (location.state?.category) {
       handleChange('offlineMeetingCategory', location.state.category);
@@ -99,8 +88,11 @@ const OfflineMeetingCreate: React.FC = () => {
       ])
     ) {
       try {
-        const formattedDate = formData.meetingDate.replace(/Z$/, ''); // Z 제거
-        const isoDateWithoutMillis = formattedDate.replace(/\.\d{3}$/, ''); // 밀리초 제거
+        const formattedDate = dayjs(formData.meetingDate).format(
+          'YYYY-MM-DDTHH:mm:ss'
+        );
+
+        console.log('변환된 KST 시간:', formattedDate);
 
         const formDataToSend: OfflineMeetingFormData = {
           meetingName: formData.meetingName,
@@ -109,11 +101,11 @@ const OfflineMeetingCreate: React.FC = () => {
           isLimited: formData.isLimited,
           maxParticipants: formData.isLimited ? formData.maxParticipants : null,
           meetingPlace: formData.meetingPlace,
-          meetingDate: isoDateWithoutMillis,
+          meetingDate: formattedDate,
           offlineMeetingCategory: formData.offlineMeetingCategory,
           backgroundImage: formData.backgroundImage, // 이미 null 허용된 상태
         };
-        console.log('모임생성 데이터: ', formData);
+        console.log('모임생성 데이터: ', formDataToSend);
         const response = await createOfflineMeeting(formDataToSend);
         console.log('오프라인 모임이 정상적으로 생성되었습니다.', response);
         nav('/home');
