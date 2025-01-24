@@ -1,45 +1,36 @@
 import { useState } from 'react';
-import { RecoilState, useRecoilState } from 'recoil';
 
-type UseInputHandlerProps<T> = {
-  atom: RecoilState<T>; // recoil atom
-  validate?: (key: keyof T, value: string, state: T) => string | null; //유효성 검사 함수
-};
+interface FormState {
+  [key: string]: any;
+}
 
-export const UseInputHandler = <T extends Record<string, any>>({
-  atom,
-  validate,
-}: UseInputHandlerProps<T>) => {
-  const [state, setState] = useRecoilState<T>(atom);
-  const [errorMessage, setErrorMessage] = useState<string>('');
+export const useInputHandler = (initialState: FormState) => {
+  const [formData, setFormData] = useState<FormState>(initialState);
+  const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
 
-  const handleInputChange = (key: keyof T, value: string) => {
-    setState((prev: T) => ({
+  const handleChange = (key: string, value: any) => {
+    setFormData((prev) => ({
       ...prev,
       [key]: value,
     }));
 
-    if (validate) {
-      const validationError = validate(key, value, state);
-      setErrorMessage(validationError || '');
-    }
+    setErrors((prev) => ({
+      ...prev,
+      [key]: false,
+    }));
   };
 
-  const isFormValid = () => {
-    if (!validate) return true;
-
-    return Object.keys(state).every((key) => {
-      const fieldKey = key as keyof T;
-      return validate(fieldKey, state[fieldKey], state) === null;
+  const validateForm = (requiredFields: string[]) => {
+    const newErrors: { [key: string]: boolean } = {};
+    requiredFields.forEach((field) => {
+      if (!formData[field] || formData[field].toString().trim() === '') {
+        newErrors[field] = true;
+      }
     });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  return {
-    state,
-    errorMessage,
-    handleInputChange,
-    isFormValid,
-    setErrorMessage,
-    setState,
-  };
+  return { formData, errors, handleChange, validateForm };
 };

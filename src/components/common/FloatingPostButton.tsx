@@ -104,7 +104,7 @@ const FloatingPostButton = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
-  const handleNavigation = (type: 'meal' | 'drink' | 'delivery') => {
+  const handleNavigation = (type: 'MEAL' | 'BEVERAGE' | 'delivery') => {
     const path =
       type === 'delivery'
         ? '/meeting/create/delivery'
@@ -130,13 +130,13 @@ const FloatingPostButton = () => {
               <Icon src={deliveryIcon} alt="배달팟" />
             </ButtonContainer>
           </MenuItem>
-          <MenuItem onClick={() => handleNavigation('drink')}>
+          <MenuItem onClick={() => handleNavigation('BEVERAGE')}>
             술약
             <ButtonContainer onClick={handleButtonClick}>
               <Icon src={drinkIcon} alt="술약" />
             </ButtonContainer>
           </MenuItem>
-          <MenuItem onClick={() => handleNavigation('meal')}>
+          <MenuItem onClick={() => handleNavigation('MEAL')}>
             밥약
             <ButtonContainer onClick={handleButtonClick}>
               <Icon src={mealIcon} alt="밥약" />

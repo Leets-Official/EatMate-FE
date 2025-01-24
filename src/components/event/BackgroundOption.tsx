@@ -40,7 +40,12 @@ const BackgroundItem = styled.div<{ isSelected: boolean }>`
     object-fit: cover;
   }
 `;
-const BackgroundOption: React.FC = () => {
+
+interface BackgroundOptionProps {
+  onChange: (key: string, value: File | string) => void;
+}
+
+const BackgroundOption: React.FC<BackgroundOptionProps> = ({ onChange }) => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [uploadedImg, setUploadedImg] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -59,13 +64,18 @@ const BackgroundOption: React.FC = () => {
         return;
       }
       setError(null);
+
       const fileUrl = URL.createObjectURL(file);
       setUploadedImg(fileUrl);
       setSelectedId(3);
+      onChange('backgroundImage', file);
     }
   };
-  const handleSelect = (id: number) => {
+  const handleSelect = (id: number, src: string) => {
     setError(null);
+    setSelectedId(id);
+    onChange('backgroundImage', src);
+
     if (id === 3) {
       document.getElementById('file-upload')?.click();
     } else setSelectedId(id);
@@ -79,7 +89,7 @@ const BackgroundOption: React.FC = () => {
           <BackgroundItem
             key={bgImg.id}
             isSelected={bgImg.id === selectedId}
-            onClick={() => handleSelect(bgImg.id)}
+            onClick={() => handleSelect(bgImg.id, bgImg.src)}
           >
             {bgImg.id === 3 && uploadedImg ? (
               <img src={uploadedImg} alt="uploadedImg" />

@@ -9,4 +9,16 @@ const defaultInstance = axios.create({
   },
 });
 
+defaultInstance.interceptors.request.use(
+  (config) => {
+    if (config.data instanceof FormData) {
+      config.headers['Content-Type'] = 'multipart/form-data';
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export default defaultInstance;

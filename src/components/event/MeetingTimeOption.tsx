@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Label } from '@/components/common/Input/styles';
 import styled from 'styled-components';
 import { flexSpaceBetween } from '@/styles/CommonStyle';
@@ -10,7 +10,7 @@ const SelectedTime = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
 `;
 
-const Container = styled.div`
+export const Container = styled.div`
   ${flexSpaceBetween}
 `;
 
@@ -31,9 +31,46 @@ const DatePickerWrapper = styled.div`
 const TimePickerWrapper = styled.div`
   flex: 1;
 `;
-const TimeOption: React.FC = () => {
+
+interface TimeOptionProps {
+  value?: string;
+  onChange?: (value: string) => void;
+}
+
+const MeetingTimeOption: React.FC<TimeOptionProps> = ({ value, onChange }) => {
   const now = new Date();
-  const [selectedDate, setSelectedDate] = useState<string>('오늘');
+  const [selectedTime, setSelectedTime] = useState({
+    date: '오늘',
+    hour: '00',
+    minute: '00',
+  });
+
+  const formattedTime = `${selectedTime.date} ${selectedTime.hour}시 ${selectedTime.minute}분`;
+
+  useEffect(() => {
+    if (onChange) {
+      // ISO 형식으로 변환하여 상위 컴포넌트에 전달
+      const currentDate = new Date();
+      let formattedDate;
+
+      if (selectedTime.date === '오늘') {
+        formattedDate = currentDate;
+      } else if (selectedTime.date === '내일') {
+        formattedDate = new Date(
+          currentDate.setDate(currentDate.getDate() + 1)
+        );
+      } else {
+        formattedDate = new Date(
+          currentDate.setDate(parseInt(selectedTime.date, 10))
+        );
+      }
+
+      formattedDate.setHours(parseInt(selectedTime.hour, 10));
+      formattedDate.setMinutes(parseInt(selectedTime.minute, 10));
+
+      onChange(formattedDate.toISOString());
+    }
+  }, [selectedTime, onChange]);
 
   // 날짜 배열 생성 (오늘 ~ +7일)
   const createDates = () => {
@@ -52,59 +89,42 @@ const TimeOption: React.FC = () => {
     return dates;
   };
 
-  const dates = createDates();
-
-  // 시간 배열 생성 (현재 시간 +30분 이후부터)
+  // 시간 배열 생성 (0~23시)
   const createHours = () => {
-    const currentHour = now.getHours();
-    const currentMinute = now.getMinutes();
-    const startHour = currentMinute >= 30 ? currentHour + 1 : currentHour; // 30분 기준
-    const hours = [];
-
-    for (let i = 0; i < 24; i++) {
-      const hour = (startHour + i) % 24;
-      hours.push(hour === 0 ? '00' : hour.toString());
-    }
-
-    return hours;
+    return Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0'));
   };
-
-  const hours = createHours();
 
   // 분 배열 생성 (10분 단위)
   const createMinutes = () => {
-    const currentMinute = now.getMinutes();
-    const startMinute = Math.ceil((currentMinute + 30) / 10) * 10; // 현재 시간 +30분을 반올림
-    const minutes: string[] = [];
-
-    for (let i = 0; i < 6; i++) {
-      const minute = (startMinute + i * 10) % 60;
-      minutes.push(minute === 0 ? '00' : minute.toString());
-    }
-
-    return minutes;
+    return Array.from({ length: 6 }, (_, i) =>
+      (i * 10).toString().padStart(2, '0')
+    );
   };
 
+  const dates = createDates();
+  const hours = createHours();
   const minutes = createMinutes();
 
-  const [selectedHour, setSelectedHour] = useState<string | number>(hours[0]);
-  const [selectedMinute, setSelectedMinute] = useState<string>(minutes[0]);
+  const handleTimeChange = (key: keyof typeof selectedTime, value: string) => {
+    setSelectedTime((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
 
   return (
     <Wrapper>
       <Container>
         <Label>약속 시간</Label>
-        <SelectedTime>
-          {selectedDate} {selectedHour}시 {selectedMinute}분
-        </SelectedTime>
+        <SelectedTime>{formattedTime}</SelectedTime>
       </Container>
       <PickerWrapper>
         <DatePickerWrapper>
           {/* 날짜 선택 */}
           <TimePicker
             options={dates}
-            defaultValue={dates[0]}
-            onChange={setSelectedDate}
+            defaultValue={selectedTime.date}
+            onChange={(value) => handleTimeChange('date', value)}
             isWide
           />
         </DatePickerWrapper>
@@ -112,16 +132,16 @@ const TimeOption: React.FC = () => {
         <TimePickerWrapper>
           <TimePicker
             options={hours}
-            defaultValue={hours[0]}
-            onChange={setSelectedHour}
+            defaultValue={selectedTime.hour}
+            onChange={(value) => handleTimeChange('hour', value)}
           />
         </TimePickerWrapper>
         {/* 분 선택 */}
         <TimePickerWrapper>
           <TimePicker
             options={minutes}
-            defaultValue={minutes[0]}
-            onChange={setSelectedMinute}
+            defaultValue={selectedTime.minute}
+            onChange={(value) => handleTimeChange('minute', value)}
           />
         </TimePickerWrapper>
       </PickerWrapper>
@@ -129,4 +149,4 @@ const TimeOption: React.FC = () => {
   );
 };
 
-export default TimeOption;
+export default MeetingTimeOption;
