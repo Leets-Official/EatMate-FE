@@ -64,6 +64,11 @@ const OfflineMeetingCreate: React.FC = () => {
     handleChange('maxParticipants', maxParticipants);
   };
 
+  const updateFormData = () => ({
+    ...formData,
+    meetingDate: dayjs(formData.meetingDate).format('YYYY-MM-DDTHH:mm:ss'),
+    maxParticipants: formData.isLimited ? formData.maxParticipants : null,
+  });
   const handleSubmit = async () => {
     if (
       validateForm([
