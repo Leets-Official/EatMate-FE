@@ -59,11 +59,10 @@ export const RightSpacer = styled.div`
 `;
 
 export const LeaveButton = styled.button`
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.md};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.large};
   color: ${({ theme }) => theme.COLORS.main};
   background-color: transparent;
-  padding: 8px 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   border: none;
