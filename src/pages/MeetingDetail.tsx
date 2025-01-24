@@ -5,6 +5,7 @@ import Header from '@/components/common/Header/Header';
 import MeetingDetailMain from '@/components/MeetingDetail/MeetingDetailMain';
 import MailIcon from '@/assets/images/ic_invite_mail.svg';
 import MeetingGuidModal from '@/components/common/Modal/MeetingGuideModal';
+import { flexCenter } from '@/styles/CommonStyle';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -16,12 +17,10 @@ const Container = styled.div`
 `;
 
 const ButtonContainer = styled.div`
-  display: flex;
+  ${flexCenter}
   flex-direction: row;
-  gap: 21px;
+  gap: 30px;
   margin: 90px auto;
-  justify-content: center;
-  align-items: center;
 `;
 
 const Icon = styled.img`
@@ -39,7 +38,7 @@ const ToastMessage = styled.div<{ show: boolean }>`
   color: ${({ theme }) => theme.COLORS.main};
   padding: 10px 20px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
   font-weight: bold;
   visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
   opacity: ${({ show }) => (show ? '1' : '0')};

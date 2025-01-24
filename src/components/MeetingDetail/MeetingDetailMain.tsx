@@ -34,7 +34,7 @@ const SectionTitle = styled.div`
 `;
 
 const Description = styled.p`
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
   color: ${({ theme }) => theme.COLORS.gray[500]};
   line-height: 1.5;
   margin: 10px 0 0 31px;

@@ -3,6 +3,7 @@ import PeopleIcon from '@/assets/images/ic_people_line.svg';
 import LocationIcon from '@/assets/images/ic_locate.svg';
 import CalendarIcon from '@/assets/images/ic_calendar.svg';
 import ChatIcon from '@/assets/images/ic_chat.svg';
+import { flexColumn } from '@/styles/CommonStyle';
 
 interface MeetingInfoProps {
   gender: string;
@@ -20,8 +21,7 @@ const InfoContainer = styled.div`
 `;
 
 const InfoItem = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: center;
   font-size: 14px;
   min-width: 80px;

@@ -4,6 +4,7 @@ import ParticipantIcon2 from '@/assets/images/ic_participant2.svg';
 import ParticipantIcon3 from '@/assets/images/ic_participant3.svg';
 import ParticipantIcon4 from '@/assets/images/ic_participant4.svg';
 import CrownIcon from '@/assets/images/ic_crown_check.svg';
+import { flexCenter, flexColumn } from '@/styles/CommonStyle';
 
 interface Participant {
   id: number;
@@ -40,8 +41,7 @@ const ParticipantsContainer = styled.div`
 `;
 
 const ParticipantWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: center;
   position: relative;
 `;
@@ -77,9 +77,7 @@ const Badge = styled.div`
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${flexCenter}
 `;
 const ParticipantsList = () => {
   return (

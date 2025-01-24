@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import HandIcon from '@/assets/images/ic_open hand.svg';
-import Button from '../Button/Button';
+import Button from '@/components/common/Button/Button';
+import { flexCenter } from '@/styles/CommonStyle';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -10,9 +11,7 @@ const ModalOverlay = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${flexCenter}
 `;
 
 const ModalContainer = styled.div`
