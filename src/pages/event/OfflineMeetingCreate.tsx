@@ -52,7 +52,7 @@ const OfflineMeetingCreate: React.FC = () => {
     }
   };
 
-  const updateFormData = (): OfflineMeetingFormData => ({
+  const buildFormData = (): OfflineMeetingFormData => ({
     meetingName: formData.meetingName,
     meetingDescription: formData.meetingDescription,
     genderRestriction: formData.genderRestriction,
@@ -75,14 +75,16 @@ const OfflineMeetingCreate: React.FC = () => {
       ])
     ) {
       try {
-        const formDataToSend: OfflineMeetingFormData = updateFormData();
+        const formDataToSend: OfflineMeetingFormData = buildFormData();
         console.log('모임생성 데이터: ', formDataToSend);
 
-        const response = await createOfflineMeeting(formDataToSend);
-        console.log('오프라인 모임이 정상적으로 생성되었습니다.', response);
+        await createOfflineMeeting(formDataToSend);
+        console.log('오프라인 모임이 정상적으로 생성되었습니다.');
         nav('/home');
       } catch (error) {
-        console.error('오프라인 모임 생성중 오류 발생: ', error);
+        console.error(
+          error instanceof Error ? error.message : '오류가 발생했습니다: '
+        );
       }
     } else {
       console.log('필수 입력값이 누락되었습니다.');

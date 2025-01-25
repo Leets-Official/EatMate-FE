@@ -32,27 +32,15 @@ const createFormData = (data: OfflineMeetingFormData): FormData => {
   return formData;
 };
 
+// API 호출 함수
 const postFormData = async (url: string, formData: FormData) => {
-  try {
-    const response = await defaultInstance.post(url, formData);
-    return response.data;
-  } catch (error) {
-    throw new Error(
-      `API 요청 실패: ${error instanceof Error ? error.message : error}`
-    );
-  }
+  return defaultInstance.post(url, formData).then((response) => response.data);
 };
 
+// 오프라인 모임 생성 API 호출
 export const createOfflineMeeting = async (
   offlineCreateData: OfflineMeetingFormData
 ) => {
-  try {
-    const formData = createFormData(offlineCreateData);
-    return await postFormData(`${PATH}/offline`, formData);
-  } catch (error) {
-    console.error(
-      `오프라인 모임 생성 실패: ${error instanceof Error ? error.message : error}`
-    );
-    throw error;
-  }
+  const formData = createFormData(offlineCreateData);
+  return await postFormData(`${PATH}/offline`, formData);
 };
