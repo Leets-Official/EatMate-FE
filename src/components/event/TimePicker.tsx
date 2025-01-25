@@ -84,7 +84,7 @@ const TimePicker: React.FC<TimePickerProps> = ({
       </S.Label>
       <S.PickerWrapper>
         {pickerData.map(
-          ({ key, items, selectedValue, setSelectedValue, ref, show }, index) =>
+          ({ key, items, selectedValue, setSelectedValue, ref, show }) =>
             show && (
               <S.ItemsContainer key={key} flex={key === 'date' ? 2 : 1}>
                 <S.Items
