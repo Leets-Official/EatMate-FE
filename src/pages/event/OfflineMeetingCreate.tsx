@@ -8,7 +8,6 @@ import GenderOption from '@/components/event/GenderOption';
 import ParticipantOption from '@/components/event/ParticipantOption';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useInputHandler } from '@/hooks/useInputHandler';
-import WheelPicker from '@/components/event/WheelPicker';
 import {
   createOfflineMeeting,
   OfflineMeetingFormData,
@@ -17,6 +16,7 @@ import { useEffect } from 'react';
 import { useUserGender } from '@/hooks/useUserGender';
 import { offlineMeetingFormFields } from '@/constants/MeetingFields';
 import { formatMeetingDate } from '@/utils/dateUtils';
+import TimePicker from '@/components/event/TimePicker';
 
 const OfflineMeetingCreate: React.FC = () => {
   const nav = useNavigate();
@@ -136,7 +136,7 @@ const OfflineMeetingCreate: React.FC = () => {
         />
 
         <S.WheelPickerContainer>
-          <WheelPicker
+          <TimePicker
             label="약속 시간"
             onChange={(value) => handleFormChange('meetingDate', value)}
           />

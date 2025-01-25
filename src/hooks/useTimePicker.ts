@@ -64,7 +64,20 @@ export const useTimePicker = (onChange: (date: string) => void) => {
       return;
     }
 
-    const formattedDate = dayjs()
+    let selectedDateValue = dayjs();
+
+    if (selectedDate.includes('오늘')) {
+      selectedDateValue = dayjs();
+    } else if (selectedDate.includes('내일')) {
+      selectedDateValue = dayjs().add(1, 'day');
+    } else {
+      const dayNumber = parseInt(selectedDate.replace('일', ''), 10);
+      if (!isNaN(dayNumber)) {
+        selectedDateValue = dayjs().date(dayNumber);
+      }
+    }
+
+    const formattedDate = selectedDateValue
       .hour(Number(selectedHour))
       .minute(Number(selectedMinute))
       .format('YYYY-MM-DDTHH:mm:ss');
