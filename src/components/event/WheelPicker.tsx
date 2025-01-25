@@ -1,86 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
+import { useTimePicker } from '@/hooks/useTimePicker';
 import * as S from '@/styles/event/TimePicker.styled';
-import dayjs from 'dayjs';
-// 날짜 생성 함수
-const generateDateItems = () => {
-  return Array.from({ length: 7 }, (_, index) => {
-    const date = dayjs().add(index, 'day');
-    let label =
-      index === 0 ? '오늘' : index === 1 ? '내일' : `${date.date()}일`;
-    return {
-      value: date.format('YYYY-MM-DD'),
-      label: label,
-    };
-  });
-};
 
-// 시간 및 분 데이터 생성
-const generateTimeItems = () => {
-  const now = dayjs().add(30, 'minute'); // 현재 시간 기준 30분 후 설정
-  const hours = Array.from({ length: 24 }, (_, i) =>
-    i.toString().padStart(2, '0')
-  );
+interface TimePickerProps {
+  label: string;
+  onChange: (date: string) => void;
+}
 
-  // 10분 단위로 정확한 분 생성
-  const minutes = Array.from({ length: 6 }, (_, i) =>
-    (i * 10).toString().padStart(2, '0')
-  );
-
-  const adjustedTime =
-    now.minute() % 10 === 0 ? now : now.add(10 - (now.minute() % 10), 'minute');
-
-  return {
+const TimePicker: React.FC<TimePickerProps> = ({ label, onChange }) => {
+  const {
+    dateItems,
     hours,
     minutes,
-    defaultHour: adjustedTime.format('HH'),
-    defaultMinute: adjustedTime.format('mm').padStart(2, '0'),
-  };
-};
-
-const WheelPicker = ({ onChange }: { onChange: (date: string) => void }) => {
-  const dateItems = generateDateItems();
-  const { hours, minutes, defaultHour, defaultMinute } = generateTimeItems();
-
-  const [selectedDate, setSelectedDate] = useState(dateItems[0].label);
-  const [selectedHour, setSelectedHour] = useState(defaultHour);
-  const [selectedMinute, setSelectedMinute] = useState(defaultMinute);
-
-  const dateRef = useRef<HTMLUListElement | null>(null);
-  const hourRef = useRef<HTMLUListElement | null>(null);
-  const minuteRef = useRef<HTMLUListElement | null>(null);
-  const isInitialMount = useRef(true);
-
-  // 선택된 값을 상위 컴포넌트로 전달 (첫 렌더링 방지)
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
-
-    const currentDate = new Date();
-    let formattedDate;
-
-    if (selectedDate === '오늘') {
-      formattedDate = currentDate;
-    } else if (selectedDate === '내일') {
-      formattedDate = new Date(currentDate.setDate(currentDate.getDate() + 1));
-    } else {
-      formattedDate = new Date(currentDate.setDate(parseInt(selectedDate, 10)));
-    }
-
-    formattedDate.setHours(parseInt(selectedHour, 10));
-    formattedDate.setMinutes(parseInt(selectedMinute, 10));
-    formattedDate.setSeconds(0);
-    formattedDate.setMilliseconds(0);
-
-    // KST로 변환 (UTC+9 시간 추가)
-    const formattedDateByKST = dayjs(formattedDate).format(
-      'YYYY-MM-DDTHH:mm:ss'
-    );
-    console.log('KST 변환된 시간:', formattedDateByKST);
-
-    onChange(formattedDateByKST);
-  }, [selectedDate, selectedHour, selectedMinute]);
+    selectedDate,
+    setSelectedDate,
+    selectedHour,
+    setSelectedHour,
+    selectedMinute,
+    setSelectedMinute,
+    dateRef,
+    hourRef,
+    minuteRef,
+  } = useTimePicker(onChange);
 
   const handleScroll = (
     ref: React.RefObject<HTMLUListElement>,

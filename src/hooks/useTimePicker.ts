@@ -18,6 +18,7 @@ export const useTimePicker = (onChange: (date: string) => void) => {
   // 시간 및 분 생성 함수
   const generateTimeItems = () => {
     const now = dayjs().add(30, 'minute'); // 현재 시간 기준 30분 후 설정
+
     const hours = Array.from({ length: 24 }, (_, i) =>
       i.toString().padStart(2, '0')
     );
@@ -41,9 +42,14 @@ export const useTimePicker = (onChange: (date: string) => void) => {
   };
 
   const dateItems = generateDateItems();
+  const now = dayjs().add(30, 'minute');
+  const defaultDate =
+    now.hour() === 23 && now.minute() >= 30
+      ? dateItems[1].label
+      : dateItems[0].label;
   const { hours, minutes, defaultHour, defaultMinute } = generateTimeItems();
 
-  const [selectedDate, setSelectedDate] = useState(dateItems[0].label);
+  const [selectedDate, setSelectedDate] = useState(defaultDate);
   const [selectedHour, setSelectedHour] = useState(defaultHour);
   const [selectedMinute, setSelectedMinute] = useState(defaultMinute);
 
@@ -65,6 +71,20 @@ export const useTimePicker = (onChange: (date: string) => void) => {
 
     onChange(formattedDate);
   }, [selectedDate, selectedHour, selectedMinute]);
+
+  useEffect(() => {
+    if (dateRef.current) {
+      dateRef.current.scrollTo({ top: 40 * 0, behavior: 'smooth' });
+    }
+    if (hourRef.current) {
+      const hourIndex = hours.findIndex((h) => h === defaultHour);
+      hourRef.current.scrollTo({ top: 40 * hourIndex, behavior: 'smooth' });
+    }
+    if (minuteRef.current) {
+      const minuteIndex = minutes.findIndex((m) => m === defaultMinute);
+      minuteRef.current.scrollTo({ top: 40 * minuteIndex, behavior: 'smooth' });
+    }
+  }, []);
 
   return {
     dateItems,
