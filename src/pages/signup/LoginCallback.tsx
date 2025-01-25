@@ -12,23 +12,33 @@ const LoginCallback: React.FC = () => {
 
         if (!response) {
           console.error('유저 정보를 가져올 수 없습니다.');
-          nav('/intro');
+          nav('/');
           return;
         }
         console.log('API 응답: ', response);
         const { role } = response;
 
         // Role에 따라 페이지 이동
-        if (role === 'USER') {
-          nav('/home');
-        } else if (role === 'GUEST') {
-          nav('/signup');
-        } else {
-          console.error('알 수 없는 사용자 role: ', role);
-          nav('/intro');
+        switch (role) {
+          case 'USER':
+            nav('/home');
+            break;
+          case 'GUEST':
+            nav('/signup');
+            break;
+          default:
+            console.error('알 수 없는 사용자 role: ', role);
+            nav('/');
         }
       } catch (error) {
+        // interceptor가 처리한 에러메세지 가져오기
+        if (error instanceof Error) {
+          console.error(`로그인 처리 중 오류가 발생했습니다: ${error.message}`);
+        } else {
+          console.error('로그인 중 알 수 없는 오류가 발생했습니다.');
+        }
         console.error('로그인 처리 중 오류가 발생했습니다.', error);
+        nav('/');
       }
     };
 
