@@ -30,6 +30,33 @@ const TimePicker: React.FC<TimePickerProps> = ({
     minuteRef,
   } = useTimePicker(onChange);
 
+  const pickerData = [
+    {
+      key: 'date',
+      items: dateItems.map((item) => item.label),
+      selectedValue: selectedDate,
+      setSelectedValue: setSelectedDate,
+      ref: dateRef,
+      show: showDatePicker,
+    },
+    {
+      key: 'hour',
+      items: hours,
+      selectedValue: selectedHour,
+      setSelectedValue: setSelectedHour,
+      ref: hourRef,
+      show: showDatePicker,
+    },
+    {
+      key: 'minute',
+      items: minutes,
+      selectedValue: selectedMinute,
+      setSelectedValue: setSelectedMinute,
+      ref: minuteRef,
+      show: true, // 분 선택은 항상 보이도록 설정
+    },
+  ];
+
   const handleScroll = (
     ref: React.RefObject<HTMLUListElement>,
     setValue: React.Dispatch<React.SetStateAction<string>>,
@@ -56,56 +83,25 @@ const TimePicker: React.FC<TimePickerProps> = ({
         )}
       </S.Label>
       <S.PickerWrapper>
-        {showDatePicker && (
-          <S.ItemsContainer flex={2}>
-            <S.Items
-              ref={dateRef}
-              onScroll={() =>
-                handleScroll(
-                  dateRef,
-                  setSelectedDate,
-                  dateItems.map((item) => item.label),
-                  true
-                )
-              }
-            >
-              {dateItems.map((item) => (
-                <S.Item
-                  key={item.value}
-                  isSelected={selectedDate === item.label}
+        {pickerData.map(
+          ({ key, items, selectedValue, setSelectedValue, ref, show }, index) =>
+            show && (
+              <S.ItemsContainer key={key} flex={key === 'date' ? 2 : 1}>
+                <S.Items
+                  ref={ref}
+                  onScroll={() =>
+                    handleScroll(ref, setSelectedValue, items, key === 'date')
+                  }
                 >
-                  <div>{item.label}</div>
-                </S.Item>
-              ))}
-            </S.Items>
-          </S.ItemsContainer>
+                  {items.map((item) => (
+                    <S.Item key={item} isSelected={selectedValue === item}>
+                      <div>{item}</div>
+                    </S.Item>
+                  ))}
+                </S.Items>
+              </S.ItemsContainer>
+            )
         )}
-        {showDatePicker && (
-          <S.ItemsContainer flex={1}>
-            <S.Items
-              ref={hourRef}
-              onScroll={() => handleScroll(hourRef, setSelectedHour, hours)}
-            >
-              {hours.map((hour) => (
-                <S.Item key={hour} isSelected={selectedHour === hour}>
-                  <div>{hour}</div>
-                </S.Item>
-              ))}
-            </S.Items>
-          </S.ItemsContainer>
-        )}
-        <S.ItemsContainer flex={1}>
-          <S.Items
-            ref={minuteRef}
-            onScroll={() => handleScroll(minuteRef, setSelectedMinute, minutes)}
-          >
-            {minutes.map((minute) => (
-              <S.Item key={minute} isSelected={selectedMinute === minute}>
-                <div>{minute}</div>
-              </S.Item>
-            ))}
-          </S.Items>
-        </S.ItemsContainer>
         {additionalText && (
           <S.AdditionalText>{additionalText}</S.AdditionalText>
         )}
