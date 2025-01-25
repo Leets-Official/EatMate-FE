@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import * as S from '@/styles/event/TimePicker.styled';
 import dayjs from 'dayjs';
-
 // 날짜 생성 함수
 const generateDateItems = () => {
   return Array.from({ length: 7 }, (_, index) => {
@@ -37,75 +36,6 @@ const generateTimeItems = () => {
     defaultMinute: adjustedTime.format('mm').padStart(2, '0'),
   };
 };
-
-const TotalContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-`;
-
-const PickerWrapper = styled.div`
-  position: relative;
-  display: flex;
-  gap: 16px;
-  width: 100%;
-  align-items: center;
-  padding-bottom: 30px;
-`;
-
-const Items = styled.ul`
-  height: 100px;
-  padding: 30px 0;
-  margin: 0;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  text-align: center;
-  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.regular};
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const Item = styled.li<{ isSelected: boolean }>`
-  list-style-type: none;
-  height: 40px;
-  line-height: 40px;
-  scroll-snap-align: center;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${({ isSelected, theme }) =>
-    isSelected ? theme.COLORS.main : '#000'};
-  font-weight: ${({ isSelected, theme }) =>
-    isSelected ? theme.FONT_WEIGHT.bold : theme.FONT_WEIGHT.regular};
-  border-top: ${({ isSelected, theme }) =>
-    isSelected ? `1px solid ${theme.COLORS.gray[50]}` : 'none'};
-  border-bottom: ${({ isSelected, theme }) =>
-    isSelected ? `1px solid ${theme.COLORS.gray[50]}` : 'none'};
-  transition: all 0.3s ease;
-`;
-
-const Label = styled.label`
-  font-size: ${({ theme }) => theme.FONT_SIZE.md};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const SelectedTime = styled.div`
-  color: ${({ theme }) => theme.COLORS.main};
-  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
-`;
 
 const WheelPicker = ({ onChange }: { onChange: (date: string) => void }) => {
   const dateItems = generateDateItems();
@@ -193,14 +123,14 @@ const WheelPicker = ({ onChange }: { onChange: (date: string) => void }) => {
   }, []);
 
   return (
-    <TotalContainer>
-      <Label>
+    <S.TotalContainer>
+      <S.Label>
         약속 시간
-        <SelectedTime>{`${selectedDate} ${selectedHour}시 ${selectedMinute}분`}</SelectedTime>
-      </Label>
-      <PickerWrapper>
+        <S.SelectedTime>{`${selectedDate} ${selectedHour}시 ${selectedMinute}분`}</S.SelectedTime>
+      </S.Label>
+      <S.PickerWrapper>
         <div style={{ flex: 2 }}>
-          <Items
+          <S.Items
             ref={dateRef}
             onScroll={() =>
               handleScroll(
@@ -212,38 +142,38 @@ const WheelPicker = ({ onChange }: { onChange: (date: string) => void }) => {
             }
           >
             {dateItems.map((item) => (
-              <Item key={item.value} isSelected={selectedDate === item.label}>
+              <S.Item key={item.value} isSelected={selectedDate === item.label}>
                 <div>{item.label}</div>
-              </Item>
+              </S.Item>
             ))}
-          </Items>
+          </S.Items>
         </div>
-        <div style={{ flex: 1 }}>
-          <Items
+        <S.ItemsContainer flex={1}>
+          <S.Items
             ref={hourRef}
             onScroll={() => handleScroll(hourRef, setSelectedHour, hours)}
           >
             {hours.map((hour) => (
-              <Item key={hour} isSelected={selectedHour === hour}>
+              <S.Item key={hour} isSelected={selectedHour === hour}>
                 <div>{hour}</div>
-              </Item>
+              </S.Item>
             ))}
-          </Items>
-        </div>
-        <div style={{ flex: 1 }}>
-          <Items
+          </S.Items>
+        </S.ItemsContainer>
+        <S.ItemsContainer flex={1}>
+          <S.Items
             ref={minuteRef}
             onScroll={() => handleScroll(minuteRef, setSelectedMinute, minutes)}
           >
             {minutes.map((minute) => (
-              <Item key={minute} isSelected={selectedMinute === minute}>
+              <S.Item key={minute} isSelected={selectedMinute === minute}>
                 <div>{minute}</div>
-              </Item>
+              </S.Item>
             ))}
-          </Items>
-        </div>
-      </PickerWrapper>
-    </TotalContainer>
+          </S.Items>
+        </S.ItemsContainer>
+      </S.PickerWrapper>
+    </S.TotalContainer>
   );
 };
 
