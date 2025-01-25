@@ -137,6 +137,7 @@ const OfflineMeetingCreate: React.FC = () => {
 
         <S.WheelPickerContainer>
           <WheelPicker
+            label="약속 시간"
             onChange={(value) => handleFormChange('meetingDate', value)}
           />
         </S.WheelPickerContainer>

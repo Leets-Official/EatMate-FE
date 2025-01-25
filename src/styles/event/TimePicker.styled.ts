@@ -60,7 +60,7 @@ export const Item = styled.li<{ isSelected: boolean }>`
 `;
 
 export const Label = styled.label`
-  font-size: ${({ theme }) => theme.FONT_SIZE.md};
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
   display: flex;
   justify-content: space-between;
@@ -71,4 +71,12 @@ export const SelectedTime = styled.div`
   color: ${({ theme }) => theme.COLORS.main};
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+`;
+
+export const AdditionalText = styled.div`
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  color: ${({ theme }) => theme.COLORS.gray[400]};
+  margin-left: 10px;
+  white-space: nowrap;
 `;

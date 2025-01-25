@@ -5,9 +5,16 @@ import * as S from '@/styles/event/TimePicker.styled';
 interface TimePickerProps {
   label: string;
   onChange: (date: string) => void;
+  showDatePicker?: boolean;
+  additionalText?: string;
 }
 
-const TimePicker: React.FC<TimePickerProps> = ({ label, onChange }) => {
+const TimePicker: React.FC<TimePickerProps> = ({
+  label,
+  onChange,
+  showDatePicker = true,
+  additionalText,
+}) => {
   const {
     dateItems,
     hours,
@@ -26,7 +33,7 @@ const TimePicker: React.FC<TimePickerProps> = ({ label, onChange }) => {
   const handleScroll = (
     ref: React.RefObject<HTMLUListElement>,
     setValue: React.Dispatch<React.SetStateAction<string>>,
-    items: any[],
+    items: string[],
     isDate = false
   ) => {
     if (ref.current) {
@@ -40,67 +47,53 @@ const TimePicker: React.FC<TimePickerProps> = ({ label, onChange }) => {
     }
   };
 
-  useEffect(() => {
-    if (dateRef.current) {
-      dateRef.current.scrollTo({
-        top: 40 * 0,
-        behavior: 'smooth',
-      });
-    }
-    if (hourRef.current) {
-      const hourIndex = hours.findIndex((h) => h === defaultHour);
-      hourRef.current.scrollTo({
-        top: 40 * hourIndex,
-        behavior: 'smooth',
-      });
-    }
-    if (minuteRef.current) {
-      const minuteIndex = minutes.findIndex((m) => m === defaultMinute);
-      minuteRef.current.scrollTo({
-        top: 40 * minuteIndex,
-        behavior: 'smooth',
-      });
-    }
-  }, []);
-
   return (
     <S.TotalContainer>
       <S.Label>
-        약속 시간
-        <S.SelectedTime>{`${selectedDate} ${selectedHour}시 ${selectedMinute}분`}</S.SelectedTime>
+        {label}
+        {showDatePicker && (
+          <S.SelectedTime>{`${selectedDate} ${selectedHour}시 ${selectedMinute}분`}</S.SelectedTime>
+        )}
       </S.Label>
       <S.PickerWrapper>
-        <div style={{ flex: 2 }}>
-          <S.Items
-            ref={dateRef}
-            onScroll={() =>
-              handleScroll(
-                dateRef,
-                setSelectedDate,
-                dateItems.map((item) => item.label),
-                true
-              )
-            }
-          >
-            {dateItems.map((item) => (
-              <S.Item key={item.value} isSelected={selectedDate === item.label}>
-                <div>{item.label}</div>
-              </S.Item>
-            ))}
-          </S.Items>
-        </div>
-        <S.ItemsContainer flex={1}>
-          <S.Items
-            ref={hourRef}
-            onScroll={() => handleScroll(hourRef, setSelectedHour, hours)}
-          >
-            {hours.map((hour) => (
-              <S.Item key={hour} isSelected={selectedHour === hour}>
-                <div>{hour}</div>
-              </S.Item>
-            ))}
-          </S.Items>
-        </S.ItemsContainer>
+        {showDatePicker && (
+          <S.ItemsContainer flex={2}>
+            <S.Items
+              ref={dateRef}
+              onScroll={() =>
+                handleScroll(
+                  dateRef,
+                  setSelectedDate,
+                  dateItems.map((item) => item.label),
+                  true
+                )
+              }
+            >
+              {dateItems.map((item) => (
+                <S.Item
+                  key={item.value}
+                  isSelected={selectedDate === item.label}
+                >
+                  <div>{item.label}</div>
+                </S.Item>
+              ))}
+            </S.Items>
+          </S.ItemsContainer>
+        )}
+        {showDatePicker && (
+          <S.ItemsContainer flex={1}>
+            <S.Items
+              ref={hourRef}
+              onScroll={() => handleScroll(hourRef, setSelectedHour, hours)}
+            >
+              {hours.map((hour) => (
+                <S.Item key={hour} isSelected={selectedHour === hour}>
+                  <div>{hour}</div>
+                </S.Item>
+              ))}
+            </S.Items>
+          </S.ItemsContainer>
+        )}
         <S.ItemsContainer flex={1}>
           <S.Items
             ref={minuteRef}
@@ -113,9 +106,12 @@ const TimePicker: React.FC<TimePickerProps> = ({ label, onChange }) => {
             ))}
           </S.Items>
         </S.ItemsContainer>
+        {additionalText && (
+          <S.AdditionalText>{additionalText}</S.AdditionalText>
+        )}
       </S.PickerWrapper>
     </S.TotalContainer>
   );
 };
 
-export default WheelPicker;
+export default TimePicker;
