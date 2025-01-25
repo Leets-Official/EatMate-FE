@@ -42,7 +42,7 @@ const BackgroundItem = styled.div<{ isSelected: boolean }>`
 `;
 
 interface BackgroundOptionProps {
-  onChange: (key: string, value: File | string) => void;
+  onChange: (key: string, value: File | null) => void;
 }
 
 const BackgroundOption: React.FC<BackgroundOptionProps> = ({ onChange }) => {
@@ -71,14 +71,13 @@ const BackgroundOption: React.FC<BackgroundOptionProps> = ({ onChange }) => {
       onChange('backgroundImage', file);
     }
   };
-  const handleSelect = (id: number, src: string) => {
+  const handleSelect = (id: number) => {
     setError(null);
     setSelectedId(id);
-    onChange('backgroundImage', src);
 
     if (id === 3) {
       document.getElementById('file-upload')?.click();
-    } else setSelectedId(id);
+    } else onChange('backgroundImage', null);
   };
 
   return (
@@ -89,7 +88,7 @@ const BackgroundOption: React.FC<BackgroundOptionProps> = ({ onChange }) => {
           <BackgroundItem
             key={bgImg.id}
             isSelected={bgImg.id === selectedId}
-            onClick={() => handleSelect(bgImg.id, bgImg.src)}
+            onClick={() => handleSelect(bgImg.id)}
           >
             {bgImg.id === 3 && uploadedImg ? (
               <img src={uploadedImg} alt="uploadedImg" />
