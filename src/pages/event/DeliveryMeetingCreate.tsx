@@ -14,6 +14,7 @@ import MenuCategoryOption from '@/components/event/MenuCategoryOption';
 import TimePicker from '@/components/event/TimePicker';
 import BankSelectModal from '@/components/common/Modal/BankSelectModal';
 import { useState } from 'react';
+import { InputWrapper } from '@/styles/SignUp/SignUp.styled';
 
 const DeliveryMeetingCreate: React.FC = () => {
   const nav = useNavigate();
@@ -119,6 +120,7 @@ const DeliveryMeetingCreate: React.FC = () => {
         <Input
           placeholder="은행 선택"
           value={selectedBank}
+          isBankInput
           readOnly
           onClick={() => setIsModalOpen(true)}
         />

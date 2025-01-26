@@ -19,6 +19,7 @@ interface InputProps {
   ) => void;
   onClick?: () => void;
   readOnly?: boolean;
+  isBankInput?: boolean;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -35,9 +36,10 @@ export const Input: React.FC<InputProps> = ({
   onChange,
   onClick,
   readOnly = false,
+  isBankInput = false,
 }) => {
   return (
-    <InputWrapper>
+    <InputWrapper style={{ marginTop: isBankInput ? '-30px' : '0px' }}>
       <Label hasError={hasError}>{label}</Label>
       <StyledInput
         as={as}
