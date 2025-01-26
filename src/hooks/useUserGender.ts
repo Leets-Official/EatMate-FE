@@ -1,3 +1,6 @@
+import { getUserInfo } from '@/apis/auth/auth';
+import { useEffect, useState } from 'react';
+
 export const useUserGender = () => {
   const [userGender, setUserGender] = useState<string | null>(null);
 
@@ -12,7 +15,7 @@ export const useUserGender = () => {
         }
       } catch (error) {
         console.error('사용자 성별 가져오기 실패', error);
-        setUserGender('MALE'); // 오류 발생 시 기본값 설정
+        setUserGender('MALE');
       }
     };
     fetchGender();

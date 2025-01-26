@@ -14,55 +14,33 @@ export interface OfflineMeetingFormData {
   backgroundImage: File | null;
 }
 
+const createFormData = (data: OfflineMeetingFormData): FormData => {
+  const formData = new FormData();
+
+  Object.entries(data).forEach(([key, value]) => {
+    if (value !== null && value !== undefined) {
+      if (key === 'backgroundImage' && value instanceof File) {
+        formData.append(key, value);
+      } else if (typeof value === 'boolean' || typeof value === 'number') {
+        formData.append(key, String(value));
+      } else {
+        formData.append(key, value as string);
+      }
+    }
+  });
+
+  return formData;
+};
+
+// API 호출 함수
+const postFormData = async (url: string, formData: FormData) => {
+  return defaultInstance.post(url, formData).then((response) => response.data);
+};
+
+// 오프라인 모임 생성 API 호출
 export const createOfflineMeeting = async (
-  OfflineCreateData: OfflineMeetingFormData
+  offlineCreateData: OfflineMeetingFormData
 ) => {
-  try {
-    const OfflineFormData = new FormData();
-
-    OfflineFormData.append('meetingName', OfflineCreateData.meetingName);
-    OfflineFormData.append(
-      'meetingDescription',
-      OfflineCreateData.meetingDescription
-    );
-    OfflineFormData.append(
-      'genderRestriction',
-      OfflineCreateData.genderRestriction
-    );
-    OfflineFormData.append('isLimited', String(OfflineCreateData.isLimited));
-
-    OfflineFormData.append('meetingDate', OfflineCreateData.meetingDate);
-
-    if (
-      OfflineCreateData.maxParticipants !== null &&
-      OfflineCreateData.maxParticipants !== undefined
-    ) {
-      OfflineFormData.append(
-        'maxParticipants',
-        OfflineCreateData.maxParticipants.toString()
-      );
-    }
-
-    OfflineFormData.append('meetingPlace', OfflineCreateData.meetingPlace);
-    OfflineFormData.append(
-      'offlineMeetingCategory',
-      OfflineCreateData.offlineMeetingCategory
-    );
-
-    if (OfflineCreateData.backgroundImage instanceof File) {
-      OfflineFormData.append(
-        'backgroundImage',
-        OfflineCreateData.backgroundImage
-      );
-    }
-
-    const response = await defaultInstance.post(
-      PATH + '/offline',
-      OfflineFormData
-    );
-    return response.data;
-  } catch (error) {
-    console.error('오프라인 모임 생성 실패: ', error);
-    throw error;
-  }
+  const formData = createFormData(offlineCreateData);
+  return await postFormData(`${PATH}/offline`, formData);
 };

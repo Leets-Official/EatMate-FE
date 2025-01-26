@@ -62,22 +62,25 @@ const ProfileImgStep: React.FC = () => {
   };
 
   const handleProceedToPolicy = async () => {
+    const signupData = {
+      year: signupState.year,
+      month: signupState.month,
+      day: signupState.day,
+      gender: signupState.gender,
+      phoneNumber: signupState.phoneNumber,
+      mbti: signupState.mbti,
+      studentNumber: signupState.studentNumber,
+      nickname: signupState.nickname,
+    };
     try {
-      const signupData = {
-        year: signupState.year,
-        month: signupState.month,
-        day: signupState.day,
-        gender: signupState.gender,
-        phoneNumber: signupState.phoneNumber,
-        mbti: signupState.mbti,
-        studentNumber: signupState.studentNumber,
-        nickname: signupState.nickname,
-      };
-      const response = await signupUser(signupData);
-      console.log('회원가입 성공: ', response);
+      await signupUser(signupData);
       setIsPolicyModalOpen(true);
     } catch (error) {
-      console.error('회원가입 실패: ', error);
+      if (error instanceof Error) {
+        console.error(`회원가입 실패: ${error.message}`);
+      } else {
+        console.error('알 수 없는 오류 발생');
+      }
     }
   };
 
