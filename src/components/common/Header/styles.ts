@@ -60,7 +60,7 @@ export const RightSpacer = styled.div`
 
 export const LeaveButton = styled.button`
   font-size: ${({ theme }) => theme.FONT_SIZE.md};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.large};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
   color: ${({ theme }) => theme.COLORS.main};
   background-color: transparent;
   cursor: pointer;

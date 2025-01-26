@@ -39,7 +39,7 @@ const ToastMessage = styled.div<{ show: boolean }>`
   padding: 10px 20px;
   border-radius: 8px;
   font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
-  font-weight: bold;
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
   visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
   opacity: ${({ show }) => (show ? '1' : '0')};
   transition: opacity 0.3s ease-in-out;

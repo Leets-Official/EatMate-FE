@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import MockImage from '@/assets/images/ic_mock_img.svg';
+import MockImage from '@/assets/images/ic_backImg_default1.svg';
 import MeetingInfo from '@/components/MeetingDetail/MeetingInfo';
 import ParticipantsList from '@/components/MeetingDetail/ParticipantsList';
 import MailIcon from '@/assets/images/ic_mail.svg';
