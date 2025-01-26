@@ -80,11 +80,11 @@ export const deliveryMeetingFormFields: FormField[] = [
     as: 'input',
     errorMessage: '다시 입력해주세요.',
   },
-  {
-    key: 'accountHolder',
-    label: '',
-    placeholder: '은행 선택',
-    as: 'input',
-    errorMessage: '다시 입력해주세요.',
-  },
+  // {
+  //   key: 'bankName',
+  //   label: '',
+  //   placeholder: '은행 선택',
+  //   as: 'input',
+  //   errorMessage: '다시 입력해주세요.',
+  // },
 ];

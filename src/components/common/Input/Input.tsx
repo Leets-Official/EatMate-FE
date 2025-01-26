@@ -17,6 +17,8 @@ interface InputProps {
   onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
+  onClick?: () => void;
+  readOnly?: boolean;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -31,6 +33,8 @@ export const Input: React.FC<InputProps> = ({
   errorMessage,
   value,
   onChange,
+  onClick,
+  readOnly = false,
 }) => {
   return (
     <InputWrapper>
@@ -44,6 +48,8 @@ export const Input: React.FC<InputProps> = ({
         hasError={hasError}
         value={value}
         onChange={onChange}
+        onClick={onClick}
+        readOnly={readOnly}
       />
       {hasError && errorMessage && <InputErrorMessage message={errorMessage} />}
       {guideMessage && <InputGuide message={guideMessage} />}

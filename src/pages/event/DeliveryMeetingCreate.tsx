@@ -12,10 +12,20 @@ import GenderOption from '@/components/event/GenderOption';
 import ParticipantOption from '@/components/event/ParticipantOption';
 import MenuCategoryOption from '@/components/event/MenuCategoryOption';
 import TimePicker from '@/components/event/TimePicker';
+import BankSelectModal from '@/components/common/Modal/BankSelectModal';
+import { useState } from 'react';
 
 const DeliveryMeetingCreate: React.FC = () => {
   const nav = useNavigate();
   const userGender = useUserGender();
+
+  const [selectedBank, setSelectedBank] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleBankSelect = (bank: string) => {
+    setSelectedBank(bank);
+    setIsModalOpen(false);
+  };
 
   const { formData, errors, handleChange, validateForm } = useInputHandler({
     meetingName: '',
@@ -101,17 +111,31 @@ const DeliveryMeetingCreate: React.FC = () => {
               placeholder={field.placeholder}
               maxLength={field.maxLength}
               rows={field.rows}
+
               // hasError={errors[field.key]}
               // onChange={(e) => handleFormChange(field.key, e.target.value)}
             />
           ))}
+        <Input
+          placeholder="은행 선택"
+          value={selectedBank}
+          readOnly
+          onClick={() => setIsModalOpen(true)}
+        />
 
+        {isModalOpen && (
+          <BankSelectModal
+            onSelect={handleBankSelect}
+            onClose={() => setIsModalOpen(false)}
+          />
+        )}
         <TimePicker
           label="주문 마감 시간"
           showDatePicker={false}
           additionalText="분 뒤 주문 접수가 종료돼요"
           onChange={handleFormChange}
         />
+
         <Button variant="primary" size="lg" rounded="md">
           배달팟 만들기
         </Button>
