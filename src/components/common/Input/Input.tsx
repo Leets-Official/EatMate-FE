@@ -10,7 +10,7 @@ interface InputProps {
   maxLength?: number;
   rows?: number;
   type?: string;
-  guideMessage?: string;
+  guideMessage?: string | string[] | React.ReactNode;
   hasError?: boolean;
   errorMessage?: string;
   value?: string;
