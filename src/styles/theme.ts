@@ -3,6 +3,7 @@ const COLORS = {
   orange: {
     50: '#FBDED0',
     100: '#FFDACC',
+    200: '#FF9D01',
   },
   yellow: '#F3AA24',
   gray: {
@@ -11,6 +12,7 @@ const COLORS = {
     200: '#D9D9D9',
     300: '#ACACAC',
     400: '#5E5E5E',
+    600: '#757575',
   },
   white: '#FFFFFF',
   black: '#1A1A1A',

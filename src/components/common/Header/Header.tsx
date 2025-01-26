@@ -8,6 +8,8 @@ interface HeaderProps {
   showBackButton?: boolean;
   subText?: string;
   onBackClick?: () => void;
+  isJoin?: boolean;
+  onLeaveClick?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -15,9 +17,11 @@ const Header: React.FC<HeaderProps> = ({
   showBackButton = false,
   subText,
   onBackClick,
+  isJoin = false,
+  onLeaveClick,
 }) => {
   return (
-    <S.HeaderContainer showBackButton={showBackButton}>
+    <S.HeaderContainer>
       {showBackButton && (
         <S.BackButton onClick={onBackClick}>
           <img src={backArrow} alt="뒤로가기" />
@@ -35,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({
           </S.SubText>
         )}
       </S.CenterContainer>
-      <S.RightSpacer />
+      {isJoin && <S.LeaveButton onClick={onLeaveClick}>나가기</S.LeaveButton>}
     </S.HeaderContainer>
   );
 };
