@@ -14,6 +14,8 @@ import OfflineMeetingCreate from '@/pages/event/OfflineMeetingCreate';
 import DeliveryMeetingCreate from '@/pages/event/DeliveryMeetingCreate';
 import MeetingDetail from '@/pages/MeetingDetail';
 import MyPage from '@/pages/mypage/MyPage';
+import MyCreatedMeetings from '@/pages/mypage/MyCreatedMeetings';
+import MyParticipatedMeetings from '@/pages/mypage/MyParticipatedMeetings';
 
 const router = createBrowserRouter([
   {
@@ -50,10 +52,6 @@ const router = createBrowserRouter([
     element: <DeliveryMeetingCreate />,
   },
   {
-    path: '/mypage',
-    element: <MyPage />,
-  },
-  {
     path: '/policy-details/:termId',
     element: <PolicyDetails />,
   },
@@ -61,5 +59,16 @@ const router = createBrowserRouter([
     path: '/meeting', //나중에 뒤에 모임 Id 추가로 넣을 예정
     element: <MeetingDetail />,
   },
+  { path: '/mypage', element: <MyPage /> },
+  { path: '/mypage/profile', element: <MyPage /> },
+  { path: '/mypage/created-meetings', element: <MyCreatedMeetings /> },
+  {
+    path: '/mypage/participated-meetings',
+    element: <MyParticipatedMeetings />,
+  },
+  { path: '/mypage/notice', element: <MyPage /> },
+  { path: '/mypage/reported-users', element: <MyPage /> },
+  { path: '/mypage/blocked-users', element: <MyPage /> },
+  { path: '/mypage/faq', element: <MyPage /> },
 ]);
 export default router;

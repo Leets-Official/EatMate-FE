@@ -54,12 +54,12 @@ export const mypageMenuItems = [
       {
         icon: TermsIcon,
         label: '서비스 이용약관',
-        path: '/mypage/terms',
+        path: '/policy-details/1',
       },
       {
         icon: PrivacyIcon,
         label: '개인정보 처리방침',
-        path: '/mypage/privacy',
+        path: '/policy-details/2',
       },
     ],
   },

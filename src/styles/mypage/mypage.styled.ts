@@ -5,6 +5,7 @@ import {
   flexColumn,
   flexColumnCenter,
 } from '@/styles/CommonStyle';
+import theme from '@/styles/theme';
 
 export const ButtonContainer = styled.div`
   padding: 20px;
