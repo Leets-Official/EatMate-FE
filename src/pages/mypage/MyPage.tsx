@@ -12,7 +12,11 @@ import theme from '@/styles/theme';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-const MyPageWrapper = styled.div``;
+const ButtonContainer = styled.div`
+  padding: 20px;
+  ${flexCenter}
+  margin-bottom: 70px;
+`;
 
 const TitleContainer = styled.div`
   padding: 20px 0 0 20px;
@@ -83,7 +87,7 @@ const SectionContainer = styled.div`
 const Divider = styled.div`
   height: 1px;
   background-color: ${({ theme }) => theme.COLORS.gray[10]};
-  margin: 10px 0;
+  margin: 10px 0 -5px 0;
 `;
 
 const mockData = {
@@ -96,7 +100,7 @@ const mockData = {
 const MyPage: React.FC = () => {
   const nav = useNavigate();
   return (
-    <MyPageWrapper>
+    <div>
       <TitleContainer>
         <Text fontSize="xl" fontWeight="bold">
           마이페이지
@@ -139,11 +143,13 @@ const MyPage: React.FC = () => {
           </SectionContainer>
         ))}
       </MenuContainer>
-      <Button variant="primary" size="lg" rounded="sm">
-        로그아웃
-      </Button>
+      <ButtonContainer>
+        <Button variant="primary" size="lg" rounded="sm">
+          로그아웃
+        </Button>
+      </ButtonContainer>
       <BottomNavigation />
-    </MyPageWrapper>
+    </div>
   );
 };
 
