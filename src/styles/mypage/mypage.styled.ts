@@ -47,13 +47,17 @@ export const TextContainer = styled.div`
 export const Text = styled.div<{
   fontSize: keyof typeof theme.FONT_SIZE;
   fontWeight?: keyof typeof theme.FONT_WEIGHT;
-  color?: 'gray';
+  color?: 'gray' | 'main';
 }>`
   font-weight: ${({ theme, fontWeight = 'light' }) =>
     theme.FONT_WEIGHT[fontWeight]};
   font-size: ${({ theme, fontSize }) => theme.FONT_SIZE[fontSize]};
   color: ${({ theme, color }) =>
-    color === 'gray' ? '#858585' : theme.COLORS.black};
+    color === 'gray'
+      ? '#858585'
+      : color === 'main'
+        ? theme.COLORS.main
+        : theme.COLORS.black};
 `;
 
 export const MenuContainer = styled.div`

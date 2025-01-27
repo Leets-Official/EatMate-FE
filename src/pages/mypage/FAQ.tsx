@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import icArrowDown from '@/assets/images/ic_arrow_down.svg';
 import { useState } from 'react';
+import { Text } from '@/styles/mypage/mypage.styled';
 
 const FaqWrapper = styled.div`
   padding: 20px;
@@ -12,9 +13,20 @@ const FaqWrapper = styled.div`
   gap: 20px;
 `;
 
+const FaqItem = styled.div<{ isOpen: boolean }>`
+  background-color: ${({ theme, isOpen }) =>
+    isOpen ? theme.COLORS.white : theme.COLORS.orange[50]};
+  border-radius: 12px;
+  overflow: hidden;
+  transition:
+    background-color 0.3s ease-in-out,
+    max-height 0.4s ease-in-out;
+`;
+
 const QuestionContainer = styled.div<{ isOpen: boolean }>`
-  border-bottom: 1px solid ${({ theme }) => theme.COLORS.gray[100]};
-  padding: 15px 0;
+  background-color: ${({ isOpen, theme }) =>
+    isOpen ? '#fcebcb' : theme.COLORS.orange[50]};
+  padding: 15px 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -22,7 +34,7 @@ const QuestionContainer = styled.div<{ isOpen: boolean }>`
 `;
 
 const QuestionText = styled.div`
-  font-size: ${({ theme }) => theme.FONT_SIZE.md};
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   display: flex;
   align-items: center;
@@ -30,12 +42,14 @@ const QuestionText = styled.div`
 `;
 
 const AnswerContainer = styled.div<{ isOpen: boolean }>`
-  max-height: ${({ isOpen }) => (isOpen ? '100px' : '0')};
-  overflow: hidden;
-  transition: max-height 0.3s ease-in-out;
-  padding: ${({ isOpen }) => (isOpen ? '10px 0' : '0')};
+  background-color: ${({ isOpen }) => (isOpen ? '#fbf2e3' : 'none')};
+  max-height: ${({ isOpen }) => (isOpen ? '200px' : '0')};
+  opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
+  transition:
+    max-height 0.4s ease-in-out,
+    opacity 0.3s ease-in-out;
+  padding: ${({ isOpen }) => (isOpen ? '15px 10px' : '0 10px')};
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-  color: ${({ theme }) => theme.COLORS.gray[500]};
 `;
 
 const ArrowIcon = styled.img<{ isOpen: boolean }>`
@@ -56,13 +70,15 @@ const Faq: React.FC = () => {
       <Header onBackClick={() => nav(-1)} showBackButton title="FAQ" />
       <FaqWrapper>
         {faqConstants.map((faq, index) => (
-          <div key={index}>
+          <FaqItem key={index} isOpen={openIndex === index}>
             <QuestionContainer
               isOpen={openIndex === index}
               onClick={() => toggleAnswer(index)}
             >
               <QuestionText>
-                <span>Q</span>
+                <Text color="main" fontSize="md">
+                  Q :
+                </Text>
                 {faq.question}
               </QuestionText>
               <ArrowIcon
@@ -72,9 +88,10 @@ const Faq: React.FC = () => {
               />
             </QuestionContainer>
             <AnswerContainer isOpen={openIndex === index}>
+              <span>A : </span>
               {faq.answer}
             </AnswerContainer>
-          </div>
+          </FaqItem>
         ))}
       </FaqWrapper>
     </>
