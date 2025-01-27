@@ -13,6 +13,7 @@ import LoginCallback from '@/pages/signup/LoginCallback';
 import OfflineMeetingCreate from '@/pages/event/OfflineMeetingCreate';
 import DeliveryMeetingCreate from '@/pages/event/DeliveryMeetingCreate';
 import MeetingDetail from '@/pages/MeetingDetail';
+import MyPage from '@/pages/mypage/MyPage';
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: '/meeting/create/delivery',
     element: <DeliveryMeetingCreate />,
+  },
+  {
+    path: '/mypage',
+    element: <MyPage />,
   },
   {
     path: '/policy-details/:termId',
