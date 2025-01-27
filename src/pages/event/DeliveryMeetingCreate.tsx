@@ -14,7 +14,6 @@ import MenuCategoryOption from '@/components/event/MenuCategoryOption';
 import TimePicker from '@/components/event/TimePicker';
 import BankSelectModal from '@/components/common/Modal/BankSelectModal';
 import { useState } from 'react';
-import { InputWrapper } from '@/styles/SignUp/SignUp.styled';
 
 const DeliveryMeetingCreate: React.FC = () => {
   const nav = useNavigate();
@@ -25,6 +24,7 @@ const DeliveryMeetingCreate: React.FC = () => {
 
   const handleBankSelect = (bank: string) => {
     setSelectedBank(bank);
+    handleFormChange('bankName', bank);
     setIsModalOpen(false);
   };
 
@@ -52,6 +52,25 @@ const DeliveryMeetingCreate: React.FC = () => {
     }
   };
 
+  const handleSubmit = () => {
+    if (
+      validateForm([
+        'meetingName',
+        'meetingDescription',
+        'genderRestriction',
+        'storeName',
+        'pickupLocation',
+        'orderDeadline',
+        'accountNumber',
+        'bankName',
+      ])
+    ) {
+      console.log('배달팟 생성 데이터:', formData);
+      nav('/home');
+    } else {
+      console.log('필수 입력값이 누락되었습니다.');
+    }
+  };
   return (
     <div>
       <Header
@@ -72,8 +91,8 @@ const DeliveryMeetingCreate: React.FC = () => {
               placeholder={field.placeholder}
               maxLength={field.maxLength}
               rows={field.rows}
-              // hasError={errors[field.key]}
-              // onChange={(e) => handleFormChange(field.key, e.target.value)}
+              hasError={errors[field.key]}
+              onChange={(e) => handleFormChange(field.key, e.target.value)}
             />
           ))}
         <BackgroundOption onChange={handleFormChange} />
@@ -95,7 +114,9 @@ const DeliveryMeetingCreate: React.FC = () => {
           }}
         />
 
-        <MenuCategoryOption />
+        <MenuCategoryOption
+        // onChange={(value) => handleFormChange('foodCategory', value)}
+        />
 
         {deliveryMeetingFormFields
           .filter((field) => !field.key.startsWith('meeting'))
@@ -112,9 +133,8 @@ const DeliveryMeetingCreate: React.FC = () => {
               placeholder={field.placeholder}
               maxLength={field.maxLength}
               rows={field.rows}
-
-              // hasError={errors[field.key]}
-              // onChange={(e) => handleFormChange(field.key, e.target.value)}
+              hasError={errors[field.key]}
+              onChange={(e) => handleFormChange(field.key, e.target.value)}
             />
           ))}
         <Input
@@ -135,10 +155,10 @@ const DeliveryMeetingCreate: React.FC = () => {
           label="주문 마감 시간"
           showDatePicker={false}
           additionalText="분 뒤 주문 접수가 종료돼요"
-          onChange={handleFormChange}
+          onChange={(value) => handleFormChange('orderDeadline', value)}
         />
 
-        <Button variant="primary" size="lg" rounded="md">
+        <Button variant="primary" size="lg" rounded="md" onClick={handleSubmit}>
           배달팟 만들기
         </Button>
       </S.ContentPadding>

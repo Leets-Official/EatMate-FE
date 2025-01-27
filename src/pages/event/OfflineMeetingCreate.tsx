@@ -11,7 +11,7 @@ import { useInputHandler } from '@/hooks/useInputHandler';
 import {
   createOfflineMeeting,
   OfflineMeetingFormData,
-} from '@/apis/meetings/createOfflineMeeting';
+} from '@/apis/meetings/createMeeting';
 import { useEffect } from 'react';
 import { useUserGender } from '@/hooks/useUserGender';
 import { offlineMeetingFormFields } from '@/constants/MeetingFields';
