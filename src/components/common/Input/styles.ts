@@ -1,7 +1,10 @@
 import { flexAlignCenter, flexColumn } from '@/styles/CommonStyle';
 import styled from 'styled-components';
 
-export const StyledInput = styled.input<{ hasError?: boolean }>`
+export const StyledInput = styled.input<{
+  hasError?: boolean;
+  readOnly?: boolean;
+}>`
   width: 100%;
   padding: 10px;
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
@@ -18,6 +21,8 @@ export const StyledInput = styled.input<{ hasError?: boolean }>`
     border-color: ${({ theme }) => theme.COLORS.main};
     outline: none;
   }
+  background-color: ${({ readOnly }) => (readOnly ? '#e9e9e9' : 'transparent')};
+  color: ${({ readOnly }) => (readOnly ? '#848484' : '#000')};
 `;
 
 export const Label = styled.div<{ hasError?: boolean }>`

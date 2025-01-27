@@ -1,8 +1,8 @@
 import Header from '@/components/common/Header/Header';
 import { useState } from 'react';
 import styled from 'styled-components';
-import warningIcon from '@/assets/images/ic_warning.svg';
 import { Text } from '@/styles/mypage/mypage.styled';
+import editIcon from '@/assets/images/ic_edit_profile.svg';
 
 const mockData = [
   {

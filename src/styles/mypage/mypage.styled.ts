@@ -19,7 +19,7 @@ export const TitleContainer = styled.div`
 
 export const ProfileContainer = styled.div`
   ${flexAlignCenter}
-  gap: 10px;
+  gap: 20px;
   padding: 20px;
 `;
 
@@ -28,13 +28,34 @@ export const MeetingItems = styled.div`
   gap: 5px;
 `;
 
+export const ProfileWrapper = styled.div`
+  position: relative;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+`;
+
+export const ProfileImage = styled.img`
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%;
+`;
+
+export const EditIcon = styled.img`
+  position: absolute;
+  bottom: 5px;
+  right: 0;
+  width: 30px;
+  height: 30px;
+`;
+
 export const MeetingContainer = styled.div`
   ${flexCenter}
   flex-direction: row;
   gap: 70px;
   padding: 15px;
   margin-bottom: 10px;
-  /* background-color: ${({ theme }) => theme.COLORS.gray[50]}; */
   background-color: #fcebcb;
   width: 100%;
 `;

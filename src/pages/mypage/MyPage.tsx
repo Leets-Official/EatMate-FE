@@ -4,12 +4,18 @@ import Button from '@/components/common/Button/Button';
 import { mypageMenuItems } from '@/constants/mypageMenuConstants';
 import * as S from '@/styles/mypage/mypage.styled';
 import { useNavigate } from 'react-router-dom';
+import editIcon from '@/assets/images/ic_edit_profile.svg';
 
-const mockData = {
-  name: '가천',
-  studentId: '가천대학교 202233333',
+export const mockData = {
+  profileImg: ProfileIcon,
+  studentId: '202233333',
   create: 1,
   participation: 5,
+  id: 'gachon@gachon.ac.kr',
+  nickName: '가천',
+  phoneNumber: '010-1111-1111',
+  mbti: 'ISTP',
+  birthday: '2000.01.01',
 };
 
 const MyPage: React.FC = () => {
@@ -22,10 +28,13 @@ const MyPage: React.FC = () => {
         </S.Text>
       </S.TitleContainer>
       <S.ProfileContainer>
-        <img src={ProfileIcon} alt="profile" />
+        <S.ProfileWrapper onClick={() => nav('/mypage/profile')}>
+          <S.ProfileImage src={ProfileIcon} alt="profile" />
+          <S.EditIcon src={editIcon} alt="edit" />
+        </S.ProfileWrapper>
         <S.TextContainer>
-          <S.Text fontSize="md">{mockData.name}</S.Text>
-          <S.Text fontSize="sm">{mockData.studentId}</S.Text>
+          <S.Text fontSize="md">{mockData.nickName}</S.Text>
+          <S.Text fontSize="sm">가천대학교 {mockData.studentId}</S.Text>
         </S.TextContainer>
       </S.ProfileContainer>
       <S.MeetingContainer>
