@@ -14,7 +14,23 @@ export interface OfflineMeetingFormData {
   backgroundImage: File | null;
 }
 
-const createFormData = (data: OfflineMeetingFormData): FormData => {
+export interface DeliveryMeetingFormData {
+  meetingName: string;
+  meetingDescription: string;
+  genderRestriction: string;
+  isLimited: boolean;
+  maxParticipants: number | null;
+  foodCategory: string;
+  storeName: string;
+  pickupLocation: string;
+  orderDeadline: string;
+  accountNumber: string;
+  bankName: string;
+  backgroundImage: File | null;
+}
+const createFormData = (
+  data: OfflineMeetingFormData | DeliveryMeetingFormData
+): FormData => {
   const formData = new FormData();
 
   Object.entries(data).forEach(([key, value]) => {
@@ -33,7 +49,7 @@ const createFormData = (data: OfflineMeetingFormData): FormData => {
 };
 
 // API 호출 함수
-const postFormData = async (url: string, formData: FormData) => {
+export const postFormData = async (url: string, formData: FormData) => {
   return defaultInstance.post(url, formData).then((response) => response.data);
 };
 
@@ -43,4 +59,11 @@ export const createOfflineMeeting = async (
 ) => {
   const formData = createFormData(offlineCreateData);
   return await postFormData(`${PATH}/offline`, formData);
+};
+
+export const createDeliveryMeeting = async (
+  DeliveryCreateData: DeliveryMeetingFormData
+) => {
+  const formData = createFormData(DeliveryCreateData);
+  return await postFormData(`${PATH}/delivery`, formData);
 };
