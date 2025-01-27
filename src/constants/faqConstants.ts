@@ -1,10 +1,10 @@
-const faqConstants = [
+export const faqConstants = [
   {
     question: '비밀번호는 어떻게 변경하나요?',
     answer: '비밀번호는 구글 계정 설정에서만 변경하실 수 있어요.',
   },
   {
-    question: '가입 시 학교 인증은 어떻게 하나요ㅛ?',
+    question: '가입 시 학교 인증은 어떻게 하나요?',
     answer:
       '가천대학교 구글 계정을 통해서만 가입이 가능합니다. 가입 시 학교 이메일을 입력하시면 자동으로 인증이 완료됩니다.',
   },
