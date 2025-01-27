@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { flexCenter } from '../CommonStyle';
 
 export const TotalContainer = styled.div`
   display: flex;
@@ -10,11 +11,10 @@ export const TotalContainer = styled.div`
 `;
 
 export const PickerWrapper = styled.div`
+  ${flexCenter}
   position: relative;
-  display: flex;
   gap: 16px;
   width: 100%;
-  align-items: center;
   padding-bottom: 30px;
 `;
 
@@ -39,7 +39,11 @@ export const Items = styled.ul`
   }
 `;
 
-export const Item = styled.li<{ isSelected: boolean }>`
+export const Item = styled.li<{
+  isSelected: boolean;
+  isMinute?: boolean;
+  showDatePicker?: boolean;
+}>`
   list-style-type: none;
   height: 40px;
   line-height: 40px;
@@ -52,8 +56,12 @@ export const Item = styled.li<{ isSelected: boolean }>`
     isSelected ? theme.COLORS.main : '#000'};
   font-weight: ${({ isSelected, theme }) =>
     isSelected ? theme.FONT_WEIGHT.bold : theme.FONT_WEIGHT.regular};
-  border-top: ${({ isSelected, theme }) =>
-    isSelected ? `1px solid ${theme.COLORS.gray[50]}` : 'none'};
+  border-top: ${({ isSelected, isMinute, showDatePicker, theme }) =>
+    isMinute && !showDatePicker
+      ? 'none'
+      : isSelected
+        ? `1px solid ${theme.COLORS.gray[50]}`
+        : 'none'};
   border-bottom: ${({ isSelected, theme }) =>
     isSelected ? `1px solid ${theme.COLORS.gray[50]}` : 'none'};
   transition: all 0.3s ease;
