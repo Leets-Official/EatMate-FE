@@ -32,10 +32,10 @@ export const Label = styled.div<{ hasError?: boolean }>`
     hasError ? theme.COLORS.error : theme.COLORS.black};
 `;
 
-export const InputWrapper = styled.div`
+export const InputWrapper = styled.div<{ marginBottom?: string }>`
   ${flexColumn}
   gap: 10px;
-  margin-bottom: 30px;
+  margin-bottom: ${({ marginBottom }) => marginBottom || '30px'};
 `;
 
 export const ErrorContainer = styled.span`

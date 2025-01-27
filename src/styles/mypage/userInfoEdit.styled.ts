@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { flexAlignCenter, flexCenter } from '../CommonStyle';
 
 export const Container = styled.div`
   display: flex;
@@ -13,6 +14,7 @@ export const ProfileWrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  cursor: pointer;
 `;
 
 export const ProfileImage = styled.img`
@@ -23,18 +25,19 @@ export const ProfileImage = styled.img`
 
 export const EditIconWrapper = styled.div`
   position: absolute;
-  bottom: 5px;
-  right: 5px;
-  background-color: white;
+  bottom: -10px;
+  right: -5px;
   border-radius: 50%;
   padding: 5px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
 `;
 
 export const EditIcon = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
+`;
+export const GoogleIcon = styled.img`
+  width: 30px;
+  height: 30px;
 `;
 
 export const FormContainer = styled.div`
@@ -45,11 +48,13 @@ export const FormContainer = styled.div`
 `;
 
 export const GoogleText = styled.div`
-  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-  margin-top: -10px;
+  ${flexAlignCenter}
+  font-size: ${({ theme }) => theme.FONT_SIZE.xs};
+  margin-top: -30px;
 `;
 
 export const ButtonContainer = styled.div`
   width: 100%;
+  ${flexCenter}
   margin-top: 30px;
 `;
