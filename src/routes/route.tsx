@@ -19,7 +19,7 @@ import MyParticipatedMeetings from '@/pages/mypage/MyParticipatedMeetings';
 import ReportedUser from '@/pages/mypage/ReportedUser';
 import BlockedUser from '@/pages/mypage/BlockedUser';
 import Notice from '@/pages/mypage/Notice';
-import Faq from '@/pages/mypage/Faq';
+import Faq from '@/pages/mypage/FAQ';
 import UserInfoEdit from '@/pages/mypage/UserInfoEdit';
 
 const router = createBrowserRouter([
