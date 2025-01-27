@@ -10,7 +10,7 @@ import { flexAlignCenter, flexCenter, flexColumn } from '@/styles/CommonStyle';
 
 interface MeetingListItemProps {
   cover: string;
-  isSelected: boolean;
+  isSelected?: boolean;
   title: string;
   description: string;
   location: string;
@@ -120,7 +120,7 @@ const RemainingTimeBadge = styled.div`
 
 const MeetingListItem: React.FC<MeetingListItemProps> = ({
   cover,
-  isSelected,
+  isSelected = false,
   title,
   description,
   location,
