@@ -5,6 +5,7 @@ import profileImg2 from '@/assets/images/ic_participant2.svg';
 import styled from 'styled-components';
 import { Text } from '@/styles/mypage/mypage.styled';
 import { flexColumn } from '@/styles/CommonStyle';
+
 const mockData = [
   {
     name: '무당벌레',
@@ -16,25 +17,25 @@ const mockData = [
   },
 ];
 
-const Container = styled.div`
-  padding: 20px;
+export const Container = styled.div`
   ${flexColumn}
+  padding: 20px;
   gap: 20px;
 `;
 
-const UserList = styled.div`
+export const UserList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
 `;
 
-const UserItem = styled.div`
+export const UserItem = styled.div`
   display: flex;
   align-items: center;
   gap: 15px;
 `;
 
-const UserIcon = styled.img`
+export const UserIcon = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;
