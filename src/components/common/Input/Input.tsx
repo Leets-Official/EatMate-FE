@@ -10,13 +10,16 @@ interface InputProps {
   maxLength?: number;
   rows?: number;
   type?: string;
-  guideMessage?: string;
+  guideMessage?: string | string[] | React.ReactNode;
   hasError?: boolean;
   errorMessage?: string;
   value?: string;
   onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
+  onClick?: () => void;
+  readOnly?: boolean;
+  isBankInput?: boolean;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -31,9 +34,12 @@ export const Input: React.FC<InputProps> = ({
   errorMessage,
   value,
   onChange,
+  onClick,
+  readOnly = false,
+  isBankInput = false,
 }) => {
   return (
-    <InputWrapper>
+    <InputWrapper style={{ marginTop: isBankInput ? '-30px' : '0px' }}>
       <Label hasError={hasError}>{label}</Label>
       <StyledInput
         as={as}
@@ -44,6 +50,8 @@ export const Input: React.FC<InputProps> = ({
         hasError={hasError}
         value={value}
         onChange={onChange}
+        onClick={onClick}
+        readOnly={readOnly}
       />
       {hasError && errorMessage && <InputErrorMessage message={errorMessage} />}
       {guideMessage && <InputGuide message={guideMessage} />}

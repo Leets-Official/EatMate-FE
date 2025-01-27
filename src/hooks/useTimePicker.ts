@@ -1,7 +1,10 @@
 import dayjs from 'dayjs';
 import { useEffect, useRef, useState } from 'react';
 
-export const useTimePicker = (onChange: (date: string) => void) => {
+export const useTimePicker = (
+  onChange: (date: string) => void,
+  showDatePicker: boolean
+) => {
   // 날짜 생성 함수
   const generateDateItems = () => {
     return Array.from({ length: 7 }, (_, index) => {
@@ -17,6 +20,17 @@ export const useTimePicker = (onChange: (date: string) => void) => {
 
   // 시간 및 분 생성 함수
   const generateTimeItems = () => {
+    if (!showDatePicker) {
+      // 주문 마감 시간의 경우 10분부터 90분까지
+      const minutes = Array.from({ length: 9 }, (_, i) => `${(i + 1) * 10}`);
+      return {
+        hours: [],
+        minutes,
+        defaultHour: '',
+        defaultMinute: '10',
+      };
+    }
+
     const now = dayjs().add(30, 'minute'); // 현재 시간 기준 30분 후 설정
 
     const hours = Array.from({ length: 24 }, (_, i) =>
