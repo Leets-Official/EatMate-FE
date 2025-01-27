@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { flexCenter } from '../CommonStyle';
+import { flexCenter } from '@/styles/CommonStyle';
 
 export const TotalContainer = styled.div`
   display: flex;

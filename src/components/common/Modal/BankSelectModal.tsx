@@ -37,7 +37,7 @@ const BankGrid = styled.div`
 const ModalContainer = styled.div`
   background: #f0f0f0;
   width: 100%;
-  max-width: 450px;
+  max-width: 390px;
   border-radius: 20px 20px 0 0;
   padding: 20px;
   box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
