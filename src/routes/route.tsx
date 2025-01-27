@@ -18,6 +18,7 @@ import MyCreatedMeetings from '@/pages/mypage/MyCreatedMeetings';
 import MyParticipatedMeetings from '@/pages/mypage/MyParticipatedMeetings';
 import ReportedUser from '@/pages/mypage/ReportedUser';
 import BlockedUser from '@/pages/mypage/BlockedUser';
+import FAQ from '@/pages/mypage/Faq';
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,6 @@ const router = createBrowserRouter([
   { path: '/mypage/notice', element: <MyPage /> },
   { path: '/mypage/reported-users', element: <ReportedUser /> },
   { path: '/mypage/blocked-users', element: <BlockedUser /> },
-  { path: '/mypage/faq', element: <MyPage /> },
+  { path: '/mypage/faq', element: <FAQ /> },
 ]);
 export default router;
