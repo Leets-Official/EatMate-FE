@@ -1,6 +1,8 @@
 import Header from '@/components/common/Header/Header';
 import MeetingListItem from '@/components/Home/MeetingListItem';
+import { flexColumn } from '@/styles/CommonStyle';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 const CreatedMeetingData = [
   {
@@ -32,6 +34,12 @@ const CreatedMeetingData = [
   },
 ];
 
+export const ItemContainer = styled.div`
+  ${flexColumn}
+  gap: 20px;
+  padding: 10px;
+`;
+
 const MyCreatedMeetings: React.FC = () => {
   const nav = useNavigate();
   return (
@@ -41,18 +49,20 @@ const MyCreatedMeetings: React.FC = () => {
         showBackButton
         title="내가 생성한 모임"
       />
-      {CreatedMeetingData.map((created) => (
-        <MeetingListItem
-          //   cover={cover}
-          key={created.id}
-          title={created.title}
-          description={created.description}
-          location={created.location}
-          participants={created.participants}
-          time={created.time}
-          deliveryTime={created.deliveryTime}
-        />
-      ))}
+      <ItemContainer>
+        {CreatedMeetingData.map((created) => (
+          <MeetingListItem
+            //   cover={cover}
+            key={created.id}
+            title={created.title}
+            description={created.description}
+            location={created.location}
+            participants={created.participants}
+            time={created.time}
+            deliveryTime={created.deliveryTime}
+          />
+        ))}
+      </ItemContainer>
     </div>
   );
 };

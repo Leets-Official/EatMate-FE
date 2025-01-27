@@ -68,7 +68,12 @@ const MyPage: React.FC = () => {
         ))}
       </S.MenuContainer>
       <S.ButtonContainer>
-        <Button variant="primary" size="lg" rounded="sm">
+        <Button
+          variant="primary"
+          size="lg"
+          rounded="sm"
+          onClick={() => nav('/')}
+        >
           로그아웃
         </Button>
       </S.ButtonContainer>
