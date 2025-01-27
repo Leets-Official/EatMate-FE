@@ -36,8 +36,8 @@ export const EditIcon = styled.img`
   height: 30px;
 `;
 export const GoogleIcon = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
 `;
 
 export const FormContainer = styled.div`
@@ -49,7 +49,7 @@ export const FormContainer = styled.div`
 
 export const GoogleText = styled.div`
   ${flexAlignCenter}
-  font-size: ${({ theme }) => theme.FONT_SIZE.xs};
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   margin-top: -30px;
 `;
 
