@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import CheckIcon from '@/assets/images/ic_option_check.svg?react';
 interface InputGuideProps {
-  message: string;
+  message: string | string[] | React.ReactNode;
   margin?: string;
 }
 
@@ -16,7 +16,7 @@ const GuideContainer = styled.div<GuideContainerProps>`
   color: ${({ theme }) => theme.COLORS.gray[400]};
   font-size: ${({ theme }) => theme.FONT_SIZE.xs};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
-  margin-top: ${({ margin }) => (margin ? margin : '10px')};
+  margin-top: ${({ margin }) => (margin ? margin : '-2px')};
 `;
 
 const InputGuide: React.FC<InputGuideProps> = ({ message, margin }) => {

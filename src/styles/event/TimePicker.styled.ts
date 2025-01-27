@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { flexCenter } from '@/styles/CommonStyle';
 
 export const TotalContainer = styled.div`
   display: flex;
@@ -10,11 +11,10 @@ export const TotalContainer = styled.div`
 `;
 
 export const PickerWrapper = styled.div`
+  ${flexCenter}
   position: relative;
-  display: flex;
   gap: 16px;
   width: 100%;
-  align-items: center;
   padding-bottom: 30px;
 `;
 
@@ -39,7 +39,11 @@ export const Items = styled.ul`
   }
 `;
 
-export const Item = styled.li<{ isSelected: boolean }>`
+export const Item = styled.li<{
+  isSelected: boolean;
+  isMinute?: boolean;
+  showDatePicker?: boolean;
+}>`
   list-style-type: none;
   height: 40px;
   line-height: 40px;
@@ -52,8 +56,12 @@ export const Item = styled.li<{ isSelected: boolean }>`
     isSelected ? theme.COLORS.main : '#000'};
   font-weight: ${({ isSelected, theme }) =>
     isSelected ? theme.FONT_WEIGHT.bold : theme.FONT_WEIGHT.regular};
-  border-top: ${({ isSelected, theme }) =>
-    isSelected ? `1px solid ${theme.COLORS.gray[50]}` : 'none'};
+  border-top: ${({ isSelected, isMinute, showDatePicker, theme }) =>
+    isMinute && !showDatePicker
+      ? 'none'
+      : isSelected
+        ? `1px solid ${theme.COLORS.gray[50]}`
+        : 'none'};
   border-bottom: ${({ isSelected, theme }) =>
     isSelected ? `1px solid ${theme.COLORS.gray[50]}` : 'none'};
   transition: all 0.3s ease;
@@ -61,7 +69,7 @@ export const Item = styled.li<{ isSelected: boolean }>`
 
 export const Label = styled.label`
   font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -76,7 +84,7 @@ export const SelectedTime = styled.div`
 export const AdditionalText = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
-  color: ${({ theme }) => theme.COLORS.gray[400]};
+  color: ${({ theme }) => theme.COLORS.black};
   margin-left: 10px;
   white-space: nowrap;
 `;

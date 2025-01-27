@@ -28,24 +28,29 @@ const TimePicker: React.FC<TimePickerProps> = ({
     dateRef,
     hourRef,
     minuteRef,
-  } = useTimePicker(onChange);
+  } = useTimePicker(onChange, showDatePicker);
+  interface PickerItem {
+    key: string;
+    items: string[];
+    selectedValue: string | undefined;
+    setSelectedValue: React.Dispatch<React.SetStateAction<string | undefined>>;
+    ref: React.RefObject<HTMLUListElement>;
+  }
 
-  const pickerData = [
-    {
+  const pickerData: PickerItem[] = [
+    showDatePicker && {
       key: 'date',
       items: dateItems.map((item) => item.label),
       selectedValue: selectedDate,
       setSelectedValue: setSelectedDate,
       ref: dateRef,
-      show: showDatePicker,
     },
-    {
+    showDatePicker && {
       key: 'hour',
       items: hours,
       selectedValue: selectedHour,
       setSelectedValue: setSelectedHour,
       ref: hourRef,
-      show: showDatePicker,
     },
     {
       key: 'minute',
@@ -53,13 +58,12 @@ const TimePicker: React.FC<TimePickerProps> = ({
       selectedValue: selectedMinute,
       setSelectedValue: setSelectedMinute,
       ref: minuteRef,
-      show: true, // 분 선택은 항상 보이도록 설정
     },
-  ];
+  ].filter(Boolean) as PickerItem[];
 
   const handleScroll = (
     ref: React.RefObject<HTMLUListElement>,
-    setValue: React.Dispatch<React.SetStateAction<string>>,
+    setValue: React.Dispatch<React.SetStateAction<string | undefined>>,
     items: string[],
     isDate = false
   ) => {
@@ -83,25 +87,27 @@ const TimePicker: React.FC<TimePickerProps> = ({
         )}
       </S.Label>
       <S.PickerWrapper>
-        {pickerData.map(
-          ({ key, items, selectedValue, setSelectedValue, ref, show }) =>
-            show && (
-              <S.ItemsContainer key={key} flex={key === 'date' ? 2 : 1}>
-                <S.Items
-                  ref={ref}
-                  onScroll={() =>
-                    handleScroll(ref, setSelectedValue, items, key === 'date')
-                  }
-                >
-                  {items.map((item) => (
-                    <S.Item key={item} isSelected={selectedValue === item}>
-                      <div>{item}</div>
-                    </S.Item>
-                  ))}
-                </S.Items>
-              </S.ItemsContainer>
-            )
-        )}
+        {pickerData
+          .filter((item) => item && typeof item === 'object')
+          .map(({ key, items, selectedValue, setSelectedValue, ref }) => (
+            <S.ItemsContainer
+              key={key}
+              flex={showDatePicker && key === 'date' ? 1 : 0.5}
+            >
+              <S.Items
+                ref={ref}
+                onScroll={() =>
+                  handleScroll(ref, setSelectedValue, items, key === 'date')
+                }
+              >
+                {items?.map((item: string) => (
+                  <S.Item key={item} isSelected={selectedValue === item}>
+                    <div>{item}</div>
+                  </S.Item>
+                ))}
+              </S.Items>
+            </S.ItemsContainer>
+          ))}
         {additionalText && (
           <S.AdditionalText>{additionalText}</S.AdditionalText>
         )}
