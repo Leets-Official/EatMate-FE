@@ -2,7 +2,6 @@ import Header from '@/components/common/Header/Header';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Text } from '@/styles/mypage/mypage.styled';
-import editIcon from '@/assets/images/ic_edit_profile.svg';
 
 const mockData = [
   {
