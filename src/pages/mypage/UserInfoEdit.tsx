@@ -7,9 +7,21 @@ import Button from '@/components/common/Button/Button';
 import { InputWrapper } from '@/components/common/Input/styles';
 import editIcon from '@/assets/images/ic_edit_camera.svg';
 import googleIcon from '@/assets/images/GoogleIcon.svg';
+import { useState } from 'react';
+import ActionModal from '@/components/common/Modal/ActionModal';
 
 const UserInfoEdit: React.FC = () => {
   const nav = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleProfileClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
       <Header
@@ -18,7 +30,7 @@ const UserInfoEdit: React.FC = () => {
         title="회원정보 수정 "
       />
       <S.Container>
-        <S.ProfileWrapper>
+        <S.ProfileWrapper onClick={handleProfileClick}>
           <S.ProfileImage src={mockData.profileImg} alt="profile" />
           <S.EditIconWrapper>
             <S.EditIcon src={editIcon} alt="edit-profile" />
@@ -52,6 +64,32 @@ const UserInfoEdit: React.FC = () => {
           </Button>
         </S.ButtonContainer>
       </S.Container>
+
+      <ActionModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        actions={[
+          {
+            label: '앨범에서 선택',
+            onClick: () => {
+              console.log('사진 변경 클릭');
+              closeModal();
+            },
+          },
+          {
+            label: '기본 이미지로 변경',
+            onClick: () => {
+              console.log('기본 이미지로 변경 클릭');
+              closeModal();
+            },
+            type: 'delete',
+          },
+          {
+            label: '닫기',
+            onClick: closeModal,
+          },
+        ]}
+      />
     </div>
   );
 };
