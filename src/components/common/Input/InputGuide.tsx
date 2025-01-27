@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import CheckIcon from '@/assets/images/ic_option_check.svg?react';
 interface InputGuideProps {
-  message: string | string[];
+  message: string | string[] | React.ReactNode;
   margin?: string;
 }
 
