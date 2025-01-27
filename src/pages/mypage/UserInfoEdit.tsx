@@ -22,6 +22,51 @@ const UserInfoEdit: React.FC = () => {
     setIsModalOpen(false);
   };
 
+  const inputFields = [
+    {
+      label: '아이디',
+      value: mockData.id,
+      readOnly: true,
+      marginBottom: '-10px',
+      extra: (
+        <S.GoogleText>
+          <S.GoogleIcon src={googleIcon} alt="google" />
+          <div>구글 로그인 사용중</div>
+        </S.GoogleText>
+      ),
+    },
+    {
+      label: '닉네임',
+      value: mockData.nickName,
+      readOnly: false,
+      marginBottom: '-30px',
+    },
+    {
+      label: '학번',
+      value: mockData.studentId,
+      readOnly: true,
+      marginBottom: '-30px',
+    },
+    {
+      label: '전화번호',
+      value: mockData.phoneNumber,
+      readOnly: true,
+      marginBottom: '-30px',
+    },
+    {
+      label: 'MBTI',
+      value: mockData.mbti,
+      readOnly: false,
+      marginBottom: '-30px',
+    },
+    {
+      label: '생년월일',
+      value: mockData.birthday,
+      readOnly: true,
+      marginBottom: '0px',
+    },
+  ];
+
   return (
     <div>
       <Header
@@ -37,26 +82,16 @@ const UserInfoEdit: React.FC = () => {
           </S.EditIconWrapper>
         </S.ProfileWrapper>
         <S.FormContainer>
-          <InputWrapper marginBottom="-20px">
-            <Input label="아이디" value={mockData.id} readOnly />
-          </InputWrapper>
-          <S.GoogleText>
-            <S.GoogleIcon src={googleIcon} alt="google" />
-            <div>구글 로그인 사용중</div>
-          </S.GoogleText>
-          <InputWrapper marginBottom="-30px">
-            <Input label="닉네임" value={mockData.nickName} />
-          </InputWrapper>
-          <InputWrapper marginBottom="-30px">
-            <Input label="학번" value={mockData.studentId} readOnly />
-          </InputWrapper>
-          <InputWrapper marginBottom="-30px">
-            <Input label="전화번호" value={mockData.phoneNumber} readOnly />
-          </InputWrapper>
-          <InputWrapper marginBottom="-30px">
-            <Input label="MBTI" value={mockData.mbti} />
-          </InputWrapper>
-          <Input label="생년월일" value={mockData.birthday} readOnly />
+          {inputFields.map((field, index) => (
+            <InputWrapper key={index} marginBottom={field.marginBottom}>
+              <Input
+                label={field.label}
+                value={field.value}
+                readOnly={field.readOnly}
+              />
+              {field.extra && field.extra}
+            </InputWrapper>
+          ))}
         </S.FormContainer>
         <S.ButtonContainer>
           <Button variant="primary" size="lg" rounded="sm">

@@ -50,7 +50,7 @@ export const FormContainer = styled.div`
 export const GoogleText = styled.div`
   ${flexAlignCenter}
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-  margin-top: -30px;
+  margin-top: -35px;
 `;
 
 export const ButtonContainer = styled.div`
