@@ -75,7 +75,7 @@ const PolicyAgreementStep: React.FC<{ onAgree: () => void }> = ({
             size="lg"
             rounded="sm"
           >
-            시작하기
+            회원가입 완료
           </Button>
         </StyledModal>
       </ModalContainer>

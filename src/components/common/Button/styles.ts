@@ -17,30 +17,30 @@ const sizeStyles: Record<
   xs: (svgIcon) => css`
     width: 108px;
     height: 43px;
-    font-size: 14px;
+    font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
     padding: ${svgIcon ? '0.2rem 0.5rem' : '0.7rem 0.5rem'};
   `,
   sm: (svgIcon) => css`
     width: 154px;
     height: 49px;
-    font-size: 14px;
+    font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
     padding: ${svgIcon ? '0.2rem 0.5rem' : '0.7rem 0.5rem'};
   `,
   md: (svgIcon) => css`
     width: 200px;
-    font-size: 16px;
+    font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
     padding: ${svgIcon ? '0.1rem 1.5rem' : '1rem 2rem'};
   `,
   lg: (svgIcon) => css`
     width: 330px;
     padding: ${svgIcon ? '0.3rem 1.5rem' : '1rem 1.5rem'};
-    font-size: 18px;
+    font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
   `,
   xl: (svgIcon) => css`
     width: 349px;
     height: 45px;
     padding: ${svgIcon ? '0.3rem 1.5rem' : '1rem 1.5rem'};
-    font-size: 14px;
+    font-size: ${({ theme }) => theme.FONT_SIZE.md};
   `,
 };
 
