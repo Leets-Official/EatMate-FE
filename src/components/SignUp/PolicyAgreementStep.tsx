@@ -1,6 +1,6 @@
 import Button from '@/components/common/Button/Button';
 import styled, { keyframes } from 'styled-components';
-import { policyContents } from "@/constants/policyContents";
+import { policyContants } from '@/constants/policyContants';
 import { useNavigate } from 'react-router-dom';
 
 const SlideUp = keyframes`
@@ -61,7 +61,7 @@ const PolicyAgreementStep: React.FC<{ onAgree: () => void }> = ({
       <ModalContainer>
         <StyledModal>
           <div>모두 동의</div>
-          {policyContents.map((content) => (
+          {policyContants.map((content) => (
             <TermItems
               key={content.id}
               onClick={() => onClickToDetail(content.id)}
