@@ -29,7 +29,7 @@ const NicknameStep: React.FC = () => {
 
   const handleNext = () => {
     if (isFormValid) {
-      nav('/signup/student-id');
+      nav('/signup/birthday');
     }
   };
 

@@ -20,7 +20,7 @@ import {
 } from '@/utils/validate-input';
 import { useNavigate } from 'react-router-dom';
 
-const BirthdayGenderStep: React.FC = () => {
+const BirthdayStep: React.FC = () => {
   const nav = useNavigate();
   const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -81,7 +81,7 @@ const BirthdayGenderStep: React.FC = () => {
 
   const handleNext = () => {
     if (isFormValid()) {
-      nav('/signup/phone-number');
+      nav('/signup/gender');
     }
   };
 
@@ -160,4 +160,4 @@ const BirthdayGenderStep: React.FC = () => {
   );
 };
 
-export default BirthdayGenderStep;
+export default BirthdayStep;

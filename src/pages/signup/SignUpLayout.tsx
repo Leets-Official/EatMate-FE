@@ -6,7 +6,8 @@ const stepPaths = [
   '/signup/profile-img',
   '/signup/phone-number',
   '/signup/nickname',
-  '/signup/birthday-gender',
+  '/signup/birthday',
+  '/signup/gender',
   '/signup/student-id',
   '/signup/mbti',
 ];

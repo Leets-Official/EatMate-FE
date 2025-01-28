@@ -2,7 +2,6 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import Home from '@/pages/Home';
 import Intro from '@/pages/signup/Intro';
 import PolicyDetails from '@/pages/signup/PolicyDetails';
-import BirthdayGenderStep from '@/components/SignUp/BirthdayGenderStep';
 import PhoneNumStep from '@/components/SignUp/PhoneNumStep';
 import MbtiStep from '@/components/SignUp/MbtiStep';
 import NicknameStep from '@/components/SignUp/NicknameStep';
@@ -21,6 +20,8 @@ import BlockedUser from '@/pages/mypage/BlockedUser';
 import Notice from '@/pages/mypage/Notice';
 import UserInfoEdit from '@/pages/mypage/UserInfoEdit';
 import Faq from '@/pages/mypage/Faq';
+import BirthdayStep from '@/components/SignUp/BirthdayStep';
+import GenderStep from '@/components/SignUp/GenderStep';
 
 const router = createBrowserRouter([
   {
@@ -39,7 +40,8 @@ const router = createBrowserRouter([
       { path: 'profile-img', element: <ProfileImgStep /> },
       { path: 'phone-number', element: <PhoneNumStep /> },
       { path: 'nickname', element: <NicknameStep /> },
-      { path: 'birthday-gender', element: <BirthdayGenderStep /> },
+      { path: 'birthday', element: <BirthdayStep /> },
+      { path: 'gender', element: <GenderStep /> },
       { path: 'student-id', element: <StudentIdStep /> },
       { path: 'mbti', element: <MbtiStep /> },
     ],
