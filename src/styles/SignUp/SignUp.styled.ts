@@ -1,9 +1,5 @@
 import styled from 'styled-components';
-import {
-  flexAlignCenter,
-  flexCenter,
-  flexColumnCenter,
-} from '@/styles/CommonStyle';
+import { flexCenter, flexColumnCenter } from '@/styles/CommonStyle';
 
 interface InputFieldProps extends React.ComponentProps<'input'> {
   error: boolean;
@@ -16,27 +12,28 @@ export const MainTitle = styled.div`
   padding: 40px 30px;
 `;
 
-export const Description = styled.div`
+export const Description = styled.div<{ padding?: string }>`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 30px;
+  padding: ${({ padding }) => padding || '10px'};
 `;
 
 export const InputField = styled.input<InputFieldProps>`
-  width: ${({ width }) => width || '300px'};
-  padding: 8px;
+  width: ${({ width }) => width || '330px'};
+  padding: 10px;
+  background-color: ${({ theme }) => theme.COLORS.gray[5]};
   font-size: ${({ theme }) => theme.FONT_SIZE.lg};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
   border: none;
-  border-bottom: 2px solid ${({ theme }) => theme.COLORS.black};
+  border-radius: 8px;
   outline: none;
   transition: border-color 0.3s;
-  text-align: center;
 
   &::placeholder {
-    color: ${({ theme }) => theme.COLORS.gray[100]};
+    color: ${({ theme }) => theme.COLORS.gray[20]};
     font-size: ${({ theme }) => theme.FONT_SIZE.lg};
     text-align: left;
   }
@@ -101,7 +98,6 @@ export const ProfileImage = styled.div<{ imageUrl: string }>`
   height: 100%;
   border-radius: 50%;
   background: ${({ imageUrl }) => `url(${imageUrl})`} no-repeat center/cover;
-  /* border: 2px solid ${({ theme }) => theme.COLORS.orange[200]}; */
   cursor: pointer;
 `;
 

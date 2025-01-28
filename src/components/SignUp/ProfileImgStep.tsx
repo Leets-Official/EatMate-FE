@@ -93,7 +93,9 @@ const ProfileImgStep: React.FC = () => {
             onChange={handleImageChange}
           />
         </ProfileImageContainer>
-        <Description>다른 사용자들에게 보이는 사진이에요.</Description>
+        <Description padding="30px">
+          다른 사용자들에게 보이는 사진이에요.
+        </Description>
       </MainContent>
 
       {/* 모달 */}
