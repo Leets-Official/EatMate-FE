@@ -122,3 +122,7 @@ export const EditIcon = styled.img`
 export const HiddenFileInput = styled.input`
   display: none;
 `;
+
+export const Padding = styled.div`
+  padding-left: 30px;
+`;

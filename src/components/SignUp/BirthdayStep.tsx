@@ -5,8 +5,8 @@ import {
   Text,
   InputContainer,
   ButtonContainer,
-  SelectButtonContainer,
   InputWrapper,
+  Padding,
 } from '@/styles/SignUp/SignUp.styled';
 import { useEffect, useState } from 'react';
 import SignUpInput from './SignupInput';
@@ -30,7 +30,7 @@ const BirthdayStep: React.FC = () => {
     day: false,
   });
 
-  const { year, month, day, gender } = signupState;
+  const { year, month, day, nickname } = signupState;
 
   const birthInputFields: {
     label: string;
@@ -74,8 +74,7 @@ const BirthdayStep: React.FC = () => {
     return (
       validateYear(year) === true &&
       validateMonth(month) === true &&
-      validateDay(day, year, month) === true &&
-      gender !== ''
+      validateDay(day, year, month) === true
     );
   };
 
@@ -96,11 +95,11 @@ const BirthdayStep: React.FC = () => {
 
   return (
     <div>
-      <MainTitle>조금만 알려주시면 준비가 끝나요!</MainTitle>
-      <Description>
-        <div>나이와 성별을 선택해주세요.</div>
-        <div>간단히 입력 후 다음으로 넘어갈 수 있어요. </div>
-      </Description>
+      <MainTitle>
+        {nickname ? `${nickname} 님,` : ''}
+        <br />
+        생일이 언제시죠?
+      </MainTitle>
       <InputWrapper>
         <InputContainer>
           {birthInputFields.map(({ label, key, maxLength, width }) => (
@@ -114,36 +113,22 @@ const BirthdayStep: React.FC = () => {
                 }
                 onChange={(e) => handleInputChange(key, e.target.value)}
                 onBlur={() => handleBlur(key)}
+                error={!!errorMessage}
               />
               <Text>{label}</Text>
             </>
           ))}
         </InputContainer>
-        {errorMessage && <InputErrorMessage message={errorMessage} />}
+        <Padding>
+          {!errorMessage ? (
+            <Description>
+              입력된 정보는 한 번 저장하면 변경할 수 없어요!
+            </Description>
+          ) : (
+            <InputErrorMessage message={errorMessage} />
+          )}
+        </Padding>
       </InputWrapper>
-
-      <SelectButtonContainer>
-        <Button
-          onClick={() => handleGenderClick('MALE')}
-          variant={
-            signupState.gender === 'MALE' ? 'primary' : 'primary-outline'
-          }
-          size="lg"
-          rounded="sm"
-        >
-          남성
-        </Button>
-        <Button
-          onClick={() => handleGenderClick('FEMALE')}
-          variant={
-            signupState.gender === 'FEMALE' ? 'primary' : 'primary-outline'
-          }
-          size="lg"
-          rounded="sm"
-        >
-          여성
-        </Button>
-      </SelectButtonContainer>
 
       <ButtonContainer>
         <Button
