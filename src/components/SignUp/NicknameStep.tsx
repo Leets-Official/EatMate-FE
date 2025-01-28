@@ -2,6 +2,7 @@ import {
   ButtonContainer,
   Description,
   InputContainer,
+  InputWrapper,
   MainTitle,
 } from '@/styles/SignUp/SignUp.styled';
 import Button from '@/components/common/Button/Button';
@@ -37,19 +38,25 @@ const NicknameStep: React.FC = () => {
   return (
     <div>
       <MainTitle>닉네임을 입력하세요</MainTitle>
-      <Description>
-        잇메이트에서 사용할 고유의 닉네임을 만드세요. 12자 이내
-      </Description>
 
       <InputContainer>
-        <SignUpInput
-          type="text"
-          placeholder="ex) 무한이"
-          value={signupState.nickname}
-          onChange={(e) => handleInputChange(e.target.value)}
-        />
+        <InputWrapper>
+          <SignUpInput
+            type="text"
+            placeholder="ex) 무한이"
+            value={signupState.nickname}
+            onChange={(e) => handleInputChange(e.target.value)}
+            error={!!errorMessage}
+          />
+          {!errorMessage ? (
+            <Description>
+              잇메이트에서 사용할 고유의 닉네임을 만드세요. 12자 이내
+            </Description>
+          ) : (
+            <InputErrorMessage message={errorMessage} />
+          )}
+        </InputWrapper>
       </InputContainer>
-      {errorMessage && <InputErrorMessage message={errorMessage} />}
 
       <ButtonContainer>
         <Button
