@@ -1,11 +1,5 @@
 import styled from 'styled-components';
-import { FlexAll, flexColumn } from '@/styles/CommonStyle';
-
-export const Container = styled.div`
-  min-height: 100vh;
-  position: relative;
-  ${FlexAll}
-`;
+import { flexColumn } from '@/styles/CommonStyle';
 
 export const MainText = styled.span<{ color?: string }>`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
@@ -32,7 +26,7 @@ export const ContentWrapper = styled.div`
 
 export const ButtonWrapper = styled.div`
   position: absolute;
-  bottom: 20px;
+  bottom: 3px;
   padding: 20px;
   width: 100%;
   display: flex;

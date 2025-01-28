@@ -1,4 +1,3 @@
-import mainLogo from '@/assets/images/EatMate_main_Logo.svg';
 import Button from '@/components/common/Button/Button';
 import GoogleIcon from '@/assets/images/GoogleIcon.svg';
 import * as S from '@/styles/SignUp/IntroPage.styled';
@@ -12,7 +11,7 @@ const onClickToLogin = () => {
 
 const Intro: React.FC = () => {
   return (
-    <S.Container>
+    <div>
       <S.ContentWrapper>
         <S.SubText>가천대학교 학생 누구든</S.SubText>
         <S.MainText>맛있는 만남, </S.MainText>
@@ -34,7 +33,7 @@ const Intro: React.FC = () => {
           Google로 시작하기
         </Button>
       </S.ButtonWrapper>
-    </S.Container>
+    </div>
   );
 };
 

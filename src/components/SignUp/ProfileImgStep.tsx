@@ -3,7 +3,6 @@ import {
   ButtonContainer,
   Description,
   MainTitle,
-  Container,
   MainContent,
   ProfileImageContainer,
   ProfileImage,
@@ -71,7 +70,7 @@ const ProfileImgStep: React.FC = () => {
   }, [signupState]);
 
   return (
-    <Container>
+    <div>
       <MainContent>
         <MainTitle>
           나만의 프로필을 <br />
@@ -124,7 +123,7 @@ const ProfileImgStep: React.FC = () => {
           다음
         </Button>
       </ButtonContainer>
-    </Container>
+    </div>
   );
 };
 
