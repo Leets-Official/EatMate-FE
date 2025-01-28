@@ -60,10 +60,10 @@ const router = createBrowserRouter([
     path: '/policy-details/:termId',
     element: <PolicyDetails />,
   },
-  {
-    path: '/meeting', //나중에 뒤에 모임 Id 추가로 넣을 예정
-    element: <MeetingDetail />,
-  },
+  // {
+  //   path: '/meeting', //나중에 뒤에 모임 Id 추가로 넣을 예정
+  //   element: <MeetingDetail />,
+  // },
   { path: '/mypage', element: <MyPage /> },
   { path: '/mypage/profile', element: <UserInfoEdit /> },
   { path: '/mypage/created-meetings', element: <MyCreatedMeetings /> },
