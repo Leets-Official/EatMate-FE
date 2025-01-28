@@ -74,6 +74,6 @@ const router = createBrowserRouter([
   { path: '/mypage/notice', element: <Notice /> },
   { path: '/mypage/reported-users', element: <ReportedUser /> },
   { path: '/mypage/blocked-users', element: <BlockedUser /> },
-  { path: '/mypage/faq', element: <Faq /> },
+  { path: '/mypage/help', element: <Faq /> },
 ]);
 export default router;
