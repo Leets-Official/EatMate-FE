@@ -22,6 +22,7 @@ import UserInfoEdit from '@/pages/mypage/UserInfoEdit';
 import Faq from '@/pages/mypage/Faq';
 import BirthdayStep from '@/components/SignUp/BirthdayStep';
 import GenderStep from '@/components/SignUp/GenderStep';
+import SignupSuccess from '@/pages/signup/SignupSuccess';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       { path: 'student-id', element: <StudentIdStep /> },
       { path: 'mbti', element: <MbtiStep /> },
     ],
+  },
+  {
+    path: '/signup/success',
+    element: <SignupSuccess />,
   },
   {
     path: '/home',

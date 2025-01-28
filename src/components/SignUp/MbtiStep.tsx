@@ -13,11 +13,13 @@ import { useState, useEffect } from 'react';
 import InputErrorMessage from '@/components/common/Input/InputErrorMessage';
 import { validateMbti } from '@/utils/validate-input';
 import { useNavigate } from 'react-router-dom';
+import PolicyAgreementStep from '@/components/SignUp/PolicyAgreementStep';
 
 const MbtiStep: React.FC = () => {
   const nav = useNavigate();
   const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [isPolicyModalOpen, setIsPolicyModalOpen] = useState(false);
 
   const handleInputChange = (value: string) => {
     const upperValue = value.toUpperCase();
@@ -29,13 +31,15 @@ const MbtiStep: React.FC = () => {
     );
   };
 
-  const isFormValid = validateMbti(signupState.mbti);
   const isInputEmpty = signupState.mbti.trim() === '';
 
   const handleNext = () => {
-    if (isFormValid) {
-      nav('/signup/nickname');
-    }
+    setIsPolicyModalOpen(true);
+  };
+
+  const handleAgreePolicy = () => {
+    setIsPolicyModalOpen(false);
+    nav('/signup/success');
   };
 
   useEffect(() => {
@@ -79,6 +83,8 @@ const MbtiStep: React.FC = () => {
           {isInputEmpty ? '나중에 추가하기' : '다음'}
         </Button>
       </ButtonContainer>
+
+      {isPolicyModalOpen && <PolicyAgreementStep onAgree={handleAgreePolicy} />}
     </div>
   );
 };
