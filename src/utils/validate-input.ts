@@ -84,14 +84,9 @@ export const validateMbtiInput = (value: string, index: number): boolean => {
  * @param mbti - 입력된 MBTI 문자열
  * @returns true or false
  */
-export const isAllMbtiInputsValid = (mbti: string): boolean => {
-  const constraints = [/^[EIei]$/, /^[NSns]$/, /^[FTft]$/, /^[PJpj]$/];
-
-  if (mbti.length !== 4) return false;
-
-  return mbti
-    .split('')
-    .every((char, index) => constraints[index].test(char.toUpperCase()));
+export const validateMbti = (mbti: string): boolean => {
+  const mbtiRegex = /^[EIei][NSns][FTft][PJpj]$/;
+  return mbtiRegex.test(mbti);
 };
 
 /**
