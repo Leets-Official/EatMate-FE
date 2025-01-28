@@ -1,5 +1,5 @@
 import Button from '@/components/common/Button/Button';
-import { policyContants } from '@/constants/policyContants';
+import { policyConstants } from '@/constants/policyContants';
 import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import EmptyCircle from '@/assets/images/ic_empty_circle.svg';
@@ -44,7 +44,7 @@ const PolicyAgreementStep: React.FC<{
         <S.Bar />
 
         <S.TermList>
-          {policyContants.map((content) => (
+          {policyConstants.map((content) => (
             <S.TermItem
               key={content.id}
               onClick={() => onClickToDetail(content.id)}

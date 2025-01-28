@@ -1,5 +1,15 @@
 import Header from '@/components/common/Header/Header';
-import { policyContants } from '@/constants/policyContants';
+import { policyConstants } from '@/constants/policyContants';
+import {
+  Container,
+  Divider,
+  FinalNotice,
+  Line,
+  Section,
+  SubItem,
+  Text,
+  TitleItem,
+} from '@/styles/SignUp/PolicyAgreement.styled';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const headerItems = [
@@ -12,6 +22,7 @@ const headerItems = [
     title: '개인정보 보호정책',
   },
 ];
+
 const PolicyDetails: React.FC = () => {
   const nav = useNavigate();
   const { termId } = useParams<{ termId: string }>();
@@ -21,7 +32,7 @@ const PolicyDetails: React.FC = () => {
   };
 
   const selectedHeader = headerItems.find((item) => item.id === termId);
-  const term = policyContants.find(
+  const term = policyConstants.find(
     (content) => content.id.toString() === termId
   );
 
@@ -34,8 +45,32 @@ const PolicyDetails: React.FC = () => {
           onBackClick={onClickToBack}
         />
       )}
-      <div>{term?.title}</div>
-      <div>{term?.content}</div>
+      <Line />
+      <Container>
+        {term?.content.map((item, index) => {
+          if (typeof item === 'string') {
+            return <Text key={index}>{item}</Text>;
+          }
+
+          switch (item.type) {
+            case 'title':
+              return <TitleItem key={index}>{item.text}</TitleItem>;
+            case 'section':
+              return <Section key={index}>{item.text}</Section>;
+            case 'subItem':
+              return <SubItem key={index}>- {item.text}</SubItem>;
+            case 'finalNotice':
+              return (
+                <div key={index}>
+                  <Divider />
+                  <FinalNotice>{item.text}</FinalNotice>
+                </div>
+              );
+            default:
+              return null;
+          }
+        })}
+      </Container>
     </div>
   );
 };
