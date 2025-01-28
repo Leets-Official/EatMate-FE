@@ -1,84 +1,72 @@
 import Button from '@/components/common/Button/Button';
-import styled, { keyframes } from 'styled-components';
 import { policyContants } from '@/constants/policyContants';
 import { useNavigate } from 'react-router-dom';
+import { useRef, useState } from 'react';
+import EmptyCircle from '@/assets/images/ic_empty_circle.svg';
+// import FilledCircle from '@/assets/images/ic_filled_circle.svg';
+import CheckIcon from '@/assets/images/ic_white_check.svg';
+import { ButtonContainer } from '@/styles/SignUp/SignUp.styled';
+import * as S from '@/styles/SignUp/PolicyAgreement.styled';
 
-const SlideUp = keyframes`
-    from {
-        transform: translateY(100%);
-    }
-    to{
-        transform: translateY(0);
-    }
-`;
-
-export const Overlay = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.57);
-  z-index: 1000;
-`;
-export const ModalContainer = styled.div`
-  position: relative;
-  height: 100%;
-  width: 100%;
-  z-index: 1100;
-`;
-
-export const StyledModal = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: ${({ theme }) => theme.COLORS.main};
-  color: ${({ theme }) => theme.COLORS.white};
-  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
-  padding: 20px;
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
-  animation: ${SlideUp} 0.3s ease-out;
-`;
-
-export const TermItems = styled.div`
-  cursor: pointer;
-  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
-  color: ${({ theme }) => theme.COLORS.white};
-  display: flex;
-  flex-direction: column;
-`;
-const PolicyAgreementStep: React.FC<{ onAgree: () => void }> = ({
-  onAgree,
-}) => {
+const PolicyAgreementStep: React.FC<{
+  onAgree: () => void;
+  onClose: () => void;
+}> = ({ onAgree, onClose }) => {
   const nav = useNavigate();
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [allChecked, setAllChecked] = useState(false);
+
+  const handleToggleAll = () => {
+    setAllChecked((prev) => !prev);
+  };
+
   const onClickToDetail = (termId: number) => {
     nav(`/policy-details/${termId}`);
   };
+
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+      onClose();
+    }
+  };
+
   return (
     <>
-      <Overlay />
-      <ModalContainer>
-        <StyledModal>
-          <div>모두 동의</div>
+      <S.Overlay onClick={handleOverlayClick} />
+      <S.ModalContainer ref={modalRef} onClick={(e) => e.stopPropagation()}>
+        <S.Title onClick={handleToggleAll}>
+          <S.CheckImage
+            src={allChecked ? EmptyCircle : EmptyCircle}
+            alt="all-check"
+          />
+          모두 동의
+        </S.Title>
+        <S.Bar />
+
+        <S.TermList>
           {policyContants.map((content) => (
-            <TermItems
+            <S.TermItem
               key={content.id}
               onClick={() => onClickToDetail(content.id)}
             >
-              {content.title}
-            </TermItems>
+              <span>{content.title}</span>
+              {allChecked && <S.CheckImage src={CheckIcon} alt="checked" />}
+            </S.TermItem>
           ))}
+        </S.TermList>
+
+        <ButtonContainer>
           <Button
             onClick={onAgree}
             variant="primary-outlineless"
             size="lg"
             rounded="sm"
+            disabled={!allChecked}
           >
             회원가입 완료
           </Button>
-        </StyledModal>
-      </ModalContainer>
+        </ButtonContainer>
+      </S.ModalContainer>
     </>
   );
 };

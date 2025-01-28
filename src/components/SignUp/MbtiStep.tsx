@@ -42,6 +42,10 @@ const MbtiStep: React.FC = () => {
     nav('/signup/success');
   };
 
+  const handleCloseModal = () => {
+    setIsPolicyModalOpen(false);
+  };
+
   useEffect(() => {
     console.log('signupState updated:', signupState);
   }, [signupState]);
@@ -84,7 +88,12 @@ const MbtiStep: React.FC = () => {
         </Button>
       </ButtonContainer>
 
-      {isPolicyModalOpen && <PolicyAgreementStep onAgree={handleAgreePolicy} />}
+      {isPolicyModalOpen && (
+        <PolicyAgreementStep
+          onAgree={handleAgreePolicy}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
 };
