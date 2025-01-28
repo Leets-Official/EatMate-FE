@@ -44,7 +44,8 @@ const BirthdayStep: React.FC = () => {
   ];
 
   const handleInputChange = (key: keyof typeof signupState, value: string) => {
-    const numericValue = value === '' ? null : parseInt(value, 10);
+    const numericValue = value.replace(/[^0-9]/g, '');
+
     setSignupState((prev) => ({
       ...prev,
       [key]: numericValue,
@@ -62,15 +63,15 @@ const BirthdayStep: React.FC = () => {
     else if (key === 'month') error = validateMonth(month);
     else if (key === 'day') error = validateDay(day, year, month);
 
-    if (error !== true) setErrorMessage(error as string);
-    else setErrorMessage('');
+    setErrorMessage(error === true ? '' : error);
   };
 
   const isFormValid = () => {
     return (
       validateYear(year) === true &&
       validateMonth(month) === true &&
-      validateDay(day, year, month) === true
+      validateDay(day, year, month) === true &&
+      errorMessage === ''
     );
   };
 
