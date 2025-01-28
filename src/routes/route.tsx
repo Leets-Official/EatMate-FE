@@ -12,7 +12,7 @@ import SignupLayout from '@/pages/signup/SignUpLayout';
 import LoginCallback from '@/pages/signup/LoginCallback';
 import OfflineMeetingCreate from '@/pages/event/OfflineMeetingCreate';
 import DeliveryMeetingCreate from '@/pages/event/DeliveryMeetingCreate';
-import MeetingDetail from '@/pages/MeetingDetail';
+// import MeetingDetail from '@/pages/MeetingDetail';
 import MyPage from '@/pages/mypage/MyPage';
 import MyCreatedMeetings from '@/pages/mypage/MyCreatedMeetings';
 import MyParticipatedMeetings from '@/pages/mypage/MyParticipatedMeetings';
