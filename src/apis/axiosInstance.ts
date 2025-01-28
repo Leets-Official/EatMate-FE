@@ -6,6 +6,7 @@ const defaultInstance = axios.create({
   timeout: 3000,
   headers: {
     'Content-Type': 'application/json',
+    'Authorization': `Bearer ${import.meta.env.VITE_JWT_TOKEN}`,
   },
 });
 

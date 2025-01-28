@@ -23,6 +23,7 @@ const ListContainer = styled.div`
   flex-direction: column;
   gap: 16px;
   align-items: center;
+  padding-bottom: 80px;
 `;
 
 const MeetingList = ({ cover }: { cover: string }) => {
@@ -59,7 +60,7 @@ const MeetingList = ({ cover }: { cover: string }) => {
             ? 'PARTICIPANT_COUNT'
             : sortOption === '최신등록순'
               ? 'CREATED_AT'
-              : 'MEETING_TYPE';
+              : 'MEETING_TIME';
 
         const genderRestriction =
           genderOption === '모든성별'
@@ -73,8 +74,8 @@ const MeetingList = ({ cover }: { cover: string }) => {
             category,
             'page-size': 5,
             'gender-restriction': genderRestriction,
-            'max-participant': maxParticipants, // NaN 방지
-            'min-participant': minParticipants, // NaN 방지
+            'max-participant': maxParticipants,
+            'min-participant': minParticipants,
             'sort-type': sortType,
           },
           headers: {
@@ -92,7 +93,7 @@ const MeetingList = ({ cover }: { cover: string }) => {
     };
 
     fetchMeetings();
-  }, [cover, sortOption, genderOption, rangeLabel]); // 필터 변경 시 호출
+  }, [cover, sortOption, genderOption, rangeLabel]);
 
   // 모달 닫기
   const handleModalClose = () => setIsModalOpen(null);

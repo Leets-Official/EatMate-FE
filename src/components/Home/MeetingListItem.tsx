@@ -8,7 +8,6 @@ import DeliveryCover from '@/assets/images/ic_delivery_cover.svg';
 import Clock from '@/assets/images/ic_clock.svg';
 import { flexAlignCenter, flexCenter, flexColumn } from '@/styles/CommonStyle';
 import dayjs from 'dayjs';
-
 interface MeetingListItemProps {
   cover: string;
   isSelected?: boolean;
@@ -17,7 +16,7 @@ interface MeetingListItemProps {
   location: string;
   participants: number;
   maxParticipants: number;
-  time: string; // Due date/time in string format (e.g., "2025-01-29T12:00:00")
+  time: string;
   deliveryTime?: string;
 }
 
@@ -78,6 +77,7 @@ const InfoContainer = styled.div`
   color: ${({ theme }) => theme.COLORS.gray[400]};
   gap: 8px;
   width: 100%;
+  justify-content: space-between;
 `;
 
 const Location = styled.div`
@@ -94,7 +94,7 @@ const Participants = styled.div`
 
 const RemainingTimeBadge = styled.div`
   margin-top: 3px;
-  width: 130px;
+  width: 95px;
   ${flexAlignCenter}
   gap: 3px;
   color: ${({ theme }) => theme.COLORS.main};
@@ -133,16 +133,20 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
       const now = dayjs();
       const dueDate = dayjs(time);
 
-      const diff = dueDate.diff(now, 'second'); // 남은 초 계산
+      const diff = dueDate.diff(now, 'second');
       if (diff > 0) {
         const hours = Math.floor(diff / 3600);
         const minutes = Math.floor((diff % 3600) / 60);
         const seconds = diff % 60;
 
         if (hours > 0) {
-          setRemainingTime(`${hours}시간 ${minutes}분 남음`);
+          setRemainingTime(
+            `${hours.toString().padStart(2, '0')}시간 ${minutes.toString().padStart(2, '0')}분`
+          );
         } else {
-          setRemainingTime(`${minutes}분 ${seconds}초 남음`);
+          setRemainingTime(
+            `${minutes.toString().padStart(2, '0')}분 ${seconds.toString().padStart(2, '0')}초`
+          );
         }
       } else {
         setRemainingTime('시간이 만료되었습니다');
@@ -181,7 +185,11 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
           <PersonIcon />
           {participants}/{maxParticipants}
         </Participants>
-        <RemainingTimeBadge>{remainingTime}</RemainingTimeBadge>
+        <RemainingTimeBadge>
+          {' '}
+          <img src={Clock} alt="알람 아이콘" />
+          {remainingTime}
+        </RemainingTimeBadge>
       </InfoContainer>
     </Container>
   );
