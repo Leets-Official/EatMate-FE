@@ -82,9 +82,8 @@ export const Text = styled.div<{
 `;
 
 export const MenuContainer = styled.div`
+  ${flexColumn}
   padding: 20px 40px;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   gap: 30px;
 `;
@@ -101,8 +100,7 @@ export const MenuItem = styled.div`
 `;
 
 export const SectionContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   gap: 15px;
 `;
 

@@ -24,8 +24,7 @@ export const Container = styled.div`
 `;
 
 export const UserList = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   gap: 30px;
 `;
 

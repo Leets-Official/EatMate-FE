@@ -1,18 +1,15 @@
 import styled from 'styled-components';
-import { flexAlignCenter, flexCenter } from '../CommonStyle';
+import { flexAlignCenter, flexCenter, flexColumn } from '../CommonStyle';
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: center;
   padding: 20px;
 `;
 
 export const ProfileWrapper = styled.div`
+  ${flexCenter}
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin-bottom: 20px;
   cursor: pointer;
 `;
@@ -41,9 +38,8 @@ export const GoogleIcon = styled.img`
 `;
 
 export const FormContainer = styled.div`
+  ${flexColumn}
   width: 100%;
-  display: flex;
-  flex-direction: column;
   gap: 20px;
 `;
 
