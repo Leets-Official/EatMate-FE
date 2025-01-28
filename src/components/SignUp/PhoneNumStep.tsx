@@ -48,10 +48,8 @@ const PhoneNumStep: React.FC = () => {
 
   return (
     <div>
-      <MainTitle>전화번호를 입력해주세요.</MainTitle>
-      <Description>
-        입력된 정보는 외부에 공개되지 않으니 안심하세요.
-      </Description>
+      <MainTitle>전화번호를 입력하세요.</MainTitle>
+      <Description>입력된 정보는 한번 저장하면 변경할 수 없어요!</Description>
 
       <InputContainer>
         <SignUpInput

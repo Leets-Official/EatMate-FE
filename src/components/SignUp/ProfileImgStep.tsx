@@ -7,6 +7,8 @@ import {
   MainContent,
   ProfileImageContainer,
   ProfileImage,
+  EditIcon,
+  EditIconWrapper,
   HiddenFileInput,
 } from '@/styles/SignUp/SignUp.styled';
 import ActionModal from '@/components/common/Modal/ActionModal';
@@ -14,15 +16,14 @@ import Button from '@/components/common/Button/Button';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 import { useNavigate } from 'react-router-dom';
-import PolicyAgreementStep from './PolicyAgreementStep';
-import { signupUser } from '@/apis/auth/auth';
+import ProfileIcon from '@/assets/images/ic_my_profile.svg';
+import editIcon from '@/assets/images/ic_edit_camera.svg';
 
 const ProfileImgStep: React.FC = () => {
   const nav = useNavigate();
 
   const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPolicyModalOpen, setIsPolicyModalOpen] = useState(false);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -56,37 +57,13 @@ const ProfileImgStep: React.FC = () => {
   const handleDeletePhoto = () => {
     setSignupState((prev) => ({
       ...prev,
-      profilePhoto: undefined,
+      profilePhoto: ProfileIcon,
     }));
     handleCloseModal();
   };
 
-  const handleProceedToPolicy = async () => {
-    const signupData = {
-      year: signupState.year,
-      month: signupState.month,
-      day: signupState.day,
-      gender: signupState.gender,
-      phoneNumber: signupState.phoneNumber,
-      mbti: signupState.mbti,
-      studentNumber: signupState.studentNumber,
-      nickname: signupState.nickname,
-    };
-    try {
-      await signupUser(signupData);
-      setIsPolicyModalOpen(true);
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(`회원가입 실패: ${error.message}`);
-      } else {
-        console.error('알 수 없는 오류 발생');
-      }
-    }
-  };
-
-  const handleAgreePolicy = () => {
-    setIsPolicyModalOpen(false);
-    nav('/home');
+  const handleProceedToNextStep = () => {
+    nav('/signup/phone-number');
   };
 
   useEffect(() => {
@@ -96,16 +73,19 @@ const ProfileImgStep: React.FC = () => {
   return (
     <Container>
       <MainContent>
-        <MainTitle>이제 마지막이에요!</MainTitle>
-        <Description>
-          EatMate에서 사용할 프로필 사진을 추가해주세요.
-        </Description>
+        <MainTitle>
+          나만의 프로필을 <br />
+          설정하세요
+        </MainTitle>
 
-        <ProfileImageContainer>
+        <ProfileImageContainer onClick={handleOpenModal}>
           <ProfileImage
-            imageUrl={signupState.profilePhoto || ''}
+            imageUrl={signupState.profilePhoto || ProfileIcon} // 기본 이미지 설정
             onClick={handleOpenModal}
-          ></ProfileImage>
+          />
+          <EditIconWrapper>
+            <EditIcon src={editIcon} alt="edit-profile" />
+          </EditIconWrapper>
           <HiddenFileInput
             id="fileInput"
             type="file"
@@ -113,6 +93,7 @@ const ProfileImgStep: React.FC = () => {
             onChange={handleImageChange}
           />
         </ProfileImageContainer>
+        <Description>다른 사용자들에게 보이는 사진이에요.</Description>
       </MainContent>
 
       {/* 모달 */}
@@ -121,21 +102,24 @@ const ProfileImgStep: React.FC = () => {
           isOpen={isModalOpen}
           actions={[
             { label: '앨범에서 선택', onClick: handleSelectPhoto },
-            { label: '사진 삭제', onClick: handleDeletePhoto, type: 'delete' },
+            {
+              label: '기본 이미지로 설정',
+              onClick: handleDeletePhoto,
+              type: 'delete',
+            },
             { label: '닫기', onClick: handleCloseModal },
           ]}
           onClose={handleCloseModal}
         />
       )}
 
-      {isPolicyModalOpen && <PolicyAgreementStep onAgree={handleAgreePolicy} />}
       <ButtonContainer>
         <Button
-          onClick={handleProceedToPolicy}
+          onClick={handleProceedToNextStep}
           size="lg"
-          disabled={!signupState.profilePhoto} // 프로필 이미지가 없으면 버튼 비활성화
+          // disabled={!signupState.profilePhoto} // 프로필 이미지가 없으면 버튼 비활성화
         >
-          회원가입 진행하기
+          다음
         </Button>
       </ButtonContainer>
     </Container>

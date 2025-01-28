@@ -1,5 +1,9 @@
 import styled from 'styled-components';
-import { flexCenter, flexColumnCenter } from '@/styles/CommonStyle';
+import {
+  flexAlignCenter,
+  flexCenter,
+  flexColumnCenter,
+} from '@/styles/CommonStyle';
 
 interface InputFieldProps extends React.ComponentProps<'input'> {
   error: boolean;
@@ -9,16 +13,16 @@ interface InputFieldProps extends React.ComponentProps<'input'> {
 export const MainTitle = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
   font-size: ${({ theme }) => theme.FONT_SIZE.xl};
-  padding: 10px 30px;
+  padding: 40px 30px;
 `;
 
 export const Description = styled.div`
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.semibold};
-  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 10px 28px;
+  padding: 30px;
 `;
 
 export const InputField = styled.input<InputFieldProps>`
@@ -85,23 +89,38 @@ export const MainContent = styled.div`
 `;
 
 export const ProfileImageContainer = styled.div`
+  position: relative;
+  width: 160px;
+  height: 160px;
   ${flexCenter}
-  margin: 2rem 0;
+  margin: 0 auto;
 `;
 
 export const ProfileImage = styled.div<{ imageUrl: string }>`
-  ${flexCenter}
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.COLORS.gray[200]};
-  background-image: ${({ imageUrl }) =>
-    imageUrl ? `url(${imageUrl})` : 'none'};
-  background-size: cover;
-  background-position: center;
-  font-size: ${({ theme }) => theme.FONT_SIZE.xl};
-  color: ${({ theme }) => theme.COLORS.gray[100]};
+  background: ${({ imageUrl }) => `url(${imageUrl})`} no-repeat center/cover;
+  /* border: 2px solid ${({ theme }) => theme.COLORS.orange[200]}; */
   cursor: pointer;
+`;
+
+export const EditIconWrapper = styled.div`
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+export const EditIcon = styled.img`
+  width: 40px;
+  height: 40px;
 `;
 
 export const HiddenFileInput = styled.input`

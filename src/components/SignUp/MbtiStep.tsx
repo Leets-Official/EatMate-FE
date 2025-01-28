@@ -58,8 +58,9 @@ const MbtiStep: React.FC = () => {
 
   return (
     <div>
-      <MainTitle>MBTI를 알고계시나요?</MainTitle>
-      <Description>다른 사용자들이 당신을 더 잘 이해할 수 있어요.</Description>
+      <MainTitle>MBTI를 알려주세요</MainTitle>
+      <Description>다른 사용자들이</Description>
+      <Description>당신을 더 잘 이해할 수 있어요.</Description>
 
       <InputContainer>
         {mbtiLetters.map((_, index) => (

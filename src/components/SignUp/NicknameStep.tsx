@@ -36,8 +36,10 @@ const NicknameStep: React.FC = () => {
 
   return (
     <div>
-      <MainTitle>당신을 더 알고 싶어요!</MainTitle>
-      <Description>뭐라고 불러드리면 될까요?</Description>
+      <MainTitle>닉네임을 입력하세요</MainTitle>
+      <Description>
+        잇메이트에서 사용할 고유의 닉네임을 만드세요. 12자 이내
+      </Description>
 
       <InputContainer>
         <SignUpInput
