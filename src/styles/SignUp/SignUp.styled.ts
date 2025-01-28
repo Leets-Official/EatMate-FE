@@ -64,6 +64,7 @@ export const SelectButtonContainer = styled.div`
 
 export const Text = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.lg};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
 `;
 
 export const InputWrapper = styled.div`

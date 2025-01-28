@@ -43,7 +43,7 @@ const NicknameStep: React.FC = () => {
         <InputWrapper>
           <SignUpInput
             type="text"
-            placeholder="ex) 무한이"
+            placeholder="닉네임 입력"
             value={signupState.nickname}
             onChange={(e) => handleInputChange(e.target.value)}
             error={!!errorMessage}

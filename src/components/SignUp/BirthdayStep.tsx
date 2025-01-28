@@ -51,10 +51,6 @@ const BirthdayStep: React.FC = () => {
     }));
   };
 
-  const handleGenderClick = (gender: string) => {
-    setSignupState((prev) => ({ ...prev, gender }));
-  };
-
   const handleBlur = (key: keyof typeof signupState) => {
     setTouched((prev) => ({
       ...prev,
