@@ -101,7 +101,8 @@ const BirthdayStep: React.FC = () => {
           {birthInputFields.map(({ label, key, maxLength, width }) => (
             <>
               <SignUpInput
-                type="text"
+                type="tel"
+                inputMode="numeric"
                 maxLength={maxLength}
                 width={width}
                 value={
