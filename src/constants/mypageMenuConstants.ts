@@ -49,7 +49,7 @@ export const mypageMenuItems = [
       {
         icon: FAQIcon,
         label: 'FAQ',
-        path: '/mypage/faq',
+        path: '/mypage/help',
       },
       {
         icon: TermsIcon,
