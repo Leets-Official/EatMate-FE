@@ -141,7 +141,6 @@ const DeliveryMeetingCreate: React.FC = () => {
           placeholder="은행 선택"
           value={selectedBank}
           isBankInput
-          readOnly
           onClick={() => setIsModalOpen(true)}
         />
 

@@ -1,0 +1,103 @@
+import Header from '@/components/common/Header/Header';
+import { useNavigate } from 'react-router-dom';
+import profileImg1 from '@/assets/images/ic_participant1.svg';
+import profileImg2 from '@/assets/images/ic_participant2.svg';
+import styled from 'styled-components';
+import { Text } from '@/styles/mypage/mypage.styled';
+import { flexColumn } from '@/styles/CommonStyle';
+import Button from '@/components/common/Button/Button';
+import { useState } from 'react';
+
+const mockData = [
+  {
+    name: '무당벌레',
+    icon: profileImg1,
+    isBlocked: true,
+  },
+  {
+    name: '도토리',
+    icon: profileImg2,
+    isBlocked: true,
+  },
+];
+
+const Container = styled.div`
+  ${flexColumn}
+  padding: 20px;
+  gap: 20px;
+`;
+
+const UserList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+`;
+
+const UserItem = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+`;
+
+const UserDetails = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+`;
+
+const UserIcon = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+`;
+
+const ReportedUser: React.FC = () => {
+  const nav = useNavigate();
+  const [users, setUsers] = useState(mockData);
+
+  const toggleBlockStatus = (index: number) => {
+    setUsers((prevUsers) =>
+      prevUsers.map((user, idx) =>
+        idx === index ? { ...user, isBlocked: !user.isBlocked } : user
+      )
+    );
+  };
+
+  return (
+    <div>
+      <Header
+        onBackClick={() => nav(-1)}
+        showBackButton
+        title="차단 사용자 관리"
+      />
+      <Container>
+        <Text fontSize="smMd" fontWeight="light" color="gray">
+          친구 {users.length}
+        </Text>
+        <UserList>
+          {users.map((user, index) => (
+            <UserItem key={index}>
+              <UserDetails>
+                <UserIcon src={user.icon} alt={user.name} />
+                <Text fontSize="sm" fontWeight="regular">
+                  {user.name}
+                </Text>
+              </UserDetails>
+              <Button
+                variant={user.isBlocked ? 'secondary-main' : 'secondary-white'}
+                size="xs"
+                rounded="lg"
+                onClick={() => toggleBlockStatus(index)}
+              >
+                {user.isBlocked ? '차단중' : '차단해제'}
+              </Button>
+            </UserItem>
+          ))}
+        </UserList>
+      </Container>
+    </div>
+  );
+};
+
+export default ReportedUser;
