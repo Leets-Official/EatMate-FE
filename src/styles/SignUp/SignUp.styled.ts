@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { flexCenter, flexColumnCenter } from '@/styles/CommonStyle';
+import { flexCenter, flexColumn, flexColumnCenter } from '@/styles/CommonStyle';
 
 interface InputFieldProps extends React.ComponentProps<'input'> {
   error: boolean;
@@ -15,8 +15,7 @@ export const MainTitle = styled.div`
 export const Description = styled.div<{ padding?: string }>`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   gap: 5px;
   padding: ${({ padding }) => padding || '10px'};
 `;
@@ -68,16 +67,14 @@ export const Text = styled.div`
 `;
 
 export const InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   margin-bottom: 5rem;
 `;
 
 export const Container = styled.div`
   position: relative;
   min-height: 780px;
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   overflow: hidden;
 `;
 
@@ -87,10 +84,10 @@ export const MainContent = styled.div`
 `;
 
 export const ProfileImageContainer = styled.div`
+  ${flexCenter}
   position: relative;
   width: 160px;
   height: 160px;
-  ${flexCenter}
   margin: 0 auto;
 `;
 
@@ -103,15 +100,13 @@ export const ProfileImage = styled.div<{ imageUrl: string }>`
 `;
 
 export const EditIconWrapper = styled.div`
+  ${flexCenter}
   position: absolute;
   bottom: 5px;
   right: 5px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
 `;
 
@@ -126,4 +121,44 @@ export const HiddenFileInput = styled.input`
 
 export const Padding = styled.div`
   padding-left: 30px;
+`;
+
+export const GenderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 50px;
+`;
+
+export const GenderOption = styled.div<{ isSelected?: boolean }>`
+  ${flexColumnCenter}
+  width: 120px;
+  height: 120px;
+  border-radius: 27px;
+  background: ${({ isSelected, theme }) =>
+    isSelected ? theme.COLORS.orange[50] : theme.COLORS.white};
+  box-shadow: ${({ isSelected }) =>
+    isSelected
+      ? '0px 4px 10px rgba(255, 102, 0, 0.2)'
+      : '0px 2px 5px rgba(0, 0, 0, 0.1)'};
+  border: 1px solid
+    ${({ isSelected, theme }) =>
+      isSelected ? theme.COLORS.main : theme.COLORS.gray[100]};
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  span {
+    margin-top: 10px;
+    font-size: ${({ theme }) => theme.FONT_SIZE.md};
+    color: ${({ theme }) => theme.COLORS.black};
+  }
+
+  &:hover {
+    background: ${({ theme }) => theme.COLORS.orange[50]};
+  }
+`;
+
+export const GenderIcon = styled.img`
+  width: 50px;
+  height: 50px;
 `;
