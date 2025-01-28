@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import LocateIcon from '@/assets/images/ic_locate.svg?react';
 import PersonIcon from '@/assets/images/ic_person.svg?react';
@@ -7,6 +7,7 @@ import BeerCover from '@/assets/images/ic_beer_cover.svg';
 import DeliveryCover from '@/assets/images/ic_delivery_cover.svg';
 import Clock from '@/assets/images/ic_clock.svg';
 import { flexAlignCenter, flexCenter, flexColumn } from '@/styles/CommonStyle';
+import dayjs from 'dayjs';
 
 interface MeetingListItemProps {
   cover: string;
@@ -14,8 +15,9 @@ interface MeetingListItemProps {
   title: string;
   description: string;
   location: string;
-  participants: string;
-  time: string;
+  participants: number;
+  maxParticipants: number;
+  time: string; // Due date/time in string format (e.g., "2025-01-29T12:00:00")
   deliveryTime?: string;
 }
 
@@ -90,15 +92,6 @@ const Participants = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
 `;
 
-const TimeBadge = styled.div`
-  color: ${({ theme }) => theme.COLORS.main};
-  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
-  border-radius: 12px;
-  padding: 4px 10px;
-  white-space: nowrap;
-`;
-
 const RemainingTimeBadge = styled.div`
   margin-top: 3px;
   width: 130px;
@@ -108,6 +101,7 @@ const RemainingTimeBadge = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   border-radius: 5px;
+  text-align: right;
   padding: 2px 6px;
   background-color: #fbded0;
   white-space: nowrap;
@@ -125,11 +119,41 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
   description,
   location,
   participants,
+  maxParticipants,
   time,
   deliveryTime,
 }) => {
   const coverType =
     cover === 'meal' ? MealCover : cover === 'beer' ? BeerCover : DeliveryCover;
+
+  const [remainingTime, setRemainingTime] = useState<string>('');
+
+  useEffect(() => {
+    const calculateRemainingTime = () => {
+      const now = dayjs();
+      const dueDate = dayjs(time);
+
+      const diff = dueDate.diff(now, 'second'); // 남은 초 계산
+      if (diff > 0) {
+        const hours = Math.floor(diff / 3600);
+        const minutes = Math.floor((diff % 3600) / 60);
+        const seconds = diff % 60;
+
+        if (hours > 0) {
+          setRemainingTime(`${hours}시간 ${minutes}분 남음`);
+        } else {
+          setRemainingTime(`${minutes}분 ${seconds}초 남음`);
+        }
+      } else {
+        setRemainingTime('시간이 만료되었습니다');
+      }
+    };
+
+    calculateRemainingTime();
+    const timer = setInterval(calculateRemainingTime, 1000);
+
+    return () => clearInterval(timer);
+  }, [time]);
 
   return (
     <Container isSelected={isSelected}>
@@ -155,9 +179,9 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
         </Location>
         <Participants>
           <PersonIcon />
-          {participants}
+          {participants}/{maxParticipants}
         </Participants>
-        <TimeBadge>{time}분 전 대화</TimeBadge>
+        <RemainingTimeBadge>{remainingTime}</RemainingTimeBadge>
       </InfoContainer>
     </Container>
   );
