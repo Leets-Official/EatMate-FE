@@ -41,6 +41,7 @@ const FONT_SIZE = {
   md: '16px',
   lg: '20px',
   xl: '24px',
+  title: '40px',
 };
 
 const theme = {

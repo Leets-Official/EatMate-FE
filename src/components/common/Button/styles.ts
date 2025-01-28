@@ -33,7 +33,7 @@ const sizeStyles: Record<
   `,
   lg: (svgIcon) => css`
     width: 330px;
-    padding: ${svgIcon ? '0.3rem 1.5rem' : '1rem 1.5rem'};
+    padding: ${svgIcon ? '2px' : '1rem 1.5rem'};
     font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
   `,
   xl: (svgIcon) => css`
