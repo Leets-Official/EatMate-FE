@@ -1,6 +1,7 @@
 import { getUserInfo } from '@/apis/auth/auth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Loading from '@/pages/Loading';
 
 const LoginCallback: React.FC = () => {
   const nav = useNavigate();
@@ -8,11 +9,13 @@ const LoginCallback: React.FC = () => {
   useEffect(() => {
     const handleLoginResponse = async () => {
       try {
+        // 로딩중 확인하려고 추가함
+        await new Promise((resolve) => setTimeout(resolve, 3000));
         const response = await getUserInfo();
 
         if (!response) {
           console.error('유저 정보를 가져올 수 없습니다.');
-          nav('/');
+          nav('/intro');
           return;
         }
         console.log('API 응답: ', response);
@@ -28,7 +31,7 @@ const LoginCallback: React.FC = () => {
             break;
           default:
             console.error('알 수 없는 사용자 role: ', role);
-            nav('/');
+            nav('/intro');
         }
       } catch (error) {
         // interceptor가 처리한 에러메세지 가져오기
@@ -38,14 +41,14 @@ const LoginCallback: React.FC = () => {
           console.error('로그인 중 알 수 없는 오류가 발생했습니다.');
         }
         console.error('로그인 처리 중 오류가 발생했습니다.', error);
-        nav('/');
+        nav('/intro');
       }
     };
 
     handleLoginResponse();
   }, [nav]);
 
-  return <div>로그인 처리 중...</div>;
+  return <Loading />;
 };
 
 export default LoginCallback;

@@ -5,6 +5,7 @@ import rightArrow from '@/assets/images/ic_arrow_right.svg';
 
 interface HeaderProps {
   title?: string;
+  showLogo?: boolean;
   showBackButton?: boolean;
   subText?: string;
   onBackClick?: () => void;
@@ -19,6 +20,7 @@ const Header: React.FC<HeaderProps> = ({
   onBackClick,
   isJoin = false,
   onLeaveClick,
+  showLogo = true,
 }) => {
   return (
     <S.HeaderContainer>
@@ -28,11 +30,11 @@ const Header: React.FC<HeaderProps> = ({
         </S.BackButton>
       )}
       <S.CenterContainer>
-        {title ? (
-          <S.Title>{title}</S.Title>
-        ) : (
+        {showLogo && !title ? (
           <img src={mainLogo} alt="eatmate-logo" width="72px" height="29px" />
-        )}
+        ) : title ? (
+          <S.Title>{title}</S.Title>
+        ) : null}
         {subText && (
           <S.SubText>
             {subText} <img src={rightArrow} alt="오른쪽 화살표" />

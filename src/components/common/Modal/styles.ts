@@ -20,6 +20,7 @@ export const ModalContainer = styled.div`
   border-radius: 16px;
   margin: 20px 20px 30px 20px;
   box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 `;
 
 export const ModalButton = styled.button<{ type: 'primary' | 'delete' }>`
@@ -39,16 +40,16 @@ export const ModalButton = styled.button<{ type: 'primary' | 'delete' }>`
   }
 
   &:not(:last-child) {
-    border-bottom: 1px solid ${({ theme }) => theme.COLORS.gray[300]};
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 
   &:first-child {
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
 
   &:last-child {
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 `;

@@ -2,12 +2,13 @@ import {
   ButtonContainer,
   Description,
   InputContainer,
+  InputWrapper,
   MainTitle,
 } from '@/styles/SignUp/SignUp.styled';
 import Button from '@/components/common/Button/Button';
 import SignUpInput from './SignupInput';
 import { useRecoilState } from 'recoil';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 import InputErrorMessage from '@/components/common/Input/InputErrorMessage';
 import { isStudentIdValid, validateStudentId } from '@/utils/validate-input';
@@ -20,39 +21,53 @@ const StudentIdStep: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleInputChange = (value: string) => {
-    const numericValue = value === '' ? null : parseInt(value, 10);
-    setSignupState((prev) => ({ ...prev, studentNumber: numericValue }));
+    const numericValue = value.replace(/\D/g, '');
 
-    const validationError = validateStudentId(numericValue);
+    setSignupState((prev) => ({
+      ...prev,
+      studentNumber: numericValue ? parseInt(numericValue, 10) : null,
+    }));
+
+    const validationError = validateStudentId(
+      numericValue ? parseInt(numericValue, 10) : null
+    );
     setErrorMessage(validationError || '');
   };
 
   const handleNext = () => {
     if (isFormValid) {
-      nav('/signup/profile-img');
+      nav('/signup/mbti');
     }
   };
+
+  useEffect(() => {
+    console.log('signupState updated:', signupState);
+  }, [signupState]);
 
   const isFormValid = isStudentIdValid(signupState.studentNumber);
   return (
     <div>
-      <MainTitle>학교 인증을 위해</MainTitle>
       <MainTitle>학번을 입력해 주세요!</MainTitle>
-      <Description>
-        입력한 학번은 인증 용도로만 사용되며, 안전하게 보호됩니다.
-      </Description>
 
       <InputContainer>
-        <SignUpInput
-          type="tel"
-          inputMode="numeric"
-          maxLength={9}
-          placeholder="ex) 202534999"
-          value={signupState.studentNumber}
-          onChange={(e) => handleInputChange(e.target.value)}
-        />
+        <InputWrapper>
+          <SignUpInput
+            type="tel"
+            inputMode="numeric"
+            placeholder="학번 입력"
+            value={signupState.studentNumber}
+            onChange={(e) => handleInputChange(e.target.value)}
+            error={!!errorMessage}
+          />
+          {!errorMessage ? (
+            <Description>
+              입력된 정보는 <br />한 번 저장하면 변경할 수 없어요!
+            </Description>
+          ) : (
+            <InputErrorMessage message={errorMessage} />
+          )}
+        </InputWrapper>
       </InputContainer>
-      {errorMessage && <InputErrorMessage message={errorMessage} />}
 
       <ButtonContainer>
         <Button

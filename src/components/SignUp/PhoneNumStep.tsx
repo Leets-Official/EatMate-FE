@@ -2,6 +2,7 @@ import {
   ButtonContainer,
   Description,
   InputContainer,
+  InputWrapper,
   MainTitle,
 } from '@/styles/SignUp/SignUp.styled';
 import Button from '@/components/common/Button/Button';
@@ -26,7 +27,7 @@ const PhoneNumStep: React.FC = () => {
 
   const handleBlur = () => {
     if (!validatePhoneNumber(signupState.phoneNumber)) {
-      setErrorMessage('다시 입력해주세요.');
+      setErrorMessage('올바른 전화번호를 입력해주세요.');
     } else {
       setErrorMessage('');
     }
@@ -34,7 +35,7 @@ const PhoneNumStep: React.FC = () => {
 
   const handleNext = () => {
     if (isFormValid()) {
-      nav('/signup/mbti');
+      nav('/signup/nickname');
     }
   };
 
@@ -48,24 +49,30 @@ const PhoneNumStep: React.FC = () => {
 
   return (
     <div>
-      <MainTitle>전화번호를 입력해주세요.</MainTitle>
-      <Description>
-        입력된 정보는 외부에 공개되지 않으니 안심하세요.
-      </Description>
+      <MainTitle>전화번호를 입력하세요.</MainTitle>
 
       <InputContainer>
-        <SignUpInput
-          type="tel"
-          maxLength={13}
-          inputMode="numeric"
-          placeholder="010-0000-0000"
-          value={signupState.phoneNumber}
-          onChange={(e) => handleInputChange(e.target.value)}
-          onBlur={handleBlur}
-        />
+        <InputWrapper>
+          <SignUpInput
+            type="tel"
+            maxLength={13}
+            inputMode="numeric"
+            placeholder="전화번호 입력"
+            value={signupState.phoneNumber}
+            onChange={(e) => handleInputChange(e.target.value)}
+            onBlur={handleBlur}
+            error={!!errorMessage}
+          />
+          {!errorMessage ? (
+            <Description>
+              입력된 정보는 한번 저장하면 변경할 수 없어요!
+            </Description>
+          ) : (
+            <InputErrorMessage message={errorMessage} />
+          )}
+        </InputWrapper>
       </InputContainer>
 
-      {errorMessage && <InputErrorMessage message={errorMessage} />}
       <ButtonContainer>
         <Button
           onClick={handleNext}

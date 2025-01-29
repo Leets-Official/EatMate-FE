@@ -1,26 +1,76 @@
 import Header from '@/components/common/Header/Header';
-import { policyContents } from '@/constants/policyContents';
+import { policyConstants } from '@/constants/policyConstants';
+import {
+  Container,
+  Divider,
+  FinalNotice,
+  Line,
+  Section,
+  SubItem,
+  Text,
+  TitleItem,
+} from '@/styles/SignUp/PolicyAgreement.styled';
 import { useNavigate, useParams } from 'react-router-dom';
+
+const headerItems = [
+  {
+    id: '1',
+    title: '서비스 이용 약관',
+  },
+  {
+    id: '2',
+    title: '개인정보 보호정책',
+  },
+];
 
 const PolicyDetails: React.FC = () => {
   const nav = useNavigate();
+  const { termId } = useParams<{ termId: string }>();
 
   const onClickToBack = () => {
     nav(-1);
   };
-  const { termId } = useParams<{ termId: string }>();
-  const term = policyContents.find(
+
+  const selectedHeader = headerItems.find((item) => item.id === termId);
+  const term = policyConstants.find(
     (content) => content.id.toString() === termId
   );
+
   return (
     <div>
-      <Header
-        showBackButton={true}
-        title="서비스 이용 약관"
-        onBackClick={onClickToBack}
-      />
-      <div>{term?.title}</div>
-      <div>{term?.content}</div>
+      {selectedHeader && (
+        <Header
+          showBackButton={true}
+          title={selectedHeader.title}
+          onBackClick={onClickToBack}
+        />
+      )}
+      <Line />
+      <Container>
+        {term?.content.map((item, index) => {
+          if (typeof item === 'string') {
+            return <Text key={index}>{item}</Text>;
+          }
+
+          switch (item.type) {
+            case 'title':
+              return <TitleItem key={index}>{item.text}</TitleItem>;
+            case 'section':
+              return <Section key={index}>{item.text}</Section>;
+            case 'subItem':
+              return <SubItem key={index}>- {item.text}</SubItem>;
+            case 'finalNotice':
+              return (
+                <div key={index}>
+                  <Divider />
+                  <FinalNotice>{item.text}</FinalNotice>
+                </div>
+              );
+            default:
+              return null;
+          }
+        })}
+      </Container>
     </div>
   );
 };

@@ -9,7 +9,7 @@ export const signupAtom = atom<{
   mbti: string;
   nickname: string;
   studentNumber: number | null;
-  profilePhoto: string | undefined;
+  profileImage: File | null;
 }>({
   key: 'signupAtom',
   default: {
@@ -21,6 +21,6 @@ export const signupAtom = atom<{
     mbti: '',
     nickname: '',
     studentNumber: null,
-    profilePhoto: undefined,
+    profileImage: null,
   },
 });
