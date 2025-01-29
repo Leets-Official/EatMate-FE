@@ -13,7 +13,7 @@ import { useState, useEffect } from 'react';
 import InputErrorMessage from '@/components/common/Input/InputErrorMessage';
 import { validateMbti } from '@/utils/validate-input';
 import { useNavigate } from 'react-router-dom';
-import PolicyAgreementStep from '@/components/SignUp/PolicyAgreementStep';
+import PolicyAgreementModal from '@/components/SignUp/PolicyAgreementModal';
 
 const MbtiStep: React.FC = () => {
   const nav = useNavigate();
@@ -89,7 +89,7 @@ const MbtiStep: React.FC = () => {
       </ButtonContainer>
 
       {isPolicyModalOpen && (
-        <PolicyAgreementStep
+        <PolicyAgreementModal
           onAgree={handleAgreePolicy}
           onClose={handleCloseModal}
         />

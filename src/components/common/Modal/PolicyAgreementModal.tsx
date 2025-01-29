@@ -3,12 +3,12 @@ import { policyConstants } from '@/constants/policyContants';
 import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import EmptyCircle from '@/assets/images/ic_empty_circle.svg';
-// import FilledCircle from '@/assets/images/ic_filled_circle.svg';
+import FilledCircle from '@/assets/images/ic_filled_circle.svg';
 import CheckIcon from '@/assets/images/ic_white_check.svg';
 import { ButtonContainer } from '@/styles/SignUp/SignUp.styled';
 import * as S from '@/styles/SignUp/PolicyAgreement.styled';
 
-const PolicyAgreementStep: React.FC<{
+const PolicyAgreementModal: React.FC<{
   onAgree: () => void;
   onClose: () => void;
 }> = ({ onAgree, onClose }) => {
@@ -36,7 +36,7 @@ const PolicyAgreementStep: React.FC<{
       <S.ModalContainer ref={modalRef} onClick={(e) => e.stopPropagation()}>
         <S.Title onClick={handleToggleAll}>
           <S.CheckImage
-            src={allChecked ? EmptyCircle : EmptyCircle}
+            src={allChecked ? FilledCircle : EmptyCircle}
             alt="all-check"
           />
           모두 동의
@@ -71,4 +71,4 @@ const PolicyAgreementStep: React.FC<{
   );
 };
 
-export default PolicyAgreementStep;
+export default PolicyAgreementModal;
