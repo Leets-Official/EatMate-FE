@@ -24,6 +24,7 @@ export const ModalContainer = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
+  max-width: 390px;
   height: 270px;
   background-color: ${({ theme }) => theme.COLORS.main};
   border-top-right-radius: 30px;
