@@ -52,3 +52,37 @@ export const getOfflineMeetingApi = () => {
 
   return { fetchMeetings };
 };
+
+interface DeliveryMeetingQueryParams {
+  category: string;
+  pageSize?: number;
+  genderRestriction?: string;
+  maxParticipant?: number;
+  minParticipant?: number;
+  sortType?: string;
+}
+
+export const getDeliveryMeetingApi = () => {
+  const fetchMeetings = async ({
+    category,
+    pageSize = 20,
+    genderRestriction = 'ALL',
+    maxParticipant,
+    minParticipant,
+    sortType = 'PARTICIPANT_COUNT',
+  }: DeliveryMeetingQueryParams) => {
+    const response = await defaultInstance.get(`/api/meetings/delivery`, {
+      params: {
+        category,
+        'page-size': pageSize,
+        'gender-restriction': genderRestriction,
+        'max-participant': maxParticipant,
+        'min-participant': minParticipant,
+        'sort-type': sortType,
+      },
+    });
+    return response.data.result.content;
+  };
+
+  return { fetchMeetings };
+};
