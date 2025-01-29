@@ -39,6 +39,7 @@ const MbtiStep: React.FC = () => {
   };
 
   const handleAgreePolicy = async () => {
+    nav('/signup/success');
     try {
       await signupUser({
         nickname: signupState.nickname,
@@ -52,7 +53,6 @@ const MbtiStep: React.FC = () => {
         profileImage: signupState.profileImage || null,
       });
       setIsPolicyModalOpen(false);
-      nav('/signup/success');
     } catch (error) {
       if (error instanceof Error) {
         console.error(`회원가입 처리 중 오류가 발생했습니다: ${error.message}`);
