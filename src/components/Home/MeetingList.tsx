@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import SortingButton from '@/components/common/SortingButton/SortingButton';
 import MeetingListItem from '@/components/Home/MeetingListItem';
 import FilterModal from '@/components/common/Modal/FilterModal';
 import RangeSlider from '@/components/common/RangeSlider';
+import { getOfflineMeetingApi } from '@/apis/meetings/getMeeting';
 
 const Container = styled.div`
   padding: 16px;
@@ -31,60 +31,30 @@ const MeetingList = ({ cover }: { cover: string }) => {
   const [meetingData, setMeetingData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // 필터 상태
   const [sortOption, setSortOption] = useState('기본순');
   const [genderOption, setGenderOption] = useState('모든성별');
   const [participantOption, setParticipantOption] = useState('2인~10인');
   const [rangeLabel, setRangeLabel] = useState('2인~10인');
 
-  const base_url = import.meta.env.VITE_BASE_URL;
-
-  // API 호출
   useEffect(() => {
     const fetchMeetings = async () => {
       setLoading(true);
       try {
-        const category = cover === 'meal' ? 'MEAL' : 'BEVERAGE';
-
-        // 안전한 숫자 변환
-        const [minParticipants, maxParticipants] = rangeLabel
-          .replace('인', '')
-          .split('~')
-          .map((value, index) => {
-            const num = Number(value);
-            return isNaN(num) ? (index === 1 ? 10 : 0) : num;
+        if (cover === 'meal' || cover === 'beer') {
+          // 오프라인 모임임
+          const api = getOfflineMeetingApi();
+          const meetings = await api.fetchMeetings({
+            cover,
+            sortOption,
+            genderOption,
+            rangeLabel,
           });
-
-        const sortType =
-          sortOption === '기본순'
-            ? 'PARTICIPANT_COUNT'
-            : sortOption === '최신등록순'
-              ? 'CREATED_AT'
-              : 'MEETING_TIME';
-
-        const genderRestriction =
-          genderOption === '모든성별'
-            ? 'ALL'
-            : genderOption === '남자만'
-              ? 'MALE'
-              : 'FEMALE';
-
-        const response = await axios.get(`${base_url}/api/meetings/offline`, {
-          params: {
-            category,
-            'page-size': 5,
-            'gender-restriction': genderRestriction,
-            'max-participant': maxParticipants,
-            'min-participant': minParticipants,
-            'sort-type': sortType,
-          },
-          headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_JWT_TOKEN}`,
-          },
-        });
-
-        console.log('API 응답 데이터:', response.data);
-        setMeetingData(response.data.result.content);
+          setMeetingData(meetings);
+        } else if (cover === 'delivery') {
+          // 여기에 delivery 관련 API 호출 로직을 추가하세요.
+          // 예: const deliveryMeetings = await fetchDeliveryMeetings();
+          // setMeetingData(deliveryMeetings);
+        }
       } catch (error) {
         console.error('Error fetching meeting data:', error);
       } finally {
@@ -95,17 +65,12 @@ const MeetingList = ({ cover }: { cover: string }) => {
     fetchMeetings();
   }, [cover, sortOption, genderOption, rangeLabel]);
 
-  // 모달 닫기
   const handleModalClose = () => setIsModalOpen(null);
-
-  // 모달 선택 반영
   const handleSelectSortOption = (value: string) => {
     if (isModalOpen === 'default') setSortOption(value);
     if (isModalOpen === 'gender') setGenderOption(value);
     handleModalClose();
   };
-
-  // 모달 RangeSlider 값 반영
   const handleParticipantConfirm = () => {
     setParticipantOption(rangeLabel);
     handleModalClose();
