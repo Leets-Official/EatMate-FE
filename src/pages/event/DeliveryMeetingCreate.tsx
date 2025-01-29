@@ -21,8 +21,7 @@ import {
 
 const DeliveryMeetingCreate: React.FC = () => {
   const nav = useNavigate();
-  // const userGender = useUserGender();
-  const userGender = 'FEMALE';
+  const userGender = useUserGender();
   const [selectedBank, setSelectedBank] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -56,13 +55,14 @@ const DeliveryMeetingCreate: React.FC = () => {
     }
   };
 
+  // orderDeadline: long 타입으로 보내야돼서 다시 숫자값으로 추출..
   const extractMinutes = (isoString: string | null): number => {
-    if (!isoString) return 10; // 기본값 10분 설정
+    if (!isoString) return 10;
 
     const date = new Date(isoString);
-    if (isNaN(date.getTime())) return 10; // 변환 실패 시 기본값 반환
+    if (isNaN(date.getTime())) return 10;
 
-    return date.getMinutes(); // ✅ 분 단위 값만 추출
+    return date.getMinutes();
   };
 
   const buildFormData = (): DeliveryMeetingFormData => ({
@@ -96,9 +96,8 @@ const DeliveryMeetingCreate: React.FC = () => {
     ) {
       try {
         const formDataToSend: DeliveryMeetingFormData = buildFormData();
-        console.log('배달팟 생성 데이터:', formData);
-
         await createDeliveryMeeting(formDataToSend);
+        console.log('배달팟 생성 데이터:', formDataToSend);
         console.log('배달팟이 정상적으로 생성되었습니다.');
         nav('/home');
       } catch (error) {
@@ -181,6 +180,9 @@ const DeliveryMeetingCreate: React.FC = () => {
           value={selectedBank}
           isBankInput
           onClick={() => setIsModalOpen(true)}
+          hasError={errors.bankName}
+          readOnly
+          keepBackground={false}
         />
 
         {isModalOpen && (

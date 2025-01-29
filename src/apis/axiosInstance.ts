@@ -15,6 +15,8 @@ defaultInstance.interceptors.request.use(
     if (config.data instanceof FormData) {
       config.headers['Content-Type'] = 'multipart/form-data';
     }
+
+    config.withCredentials = true;
     return config;
   },
   (error) => {
