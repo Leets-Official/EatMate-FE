@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   ${flexCenter};
-  margin-top: 10px;
 `;
 
 const ItemsContainer = styled.div`
@@ -23,8 +22,8 @@ const ItemWrapper = styled.div`
 
 const Item = styled.div<{ isSelected: boolean }>`
   ${flexCenter};
-  width: 60px;
-  height: 60px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   cursor: pointer;
   background-color: ${({ isSelected }) => (isSelected ? '#FBDED0' : 'white')};

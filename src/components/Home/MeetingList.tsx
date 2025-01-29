@@ -26,6 +26,13 @@ const ListContainer = styled.div`
   align-items: center;
   padding-bottom: 80px;
 `;
+
+const Divider = styled.div`
+  width: 100%;
+  height: 10px;
+  background-color: #f9f9fc;
+  margin: 20px 0;
+`;
 interface BaseMeetingParams {
   cover: string;
   sortOption: string;
@@ -95,7 +102,10 @@ const MeetingList = ({ cover }: { cover: string }) => {
   return (
     <Container>
       {cover === 'delivery' ? (
-        <DeliveryCategory onCategorySelect={setDeliveryCategory} />
+        <div>
+          <DeliveryCategory onCategorySelect={setDeliveryCategory} />
+          <Divider />
+        </div>
       ) : null}
       <ButtonContainer>
         <SortingButton
