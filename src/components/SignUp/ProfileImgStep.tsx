@@ -23,6 +23,7 @@ const ProfileImgStep: React.FC = () => {
 
   const [signupState, setSignupState] = useRecoilState(signupAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -32,10 +33,11 @@ const ProfileImgStep: React.FC = () => {
         if (reader.result) {
           setSignupState((prev) => ({
             ...prev,
-            profilePhoto: reader.result as string,
+            profileImage: file,
           }));
         }
       };
+      const objectUrl = URL.createObjectURL(file);
       reader.readAsDataURL(file);
     }
   };
@@ -56,8 +58,9 @@ const ProfileImgStep: React.FC = () => {
   const handleDeletePhoto = () => {
     setSignupState((prev) => ({
       ...prev,
-      profilePhoto: ProfileIcon,
+      profilePhoto: null,
     }));
+    setPreviewUrl(null);
     handleCloseModal();
   };
 
@@ -79,7 +82,12 @@ const ProfileImgStep: React.FC = () => {
 
         <ProfileImageContainer onClick={handleOpenModal}>
           <ProfileImage
-            imageUrl={signupState.profilePhoto || ProfileIcon} // 기본 이미지 설정
+            imageUrl={
+              previewUrl ||
+              (signupState.profileImage
+                ? URL.createObjectURL(signupState.profileImage)
+                : ProfileIcon)
+            } // 기본 이미지 설정
             onClick={handleOpenModal}
           />
           <EditIconWrapper>
