@@ -25,7 +25,6 @@ export const getOfflineMeetingApi = () => {
       category = deliveryCategory;
     }
     const endpoint = cover === 'delivery' ? 'delivery' : 'offline';
-    console.log(endpoint);
     const [minParticipants, maxParticipants] = rangeLabel
       .replace('인', '')
       .split('~')

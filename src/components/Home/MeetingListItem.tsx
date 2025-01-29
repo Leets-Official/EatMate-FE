@@ -168,12 +168,13 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
         <TextContainer>
           <Title>{title}</Title>
           <Description>{description}</Description>
+          {/* 이 부분은 나중에 채팅 추가하면서 수정할 예정입니다,,
           {cover === 'delivery' && deliveryTime && (
             <RemainingTimeBadge>
               <img src={Clock} alt="알람 아이콘" />
               {deliveryTime} 남았어요
             </RemainingTimeBadge>
-          )}
+          )} */}
         </TextContainer>
       </MainContainer>
       <InfoContainer>
