@@ -5,6 +5,7 @@ import MeetingListItem from '@/components/Home/MeetingListItem';
 import FilterModal from '@/components/common/Modal/FilterModal';
 import RangeSlider from '@/components/common/RangeSlider';
 import { getOfflineMeetingApi } from '@/apis/meetings/getMeeting';
+import DeliveryCategory from './DeliveryCategory';
 
 const Container = styled.div`
   padding: 16px;
@@ -25,11 +26,23 @@ const ListContainer = styled.div`
   align-items: center;
   padding-bottom: 80px;
 `;
+interface BaseMeetingParams {
+  cover: string;
+  sortOption: string;
+  genderOption: string;
+  rangeLabel: string;
+}
+
+interface DeliveryMeetingParams extends BaseMeetingParams {
+  deliveryCategory: string;
+}
 
 const MeetingList = ({ cover }: { cover: string }) => {
   const [isModalOpen, setIsModalOpen] = useState<string | null>(null);
   const [meetingData, setMeetingData] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [deliveryCategory, setDeliveryCategory] = useState('');
 
   const [sortOption, setSortOption] = useState('기본순');
   const [genderOption, setGenderOption] = useState('모든성별');
@@ -40,21 +53,24 @@ const MeetingList = ({ cover }: { cover: string }) => {
     const fetchMeetings = async () => {
       setLoading(true);
       try {
-        if (cover === 'meal' || cover === 'beer') {
-          // 오프라인 모임임
-          const api = getOfflineMeetingApi();
-          const meetings = await api.fetchMeetings({
-            cover,
-            sortOption,
-            genderOption,
-            rangeLabel,
-          });
-          setMeetingData(meetings);
-        } else if (cover === 'delivery') {
-          // 여기에 delivery 관련 API 호출 로직을 추가하세요.
-          // 예: const deliveryMeetings = await fetchDeliveryMeetings();
-          // setMeetingData(deliveryMeetings);
+        // 조건에 따라 다른 파라미터 설정
+        let params: BaseMeetingParams | DeliveryMeetingParams = {
+          cover,
+          sortOption,
+          genderOption,
+          rangeLabel,
+        };
+
+        if (cover === 'delivery') {
+          params = {
+            ...params,
+            // 'delivery' 경우에만 deliveryCategory 추가
+            deliveryCategory: deliveryCategory,
+          };
         }
+        const api = getOfflineMeetingApi();
+        const meetings = await api.fetchMeetings(params);
+        setMeetingData(meetings);
       } catch (error) {
         console.error('Error fetching meeting data:', error);
       } finally {
@@ -63,7 +79,7 @@ const MeetingList = ({ cover }: { cover: string }) => {
     };
 
     fetchMeetings();
-  }, [cover, sortOption, genderOption, rangeLabel]);
+  }, [cover, sortOption, genderOption, rangeLabel, deliveryCategory]);
 
   const handleModalClose = () => setIsModalOpen(null);
   const handleSelectSortOption = (value: string) => {
@@ -78,6 +94,9 @@ const MeetingList = ({ cover }: { cover: string }) => {
 
   return (
     <Container>
+      {cover === 'delivery' ? (
+        <DeliveryCategory onCategorySelect={setDeliveryCategory} />
+      ) : null}
       <ButtonContainer>
         <SortingButton
           text={sortOption}

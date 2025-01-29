@@ -1,6 +1,7 @@
 import defaultInstance from '@/apis/axiosInstance';
 
 interface MeetingQueryParams {
+  deliveryCategory?: string;
   cover: string;
   sortOption: string;
   genderOption: string;
@@ -9,12 +10,22 @@ interface MeetingQueryParams {
 
 export const getOfflineMeetingApi = () => {
   const fetchMeetings = async ({
+    deliveryCategory,
     cover,
     sortOption,
     genderOption,
     rangeLabel,
   }: MeetingQueryParams) => {
-    const category = cover === 'meal' ? 'MEAL' : 'BEVERAGE';
+    let category;
+    if (cover === 'meal') {
+      category = 'MEAL';
+    } else if (cover === 'beer') {
+      category = 'BEVERAGE';
+    } else {
+      category = deliveryCategory;
+    }
+    const endpoint = cover === 'delivery' ? 'delivery' : 'offline';
+    console.log(endpoint);
     const [minParticipants, maxParticipants] = rangeLabel
       .replace('인', '')
       .split('~')
@@ -37,47 +48,13 @@ export const getOfflineMeetingApi = () => {
           ? 'MALE'
           : 'FEMALE';
 
-    const response = await defaultInstance.get(`/api/meetings/offline`, {
+    const response = await defaultInstance.get(`/api/meetings/${endpoint}`, {
       params: {
         category,
         'page-size': 5,
         'gender-restriction': genderRestriction,
         'max-participant': maxParticipants,
         'min-participant': minParticipants,
-        'sort-type': sortType,
-      },
-    });
-    return response.data.result.content;
-  };
-
-  return { fetchMeetings };
-};
-
-interface DeliveryMeetingQueryParams {
-  category: string;
-  pageSize?: number;
-  genderRestriction?: string;
-  maxParticipant?: number;
-  minParticipant?: number;
-  sortType?: string;
-}
-
-export const getDeliveryMeetingApi = () => {
-  const fetchMeetings = async ({
-    category,
-    pageSize = 20,
-    genderRestriction = 'ALL',
-    maxParticipant,
-    minParticipant,
-    sortType = 'PARTICIPANT_COUNT',
-  }: DeliveryMeetingQueryParams) => {
-    const response = await defaultInstance.get(`/api/meetings/delivery`, {
-      params: {
-        category,
-        'page-size': pageSize,
-        'gender-restriction': genderRestriction,
-        'max-participant': maxParticipant,
-        'min-participant': minParticipant,
         'sort-type': sortType,
       },
     });
