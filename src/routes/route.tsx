@@ -24,11 +24,21 @@ import BirthdayStep from '@/components/SignUp/BirthdayStep';
 import GenderStep from '@/components/SignUp/GenderStep';
 import SignupSuccess from '@/pages/signup/SignupSuccess';
 import Splash from '@/pages/Splash';
+import Loading from '@/pages/Loading';
+import NotFound from '@/pages/Not-found';
 
 const router = createBrowserRouter([
   {
     path: '',
     element: <Splash />,
+  },
+  {
+    path: '/loading',
+    element: <Loading />,
+  },
+  {
+    path: '/not-found',
+    element: <NotFound />,
   },
   {
     path: '/intro',

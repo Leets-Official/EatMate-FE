@@ -1,5 +1,5 @@
 const Splash: React.FC = () => {
-  return <div></div>;
+  return <div>스플래시화면</div>;
 };
 
 export default Splash;
