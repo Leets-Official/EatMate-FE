@@ -1,10 +1,5 @@
 import styled from 'styled-components';
-import {
-  FlexAll,
-  flexCenter,
-  flexColumn,
-  flexColumnCenter,
-} from '@/styles/CommonStyle';
+import { flexCenter, flexColumn } from '@/styles/CommonStyle';
 
 export const MainText = styled.span<{ color?: string }>`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};

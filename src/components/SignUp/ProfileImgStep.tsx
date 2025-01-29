@@ -37,7 +37,7 @@ const ProfileImgStep: React.FC = () => {
           }));
         }
       };
-      const objectUrl = URL.createObjectURL(file);
+      // const objectUrl = URL.createObjectURL(file);
       reader.readAsDataURL(file);
     }
   };
