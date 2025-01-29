@@ -1,5 +1,10 @@
 import styled from 'styled-components';
-import { flexColumn } from '@/styles/CommonStyle';
+import {
+  FlexAll,
+  flexCenter,
+  flexColumn,
+  flexColumnCenter,
+} from '@/styles/CommonStyle';
 
 export const MainText = styled.span<{ color?: string }>`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
@@ -16,19 +21,39 @@ export const SubText = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  position: absolute;
-  top: 15%;
-  left: 36%;
-  transform: translateX(-50%);
   ${flexColumn}
-  text-align: center;
+  height: 40vh;
+  margin-top: 10vh;
+  padding: 30px;
 `;
 
-export const ButtonWrapper = styled.div`
-  position: absolute;
-  bottom: 3px;
-  padding: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
+export const ProfileIconsWrapper = styled.div`
+  ${flexCenter}
+  position: relative;
+  gap: 5px;
+  overflow: hidden;
+  margin-top: 15vh;
+`;
+
+export const ProfileIcon = styled.img`
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+
+  margin: 0 calc(15px - 5px);
+
+  &:first-child {
+    margin-left: 60px;
+  }
+
+  &:last-child {
+    margin-left: 15px;
+  }
+`;
+
+export const Icon = styled.img`
+  width: 50px;
+  height: 50px;
+  padding: 5px;
 `;

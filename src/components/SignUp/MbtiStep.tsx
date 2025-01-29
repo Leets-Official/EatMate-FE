@@ -49,7 +49,7 @@ const MbtiStep: React.FC = () => {
         year: signupState.year,
         month: signupState.month,
         day: signupState.day,
-        profileImage: signupState.profilePhoto || null,
+        profileImage: signupState.profileImage || null,
       });
       setIsPolicyModalOpen(false);
       nav('/signup/success');
