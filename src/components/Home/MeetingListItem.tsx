@@ -121,7 +121,7 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
   participants,
   maxParticipants,
   time,
-  deliveryTime,
+  // deliveryTime,
 }) => {
   const coverType =
     cover === 'meal' ? MealCover : cover === 'beer' ? BeerCover : DeliveryCover;

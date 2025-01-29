@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import BottomNavigation from '@/components/common/BottomNavi';
 import FloatingPostButton from '@/components/common/FloatingPostButton';
-import DeliveryCategory from '@/components/Home/DeliveryCategory';
 import Header from '@/components/common/Header/Header';
 import { flexAlignCenter } from '@/styles/CommonStyle';
 
