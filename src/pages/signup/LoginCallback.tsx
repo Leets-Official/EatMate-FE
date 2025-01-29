@@ -1,6 +1,7 @@
 import { getUserInfo } from '@/apis/auth/auth';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Loading from '@/pages/Loading';
 
 const LoginCallback: React.FC = () => {
   const nav = useNavigate();
@@ -8,6 +9,8 @@ const LoginCallback: React.FC = () => {
   useEffect(() => {
     const handleLoginResponse = async () => {
       try {
+        // 로딩중 확인하려고 추가함
+        await new Promise((resolve) => setTimeout(resolve, 3000));
         const response = await getUserInfo();
 
         if (!response) {
@@ -45,7 +48,7 @@ const LoginCallback: React.FC = () => {
     handleLoginResponse();
   }, [nav]);
 
-  return <div>로그인 처리 중...</div>;
+  return <Loading />;
 };
 
 export default LoginCallback;
