@@ -1,5 +1,5 @@
 import Header from '@/components/common/Header/Header';
-import { policyConstants } from '@/constants/policyContants';
+import { policyConstants } from '@/constants/policyConstants';
 import {
   Container,
   Divider,

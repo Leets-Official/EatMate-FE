@@ -13,7 +13,7 @@ import { useState, useEffect } from 'react';
 import InputErrorMessage from '@/components/common/Input/InputErrorMessage';
 import { validateMbti } from '@/utils/validate-input';
 import { useNavigate } from 'react-router-dom';
-import PolicyAgreementModal from '@/components/SignUp/PolicyAgreementModal';
+import PolicyAgreementModal from '@/components/common/Modal/PolicyAgreementModal';
 
 const MbtiStep: React.FC = () => {
   const nav = useNavigate();

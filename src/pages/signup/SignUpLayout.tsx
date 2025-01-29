@@ -28,7 +28,11 @@ const SignupLayout: React.FC = () => {
 
   return (
     <div>
-      <Header showBackButton={true} onBackClick={handleBackClick} />
+      <Header
+        showBackButton={true}
+        showLogo={false}
+        onBackClick={handleBackClick}
+      />
       <ProgressBar progress={progress} />
       <Outlet />
     </div>

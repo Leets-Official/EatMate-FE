@@ -1,5 +1,5 @@
 import Button from '@/components/common/Button/Button';
-import { policyConstants } from '@/constants/policyContants';
+import { policyConstants } from '@/constants/policyConstants';
 import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import EmptyCircle from '@/assets/images/ic_empty_circle.svg';
