@@ -43,7 +43,6 @@ const Badge = styled.div`
 
 const Home = () => {
   const [selectedTabId, setSelectedTabId] = useState('tab1');
-  const [selectedCategory, setSelectedCategory] = useState('');
 
   const tabs = [
     { id: 'tab1', label: '밥약' },
@@ -54,7 +53,6 @@ const Home = () => {
   const handleTabClick = (id: string) => {
     setSelectedTabId(id);
   };
-  console.log(selectedCategory);
   return (
     <Container>
       <Header subText="배달팟 실시간 모집 중" />

@@ -5,7 +5,7 @@ import MeetingListItem from '@/components/Home/MeetingListItem';
 import FilterModal from '@/components/common/Modal/FilterModal';
 import RangeSlider from '@/components/common/RangeSlider';
 import { getOfflineMeetingApi } from '@/apis/meetings/getMeeting';
-import DeliveryCategory from './DeliveryCategory';
+import DeliveryCategory from '@/components/Home/DeliveryCategory';
 
 const Container = styled.div`
   padding: 16px;

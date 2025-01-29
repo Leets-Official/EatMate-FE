@@ -118,7 +118,7 @@ const items = [
 ];
 
 interface DeliveryCategoryProps {
-  onCategorySelect: (category: string) => void;
+  onCategorySelect?: (category: string) => void;
 }
 
 const DeliveryCategory: React.FC<DeliveryCategoryProps> = ({
@@ -128,7 +128,7 @@ const DeliveryCategory: React.FC<DeliveryCategoryProps> = ({
 
   const handleItemClick = (item: (typeof items)[0]) => {
     setSelectedItem(item.id);
-    onCategorySelect(item.category);
+    onCategorySelect?.(item.category);
   };
 
   return (
