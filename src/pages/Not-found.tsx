@@ -1,7 +1,6 @@
 import NotFoundLottie from '@/assets/lotties/404Lottie.json';
 import { LottieContainer } from './signup/SignupSuccess';
 import Lottie from 'lottie-react';
-import { Text } from '@/styles/mypage/mypage.styled';
 import Button from '@/components/common/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -16,7 +15,6 @@ const NotFound: React.FC = () => {
   const nav = useNavigate();
   return (
     <LottieContainer>
-      <Text fontSize="xl">페이지를 찾을 수 없습니다! </Text>
       <Lottie
         animationData={NotFoundLottie}
         loop={true}
