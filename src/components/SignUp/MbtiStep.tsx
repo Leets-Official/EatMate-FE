@@ -14,7 +14,7 @@ import InputErrorMessage from '@/components/common/Input/InputErrorMessage';
 import { validateMbti } from '@/utils/validate-input';
 import { useNavigate } from 'react-router-dom';
 import PolicyAgreementModal from '@/components/common/Modal/PolicyAgreementModal';
-import { signupUser } from '@/apis/auth/auth';
+// import { signupUser } from '@/apis/auth/auth';
 
 const MbtiStep: React.FC = () => {
   const nav = useNavigate();
