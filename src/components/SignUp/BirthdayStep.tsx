@@ -13,11 +13,7 @@ import SignUpInput from './SignupInput';
 import { useRecoilState } from 'recoil';
 import { signupAtom } from '@/recoil/atoms/userAtom';
 import InputErrorMessage from '@/components/common/Input/InputErrorMessage';
-import {
-  validateDay,
-  validateMonth,
-  validateYear,
-} from '@/utils/validate-input';
+import { validateBirthday } from '@/utils/validate-input';
 import { useNavigate } from 'react-router-dom';
 
 const BirthdayStep: React.FC = () => {
@@ -41,17 +37,6 @@ const BirthdayStep: React.FC = () => {
     }));
   };
 
-  const validateBirthdate = () => {
-    if (
-      validateYear(year) !== true ||
-      validateMonth(month) !== true ||
-      validateDay(day, year, month) !== true
-    ) {
-      return '올바른 생년월일을 입력해주세요.';
-    }
-    return null;
-  };
-
   const isFormValid = () => {
     return errorMessage === null;
   };
@@ -63,7 +48,8 @@ const BirthdayStep: React.FC = () => {
   };
 
   useEffect(() => {
-    setErrorMessage(validateBirthdate());
+    const validationResult = validateBirthday(year, month, day);
+    setErrorMessage(validationResult !== true ? validationResult : null);
   }, [year, month, day]);
 
   useEffect(() => {
