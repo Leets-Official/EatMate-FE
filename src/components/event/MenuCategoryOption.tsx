@@ -10,11 +10,17 @@ const StyledLabel = styled(Label)`
   margin-bottom: 10px;
 `;
 
-const MenuCategoryOption: React.FC = () => {
+interface DeliveryCategoryProps {
+  onCategorySelect: (category: string) => void;
+}
+
+const MenuCategoryOption: React.FC<DeliveryCategoryProps> = ({
+  onCategorySelect,
+}) => {
   return (
     <CategoryContainer>
       <StyledLabel>메뉴 카테고리 설정</StyledLabel>
-      <DeliveryCategory />
+      <DeliveryCategory onCategorySelect={onCategorySelect} />
     </CategoryContainer>
   );
 };

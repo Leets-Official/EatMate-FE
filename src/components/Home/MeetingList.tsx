@@ -31,7 +31,7 @@ const Divider = styled.div`
   width: 100%;
   height: 10px;
   background-color: #f9f9fc;
-  margin: 20px 0;
+  margin: 10px 0;
 `;
 interface BaseMeetingParams {
   cover: string;
