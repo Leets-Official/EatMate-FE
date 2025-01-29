@@ -14,11 +14,15 @@ import MenuCategoryOption from '@/components/event/MenuCategoryOption';
 import TimePicker from '@/components/event/TimePicker';
 import BankSelectModal from '@/components/common/Modal/BankSelectModal';
 import { useState } from 'react';
+import {
+  createDeliveryMeeting,
+  DeliveryMeetingFormData,
+} from '@/apis/meetings/createMeeting';
 
 const DeliveryMeetingCreate: React.FC = () => {
   const nav = useNavigate();
-  const userGender = useUserGender();
-
+  // const userGender = useUserGender();
+  const userGender = 'FEMALE';
   const [selectedBank, setSelectedBank] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -52,7 +56,32 @@ const DeliveryMeetingCreate: React.FC = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const extractMinutes = (isoString: string | null): number => {
+    if (!isoString) return 10; // 기본값 10분 설정
+
+    const date = new Date(isoString);
+    if (isNaN(date.getTime())) return 10; // 변환 실패 시 기본값 반환
+
+    return date.getMinutes(); // ✅ 분 단위 값만 추출
+  };
+
+  const buildFormData = (): DeliveryMeetingFormData => ({
+    meetingName: formData.meetingName,
+    meetingDescription: formData.meetingDescription,
+    genderRestriction: formData.genderRestriction,
+    isLimited: formData.isLimited,
+    maxParticipants: formData.isLimited ? formData.maxParticipants : null,
+    // foodCategory: formData.foodCategory,
+    foodCategory: 'BURGER',
+    storeName: formData.storeName,
+    pickupLocation: formData.pickupLocation,
+    orderDeadline: extractMinutes(formData.orderDeadline),
+    accountNumber: formData.accountNumber,
+    bankName: formData.bankName,
+    backgroundImage: formData.backgroundImage,
+  });
+
+  const handleSubmit = async () => {
     if (
       validateForm([
         'meetingName',
@@ -65,8 +94,18 @@ const DeliveryMeetingCreate: React.FC = () => {
         'bankName',
       ])
     ) {
-      console.log('배달팟 생성 데이터:', formData);
-      nav('/home');
+      try {
+        const formDataToSend: DeliveryMeetingFormData = buildFormData();
+        console.log('배달팟 생성 데이터:', formData);
+
+        await createDeliveryMeeting(formDataToSend);
+        console.log('배달팟이 정상적으로 생성되었습니다.');
+        nav('/home');
+      } catch (error) {
+        console.error(
+          error instanceof Error ? error.message : '오류가 발생했습니다.'
+        );
+      }
     } else {
       console.log('필수 입력값이 누락되었습니다.');
     }

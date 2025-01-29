@@ -23,7 +23,7 @@ export interface DeliveryMeetingFormData {
   foodCategory: string;
   storeName: string;
   pickupLocation: string;
-  orderDeadline: string;
+  orderDeadline: number;
   accountNumber: string;
   bankName: string;
   backgroundImage: File | null;
