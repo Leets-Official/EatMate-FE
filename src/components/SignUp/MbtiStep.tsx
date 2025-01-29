@@ -39,28 +39,28 @@ const MbtiStep: React.FC = () => {
   };
 
   const handleAgreePolicy = async () => {
-    try {
-      await signupUser({
-        nickname: signupState.nickname,
-        mbti: signupState.mbti,
-        phoneNumber: signupState.phoneNumber,
-        studentNumber: signupState.studentNumber,
-        gender: signupState.gender,
-        year: signupState.year,
-        month: signupState.month,
-        day: signupState.day,
-        profileImage: signupState.profileImage || null,
-      });
-      setIsPolicyModalOpen(false);
-      nav('/signup/success');
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error(`회원가입 처리 중 오류가 발생했습니다: ${error.message}`);
-      } else {
-        console.error('회원가입 중 알 수 없는 오류가 발생했습니다.');
-      }
-      console.error('회원가입 처리 중 오류가 발생했습니다.', error);
-    }
+    // try {
+    //   await signupUser({
+    //     nickname: signupState.nickname,
+    //     mbti: signupState.mbti,
+    //     phoneNumber: signupState.phoneNumber,
+    //     studentNumber: signupState.studentNumber,
+    //     gender: signupState.gender,
+    //     year: signupState.year,
+    //     month: signupState.month,
+    //     day: signupState.day,
+    //     profileImage: signupState.profileImage || null,
+    // });
+    setIsPolicyModalOpen(false);
+    nav('/signup/success');
+    // } catch (error) {
+    //   if (error instanceof Error) {
+    //     console.error(`회원가입 처리 중 오류가 발생했습니다: ${error.message}`);
+    //   } else {
+    //     console.error('회원가입 중 알 수 없는 오류가 발생했습니다.');
+    //   }
+    //   console.error('회원가입 처리 중 오류가 발생했습니다.', error);
+    // }
   };
 
   const handleCloseModal = () => {
