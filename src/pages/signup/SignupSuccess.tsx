@@ -8,8 +8,8 @@ import { useNavigate } from 'react-router-dom';
 
 export const LottieContainer = styled.div`
   ${flexColumnCenter}
-  gap: 50px;
   position: absolute;
+  gap: 50px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -20,7 +20,7 @@ const SignupSuccess: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       nav('/home');
-    }, 1500);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, [nav]);

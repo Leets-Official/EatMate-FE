@@ -20,7 +20,7 @@ const SignupLayout: React.FC = () => {
 
   const handleBackClick = () => {
     if (location.pathname === '/signup/profile-img') {
-      nav('/');
+      nav('/intro');
     } else if (currentStepIndex > 0) {
       nav(stepPaths[currentStepIndex - 1]);
     }

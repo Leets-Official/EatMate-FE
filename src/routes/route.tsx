@@ -23,10 +23,15 @@ import Faq from '@/pages/mypage/Faq';
 import BirthdayStep from '@/components/SignUp/BirthdayStep';
 import GenderStep from '@/components/SignUp/GenderStep';
 import SignupSuccess from '@/pages/signup/SignupSuccess';
+import Splash from '@/pages/Splash';
 
 const router = createBrowserRouter([
   {
     path: '',
+    element: <Splash />,
+  },
+  {
+    path: '/intro',
     element: <Intro />,
   },
   {
