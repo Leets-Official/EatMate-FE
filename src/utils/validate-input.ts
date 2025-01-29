@@ -4,9 +4,10 @@
  * @returns 에러 메세지 또는 true ( 유효한 경우 )
  */
 export const validateYear = (year: number | null): string | true => {
-  if (year === null) return '년도를 입력해주세요.';
+  if (year === null) return '올바른 생년월일을 입력해주세요.';
   const currentYear = new Date().getFullYear();
-  if (year < 1900 || year > currentYear) return '올바른 년도를 입력해주세요.';
+  if (year < 1900 || year > currentYear)
+    return '올바른 생년월일을 입력해주세요.';
   return true;
 };
 
@@ -16,8 +17,8 @@ export const validateYear = (year: number | null): string | true => {
  * @returns 에러 메세지 또는 true ( 유효한 경우 )
  */
 export const validateMonth = (month: number | null): string | true => {
-  if (month === null) return '월을 입력해주세요.';
-  if (month < 1 || month > 12) return '1에서 12 사이의 숫자를 입력해주세요.';
+  if (month === null) return '올바른 생년월일을 입력해주세요.';
+  if (month < 1 || month > 12) return '올바른 생년월일을 입력해주세요.';
   return true;
 };
 
@@ -34,12 +35,11 @@ export const validateDay = (
   month: number | null
 ): string | true => {
   if (day === null || year === null || month === null)
-    return '날짜를 입력해주세요.';
+    return '올바른 생년월일을 입력해주세요.';
 
   const daysInMonth = new Date(year, month, 0).getDate();
 
-  if (day < 1 || day > daysInMonth)
-    return `${month}월은 ${daysInMonth}일까지입니다.`;
+  if (day < 1 || day > daysInMonth) return '올바른 생년월일을 입력해주세요.';
   return true;
 };
 

@@ -23,56 +23,37 @@ import { useNavigate } from 'react-router-dom';
 const BirthdayStep: React.FC = () => {
   const nav = useNavigate();
   const [signupState, setSignupState] = useRecoilState(signupAtom);
-  const [errorMessage, setErrorMessage] = useState<string>('');
-  const [touched, setTouched] = useState({
-    year: false,
-    month: false,
-    day: false,
-  });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const { year, month, day, nickname } = signupState;
 
-  const birthInputFields: {
-    label: string;
-    key: keyof typeof signupState;
-    maxLength: number;
-    width: string;
-  }[] = [
+  const birthInputFields = [
     { label: '년', key: 'year', maxLength: 4, width: '100px' },
     { label: '월', key: 'month', maxLength: 2, width: '40px' },
     { label: '일', key: 'day', maxLength: 2, width: '40px' },
-  ];
+  ] as const;
 
-  const handleInputChange = (key: keyof typeof signupState, value: string) => {
+  const handleInputChange = (key: 'year' | 'month' | 'day', value: string) => {
     const numericValue = value.replace(/[^0-9]/g, '');
-
     setSignupState((prev) => ({
       ...prev,
-      [key]: numericValue,
+      [key]: numericValue ? Number(numericValue) : null,
     }));
   };
 
-  const handleBlur = (key: keyof typeof signupState) => {
-    setTouched((prev) => ({
-      ...prev,
-      [key]: true,
-    }));
-
-    let error: string | true = '';
-    if (key === 'year') error = validateYear(year);
-    else if (key === 'month') error = validateMonth(month);
-    else if (key === 'day') error = validateDay(day, year, month);
-
-    setErrorMessage(error === true ? '' : error);
+  const validateBirthdate = () => {
+    if (
+      validateYear(year) !== true ||
+      validateMonth(month) !== true ||
+      validateDay(day, year, month) !== true
+    ) {
+      return '올바른 생년월일을 입력해주세요.';
+    }
+    return null;
   };
 
   const isFormValid = () => {
-    return (
-      validateYear(year) === true &&
-      validateMonth(month) === true &&
-      validateDay(day, year, month) === true &&
-      errorMessage === ''
-    );
+    return errorMessage === null;
   };
 
   const handleNext = () => {
@@ -82,13 +63,12 @@ const BirthdayStep: React.FC = () => {
   };
 
   useEffect(() => {
+    setErrorMessage(validateBirthdate());
+  }, [year, month, day]);
+
+  useEffect(() => {
     console.log('signupState updated:', signupState);
   }, [signupState]);
-
-  // 빌드 에러 임시 해결
-  useEffect(() => {
-    console.log(touched);
-  }, [touched]);
 
   return (
     <div>
@@ -110,7 +90,6 @@ const BirthdayStep: React.FC = () => {
                   signupState[key] !== null ? signupState[key]?.toString() : ''
                 }
                 onChange={(e) => handleInputChange(key, e.target.value)}
-                onBlur={() => handleBlur(key)}
                 error={!!errorMessage}
               />
               <Text>{label}</Text>
