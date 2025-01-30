@@ -169,7 +169,7 @@ const ChatRoom = () => {
         isMenu={true}
         onMenuClick={handleMenu}
       />
-      <Notice title="마라탕 맛잇겟엉점" time="13시 30분" />
+      <Notice type="meeting" place="마라탕 맛잇겟엉점" details="13시 30분" />
       <DateContainer>2025년 01월 14일 (화)</DateContainer>
       <MessagesList>
         {messages.map((msg) => (
