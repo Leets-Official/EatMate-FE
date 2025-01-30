@@ -32,20 +32,18 @@ export const signupUser = async (signupData: {
     ...signupData,
     phoneNumber: signupData.phoneNumber.replace(/-/g, ''),
   };
-  // formData.append(
-  //   'data',
-  //   new Blob([JSON.stringify(formattedSignupData)], {
-  //     type: 'application/json',
-  //   })
-  // );
+
+  formData.append(
+    'data',
+    new Blob([JSON.stringify(formattedSignupData)], {
+      type: 'application/json',
+    })
+  );
 
   if (signupData.profileImage) {
     formData.append('profileImage', signupData.profileImage);
   }
 
-  const response = await defaultInstance.post(
-    PATH + '/signup',
-    formattedSignupData
-  );
+  const response = await defaultInstance.post(PATH + '/signup', formData);
   return response.data;
 };
