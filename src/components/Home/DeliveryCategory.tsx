@@ -1,10 +1,10 @@
+import { deliveryItems } from '@/constants/deliveryItems';
 import { flexCenter, flexColumnCenter } from '@/styles/CommonStyle';
 import { useState } from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
   ${flexCenter};
-  margin-top: 10px;
 `;
 
 const ItemsContainer = styled.div`
@@ -23,8 +23,8 @@ const ItemWrapper = styled.div`
 
 const Item = styled.div<{ isSelected: boolean }>`
   ${flexCenter};
-  width: 60px;
-  height: 60px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   cursor: pointer;
   background-color: ${({ isSelected }) => (isSelected ? '#FBDED0' : 'white')};
@@ -54,42 +54,28 @@ const Label = styled.span<{ isSelected: boolean }>`
     isSelected ? theme.COLORS.main : '#636363'};
 `;
 
-const items = [
-  { id: 1, name: '버거', icon: '/src/assets/images/delivery/ic_hamburger.svg' },
-  { id: 2, name: '치킨', icon: '/src/assets/images/delivery/ic_chicken.svg' },
-  { id: 3, name: '피자', icon: '/src/assets/images/delivery/ic_pizza.svg' },
-  { id: 4, name: '일식', icon: '/src/assets/images/delivery/ic_japan.svg' },
-  { id: 5, name: '한식', icon: '/src/assets/images/delivery/ic_korea.svg' },
-  { id: 6, name: '중식', icon: '/src/assets/images/delivery/ic_china.svg' },
-  { id: 7, name: '아시안', icon: '/src/assets/images/delivery/ic_asian.svg' },
-  { id: 8, name: '족발/보쌈', icon: '/src/assets/images/delivery/ic_pig.svg' },
-  {
-    id: 9,
-    name: '커피/차',
-    icon: '/src/assets/images/delivery/ic_coffee.svg',
-  },
-  {
-    id: 10,
-    name: '디저트',
-    icon: '/src/assets/images/delivery/ic_dessert.svg',
-  },
-];
+interface DeliveryCategoryProps {
+  onCategorySelect: (category: string) => void;
+}
 
-const DeliveryCategory = () => {
+const DeliveryCategory: React.FC<DeliveryCategoryProps> = ({
+  onCategorySelect,
+}) => {
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
 
-  const handleItemClick = (id: number) => {
-    setSelectedItem(id);
+  const handleItemClick = (item: (typeof deliveryItems)[0]) => {
+    setSelectedItem(item.id);
+    onCategorySelect(item.category);
   };
 
   return (
     <Wrapper>
       <ItemsContainer>
-        {items.map((item) => (
+        {deliveryItems.map((item) => (
           <ItemWrapper key={item.id}>
             <Item
               isSelected={selectedItem === item.id}
-              onClick={() => handleItemClick(item.id)}
+              onClick={() => handleItemClick(item)}
             >
               <Icon src={item.icon} alt={item.name} />
             </Item>

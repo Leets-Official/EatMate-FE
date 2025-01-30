@@ -57,7 +57,7 @@ const meetingMockData = {
 };
 
 interface MeetingDetailProps {
-  isOwner: boolean;
+  isOwner?: boolean;
 }
 
 const MeetingDetail = ({ isOwner }: MeetingDetailProps) => {
