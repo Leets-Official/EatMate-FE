@@ -18,6 +18,7 @@ interface MeetingListItemProps {
   maxParticipants: number;
   time: string;
   rightSection?: string;
+  onClick: () => void;
 }
 
 const Container = styled.div<{ isSelected: boolean }>`
@@ -121,6 +122,7 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
   maxParticipants,
   time,
   rightSection,
+  onClick,
 }) => {
   const coverType =
     cover === 'meal' ? MealCover : cover === 'beer' ? BeerCover : DeliveryCover;
@@ -159,7 +161,7 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
   }, [time]);
 
   return (
-    <Container isSelected={isSelected}>
+    <Container isSelected={isSelected} onClick={onClick}>
       <MainContainer>
         <IconWrapper>
           <img src={coverType} alt="모임 아이콘" width="65" height="65" />

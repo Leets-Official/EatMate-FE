@@ -6,8 +6,8 @@ import FilterModal from '@/components/common/Modal/FilterModal';
 import RangeSlider from '@/components/common/RangeSlider';
 import { getOfflineMeetingApi } from '@/apis/meetings/getMeeting';
 import DeliveryCategory from '@/components/Home/DeliveryCategory';
-import Loading from '@/components/common/Loading';
 import NotFound from '@/pages/Not-found';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   padding: 16px;
@@ -48,6 +48,8 @@ const MeetingList = ({ cover }: { cover: string }) => {
   const [participantOption, setParticipantOption] = useState('2인~10인');
   const [rangeLabel, setRangeLabel] = useState('2인~10인');
 
+  const navigate = useNavigate();
+
   // params 객체 생성
   const params = useMemo(() => {
     const baseParams = { cover, sortOption, genderOption, rangeLabel };
@@ -85,6 +87,10 @@ const MeetingList = ({ cover }: { cover: string }) => {
   const handleParticipantConfirm = () => {
     setParticipantOption(rangeLabel);
     handleModalClose();
+  };
+
+  const handleNavigateToDetail = (meetingId: number) => {
+    navigate(`/meeting/${meetingId}`);
   };
 
   return (
@@ -131,6 +137,7 @@ const MeetingList = ({ cover }: { cover: string }) => {
               participants={meeting.currentParticipantCount}
               maxParticipants={meeting.maxParticipants}
               time={meeting.dueDateTime}
+              onClick={() => handleNavigateToDetail(meeting.meetingId)}
             />
           ))
         )}

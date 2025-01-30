@@ -83,7 +83,7 @@ const router = createBrowserRouter([
     element: <PolicyDetails />,
   },
   {
-    path: '/meeting', //나중에 뒤에 모임 Id 추가로 넣을 예정
+    path: '/meeting/:meetingId',
     element: <MeetingDetail />,
   },
   { path: '/mypage', element: <MyPage /> },
