@@ -21,7 +21,7 @@ export const signupUser = async (signupData: {
   day: number | null;
   gender: string;
   phoneNumber: string;
-  mbti: string;
+  mbti: string | null;
   studentNumber: number | null;
   nickname: string;
   profileImage?: File | null;
@@ -32,6 +32,7 @@ export const signupUser = async (signupData: {
     ...signupData,
     phoneNumber: signupData.phoneNumber.replace(/-/g, ''),
   };
+
   formData.append(
     'data',
     new Blob([JSON.stringify(formattedSignupData)], {
@@ -43,9 +44,6 @@ export const signupUser = async (signupData: {
     formData.append('profileImage', signupData.profileImage);
   }
 
-  const response = await defaultInstance.post(
-    PATH + '/signup',
-    formattedSignupData
-  );
+  const response = await defaultInstance.post(PATH + '/signup', formData);
   return response.data;
 };
