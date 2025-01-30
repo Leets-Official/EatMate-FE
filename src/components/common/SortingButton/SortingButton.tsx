@@ -1,6 +1,8 @@
 import { flexCenter } from '@/styles/CommonStyle';
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
+import DownArrow from '@/assets/images/ic_arrow_bottom.svg';
+import UpDownArrow from '@/assets/images/ic_default_sort.svg';
 
 interface ButtonProps extends React.ComponentProps<'button'> {
   isSelected?: boolean;
@@ -46,9 +48,9 @@ const SortingButton = forwardRef<HTMLButtonElement, ButtonProps>(
     const getIconSrc = () => {
       switch (iconType) {
         case 'upDown':
-          return '/src/assets/images/ic_default_sort.svg';
+          return DownArrow;
         case 'downArrow':
-          return '/src/assets/images/ic_arrow_bottom.svg';
+          return UpDownArrow;
         default:
           return '';
       }

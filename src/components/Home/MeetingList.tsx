@@ -118,7 +118,7 @@ const MeetingList = ({ cover }: { cover: string }) => {
 
       <ListContainer>
         {loading ? (
-          <Loading />
+          <div> </div>
         ) : (
           meetingData.map((meeting: any) => (
             <MeetingListItem
