@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import sendIcon from '@/assets/images/ic_backImg_default1.svg';
 import Header from '@/components/common/Header/Header';
 import ProfileIcon from '@/assets/images/ic_participant1.svg';
+import Notice from '@/components/chat/Notice';
 
 const ChatContainer = styled.div`
   display: flex;
@@ -157,6 +158,7 @@ const ChatRoom = () => {
         isMenu={true}
         onMenuClick={handleMenu}
       />
+      <Notice title="마라탕 맛잇겟엉점" time="13시 30분" />
       <MessagesList>
         {messages.map((msg) => (
           <Message key={msg.id} isMine={msg.isMine}>
