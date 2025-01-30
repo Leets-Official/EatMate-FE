@@ -26,16 +26,12 @@ import SignupSuccess from '@/pages/signup/SignupSuccess';
 import Splash from '@/pages/Splash';
 import Loading from '@/pages/Loading';
 import NotFound from '@/pages/Not-found';
-import SignupGuard from '@/pages/signup/SignupGuard';
+import AuthGuard from '@/pages/signup/AuthGuard';
 
 const router = createBrowserRouter([
   {
     path: '',
     element: <Splash />,
-  },
-  {
-    path: '/loading',
-    element: <Loading />,
   },
   {
     path: '*',
@@ -52,9 +48,9 @@ const router = createBrowserRouter([
   {
     path: '/signup',
     element: (
-      <SignupGuard>
+      <AuthGuard>
         <SignupLayout />
-      </SignupGuard>
+      </AuthGuard>
     ),
     children: [
       { index: true, element: <Navigate to="/signup/profile-img" /> },
