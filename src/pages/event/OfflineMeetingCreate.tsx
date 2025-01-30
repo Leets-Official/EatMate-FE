@@ -14,7 +14,7 @@ import {
 } from '@/apis/meetings/createMeeting';
 import { useEffect } from 'react';
 import { useUserGender } from '@/hooks/useUserGender';
-import { offlineMeetingFormFields } from '@/constants/MeetingFields';
+import { offlineMeetingFormFields } from '@/constants/MeetingFieldsConstants';
 import { formatMeetingDate } from '@/utils/dateUtils';
 import TimePicker from '@/components/event/TimePicker';
 

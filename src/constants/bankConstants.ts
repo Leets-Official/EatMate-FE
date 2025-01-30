@@ -1,12 +1,12 @@
-import WooriIcon from '@/assets/images/ic_bank_woori.svg';
-import TossIcon from '@/assets/images/ic_bank_toss.svg';
-import ShinhanIcon from '@/assets/images/ic_bank_shinhan.svg';
-import NHIcon from '@/assets/images/ic_bank_nh.svg';
-import MGIcon from '@/assets/images/ic_bank_mg.svg';
-import KookminIcon from '@/assets/images/ic_bank_kookmin.svg';
-import KakaoIcon from '@/assets/images/ic_bank_kakao.svg';
-import IBKIcon from '@/assets/images/ic_bank_ibk.svg';
-import HanaIcon from '@/assets/images/ic_bank_hana.svg';
+import WooriIcon from '@/assets/images/bank/ic_bank_woori.svg';
+import TossIcon from '@/assets/images/bank/ic_bank_toss.svg';
+import ShinhanIcon from '@/assets/images/bank/ic_bank_shinhan.svg';
+import NHIcon from '@/assets/images/bank/ic_bank_nh.svg';
+import MGIcon from '@/assets/images/bank/ic_bank_mg.svg';
+import KookminIcon from '@/assets/images/bank/ic_bank_kookmin.svg';
+import KakaoIcon from '@/assets/images/bank/ic_bank_kakao.svg';
+import IBKIcon from '@/assets/images/bank/ic_bank_ibk.svg';
+import HanaIcon from '@/assets/images/bank/ic_bank_hana.svg';
 
 export const bankList = [
   { id: 'woori', name: '우리은행', src: WooriIcon },

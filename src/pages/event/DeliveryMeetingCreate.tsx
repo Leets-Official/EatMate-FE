@@ -3,7 +3,7 @@ import { useUserGender } from '@/hooks/useUserGender';
 import { useNavigate } from 'react-router-dom';
 import * as S from '@/styles/event/MeetingCreate.styled';
 import Button from '@/components/common/Button/Button';
-import { deliveryMeetingFormFields } from '@/constants/MeetingFields';
+import { deliveryMeetingFormFields } from '@/constants/MeetingFieldsConstants';
 import { Input } from '@/components/common/Input/Input';
 import BackgroundOption from '@/components/event/BackgroundOption';
 import { useInputHandler } from '@/hooks/useInputHandler';

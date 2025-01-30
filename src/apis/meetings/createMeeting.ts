@@ -28,6 +28,7 @@ export interface DeliveryMeetingFormData {
   bankName: string;
   backgroundImage: File | null;
 }
+
 const createFormData = (
   data: OfflineMeetingFormData | DeliveryMeetingFormData
 ): FormData => {
@@ -61,6 +62,7 @@ export const createOfflineMeeting = async (
   return await postFormData(`${PATH}/offline`, formData);
 };
 
+// 배달팟 모임 생성 API 호출
 export const createDeliveryMeeting = async (
   DeliveryCreateData: DeliveryMeetingFormData
 ) => {
