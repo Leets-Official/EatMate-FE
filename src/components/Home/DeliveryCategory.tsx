@@ -1,3 +1,4 @@
+import { deliveryItems } from '@/constants/deliveryItems';
 import { flexCenter, flexColumnCenter } from '@/styles/CommonStyle';
 import { useState } from 'react';
 import styled from 'styled-components';
@@ -53,69 +54,6 @@ const Label = styled.span<{ isSelected: boolean }>`
     isSelected ? theme.COLORS.main : '#636363'};
 `;
 
-const items = [
-  {
-    id: 1,
-    name: '버거',
-    icon: '/src/assets/images/delivery/ic_hamburger.svg',
-    category: 'BURGER',
-  },
-  {
-    id: 2,
-    name: '치킨',
-    icon: '/src/assets/images/delivery/ic_chicken.svg',
-    category: 'CHICKEN',
-  },
-  {
-    id: 3,
-    name: '피자',
-    icon: '/src/assets/images/delivery/ic_pizza.svg',
-    category: 'PIZZA',
-  },
-  {
-    id: 4,
-    name: '일식',
-    icon: '/src/assets/images/delivery/ic_japan.svg',
-    category: 'JAPANESE',
-  },
-  {
-    id: 5,
-    name: '한식',
-    icon: '/src/assets/images/delivery/ic_korea.svg',
-    category: 'KOREAN',
-  },
-  {
-    id: 6,
-    name: '중식',
-    icon: '/src/assets/images/delivery/ic_china.svg',
-    category: 'CHINESE',
-  },
-  {
-    id: 7,
-    name: '아시안',
-    icon: '/src/assets/images/delivery/ic_asian.svg',
-    category: 'ASIAN',
-  },
-  {
-    id: 8,
-    name: '족발/보쌈',
-    icon: '/src/assets/images/delivery/ic_pig.svg',
-    category: 'JOKBAL',
-  },
-  {
-    id: 9,
-    name: '커피/차',
-    icon: '/src/assets/images/delivery/ic_coffee.svg',
-    category: 'CAFE',
-  },
-  {
-    id: 10,
-    name: '디저트',
-    icon: '/src/assets/images/delivery/ic_dessert.svg',
-    category: 'DESSERT',
-  },
-];
-
 interface DeliveryCategoryProps {
   onCategorySelect: (category: string) => void;
 }
@@ -125,7 +63,7 @@ const DeliveryCategory: React.FC<DeliveryCategoryProps> = ({
 }) => {
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
 
-  const handleItemClick = (item: (typeof items)[0]) => {
+  const handleItemClick = (item: (typeof deliveryItems)[0]) => {
     setSelectedItem(item.id);
     onCategorySelect(item.category);
   };
@@ -133,7 +71,7 @@ const DeliveryCategory: React.FC<DeliveryCategoryProps> = ({
   return (
     <Wrapper>
       <ItemsContainer>
-        {items.map((item) => (
+        {deliveryItems.map((item) => (
           <ItemWrapper key={item.id}>
             <Item
               isSelected={selectedItem === item.id}
