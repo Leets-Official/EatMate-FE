@@ -18,7 +18,7 @@ export const SubText = styled.div`
 export const ContentWrapper = styled.div`
   ${flexColumn}
   height: 40vh;
-  margin-top: 10vh;
+  margin-top: 5vh;
   padding: 30px;
 `;
 

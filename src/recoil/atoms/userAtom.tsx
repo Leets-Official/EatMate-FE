@@ -6,7 +6,7 @@ export const signupAtom = atom<{
   day: number | null;
   gender: string;
   phoneNumber: string;
-  mbti: string;
+  mbti: string | null;
   nickname: string;
   studentNumber: number | null;
   profileImage: File | null;
@@ -18,7 +18,7 @@ export const signupAtom = atom<{
     day: null,
     gender: '',
     phoneNumber: '',
-    mbti: '',
+    mbti: null,
     nickname: '',
     studentNumber: null,
     profileImage: null,

@@ -20,7 +20,7 @@ const SignupSuccess: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       nav('/home');
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [nav]);
