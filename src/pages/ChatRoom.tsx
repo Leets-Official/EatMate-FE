@@ -10,7 +10,6 @@ const ChatContainer = styled.div`
   flex-direction: column;
   height: 100vh;
   justify-content: space-between;
-  background-color: #fafafa;
 `;
 
 const MessagesList = styled.div`

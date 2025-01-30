@@ -7,7 +7,7 @@ const NotificationButton = styled.div`
   align-items: center;
   padding: 10px 20px;
   border-radius: 5px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 -6px 70px rgba(0, 0, 0, 0.28);
   margin: 10px;
   background-color: white;
 `;
