@@ -18,6 +18,9 @@ const Overlay = styled.div`
 `;
 
 const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 50%;
   background-color: white;
   padding: 20px;
@@ -75,8 +78,6 @@ const ExitButton = styled.button`
   height: 28px;
   border: none;
   cursor: pointer;
-  align-self: center;
-  margin: 20px 0;
 `;
 
 const ratings = [
@@ -89,18 +90,19 @@ const ratings = [
 const ChatModal = () => (
   <Overlay>
     <ModalContainer>
-      <Title>마라탕 맛집 평가하기</Title>
-      <Description>n명 참여중</Description>
-      <Divider />
-      {ratings.map((user) => (
-        <UserContainer key={user.name}>
-          <ParticipantImage src={user.image} alt={user.name} />
-          {user.isHost && <Crown src={CrownIcon} alt="방장" />}
-          {user.isMe && <Badge>나</Badge>}
-          <UserName>{user.name}</UserName>
-        </UserContainer>
-      ))}
-      <Divider />
+      <div>
+        <Title>마라탕 맛집 평가하기</Title>
+        <Description>n명 참여중</Description>
+        <Divider />
+        {ratings.map((user) => (
+          <UserContainer key={user.name}>
+            <ParticipantImage src={user.image} alt={user.name} />
+            {user.isHost && <Crown src={CrownIcon} alt="방장" />}
+            {user.isMe && <Badge>나</Badge>}
+            <UserName>{user.name}</UserName>
+          </UserContainer>
+        ))}
+      </div>
       <ExitButton onClick={() => console.log('나가기 버튼 클릭')}>
         <img src={ExitIcon} alt="나가기" />
       </ExitButton>
