@@ -17,7 +17,7 @@ interface MeetingListItemProps {
   participants: number;
   maxParticipants: number;
   time: string;
-  deliveryTime?: string;
+  rightSection?: string;
 }
 
 const Container = styled.div<{ isSelected: boolean }>`
@@ -94,7 +94,7 @@ const Participants = styled.div`
 
 const RemainingTimeBadge = styled.div`
   margin-top: 3px;
-  width: 95px;
+  padding: 2px 8px;
   ${flexAlignCenter}
   gap: 3px;
   color: ${({ theme }) => theme.COLORS.main};
@@ -102,7 +102,6 @@ const RemainingTimeBadge = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   border-radius: 5px;
   text-align: right;
-  padding: 2px 6px;
   background-color: #fbded0;
   white-space: nowrap;
 
@@ -121,7 +120,7 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
   participants,
   maxParticipants,
   time,
-  // deliveryTime,
+  rightSection,
 }) => {
   const coverType =
     cover === 'meal' ? MealCover : cover === 'beer' ? BeerCover : DeliveryCover;
@@ -168,13 +167,13 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
         <TextContainer>
           <Title>{title}</Title>
           <Description>{description}</Description>
-          {/* 이 부분은 나중에 채팅 추가하면서 수정할 예정입니다,,
-          {cover === 'delivery' && deliveryTime && (
+          {cover === 'delivery' && (
             <RemainingTimeBadge>
+              {' '}
               <img src={Clock} alt="알람 아이콘" />
-              {deliveryTime} 남았어요
+              {remainingTime}
             </RemainingTimeBadge>
-          )} */}
+          )}
         </TextContainer>
       </MainContainer>
       <InfoContainer>
@@ -187,9 +186,7 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
           {participants}/{maxParticipants}
         </Participants>
         <RemainingTimeBadge>
-          {' '}
-          <img src={Clock} alt="알람 아이콘" />
-          {remainingTime}
+          {rightSection ? rightSection : `${remainingTime} 전 대화`}
         </RemainingTimeBadge>
       </InfoContainer>
     </Container>

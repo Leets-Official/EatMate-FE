@@ -131,7 +131,7 @@ const MeetingList = ({ cover }: { cover: string }) => {
               participants={meeting.currentParticipantCount}
               maxParticipants={meeting.maxParticipants}
               time={meeting.dueDateTime}
-              deliveryTime={meeting.dueDateTime}
+              rightSection="myPage"
             />
           ))
         )}
