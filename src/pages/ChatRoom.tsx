@@ -14,7 +14,9 @@ const ChatContainer = styled.div`
 `;
 
 const MessagesList = styled.div`
-  padding: 10px;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 0 10px;
 `;
 
 const Message = styled.div<{ isMine: boolean }>`
@@ -99,7 +101,6 @@ const TimeStamp = styled.span<{ isMine: boolean }>`
   font-size: ${({ theme }) => theme.FONT_SIZE.xs};
   color: #bfbfbf;
   padding: 0 8px 5px 8px;
-  align-self: end;
 `;
 
 const DateContainer = styled.div`
@@ -109,7 +110,7 @@ const DateContainer = styled.div`
   padding: 8px 16px;
   border-radius: 20px;
   width: fit-content;
-  margin: 10px auto;
+  margin: 0px auto;
 `;
 
 interface IMessage {
