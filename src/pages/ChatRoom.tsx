@@ -5,6 +5,7 @@ import Header from '@/components/common/Header/Header';
 import ProfileIcon from '@/assets/images/ic_participant1.svg';
 import Notice from '@/components/chat/Notice';
 import ChatModal from '@/components/common/Modal/ChatModal';
+import ChatExitModal from '@/components/common/Modal/ChatExitModal';
 
 const ChatContainer = styled.div`
   display: flex;
@@ -130,7 +131,18 @@ const ChatRoom = () => {
     },
   ]);
   const [inputText, setInputText] = useState('');
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isChatModalOpen, setChatModalOpen] = useState(false);
+  const [isChatExitModalOpen, setChatExitModalOpen] = useState(false);
+
+  const openChatModal = () => setChatModalOpen(true);
+  const closeChatModal = () => setChatModalOpen(false);
+
+  const openChatExitModal = () => {
+    closeChatModal();
+    setChatExitModalOpen(true);
+  };
+
+  const closeChatExitModal = () => setChatExitModalOpen(false);
 
   const handleSendMessage = () => {
     if (inputText.trim()) {
@@ -159,7 +171,7 @@ const ChatRoom = () => {
   };
 
   const handleMenu = () => {
-    setModalOpen(true);
+    openChatModal();
   };
   return (
     <ChatContainer>
@@ -200,7 +212,8 @@ const ChatRoom = () => {
         />
         <SendButton onClick={handleSendMessage} />
       </InputContainer>
-      {isModalOpen && <ChatModal />}
+      {isChatModalOpen && <ChatModal onClose={openChatExitModal} />}
+      {isChatExitModalOpen && <ChatExitModal onClose={closeChatExitModal} />}
     </ChatContainer>
   );
 };

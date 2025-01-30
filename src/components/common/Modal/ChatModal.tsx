@@ -80,21 +80,25 @@ const ExitButton = styled.button`
   cursor: pointer;
 `;
 
-const ratings = [
+const participants = [
   { name: '가족', image: ParticipantIcon1, isMe: true, isHost: false },
   { name: '친인미', image: ParticipantIcon2, isMe: false, isHost: true },
   { name: '모둠멜론', image: ParticipantIcon3, isMe: false, isHost: false },
   { name: '황아정', image: ParticipantIcon4, isMe: false, isHost: false },
 ];
 
-const ChatModal = () => (
+interface ChatModalProps {
+  onClose: () => void;
+}
+
+const ChatModal: React.FC<ChatModalProps> = ({ onClose }) => (
   <Overlay>
     <ModalContainer>
       <div>
         <Title>마라탕 맛집 평가하기</Title>
         <Description>n명 참여중</Description>
         <Divider />
-        {ratings.map((user) => (
+        {participants.map((user) => (
           <UserContainer key={user.name}>
             <ParticipantImage src={user.image} alt={user.name} />
             {user.isHost && <Crown src={CrownIcon} alt="방장" />}
@@ -103,7 +107,7 @@ const ChatModal = () => (
           </UserContainer>
         ))}
       </div>
-      <ExitButton onClick={() => console.log('나가기 버튼 클릭')}>
+      <ExitButton onClick={() => onClose()}>
         <img src={ExitIcon} alt="나가기" />
       </ExitButton>
     </ModalContainer>

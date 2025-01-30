@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import HandIcon from '@/assets/images/ic_open hand.svg';
 import Button from '@/components/common/Button/Button';
 import { flexCenter } from '@/styles/CommonStyle';
 const ModalOverlay = styled.div`
@@ -29,15 +28,10 @@ const Title = styled.div`
   margin-bottom: 5px;
 `;
 
-const Icon = styled.img`
-  width: 100px;
-  margin-top: 5px;
-`;
-
 const Description = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   color: #707070;
-  margin-bottom: 5px;
+  margin: 10px 0;
 `;
 
 const ButtonContainer = styled.div`
@@ -54,11 +48,11 @@ const ChatExitModal: React.FC<ChatExitModalProps> = ({ onClose }) => {
   return (
     <ModalOverlay>
       <ModalContainer>
-        <Title>이용규칙</Title>
-        <Icon src={HandIcon} alt="손" />
+        <Title>채팅방 나가기기</Title>
         <Description>
           채팅방을 나가시면 그동안 이야기하신 모든 내용과 모임 참여 기록들이
-          삭제됩니다. 정말로 나가시겠어요?
+          삭제됩니다. <br />
+          정말로 나가시겠어요?
         </Description>
         <ButtonContainer>
           <Button
