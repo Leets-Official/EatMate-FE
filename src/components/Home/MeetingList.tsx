@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import SortingButton from '@/components/common/SortingButton/SortingButton';
 import MeetingListItem from '@/components/Home/MeetingListItem';
@@ -6,6 +6,8 @@ import FilterModal from '@/components/common/Modal/FilterModal';
 import RangeSlider from '@/components/common/RangeSlider';
 import { getOfflineMeetingApi } from '@/apis/meetings/getMeeting';
 import DeliveryCategory from '@/components/Home/DeliveryCategory';
+import Loading from '@/pages/Loading';
+import NotFound from '@/pages/Not-found';
 
 const Container = styled.div`
   padding: 16px;
@@ -33,16 +35,6 @@ const Divider = styled.div`
   background-color: #f9f9fc;
   margin: 10px 0;
 `;
-interface BaseMeetingParams {
-  cover: string;
-  sortOption: string;
-  genderOption: string;
-  rangeLabel: string;
-}
-
-interface DeliveryMeetingParams extends BaseMeetingParams {
-  deliveryCategory: string;
-}
 
 const MeetingList = ({ cover }: { cover: string }) => {
   const [isModalOpen, setIsModalOpen] = useState<string | null>(null);
@@ -56,37 +48,33 @@ const MeetingList = ({ cover }: { cover: string }) => {
   const [participantOption, setParticipantOption] = useState('2인~10인');
   const [rangeLabel, setRangeLabel] = useState('2인~10인');
 
-  useEffect(() => {
-    const fetchMeetings = async () => {
-      setLoading(true);
-      try {
-        // 조건에 따라 다른 파라미터 설정
-        let params: BaseMeetingParams | DeliveryMeetingParams = {
-          cover,
-          sortOption,
-          genderOption,
-          rangeLabel,
-        };
-
-        if (cover === 'delivery') {
-          params = {
-            ...params,
-            // 'delivery' 경우에만 deliveryCategory 추가
-            deliveryCategory: deliveryCategory,
-          };
-        }
-        const api = getOfflineMeetingApi();
-        const meetings = await api.fetchMeetings(params);
-        setMeetingData(meetings);
-      } catch (error) {
-        console.error('Error fetching meeting data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchMeetings();
+  // params 객체 생성
+  const params = useMemo(() => {
+    const baseParams = { cover, sortOption, genderOption, rangeLabel };
+    if (cover === 'delivery') {
+      return { ...baseParams, deliveryCategory };
+    }
+    return baseParams;
   }, [cover, sortOption, genderOption, rangeLabel, deliveryCategory]);
+
+  const fetchMeetings = useCallback(async () => {
+    setLoading(true);
+    try {
+      const api = getOfflineMeetingApi();
+      const meetings = await api.fetchMeetings(params);
+      setMeetingData(meetings);
+    } catch (error) {
+      console.error('Error fetching meeting data:', error);
+      return <NotFound />;
+    } finally {
+      setLoading(false);
+    }
+  }, [params]);
+
+  // fetchMeetings 변경될 때만 실행
+  useEffect(() => {
+    fetchMeetings();
+  }, [fetchMeetings]);
 
   const handleModalClose = () => setIsModalOpen(null);
   const handleSelectSortOption = (value: string) => {
@@ -130,7 +118,7 @@ const MeetingList = ({ cover }: { cover: string }) => {
 
       <ListContainer>
         {loading ? (
-          <p>Loading...</p>
+          <Loading />
         ) : (
           meetingData.map((meeting: any) => (
             <MeetingListItem
