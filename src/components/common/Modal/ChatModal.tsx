@@ -1,0 +1,77 @@
+import styled from 'styled-components';
+import CrownIcon from '@/assets/images/ic_crown_check.svg';
+import ParticipantIcon1 from '@/assets/images/ic_participant1.svg';
+import ParticipantIcon2 from '@/assets/images/ic_participant2.svg';
+import ParticipantIcon3 from '@/assets/images/ic_participant3.svg';
+import ParticipantIcon4 from '@/assets/images/ic_participant4.svg';
+import { flexCenter } from '@/styles/CommonStyle';
+
+const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+const Title = styled.h2`
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #333;
+`;
+
+const UserContainer = styled.div`
+  ${flexCenter}
+  margin-bottom: 10px;
+`;
+
+const ParticipantImage = styled.img`
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+`;
+const UserName = styled.span`
+  font-size: 16px;
+  color: #333;
+  flex-grow: 1;
+`;
+const Badge = styled.div`
+  background: #636363;
+  color: ${({ theme }) => theme.COLORS.white};
+  font-size: ${({ theme }) => theme.FONT_SIZE.xs};
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  ${flexCenter}
+`;
+const Crown = styled.img`
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 15px;
+  height: 15px;
+`;
+
+const ratings = [
+  { name: '가족', image: ParticipantIcon1, isMe: true, isHost: false },
+  { name: '친인미', image: ParticipantIcon2, isMe: false, isHost: true },
+  { name: '모둠멜론', image: ParticipantIcon3, isMe: false, isHost: false },
+  { name: '황아정', image: ParticipantIcon4, isMe: false, isHost: false },
+];
+
+const ChatModal = () => (
+  <ModalContainer>
+    <Title>마라탕 맛집 평가하기</Title>
+    {ratings.map((user) => (
+      <UserContainer key={user.name}>
+        <ParticipantImage src={user.image} alt={user.name} />
+        {user.isHost && <Crown src={CrownIcon} alt="방장" />}
+        {user.isMe && <Badge>나</Badge>}
+        <UserName>{user.name}</UserName>
+      </UserContainer>
+    ))}
+  </ModalContainer>
+);
+
+export default ChatModal;
