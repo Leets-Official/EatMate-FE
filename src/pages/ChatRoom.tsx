@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import sendIcon from '@/assets/images/ic_backImg_default1.svg';
+import Header from '@/components/common/Header/Header';
+import ProfileIcon from '@/assets/images/ic_participant1.svg';
 
 const ChatContainer = styled.div`
   display: flex;
@@ -11,29 +13,34 @@ const ChatContainer = styled.div`
 `;
 
 const MessagesList = styled.div`
-  padding: 20px;
-  overflow-y: scroll;
+  padding: 10px;
 `;
 
 const Message = styled.div<{ isMine: boolean }>`
   display: flex;
-  justify-content: ${({ isMine }) => (isMine ? 'flex-end' : 'flex-start')};
-  align-items: flex-end;
-  margin: 10px 0;
+  flex-direction: column;
+  align-items: ${({ isMine }) => (isMine ? 'flex-end' : 'flex-start')};
+  margin: 10px;
 `;
 
 const MessageBox = styled.div<{ isMine: boolean }>`
   max-width: 70%;
   padding: 10px;
-  margin: ${({ isMine }) => (isMine ? '0 0 0 10px' : '0 10px 0 0')};
   border-radius: ${({ isMine }) =>
-    isMine ? '18px 0 18px 18px' : '0 18px 18px 18px'};
+    isMine ? '15px 0 15px 15px' : '0 15px 15px 15px'};
   background-color: ${({ isMine, theme }) =>
     isMine ? theme.COLORS.main : '#DDDDDD'};
   color: ${({ isMine, theme }) =>
-    isMine ? theme.COLORS.white : theme.COLORS.balck};
-  position: relative;
+    isMine ? theme.COLORS.white : theme.COLORS.black};
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+`;
+
+const MessageContent = styled.div<{ isMine: boolean }>`
+  display: flex;
+  flex-direction: row;
+  justify-content: ${({ isMine }) => (isMine ? 'flex-end' : 'flex-start')};
+  align-items: center;
+  width: 100%;
 `;
 
 const InputContainer = styled.div`
@@ -67,6 +74,31 @@ const SendButton = styled.button`
   height: 27px;
   border-radius: 50%;
   cursor: pointer;
+`;
+
+const ProfileContainer = styled.div<{ isMine: boolean }>`
+  display: ${({ isMine }) => (isMine ? 'none' : 'flex')};
+  align-items: center;
+  margin-bottom: 5px;
+`;
+
+const ProfileText = styled.div`
+  margin-left: 8px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
+`;
+
+const ProfileImg = styled.img`
+  border: none;
+  width: 31px;
+  height: 31px;
+  border-radius: 50%;
+  cursor: pointer;
+`;
+const TimeStamp = styled.span<{ isMine: boolean }>`
+  font-size: ${({ theme }) => theme.FONT_SIZE.xs};
+  color: #bfbfbf;
+  padding: 0 8px 5px 8px;
+  align-self: end;
 `;
 
 interface IMessage {
@@ -113,12 +145,34 @@ const ChatRoom = () => {
     }
   };
 
+  const handleMenu = () => {
+    console.log('메뉴 클릭');
+  };
   return (
     <ChatContainer>
+      <Header
+        title="모임 제목"
+        showBackButton={true}
+        onBackClick={() => console.log('뒤로가기 클릭')}
+        isMenu={true}
+        onMenuClick={handleMenu}
+      />
       <MessagesList>
         {messages.map((msg) => (
           <Message key={msg.id} isMine={msg.isMine}>
-            <MessageBox isMine={msg.isMine}>{msg.text}</MessageBox>
+            <ProfileContainer isMine={msg.isMine}>
+              <ProfileImg src={ProfileIcon} alt="User Image" />
+              <ProfileText>{'이름 | ISFP'}</ProfileText>
+            </ProfileContainer>
+            <MessageContent isMine={msg.isMine}>
+              {msg.isMine && (
+                <TimeStamp isMine={msg.isMine}>{msg.time}</TimeStamp>
+              )}
+              <MessageBox isMine={msg.isMine}>{msg.text}</MessageBox>
+              {!msg.isMine && (
+                <TimeStamp isMine={msg.isMine}>{msg.time}</TimeStamp>
+              )}
+            </MessageContent>
           </Message>
         ))}
       </MessagesList>
