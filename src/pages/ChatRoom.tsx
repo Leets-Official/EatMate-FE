@@ -26,12 +26,14 @@ const MessageBox = styled.div<{ isMine: boolean }>`
   max-width: 70%;
   padding: 10px;
   margin: ${({ isMine }) => (isMine ? '0 0 0 10px' : '0 10px 0 0')};
-  border-radius: 20px;
-  background-color: ${({ isMine }) => (isMine ? '#ff7e67' : '#ffffff')};
-  color: ${({ isMine }) => (isMine ? '#ffffff' : '#000000')};
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  border-radius: ${({ isMine }) =>
+    isMine ? '18px 0 18px 18px' : '0 18px 18px 18px'};
+  background-color: ${({ isMine, theme }) =>
+    isMine ? theme.COLORS.main : '#DDDDDD'};
+  color: ${({ isMine, theme }) =>
+    isMine ? theme.COLORS.white : theme.COLORS.balck};
   position: relative;
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
 `;
 
 const InputContainer = styled.div`
@@ -41,7 +43,6 @@ const InputContainer = styled.div`
   padding: 0 12px;
   border-radius: 20px;
   background-color: #eeeeee;
-  color: white;
   margin: 0 10px 30px 10px;
 `;
 
@@ -61,7 +62,6 @@ const Input = styled.input`
 
 const SendButton = styled.button`
   background: url(${sendIcon}) no-repeat center;
-  background-color: #ff7e67;
   border: none;
   width: 27px;
   height: 27px;
