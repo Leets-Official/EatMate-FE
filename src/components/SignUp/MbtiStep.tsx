@@ -19,12 +19,13 @@ import { signupUser } from '@/apis/auth/auth';
 const MbtiStep: React.FC = () => {
   const nav = useNavigate();
   const [signupState, setSignupState] = useRecoilState(signupAtom);
+
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [isPolicyModalOpen, setIsPolicyModalOpen] = useState(false);
 
   const handleInputChange = (value: string) => {
     if (value.trim() === '') {
-      setSignupState((prev) => ({ ...prev, mbti: '' }));
+      setSignupState((prev) => ({ ...prev, mbti: null }));
       setErrorMessage('');
       return;
     }
@@ -59,7 +60,9 @@ const MbtiStep: React.FC = () => {
         day: signupState.day,
         profileImage: signupState.profileImage || null,
       });
+      localStorage.setItem('signupCompleted', 'true');
       setIsPolicyModalOpen(false);
+
       nav('/signup/success');
     } catch (error) {
       if (error instanceof Error) {

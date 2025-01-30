@@ -26,6 +26,7 @@ import SignupSuccess from '@/pages/signup/SignupSuccess';
 import Splash from '@/pages/Splash';
 import Loading from '@/pages/Loading';
 import NotFound from '@/pages/Not-found';
+import SignupGuard from '@/pages/signup/SignupGuard';
 
 const router = createBrowserRouter([
   {
@@ -50,7 +51,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/signup',
-    element: <SignupLayout />,
+    element: (
+      <SignupGuard>
+        <SignupLayout />
+      </SignupGuard>
+    ),
     children: [
       { index: true, element: <Navigate to="/signup/profile-img" /> },
       { path: 'profile-img', element: <ProfileImgStep /> },
