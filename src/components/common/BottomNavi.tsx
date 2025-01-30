@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import homeIcon from '@/assets/images/ic_home.svg';
 import homeIconActive from '@/assets/images/ic_home_color.svg';
@@ -6,7 +7,6 @@ import participantsIcon from '@/assets/images/ic_people.svg';
 import participantsIconActive from '@/assets/images/ic_people_color.svg';
 import myPageIcon from '@/assets/images/ic_navi_logo.svg';
 import mypageIconActive from '@/assets/images/ic_navi_logo_color.svg';
-
 import theme from '@/styles/theme';
 
 const NavContainer = styled.div`
@@ -54,16 +54,36 @@ const Icon = styled.img`
 `;
 
 const BottomNavigation = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState(0);
 
+  useEffect(() => {
+    const path = location.pathname;
+    const tabIndex = {
+      '/home': 0,
+      '/participants': 1,
+      '/mypage': 2,
+    }[path];
+    if (tabIndex !== undefined) {
+      setActiveTab(tabIndex);
+    }
+  }, [location]);
+
   const navItems = [
-    { label: '홈', icon: homeIcon, activeIcon: homeIconActive },
+    { label: '홈', icon: homeIcon, activeIcon: homeIconActive, path: '/home' },
     {
       label: '참여모임',
       icon: participantsIcon,
       activeIcon: participantsIconActive,
+      path: '/participants',
     },
-    { label: '마이페이지', icon: myPageIcon, activeIcon: mypageIconActive },
+    {
+      label: '마이페이지',
+      icon: myPageIcon,
+      activeIcon: mypageIconActive,
+      path: '/mypage',
+    },
   ];
 
   return (
@@ -72,7 +92,10 @@ const BottomNavigation = () => {
         <NavItem
           key={index}
           isActive={activeTab === index}
-          onClick={() => setActiveTab(index)}
+          onClick={() => {
+            setActiveTab(index);
+            navigate(item.path);
+          }}
         >
           <Icon
             src={activeTab === index ? item.activeIcon : item.icon}
