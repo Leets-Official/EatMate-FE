@@ -21,7 +21,7 @@ export const signupUser = async (signupData: {
   day: number | null;
   gender: string;
   phoneNumber: string;
-  mbti: string;
+  mbti: string | null;
   studentNumber: number | null;
   nickname: string;
   profileImage?: File | null;
@@ -32,12 +32,12 @@ export const signupUser = async (signupData: {
     ...signupData,
     phoneNumber: signupData.phoneNumber.replace(/-/g, ''),
   };
-  formData.append(
-    'data',
-    new Blob([JSON.stringify(formattedSignupData)], {
-      type: 'application/json',
-    })
-  );
+  // formData.append(
+  //   'data',
+  //   new Blob([JSON.stringify(formattedSignupData)], {
+  //     type: 'application/json',
+  //   })
+  // );
 
   if (signupData.profileImage) {
     formData.append('profileImage', signupData.profileImage);
