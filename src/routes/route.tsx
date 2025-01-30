@@ -25,7 +25,7 @@ import GenderStep from '@/components/SignUp/GenderStep';
 import SignupSuccess from '@/pages/signup/SignupSuccess';
 import Splash from '@/pages/Splash';
 import NotFound from '@/pages/Not-found';
-import AuthGuard from '@/pages/signup/AuthGuard';
+import AuthGuard from '@/pages/AuthGuard';
 
 const router = createBrowserRouter([
   {
