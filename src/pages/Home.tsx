@@ -1,11 +1,10 @@
+import { useState } from 'react';
 import Tabs from '@/components/common/Tab/Tab';
 import MeetingList from '@/components/Home/MeetingList';
-import { useState } from 'react';
 import styled from 'styled-components';
 
 import BottomNavigation from '@/components/common/BottomNavi';
 import FloatingPostButton from '@/components/common/FloatingPostButton';
-import DeliveryCategory from '@/components/Home/DeliveryCategory';
 import Header from '@/components/common/Header/Header';
 import { flexAlignCenter } from '@/styles/CommonStyle';
 
@@ -42,21 +41,17 @@ const Badge = styled.div`
 `;
 
 const Home = () => {
-  // 선택된 탭의 ID를 관리하는 상태
   const [selectedTabId, setSelectedTabId] = useState('tab1');
 
-  // 탭 데이터
   const tabs = [
     { id: 'tab1', label: '밥약' },
     { id: 'tab2', label: '술약' },
     { id: 'tab3', label: '배달팟' },
   ];
 
-  // 탭 클릭 핸들러
   const handleTabClick = (id: string) => {
     setSelectedTabId(id);
   };
-
   return (
     <Container>
       <Header subText="배달팟 실시간 모집 중" />
@@ -73,7 +68,6 @@ const Home = () => {
       {selectedTabId === 'tab2' && <MeetingList cover="beer" />}
       {selectedTabId === 'tab3' && (
         <div>
-          <DeliveryCategory />
           <MeetingList cover="delivery" />
         </div>
       )}

@@ -1,9 +1,7 @@
 import styled from 'styled-components';
-import PeopleIcon from '@/assets/images/ic_people_line.svg';
-import LocationIcon from '@/assets/images/ic_locate.svg';
-import CalendarIcon from '@/assets/images/ic_calendar.svg';
-import ChatIcon from '@/assets/images/ic_chat.svg';
+
 import { flexColumn } from '@/styles/CommonStyle';
+import { meetingInfoContents } from '@/constants/meetingInfoContents';
 
 interface MeetingInfoProps {
   gender: string;
@@ -55,27 +53,15 @@ const MeetingInfo: React.FC<MeetingInfoProps> = ({
 }) => {
   return (
     <InfoContainer>
-      <InfoItem>
-        <Icon src={PeopleIcon} alt="참가자 아이콘" />
-        <InfoTitle>{gender}</InfoTitle>
-      </InfoItem>
-      <InfoItem>
-        <Icon src={LocationIcon} alt="위치 아이콘" />
-        <InfoTitle>
-          {location} <br /> {placeName}
-        </InfoTitle>
-      </InfoItem>
-      <InfoItem>
-        <Icon src={CalendarIcon} alt="캘린더 아이콘" />
-        <InfoTitle>
-          {time.split(' ')[0]} <br /> {time.split(' ')[1]}
-        </InfoTitle>
-      </InfoItem>
-      <InfoItem>
-        <Icon src={ChatIcon} alt="채팅 아이콘" />
-        <InfoTitle>채팅</InfoTitle>
-        <HighlightedText>{chatTime} 전 대화</HighlightedText>
-      </InfoItem>
+      {meetingInfoContents.map((item, index) => (
+        <InfoItem key={index}>
+          <Icon src={item.icon} alt={item.alt} />
+          <InfoTitle>{item.title(gender, location, placeName, time)}</InfoTitle>
+          {item.highlightedText && (
+            <HighlightedText>{item.highlightedText(chatTime)}</HighlightedText>
+          )}
+        </InfoItem>
+      ))}
     </InfoContainer>
   );
 };

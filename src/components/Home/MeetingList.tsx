@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import SortingButton from '@/components/common/SortingButton/SortingButton';
 import MeetingListItem from '@/components/Home/MeetingListItem';
 import FilterModal from '@/components/common/Modal/FilterModal';
 import RangeSlider from '@/components/common/RangeSlider';
+import { getOfflineMeetingApi } from '@/apis/meetings/getMeeting';
+import DeliveryCategory from '@/components/Home/DeliveryCategory';
+import Loading from '@/components/common/Loading';
+import NotFound from '@/pages/Not-found';
 
 const Container = styled.div`
   padding: 16px;
@@ -22,72 +26,62 @@ const ListContainer = styled.div`
   flex-direction: column;
   gap: 16px;
   align-items: center;
+  padding-bottom: 80px;
 `;
-const meetingData = [
-  {
-    id: 0,
-    title: '마라탕 맛나게 냠냠냠 (ง •̀_•́)ง 모임',
-    description:
-      '마라탕 레전드 찐맛집입니다. 맛도 좋고 정문 옆이라 자주 가는데 혼자가기 빠끔하고 카메라모드로 시켜먹고 싶어서 방 팝니다!',
-    location: '마라탕집 인메이트점',
-    participants: '8/10',
-    time: '30',
-    isSelected: true,
-  },
-  {
-    id: 1,
-    title: '삼겹살팟',
-    description:
-      '삼겹살 좋아하시는 분들 같이 먹어요! 먹으면서 대화도 나누고 싶으신 분들 환영이에요. 진짜 많이 먹을거라서 n분의1은 안할 수도 있어요',
-    location: '서울삼겹살 가천대점',
-    participants: '4/10',
-    time: '2',
-    isSelected: false,
-  },
-  {
-    id: 2,
-    title: '시험 끝! 축하 밥약 모임 🎉',
-    description:
-      '시험 끝났으니 스트레스 풀 겸 맛있는 밥 같이 먹어요! 스트레스도 날려버립시다!',
-    location: '소쿠리소',
-    participants: '6/10',
-    time: '5',
-    isSelected: false,
-    deliveryTime: '23분 20초',
-  },
-];
+
+const Divider = styled.div`
+  width: 100%;
+  height: 10px;
+  background-color: #f9f9fc;
+  margin: 10px 0;
+`;
 
 const MeetingList = ({ cover }: { cover: string }) => {
   const [isModalOpen, setIsModalOpen] = useState<string | null>(null);
+  const [meetingData, setMeetingData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  // 각 필터별 선택 상태
+  const [deliveryCategory, setDeliveryCategory] = useState('');
+
   const [sortOption, setSortOption] = useState('기본순');
   const [genderOption, setGenderOption] = useState('모든성별');
-  const [participantOption, setParticipantOption] = useState('인원수');
-
-  // RangeLabel 및 체크박스 상태를 저장할 state
+  const [participantOption, setParticipantOption] = useState('2인~10인');
   const [rangeLabel, setRangeLabel] = useState('2인~10인');
 
-  const handleSortClick = (value: string) => {
-    setIsModalOpen(value);
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(null);
-  };
-
-  const handleSelectSortOption = (value: string) => {
-    if (isModalOpen === 'default') {
-      setSortOption(value);
-    } else if (isModalOpen === 'gender') {
-      setGenderOption(value);
-    } else if (isModalOpen === 'participant') {
-      setParticipantOption(value);
+  // params 객체 생성
+  const params = useMemo(() => {
+    const baseParams = { cover, sortOption, genderOption, rangeLabel };
+    if (cover === 'delivery') {
+      return { ...baseParams, deliveryCategory };
     }
+    return baseParams;
+  }, [cover, sortOption, genderOption, rangeLabel, deliveryCategory]);
+
+  const fetchMeetings = useCallback(async () => {
+    setLoading(true);
+    try {
+      const api = getOfflineMeetingApi();
+      const meetings = await api.fetchMeetings(params);
+      setMeetingData(meetings);
+    } catch (error) {
+      console.error('Error fetching meeting data:', error);
+      return <NotFound />;
+    } finally {
+      setLoading(false);
+    }
+  }, [params]);
+
+  // fetchMeetings 변경될 때만 실행
+  useEffect(() => {
+    fetchMeetings();
+  }, [fetchMeetings]);
+
+  const handleModalClose = () => setIsModalOpen(null);
+  const handleSelectSortOption = (value: string) => {
+    if (isModalOpen === 'default') setSortOption(value);
+    if (isModalOpen === 'gender') setGenderOption(value);
     handleModalClose();
   };
-
-  // 모달 닫을 때 RangeSlider 값 반영
   const handleParticipantConfirm = () => {
     setParticipantOption(rangeLabel);
     handleModalClose();
@@ -95,51 +89,61 @@ const MeetingList = ({ cover }: { cover: string }) => {
 
   return (
     <Container>
+      {cover === 'delivery' ? (
+        <div>
+          <DeliveryCategory onCategorySelect={setDeliveryCategory} />
+          <Divider />
+        </div>
+      ) : null}
       <ButtonContainer>
         <SortingButton
           text={sortOption}
           iconType="upDown"
           isSelected={sortOption !== '기본순'}
-          onClick={() => handleSortClick('default')}
+          onClick={() => setIsModalOpen('default')}
         />
         <SortingButton
           text={genderOption}
           iconType="downArrow"
           isSelected={genderOption !== '모든성별'}
-          onClick={() => handleSortClick('gender')}
+          onClick={() => setIsModalOpen('gender')}
         />
         <SortingButton
           text={participantOption}
           iconType="downArrow"
-          isSelected={participantOption !== '인원수'}
-          onClick={() => handleSortClick('participant')}
+          isSelected={participantOption !== '2인~10인'}
+          onClick={() => setIsModalOpen('participant')}
         />
       </ButtonContainer>
 
       <ListContainer>
-        {meetingData.map((meeting) => (
-          <MeetingListItem
-            cover={cover}
-            key={meeting.id}
-            isSelected={meeting.isSelected}
-            title={meeting.title}
-            description={meeting.description}
-            location={meeting.location}
-            participants={meeting.participants}
-            time={meeting.time}
-            deliveryTime={meeting.deliveryTime}
-          />
-        ))}
+        {loading ? (
+          <div> </div>
+        ) : (
+          meetingData.map((meeting: any) => (
+            <MeetingListItem
+              cover={cover}
+              key={meeting.meetingId}
+              isSelected={false}
+              title={meeting.meetingName}
+              description={meeting.meetingDescription}
+              location={meeting.location}
+              participants={meeting.currentParticipantCount}
+              maxParticipants={meeting.maxParticipants}
+              time={meeting.dueDateTime}
+            />
+          ))
+        )}
       </ListContainer>
 
       {isModalOpen === 'default' && (
         <FilterModal
-          isOpen={true}
+          isOpen
           title="정렬"
           options={[
             { label: '기본순', value: '기본순' },
-            { label: '최신등록순', value: '최신 등록 순' },
-            { label: '모임임박순', value: '모임시간 임박 순' },
+            { label: '최신등록순', value: '최신등록순' },
+            { label: '모임임박순', value: '모임임박순' },
           ]}
           selectedOption={sortOption}
           onSelect={handleSelectSortOption}
@@ -149,7 +153,7 @@ const MeetingList = ({ cover }: { cover: string }) => {
 
       {isModalOpen === 'gender' && (
         <FilterModal
-          isOpen={true}
+          isOpen
           title="성별"
           options={[
             { label: '모든성별', value: '모든성별' },
@@ -164,7 +168,7 @@ const MeetingList = ({ cover }: { cover: string }) => {
 
       {isModalOpen === 'participant' && (
         <FilterModal
-          isOpen={true}
+          isOpen
           title="인원수"
           options={[]}
           selectedOption=""

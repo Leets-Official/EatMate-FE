@@ -13,7 +13,7 @@ import ParticipantOption from '@/components/event/ParticipantOption';
 import MenuCategoryOption from '@/components/event/MenuCategoryOption';
 import TimePicker from '@/components/event/TimePicker';
 import BankSelectModal from '@/components/common/Modal/BankSelectModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const DeliveryMeetingCreate: React.FC = () => {
   const nav = useNavigate();
@@ -21,6 +21,12 @@ const DeliveryMeetingCreate: React.FC = () => {
 
   const [selectedBank, setSelectedBank] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deliveryCategory, setDeliveryCategory] = useState('');
+
+  // 배달 목록 확인,,
+  useEffect(() => {
+    console.log(deliveryCategory);
+  }, [deliveryCategory]);
 
   const handleBankSelect = (bank: string) => {
     setSelectedBank(bank);
@@ -114,9 +120,7 @@ const DeliveryMeetingCreate: React.FC = () => {
           }}
         />
 
-        <MenuCategoryOption
-        // onChange={(value) => handleFormChange('foodCategory', value)}
-        />
+        <MenuCategoryOption onCategorySelect={setDeliveryCategory} />
 
         {deliveryMeetingFormFields
           .filter((field) => !field.key.startsWith('meeting'))

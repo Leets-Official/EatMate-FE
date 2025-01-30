@@ -23,18 +23,14 @@ import BirthdayStep from '@/components/SignUp/BirthdayStep';
 import GenderStep from '@/components/SignUp/GenderStep';
 import SignupSuccess from '@/pages/signup/SignupSuccess';
 import Splash from '@/pages/Splash';
-import Loading from '@/pages/Loading';
 import NotFound from '@/pages/Not-found';
+import AuthGuard from '@/components/common/AuthGuard';
 import MeetingDetail from '@/pages/MeetingDetail';
 
 const router = createBrowserRouter([
   {
     path: '',
     element: <Splash />,
-  },
-  {
-    path: '/loading',
-    element: <Loading />,
   },
   {
     path: '*',
@@ -50,7 +46,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/signup',
-    element: <SignupLayout />,
+    element: (
+      <AuthGuard>
+        <SignupLayout />
+      </AuthGuard>
+    ),
     children: [
       { index: true, element: <Navigate to="/signup/profile-img" /> },
       { path: 'profile-img', element: <ProfileImgStep /> },
