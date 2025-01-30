@@ -6,10 +6,10 @@ import ProfileIcon from '@/assets/images/ic_participant1.svg';
 import Notice from '@/components/chat/Notice';
 import ChatModal from '@/components/common/Modal/ChatModal';
 import ChatExitModal from '@/components/common/Modal/ChatExitModal';
+import { flexColumn } from '@/styles/CommonStyle';
 
 const ChatContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   height: 100vh;
   justify-content: space-between;
 `;
@@ -21,8 +21,7 @@ const MessagesList = styled.div`
 `;
 
 const Message = styled.div<{ isMine: boolean }>`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: ${({ isMine }) => (isMine ? 'flex-end' : 'flex-start')};
   margin: 10px;
 `;
@@ -101,7 +100,8 @@ const ProfileImg = styled.img`
 const TimeStamp = styled.span<{ isMine: boolean }>`
   font-size: ${({ theme }) => theme.FONT_SIZE.xs};
   color: #bfbfbf;
-  padding: 0 8px 5px 8px;
+  padding: 5px;
+  align-self: end;
 `;
 
 const DateContainer = styled.div`

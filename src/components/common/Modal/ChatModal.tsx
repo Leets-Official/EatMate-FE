@@ -5,7 +5,7 @@ import ParticipantIcon1 from '@/assets/images/ic_participant1.svg';
 import ParticipantIcon2 from '@/assets/images/ic_participant2.svg';
 import ParticipantIcon3 from '@/assets/images/ic_participant3.svg';
 import ParticipantIcon4 from '@/assets/images/ic_participant4.svg';
-import { flexCenter } from '@/styles/CommonStyle';
+import { flexCenter, flexColumn } from '@/styles/CommonStyle';
 import ExitIcon from '@/assets/images/ic_exit.svg';
 
 const Overlay = styled.div`
@@ -20,14 +20,13 @@ const Overlay = styled.div`
 `;
 
 const ModalContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   justify-content: space-between;
   width: 50%;
-  background-color: white;
+  background-color: ${({ theme }) => theme.COLORS.white};
   padding: 20px;
   height: 100%;
-  box-sizing: border-box; // Ensure padding is included in width/height
+  box-sizing: border-box;
 `;
 
 const Title = styled.div`
