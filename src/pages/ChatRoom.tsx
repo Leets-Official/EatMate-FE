@@ -4,6 +4,7 @@ import sendIcon from '@/assets/images/ic_backImg_default1.svg';
 import Header from '@/components/common/Header/Header';
 import ProfileIcon from '@/assets/images/ic_participant1.svg';
 import Notice from '@/components/chat/Notice';
+import ChatModal from '@/components/common/Modal/ChatModal';
 
 const ChatContainer = styled.div`
   display: flex;
@@ -129,6 +130,7 @@ const ChatRoom = () => {
     },
   ]);
   const [inputText, setInputText] = useState('');
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const handleSendMessage = () => {
     if (inputText.trim()) {
@@ -157,7 +159,7 @@ const ChatRoom = () => {
   };
 
   const handleMenu = () => {
-    console.log('메뉴 클릭');
+    setModalOpen(true);
   };
   return (
     <ChatContainer>
@@ -198,6 +200,7 @@ const ChatRoom = () => {
         />
         <SendButton onClick={handleSendMessage} />
       </InputContainer>
+      {isModalOpen && <ChatModal />}
     </ChatContainer>
   );
 };
