@@ -60,7 +60,6 @@ const MbtiStep: React.FC = () => {
         day: signupState.day,
         profileImage: signupState.profileImage || null,
       });
-      localStorage.setItem('signupCompleted', 'true');
       setIsPolicyModalOpen(false);
 
       nav('/signup/success');
