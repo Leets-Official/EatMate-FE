@@ -1,6 +1,6 @@
 import LoadingLottie from '@/assets/lotties/loadingLottie.json';
 import Lottie from 'lottie-react';
-import { LottieContainer } from './signup/SignupSuccess';
+import { LottieContainer } from '@/pages/signup/SignupSuccess';
 
 const Loading: React.FC = () => {
   return (

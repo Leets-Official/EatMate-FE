@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { getUserInfo } from '@/apis/auth/auth';
-import Loading from '@/pages/Loading';
+import Loading from '@/components/common/Loading';
 
 const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const [isBlocked, setIsBlocked] = useState<boolean | null>(null);
