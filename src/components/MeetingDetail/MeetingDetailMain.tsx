@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import MockImage from '@/assets/images/ic_backImg_default1.svg';
 import MeetingInfo from '@/components/MeetingDetail/MeetingInfo';
-import ParticipantsList from '@/components/MeetingDetail/ParticipantsList';
 import MailIcon from '@/assets/images/ic_mail.svg';
 
 const Container = styled.div`
@@ -51,6 +50,7 @@ const Divider = styled.div`
   margin: 20px 0;
 `;
 interface MeetingDetailMainProps {
+  meetingType: string;
   title: string;
   description: string;
   gender: string;
@@ -61,6 +61,7 @@ interface MeetingDetailMainProps {
 }
 
 const MeetingDetailMain: React.FC<MeetingDetailMainProps> = ({
+  meetingType,
   title,
   description,
   gender,
@@ -69,6 +70,7 @@ const MeetingDetailMain: React.FC<MeetingDetailMainProps> = ({
   time,
   chatTime,
 }) => {
+  console.log(meetingType);
   return (
     <Container>
       <ImgContainer src={MockImage} alt="메인 이미지" />
@@ -88,7 +90,6 @@ const MeetingDetailMain: React.FC<MeetingDetailMainProps> = ({
       </SectionTitle>
       <Description>{description}</Description>
       <Divider />
-      <ParticipantsList />
     </Container>
   );
 };

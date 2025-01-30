@@ -6,6 +6,7 @@ import MeetingDetailMain from '@/components/MeetingDetail/MeetingDetailMain';
 import MailIcon from '@/assets/images/ic_invite_mail.svg';
 import MeetingGuidModal from '@/components/common/Modal/MeetingGuideModal';
 import { flexCenter } from '@/styles/CommonStyle';
+import ParticipantsList from '@/components/MeetingDetail/ParticipantsList';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -46,6 +47,7 @@ const ToastMessage = styled.div<{ show: boolean }>`
 `;
 
 const meetingMockData = {
+  meetingType: 'delivery',
   title: '마라탕 맛나게 냠냠냠 ٩( ᐛ )و 모임',
   description: `마라탕 레전드 찐맛집입니다.
   맛도 좋고 정문 옆이라 자주 가는데 혼자 가기 뻘쭘해서 방 팝니다!`,
@@ -54,13 +56,37 @@ const meetingMockData = {
   placeName: '맛있겠어요점',
   time: '오후 6시 10분',
   chatTime: '30분',
+  backgroundImage: 'sdf',
+  isOwner: true,
+  participants: [
+    {
+      userId: 0,
+      name: '이유진',
+      isOwner: true,
+      isCurrentUser: true,
+    },
+    {
+      userId: 1,
+      name: '계다현',
+      isOwner: true,
+      isCurrentUser: false,
+    },
+    {
+      userId: 2,
+      name: '홍길동',
+      isOwner: true,
+      isCurrentUser: false,
+    },
+    {
+      userId: 3,
+      name: '음음음',
+      isOwner: true,
+      isCurrentUser: false,
+    },
+  ],
 };
 
-interface MeetingDetailProps {
-  isOwner: boolean;
-}
-
-const MeetingDetail = ({ isOwner }: MeetingDetailProps) => {
+const MeetingDetail = () => {
   const [showToast, setShowToast] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -85,6 +111,7 @@ const MeetingDetail = ({ isOwner }: MeetingDetailProps) => {
         onLeaveClick={handleLeave}
       />
       <MeetingDetailMain
+        meetingType={meetingMockData.meetingType}
         title={meetingMockData.title}
         description={meetingMockData.description}
         gender={meetingMockData.gender}
@@ -93,6 +120,7 @@ const MeetingDetail = ({ isOwner }: MeetingDetailProps) => {
         time={meetingMockData.time}
         chatTime={meetingMockData.chatTime}
       />
+      <ParticipantsList participants={meetingMockData.participants} />
 
       <ButtonContainer>
         <Button
@@ -104,7 +132,7 @@ const MeetingDetail = ({ isOwner }: MeetingDetailProps) => {
           <Icon src={MailIcon} alt="초대" />
           초대하기
         </Button>
-        {isOwner ? (
+        {meetingMockData.isOwner ? (
           <>
             <Button size="sm" rounded="sm">
               수정하기

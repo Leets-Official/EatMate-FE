@@ -1,24 +1,28 @@
 import styled from 'styled-components';
+import CrownIcon from '@/assets/images/ic_crown_check.svg';
+import { flexCenter, flexColumn } from '@/styles/CommonStyle';
 import ParticipantIcon1 from '@/assets/images/ic_participant1.svg';
 import ParticipantIcon2 from '@/assets/images/ic_participant2.svg';
 import ParticipantIcon3 from '@/assets/images/ic_participant3.svg';
 import ParticipantIcon4 from '@/assets/images/ic_participant4.svg';
-import CrownIcon from '@/assets/images/ic_crown_check.svg';
-import { flexCenter, flexColumn } from '@/styles/CommonStyle';
 
 interface Participant {
-  id: number;
+  userId: number;
   name: string;
-  image: string;
   isHost?: boolean;
   isMe?: boolean;
 }
 
-const participants: Participant[] = [
-  { id: 1, name: '가천', image: ParticipantIcon1, isHost: true, isMe: true },
-  { id: 2, name: '김잇메', image: ParticipantIcon2 },
-  { id: 3, name: '무당벌레', image: ParticipantIcon3 },
-  { id: 4, name: '친구', image: ParticipantIcon4 },
+interface ParticipantsListProps {
+  participants: Participant[];
+}
+
+// 이미지 배열
+const participantImages = [
+  ParticipantIcon1,
+  ParticipantIcon2,
+  ParticipantIcon3,
+  ParticipantIcon4,
 ];
 
 const Container = styled.div`
@@ -33,6 +37,7 @@ const Title = styled.div`
   gap: 6px;
   color: ${({ theme }) => theme.COLORS.black};
 `;
+
 const ParticipantsContainer = styled.div`
   display: flex;
   gap: 24px;
@@ -79,7 +84,10 @@ const Badge = styled.div`
   border-radius: 50%;
   ${flexCenter}
 `;
-const ParticipantsList = () => {
+
+const ParticipantsList: React.FC<ParticipantsListProps> = ({
+  participants,
+}) => {
   return (
     <Container>
       <Title>
@@ -87,10 +95,16 @@ const ParticipantsList = () => {
       </Title>
       <ParticipantsContainer>
         {participants.map((participant) => (
-          <ParticipantWrapper key={participant.id}>
-            <ParticipantImage src={participant.image} alt={participant.name} />
+          <ParticipantWrapper key={participant.userId}>
+            <ParticipantImage
+              src={
+                participantImages[
+                  Math.floor(Math.random() * participantImages.length)
+                ]
+              }
+              alt={participant.name}
+            />
             {participant.isHost && <Crown src={CrownIcon} alt="방장" />}
-
             <ParticipantName>
               {participant.isMe && <Badge>나</Badge>}
               <span>{participant.name}</span>
