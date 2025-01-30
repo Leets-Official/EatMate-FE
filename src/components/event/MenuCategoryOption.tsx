@@ -1,7 +1,7 @@
 import DeliveryCategory from '@/components/Home/DeliveryCategory';
 import { Label } from '@/components/common/Input/styles';
 import styled from 'styled-components';
-import InputErrorMessage from '../common/Input/InputErrorMessage';
+import InputErrorMessage from '@/components/common/Input/InputErrorMessage';
 
 const CategoryContainer = styled.div`
   padding: 30px 0;
