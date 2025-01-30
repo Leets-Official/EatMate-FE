@@ -1,45 +1,34 @@
 /**
- * 년도 유효성 검사
+ * 생년월일 유효성 검사
  * @param year - 입력된 년도 값
- * @returns 에러 메세지 또는 true ( 유효한 경우 )
- */
-export const validateYear = (year: number | null): string | true => {
-  if (year === null) return '년도를 입력해주세요.';
-  const currentYear = new Date().getFullYear();
-  if (year < 1900 || year > currentYear) return '올바른 년도를 입력해주세요.';
-  return true;
-};
-
-/**
- * 월 유효성 검사
  * @param month - 입력된 월 값
- * @returns 에러 메세지 또는 true ( 유효한 경우 )
- */
-export const validateMonth = (month: number | null): string | true => {
-  if (month === null) return '월을 입력해주세요.';
-  if (month < 1 || month > 12) return '1에서 12 사이의 숫자를 입력해주세요.';
-  return true;
-};
-
-/**
- * 일 유효성 검사
  * @param day - 입력된 일 값
- * @param year - 입력된 년도 값
- * @param month - 입력된 월 값
- * @returns - 에러 메세지 또는 true
+ * @returns 에러 메세지 또는 true ( 유효한 경우 )
  */
-export const validateDay = (
-  day: number | null,
+export const validateBirthday = (
   year: number | null,
-  month: number | null
+  month: number | null,
+  day: number | null
 ): string | true => {
-  if (day === null || year === null || month === null)
-    return '날짜를 입력해주세요.';
+  const currentYear = new Date().getFullYear();
+
+  if (year === null || month === null || day === null) {
+    return '올바른 생년월일을 입력해주세요.';
+  }
+
+  if (year < 1900 || year > currentYear) {
+    return '올바른 생년월일을 입력해주세요.';
+  }
+
+  if (month < 1 || month > 12) {
+    return '올바른 생년월일을 입력해주세요.';
+  }
 
   const daysInMonth = new Date(year, month, 0).getDate();
+  if (day < 1 || day > daysInMonth) {
+    return '올바른 생년월일을 입력해주세요.';
+  }
 
-  if (day < 1 || day > daysInMonth)
-    return `${month}월은 ${daysInMonth}일까지입니다.`;
   return true;
 };
 
@@ -84,14 +73,9 @@ export const validateMbtiInput = (value: string, index: number): boolean => {
  * @param mbti - 입력된 MBTI 문자열
  * @returns true or false
  */
-export const isAllMbtiInputsValid = (mbti: string): boolean => {
-  const constraints = [/^[EIei]$/, /^[NSns]$/, /^[FTft]$/, /^[PJpj]$/];
-
-  if (mbti.length !== 4) return false;
-
-  return mbti
-    .split('')
-    .every((char, index) => constraints[index].test(char.toUpperCase()));
+export const validateMbti = (mbti: string): boolean => {
+  const mbtiRegex = /^[EIei][NSns][FTft][PJpj]$/;
+  return mbtiRegex.test(mbti);
 };
 
 /**

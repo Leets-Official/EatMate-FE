@@ -3,12 +3,13 @@ import ProgressBar from '@/components/SignUp/ProgressBar';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 const stepPaths = [
-  '/signup/birthday-gender',
-  '/signup/phone-number',
-  '/signup/mbti',
-  '/signup/nickname',
-  '/signup/student-id',
   '/signup/profile-img',
+  '/signup/phone-number',
+  '/signup/nickname',
+  '/signup/birthday',
+  '/signup/gender',
+  '/signup/student-id',
+  '/signup/mbti',
 ];
 
 const SignupLayout: React.FC = () => {
@@ -18,8 +19,8 @@ const SignupLayout: React.FC = () => {
   const progress = ((currentStepIndex + 1) / stepPaths.length) * 100;
 
   const handleBackClick = () => {
-    if (location.pathname === '/signup/birthday-gender') {
-      nav('/');
+    if (location.pathname === '/signup/profile-img') {
+      nav('/intro');
     } else if (currentStepIndex > 0) {
       nav(stepPaths[currentStepIndex - 1]);
     }
@@ -27,7 +28,11 @@ const SignupLayout: React.FC = () => {
 
   return (
     <div>
-      <Header showBackButton={true} onBackClick={handleBackClick} />
+      <Header
+        showBackButton={true}
+        showLogo={false}
+        onBackClick={handleBackClick}
+      />
       <ProgressBar progress={progress} />
       <Outlet />
     </div>

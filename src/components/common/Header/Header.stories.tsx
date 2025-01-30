@@ -17,6 +17,10 @@ const meta: Meta<typeof Header> = {
       control: 'boolean',
       description: '뒤로가기 버튼 표시 여부를 설정합니다.',
     },
+    showLogo: {
+      control: 'boolean',
+      description: '잇메이트 로고 표시 여부를 설정합니다.',
+    },
     subText: {
       control: 'text',
       description: '헤더 하단에 표시할 서브 텍스트를 설정합니다.',
@@ -78,5 +82,13 @@ export const LeaveButton: Story = {
     showBackButton: true,
     subText: undefined,
     isJoin: true,
+  },
+};
+
+export const OnlyBackButton: Story = {
+  args: {
+    showBackButton: true,
+    showLogo: false,
+    subText: undefined,
   },
 };
