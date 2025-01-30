@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import HandIcon from '@/assets/images/ic_open hand.svg';
 import Button from '@/components/common/Button/Button';
 import { flexCenter } from '@/styles/CommonStyle';
-
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -35,22 +34,10 @@ const Icon = styled.img`
   margin-top: 5px;
 `;
 
-const RuleList = styled.ul`
-  margin-top: 15px;
-  list-style: none;
-  padding: 0 15px;
-  text-align: left;
-`;
-
-const RuleItem = styled.li`
+const Description = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-  margin-bottom: 16px;
-  color: ${({ theme }) => theme.COLORS.black};
-  line-height: 1.5;
-
-  strong {
-    font-weight: bold;
-  }
+  color: #707070;
+  margin-bottom: 5px;
 `;
 
 const ButtonContainer = styled.div`
@@ -69,17 +56,10 @@ const ChatExitModal: React.FC<ChatExitModalProps> = ({ onClose }) => {
       <ModalContainer>
         <Title>이용규칙</Title>
         <Icon src={HandIcon} alt="손" />
-        <RuleList>
-          <RuleItem>
-            <Title>1. 존중과 예의를 지켜주세요</Title>
-            상대방에게 예의를 갖추고, 비방이나 공격적인 언행을 삼가주세요.
-          </RuleItem>
-          <RuleItem>
-            <Title>2. 약속 시간을 반드시 지켜주세요</Title>
-            모임 시작 시간에 늦지 않도록 하고, 불참 시 미리 주최자에게
-            알려주세요.
-          </RuleItem>
-        </RuleList>
+        <Description>
+          채팅방을 나가시면 그동안 이야기하신 모든 내용과 모임 참여 기록들이
+          삭제됩니다. 정말로 나가시겠어요?
+        </Description>
         <ButtonContainer>
           <Button
             variant="secondary-white"
@@ -87,7 +67,7 @@ const ChatExitModal: React.FC<ChatExitModalProps> = ({ onClose }) => {
             rounded="lg"
             onClick={onClose}
           >
-            뒤로가기
+            네, 나갈게요
           </Button>
           <Button
             variant="secondary-main"
@@ -95,7 +75,7 @@ const ChatExitModal: React.FC<ChatExitModalProps> = ({ onClose }) => {
             rounded="lg"
             onClick={onClose}
           >
-            확인했어요
+            아니오
           </Button>
         </ButtonContainer>
       </ModalContainer>
