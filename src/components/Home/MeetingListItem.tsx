@@ -186,7 +186,7 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
           {participants}/{maxParticipants}
         </Participants>
         <RemainingTimeBadge>
-          {rightSection ? rightSection : `${remainingTime} 전 대화`}
+          {rightSection ? rightSection : `n분 전 대화`}
         </RemainingTimeBadge>
       </InfoContainer>
     </Container>

@@ -6,7 +6,7 @@ import FilterModal from '@/components/common/Modal/FilterModal';
 import RangeSlider from '@/components/common/RangeSlider';
 import { getOfflineMeetingApi } from '@/apis/meetings/getMeeting';
 import DeliveryCategory from '@/components/Home/DeliveryCategory';
-import Loading from '@/pages/Loading';
+import Loading from '@/components/common/Loading';
 import NotFound from '@/pages/Not-found';
 
 const Container = styled.div`
@@ -131,7 +131,6 @@ const MeetingList = ({ cover }: { cover: string }) => {
               participants={meeting.currentParticipantCount}
               maxParticipants={meeting.maxParticipants}
               time={meeting.dueDateTime}
-              rightSection="myPage"
             />
           ))
         )}
