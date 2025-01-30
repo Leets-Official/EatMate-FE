@@ -21,9 +21,11 @@ export const getOfflineMeetingApi = () => {
       category = 'MEAL';
     } else if (cover === 'beer') {
       category = 'BEVERAGE';
-    } else {
+    } else if (deliveryCategory) {
+      // 배달 카테고리 선택 안 할 경우는 할당x
       category = deliveryCategory;
     }
+
     const endpoint = cover === 'delivery' ? 'delivery' : 'offline';
     const [minParticipants, maxParticipants] = rangeLabel
       .replace('인', '')
@@ -47,15 +49,21 @@ export const getOfflineMeetingApi = () => {
           ? 'MALE'
           : 'FEMALE';
 
+    const params: any = {
+      'page-size': 5,
+      'gender-restriction': genderRestriction,
+      'max-participant': maxParticipants,
+      'min-participant': minParticipants,
+      'sort-type': sortType,
+    };
+
+    // 카테고리가 null일 경우는 params에 추가하지 않음음
+    if (category) {
+      params.category = category;
+    }
+
     const response = await defaultInstance.get(`/api/meetings/${endpoint}`, {
-      params: {
-        category,
-        'page-size': 5,
-        'gender-restriction': genderRestriction,
-        'max-participant': maxParticipants,
-        'min-participant': minParticipants,
-        'sort-type': sortType,
-      },
+      params,
     });
     return response.data.result.content;
   };
