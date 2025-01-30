@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import CrownIcon from '@/assets/images/ic_crown_check.svg';
 import ParticipantIcon1 from '@/assets/images/ic_participant1.svg';
@@ -6,6 +7,7 @@ import ParticipantIcon3 from '@/assets/images/ic_participant3.svg';
 import ParticipantIcon4 from '@/assets/images/ic_participant4.svg';
 import { flexCenter } from '@/styles/CommonStyle';
 import ExitIcon from '@/assets/images/ic_exit.svg';
+
 const Overlay = styled.div`
   position: fixed;
   top: 0;
@@ -25,6 +27,7 @@ const ModalContainer = styled.div`
   background-color: white;
   padding: 20px;
   height: 100%;
+  box-sizing: border-box; // Ensure padding is included in width/height
 `;
 
 const Title = styled.div`
@@ -32,6 +35,7 @@ const Title = styled.div`
   font-size: 18px;
   color: #333;
 `;
+
 const Description = styled.div`
   color: ${({ theme }) => theme.COLORS.gray[300]};
   margin-bottom: 20px;
@@ -48,11 +52,13 @@ const ParticipantImage = styled.img`
   height: 45px;
   border-radius: 50%;
 `;
+
 const UserName = styled.span`
   font-size: 16px;
   color: #333;
   flex-grow: 1;
 `;
+
 const Badge = styled.div`
   background: #636363;
   color: ${({ theme }) => theme.COLORS.white};
@@ -62,16 +68,19 @@ const Badge = styled.div`
   border-radius: 50%;
   ${flexCenter}
 `;
+
 const Crown = styled.img`
   width: 15px;
   height: 15px;
 `;
+
 const Divider = styled.div`
   width: 120%;
   height: 10px;
   background-color: #f9f9fc;
   margin-left: -20px;
 `;
+
 const ExitButton = styled.button`
   background-color: ${({ theme }) => theme.COLORS.white};
   width: 28px;
@@ -89,29 +98,40 @@ const participants = [
 
 interface ChatModalProps {
   onClose: () => void;
+  onExit: () => void;
 }
 
-const ChatModal: React.FC<ChatModalProps> = ({ onClose }) => (
-  <Overlay>
-    <ModalContainer>
-      <div>
-        <Title>마라탕 맛집 평가하기</Title>
-        <Description>n명 참여중</Description>
-        <Divider />
-        {participants.map((user) => (
-          <UserContainer key={user.name}>
-            <ParticipantImage src={user.image} alt={user.name} />
-            {user.isHost && <Crown src={CrownIcon} alt="방장" />}
-            {user.isMe && <Badge>나</Badge>}
-            <UserName>{user.name}</UserName>
-          </UserContainer>
-        ))}
-      </div>
-      <ExitButton onClick={() => onClose()}>
-        <img src={ExitIcon} alt="나가기" />
-      </ExitButton>
-    </ModalContainer>
-  </Overlay>
-);
+const ChatModal: React.FC<ChatModalProps> = ({ onClose, onExit }) => {
+  const handleOverlayClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
+  return (
+    <Overlay onClick={handleOverlayClick}>
+      <ModalContainer>
+        <div>
+          <Title>마라탕 맛집 평가하기</Title>
+          <Description>n명 참여중</Description>
+          <Divider />
+          {participants.map((user) => (
+            <UserContainer key={user.name}>
+              <ParticipantImage src={user.image} alt={user.name} />
+              {user.isHost && <Crown src={CrownIcon} alt="방장" />}
+              {user.isMe && <Badge>나</Badge>}
+              <UserName>{user.name}</UserName>
+            </UserContainer>
+          ))}
+        </div>
+        <ExitButton onClick={onExit}>
+          <img src={ExitIcon} alt="나가기" />
+        </ExitButton>
+      </ModalContainer>
+    </Overlay>
+  );
+};
 
 export default ChatModal;

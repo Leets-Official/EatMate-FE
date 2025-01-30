@@ -212,7 +212,12 @@ const ChatRoom = () => {
         />
         <SendButton onClick={handleSendMessage} />
       </InputContainer>
-      {isChatModalOpen && <ChatModal onClose={openChatExitModal} />}
+      {isChatModalOpen && (
+        <ChatModal
+          onExit={openChatExitModal}
+          onClose={() => setChatModalOpen(false)}
+        />
+      )}
       {isChatExitModalOpen && <ChatExitModal onClose={closeChatExitModal} />}
     </ChatContainer>
   );
