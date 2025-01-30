@@ -18,6 +18,7 @@ import {
   createDeliveryMeeting,
   DeliveryMeetingFormData,
 } from '@/apis/meetings/createMeeting';
+import { extractMinutes } from '@/utils/dateUtils';
 
 const DeliveryMeetingCreate: React.FC = () => {
   const nav = useNavigate();
@@ -53,16 +54,6 @@ const DeliveryMeetingCreate: React.FC = () => {
     if (key === 'isLimited' && !value) {
       handleChange('maxParticipants', null);
     }
-  };
-
-  // orderDeadline: long 타입으로 보내야돼서 다시 숫자값으로 추출..
-  const extractMinutes = (isoString: string | null): number => {
-    if (!isoString) return 10;
-
-    const date = new Date(isoString);
-    if (isNaN(date.getTime())) return 10;
-
-    return date.getMinutes();
   };
 
   const buildFormData = (): DeliveryMeetingFormData => ({
