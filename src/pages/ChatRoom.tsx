@@ -102,6 +102,16 @@ const TimeStamp = styled.span<{ isMine: boolean }>`
   align-self: end;
 `;
 
+const DateContainer = styled.div`
+  background-color: #eeeeee;
+  color: #bfbfbf;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  padding: 8px 16px;
+  border-radius: 20px;
+  width: fit-content;
+  margin: 10px auto;
+`;
+
 interface IMessage {
   id: number;
   text: string;
@@ -159,6 +169,7 @@ const ChatRoom = () => {
         onMenuClick={handleMenu}
       />
       <Notice title="마라탕 맛잇겟엉점" time="13시 30분" />
+      <DateContainer>2025년 01월 14일 (화)</DateContainer>
       <MessagesList>
         {messages.map((msg) => (
           <Message key={msg.id} isMine={msg.isMine}>

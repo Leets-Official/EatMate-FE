@@ -8,6 +8,7 @@ const NotificationButton = styled.div`
   border-radius: 5px;
   box-shadow: 0 3px 50px rgba(0, 0, 0, 0.35);
   align-items: center;
+  margin: 0 10px;
 `;
 
 const IconContainer = styled.div`
@@ -21,7 +22,7 @@ const TextContainer = styled.div`
 `;
 
 const Title = styled.span`
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   margin-bottom: 4px;
 `;
 
