@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import LocateIcon from '@/assets/images/ic_locate.svg?react';
 import PersonIcon from '@/assets/images/ic_person.svg?react';
@@ -7,16 +7,17 @@ import BeerCover from '@/assets/images/ic_beer_cover.svg';
 import DeliveryCover from '@/assets/images/ic_delivery_cover.svg';
 import Clock from '@/assets/images/ic_clock.svg';
 import { flexAlignCenter, flexCenter, flexColumn } from '@/styles/CommonStyle';
-
+import dayjs from 'dayjs';
 interface MeetingListItemProps {
   cover: string;
-  isSelected: boolean;
+  isSelected?: boolean;
   title: string;
   description: string;
   location: string;
-  participants: string;
+  participants: number;
+  maxParticipants: number;
   time: string;
-  deliveryTime?: string;
+  rightSection?: string;
 }
 
 const Container = styled.div<{ isSelected: boolean }>`
@@ -76,6 +77,7 @@ const InfoContainer = styled.div`
   color: ${({ theme }) => theme.COLORS.gray[400]};
   gap: 8px;
   width: 100%;
+  justify-content: space-between;
 `;
 
 const Location = styled.div`
@@ -90,25 +92,16 @@ const Participants = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
 `;
 
-const TimeBadge = styled.div`
-  color: ${({ theme }) => theme.COLORS.main};
-  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
-  border-radius: 12px;
-  padding: 4px 10px;
-  white-space: nowrap;
-`;
-
 const RemainingTimeBadge = styled.div`
   margin-top: 3px;
-  width: 130px;
+  padding: 2px 8px;
   ${flexAlignCenter}
   gap: 3px;
   color: ${({ theme }) => theme.COLORS.main};
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   border-radius: 5px;
-  padding: 2px 6px;
+  text-align: right;
   background-color: #fbded0;
   white-space: nowrap;
 
@@ -120,16 +113,50 @@ const RemainingTimeBadge = styled.div`
 
 const MeetingListItem: React.FC<MeetingListItemProps> = ({
   cover,
-  isSelected,
+  isSelected = false,
   title,
   description,
   location,
   participants,
+  maxParticipants,
   time,
-  deliveryTime,
+  rightSection,
 }) => {
   const coverType =
     cover === 'meal' ? MealCover : cover === 'beer' ? BeerCover : DeliveryCover;
+
+  const [remainingTime, setRemainingTime] = useState<string>('');
+
+  useEffect(() => {
+    const calculateRemainingTime = () => {
+      const now = dayjs();
+      const dueDate = dayjs(time);
+
+      const diff = dueDate.diff(now, 'second');
+      if (diff > 0) {
+        const hours = Math.floor(diff / 3600);
+        const minutes = Math.floor((diff % 3600) / 60);
+        const seconds = diff % 60;
+
+        if (hours > 0) {
+          setRemainingTime(
+            `${hours.toString().padStart(2, '0')}시간 ${minutes.toString().padStart(2, '0')}분`
+          );
+        } else {
+          setRemainingTime(
+            `${minutes.toString().padStart(2, '0')}분 ${seconds.toString().padStart(2, '0')}초`
+          );
+        }
+      } else {
+        setRemainingTime('시간이 만료되었습니다');
+      }
+    };
+
+    calculateRemainingTime();
+    const timer = setInterval(calculateRemainingTime, 1000);
+
+    return () => clearInterval(timer);
+  }, [time]);
 
   return (
     <Container isSelected={isSelected}>
@@ -140,10 +167,11 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
         <TextContainer>
           <Title>{title}</Title>
           <Description>{description}</Description>
-          {cover === 'delivery' && deliveryTime && (
+          {cover === 'delivery' && (
             <RemainingTimeBadge>
+              {' '}
               <img src={Clock} alt="알람 아이콘" />
-              {deliveryTime} 남았어요
+              {remainingTime}
             </RemainingTimeBadge>
           )}
         </TextContainer>
@@ -155,9 +183,11 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
         </Location>
         <Participants>
           <PersonIcon />
-          {participants}
+          {participants}/{maxParticipants}
         </Participants>
-        <TimeBadge>{time}분 전 대화</TimeBadge>
+        <RemainingTimeBadge>
+          {rightSection ? rightSection : `${remainingTime} 전 대화`}
+        </RemainingTimeBadge>
       </InfoContainer>
     </Container>
   );
