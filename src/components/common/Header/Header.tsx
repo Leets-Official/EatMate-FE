@@ -2,7 +2,7 @@ import * as S from './styles';
 import mainLogo from '@/assets/images/EatMate_main_Logo.svg';
 import backArrow from '@/assets/images/backButton.svg';
 import rightArrow from '@/assets/images/ic_arrow_right.svg';
-
+import menu from '@/assets/images/ic_menu.svg';
 interface HeaderProps {
   title?: string;
   showLogo?: boolean;
@@ -10,7 +10,9 @@ interface HeaderProps {
   subText?: string;
   onBackClick?: () => void;
   isJoin?: boolean;
+  isMenu?: boolean;
   onLeaveClick?: () => void;
+  onMenuClick?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -21,6 +23,8 @@ const Header: React.FC<HeaderProps> = ({
   isJoin = false,
   onLeaveClick,
   showLogo = true,
+  isMenu = false,
+  onMenuClick,
 }) => {
   return (
     <S.HeaderContainer>
@@ -42,6 +46,7 @@ const Header: React.FC<HeaderProps> = ({
         )}
       </S.CenterContainer>
       {isJoin && <S.LeaveButton onClick={onLeaveClick}>나가기</S.LeaveButton>}
+      {isMenu && <img src={menu} onClick={onMenuClick} alt="메뉴" />}
     </S.HeaderContainer>
   );
 };
