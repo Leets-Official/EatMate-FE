@@ -63,7 +63,7 @@ const OfflineMeetingCreate: React.FC = () => {
     offlineMeetingCategory: formData.offlineMeetingCategory,
     backgroundImage: formData.backgroundImage,
   });
-
+  console.log('모임 시간: ', formatMeetingDate(formData.meetingDate));
   const handleSubmit = async () => {
     if (
       validateForm([
