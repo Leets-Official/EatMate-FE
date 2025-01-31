@@ -5,21 +5,44 @@ import { mypageMenuItems } from '@/constants/mypageMenuConstants';
 import * as S from '@/styles/mypage/mypage.styled';
 import { useNavigate } from 'react-router-dom';
 import editIcon from '@/assets/images/ic_edit_profile.svg';
+import { useEffect, useState } from 'react';
+import { getProfileInfo } from '@/apis/profile/getProfile';
 
 export const mockData = {
-  profileImg: ProfileIcon,
-  studentId: '202233333',
   create: 1,
   participation: 5,
-  id: 'gachon@gachon.ac.kr',
-  nickName: '가천',
-  phoneNumber: '010-1111-1111',
-  mbti: 'ISTP',
-  birthday: '2000.01.01',
 };
 
 const MyPage: React.FC = () => {
   const nav = useNavigate();
+  const [profileData, setProfileData] = useState<{
+    nickname: string;
+    studentNumber: string;
+    profileImg: string;
+  }>({
+    nickname: '',
+    studentNumber: '',
+    profileImg: ProfileIcon,
+  });
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const data = await getProfileInfo();
+        console.log('받아온 유저 데이터: ', data);
+        setProfileData({
+          nickname: data.nickname || '닉네임 없음',
+          studentNumber: data.studentNumber?.toString() || '학번 없음',
+          profileImg: data.profileImageUrl || ProfileIcon,
+        });
+      } catch (error) {
+        console.error('프로필 정보를 불러오는 중 오류 발생:', error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
   return (
     <div>
       <S.TitleContainer>
@@ -29,23 +52,27 @@ const MyPage: React.FC = () => {
       </S.TitleContainer>
       <S.ProfileContainer>
         <S.ProfileWrapper onClick={() => nav('/mypage/profile')}>
-          <S.ProfileImage src={ProfileIcon} alt="profile" />
+          <S.ProfileImage src={profileData.profileImg} alt="profile" />
           <S.EditIcon src={editIcon} alt="edit" />
         </S.ProfileWrapper>
         <S.TextContainer>
-          <S.Text fontSize="md">{mockData.nickName}</S.Text>
-          <S.Text fontSize="sm">가천대학교 {mockData.studentId}</S.Text>
+          <S.Text fontSize="lg">{profileData.nickname}</S.Text>
+          <S.Text fontSize="sm">가천대학교 {profileData.studentNumber}</S.Text>
         </S.TextContainer>
       </S.ProfileContainer>
       <S.MeetingContainer>
         <S.MeetingItems>
-          <div>{mockData.create}</div>
+          <S.Text color="main" fontSize="md">
+            {mockData.create}
+          </S.Text>
           <S.Text fontSize="sm" color="gray">
             개설한 모임
           </S.Text>
         </S.MeetingItems>
         <S.MeetingItems>
-          <div>{mockData.participation}</div>
+          <S.Text color="main" fontSize="md">
+            {mockData.participation}
+          </S.Text>
           <S.Text fontSize="sm" color="gray">
             참여한 모임
           </S.Text>
@@ -72,7 +99,7 @@ const MyPage: React.FC = () => {
           variant="primary"
           size="lg"
           rounded="sm"
-          onClick={() => nav('/')}
+          onClick={() => nav('/intro')}
         >
           로그아웃
         </Button>
