@@ -20,11 +20,7 @@ export const meetingInfoContents: MeetingInfoContent[] = [
   {
     icon: LocationIcon,
     alt: '위치 아이콘',
-    title: (location: string, placeName: string): React.ReactNode => (
-      <>
-        {location} <br /> {placeName}
-      </>
-    ),
+    title: (location: string): string => location,
   },
   {
     icon: CalendarIcon,
@@ -41,7 +37,6 @@ export const meetingInfoContents: MeetingInfoContent[] = [
       );
     },
   },
-
   {
     icon: ChatIcon,
     alt: '채팅 아이콘',

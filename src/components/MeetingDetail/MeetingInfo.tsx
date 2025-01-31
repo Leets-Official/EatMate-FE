@@ -49,6 +49,7 @@ const MeetingInfo: React.FC<MeetingInfoProps> = ({
   time,
   chatTime,
 }) => {
+  console.log(time);
   return (
     <InfoContainer>
       {meetingInfoContents.map((item, index) => (

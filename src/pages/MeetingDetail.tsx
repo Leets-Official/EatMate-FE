@@ -7,7 +7,6 @@ import MailIcon from '@/assets/images/ic_invite_mail.svg';
 import MeetingGuidModal from '@/components/common/Modal/MeetingGuideModal';
 import { flexCenter } from '@/styles/CommonStyle';
 import ParticipantsList from '@/components/MeetingDetail/ParticipantsList';
-import defaultInstance from '@/apis/axiosInstance';
 import { useParams } from 'react-router-dom';
 import { getMeetingDetailApi } from '@/apis/meetings/getMeeting';
 import Loading from '@/components/common/Loading';
@@ -55,7 +54,7 @@ interface MeetingData {
   meetingDescription: string;
   genderRestriction: string;
   location: string;
-  time: string;
+  dueDateTime: string;
   chatTime: string;
   isOwner: boolean;
   participants: Participant[];
@@ -77,7 +76,7 @@ const MeetingDetail = () => {
   useEffect(() => {
     const fetchMeetingDetail = async () => {
       try {
-        const data = await getMeetingDetailApi(meetingId);
+        const data = await getMeetingDetailApi(meetingId!);
         setMeetingData(data);
       } catch (error) {
         alert('모임 정보를 불러오는데 실패했습니다.');
@@ -87,7 +86,7 @@ const MeetingDetail = () => {
     };
 
     fetchMeetingDetail();
-  }, [meetingId]);
+  }, []);
 
   const handleInviteClick = () => {
     setShowToast(true);
@@ -132,7 +131,7 @@ const MeetingDetail = () => {
             description={meetingData?.meetingDescription}
             gender={meetingData?.genderRestriction}
             location={meetingData?.location}
-            time={meetingData?.time}
+            time={meetingData?.dueDateTime}
             chatTime="n분"
             isOwner={meetingData?.isOwner}
           />
