@@ -88,8 +88,9 @@ const DeliveryMeetingCreate: React.FC = () => {
       try {
         const formDataToSend: DeliveryMeetingFormData = buildFormData();
         await createDeliveryMeeting(formDataToSend);
-        console.log('배달팟 생성 데이터:', formDataToSend);
+        window.alert('배달팟 모임이 생성되었습니다.');
         console.log('배달팟이 정상적으로 생성되었습니다.');
+        console.log('배달팟 생성 데이터:', formDataToSend);
         nav('/home');
       } catch (error) {
         console.error(
