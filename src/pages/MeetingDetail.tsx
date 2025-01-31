@@ -143,7 +143,6 @@ const MeetingDetail = () => {
       {meetingData && (
         <div>
           <MeetingDetailMain
-            meetingType={meetingData?.meetingType}
             title={meetingData?.meetingName}
             description={meetingData?.meetingDescription}
             gender={meetingData?.genderRestriction}

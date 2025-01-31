@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import MockImage from '@/assets/images/ic_backImg_default1.svg';
 import MeetingInfo from '@/components/MeetingDetail/MeetingInfo';
 import MailIcon from '@/assets/images/ic_mail.svg';
+import { formatTimeWithMeridiem } from '@/utils/dateUtils';
 
 const Container = styled.div`
   width: 100%;
@@ -51,7 +52,6 @@ const Divider = styled.div`
 `;
 interface MeetingData {
   title: string;
-  meetingType: string;
   description: string;
   gender: string;
   location: string;
@@ -61,16 +61,13 @@ interface MeetingData {
 }
 
 const MeetingDetailMain: React.FC<MeetingData> = ({
-  meetingType,
   title,
   description,
   gender,
   location,
   time,
   chatTime,
-  isOwner,
 }) => {
-  console.log(meetingType);
   return (
     <Container>
       <ImgContainer src={MockImage} alt="메인 이미지" />
@@ -79,7 +76,7 @@ const MeetingDetailMain: React.FC<MeetingData> = ({
       <MeetingInfo
         gender={gender}
         location={location}
-        time={time}
+        time={formatTimeWithMeridiem(time)}
         chatTime={chatTime}
       />
       <Divider />
