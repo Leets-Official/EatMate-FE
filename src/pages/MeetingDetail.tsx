@@ -90,14 +90,27 @@ const MeetingDetail = () => {
   }, []);
 
   const handleInviteClick = () => {
-    setShowToast(true);
-    setTimeout(() => {
-      setShowToast(false);
-    }, 2000);
+    // 현재 페이지 URL 가져오기
+    const url = window.location.href;
+
+    // 클립보드에 URL 복사
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+        }, 2000);
+      })
+      .catch((err) => {
+        console.error('클립보드에 복사 실패:', err);
+        alert('링크 복사에 실패했습니다. 다시 시도해주세요.');
+      });
   };
 
   const handleLeave = () => {
     alert('모임에서 나갔습니다.');
+    // TODO: 채팅방 나가기 연결,,, 하면서 추가
   };
 
   const handleEdit = () => {
@@ -111,7 +124,6 @@ const MeetingDetail = () => {
 
   const handleJoin = () => {
     console.log('참여하기 클릭');
-    // 참여 관련 로직 수행
   };
   console.log(meetingData);
 
