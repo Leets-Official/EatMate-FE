@@ -13,7 +13,7 @@ interface InputProps {
   guideMessage?: string | string[] | React.ReactNode;
   hasError?: boolean;
   errorMessage?: string;
-  value?: string;
+  value?: string | number;
   onChange?: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
