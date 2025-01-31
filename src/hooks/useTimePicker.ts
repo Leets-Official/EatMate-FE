@@ -87,7 +87,13 @@ export const useTimePicker = (
     } else {
       const dayNumber = parseInt(selectedDate.replace('일', ''), 10);
       if (!isNaN(dayNumber)) {
-        selectedDateValue = dayjs().date(dayNumber);
+        const today = dayjs();
+        const futureDate =
+          today.month() === 0 && dayNumber < today.date()
+            ? today.add(1, 'month')
+            : today; // 달이 넘어가는 경우 처리
+
+        selectedDateValue = futureDate.date(dayNumber);
       }
     }
 
