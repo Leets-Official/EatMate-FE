@@ -48,7 +48,7 @@ const ChatExitModal: React.FC<ChatExitModalProps> = ({ onClose }) => {
   return (
     <ModalOverlay>
       <ModalContainer>
-        <Title>채팅방 나가기기</Title>
+        <Title>채팅방 나가기</Title>
         <Description>
           채팅방을 나가시면 그동안 이야기하신 모든 내용과 모임 참여 기록들이
           삭제됩니다. <br />
