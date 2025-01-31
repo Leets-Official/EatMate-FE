@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Speaker from '@/assets/images/ic_speaker.svg';
+import { flexColumn } from '@/styles/CommonStyle';
 
 const NotificationButton = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ const NotificationButton = styled.div`
   border-radius: 5px;
   box-shadow: 0 -6px 70px rgba(0, 0, 0, 0.28);
   margin: 10px;
-  background-color: white;
+  background-color: ${({ theme }) => theme.COLORS.white};
 `;
 
 const IconContainer = styled.div`
@@ -17,8 +18,7 @@ const IconContainer = styled.div`
 `;
 
 const TextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   text-align: left;
 `;
 
