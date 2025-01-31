@@ -158,7 +158,6 @@ const UserInfoEdit: React.FC = () => {
         title="회원정보 수정"
       />
       <S.Container>
-        {/* 🔥 프로필 이미지 미리보기 적용 */}
         <S.ProfileWrapper onClick={() => setIsModalOpen(true)}>
           <S.ProfileImage src={previewImage || ProfileIcon} alt="profile" />
           <S.EditIconWrapper>
@@ -193,7 +192,6 @@ const UserInfoEdit: React.FC = () => {
         </S.ButtonContainer>
       </S.Container>
 
-      {/* 🔥 프로필 사진 수정 모달 */}
       <ActionModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
