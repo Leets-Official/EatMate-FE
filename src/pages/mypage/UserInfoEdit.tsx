@@ -9,7 +9,7 @@ import googleIcon from '@/assets/images/GoogleIcon.svg';
 import { useEffect, useState } from 'react';
 import ActionModal from '@/components/common/Modal/ActionModal';
 import { getProfileInfo, ProfileData } from '@/apis/profile/getProfile';
-import { ProfileIcon } from '@/styles/SignUp/IntroPage.styled';
+import ProfileIcon from '@/assets/images/ic_my_profile.svg';
 import {
   patchProfileData,
   patchProfileInfo,
@@ -24,6 +24,7 @@ const UserInfoEdit: React.FC = () => {
     mbti: '',
   });
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   const handleInputChange = (
     field: 'nickname' | 'mbti',
@@ -33,6 +34,16 @@ const UserInfoEdit: React.FC = () => {
       ...prev,
       [field]: e.target.value,
     }));
+  };
+
+  const handleProfileImageChange = (file: File | null) => {
+    if (file) {
+      setSelectedImage(file);
+      setPreviewImage(URL.createObjectURL(file)); // 미리보기 URL 저장
+    } else {
+      setSelectedImage(null);
+      setPreviewImage(null);
+    }
   };
 
   useEffect(() => {
@@ -45,6 +56,7 @@ const UserInfoEdit: React.FC = () => {
           nickname: data.nickname || '',
           mbti: data.mbti || '',
         });
+        setPreviewImage(data.profileImageUrl || null);
       } catch (error) {
         console.error('프로필 정보를 불러오는 중 오류 발생:', error);
       }
@@ -54,17 +66,19 @@ const UserInfoEdit: React.FC = () => {
   }, []);
 
   const handleSubmit = async () => {
-    const updatedData: patchProfileData = {
-      profileImage: null,
-    };
+    if (!userInfo) return;
 
-    if (editedUserInfo.nickname !== userInfo?.nickname) {
+    const updatedData: patchProfileData = {};
+
+    if (editedUserInfo.nickname !== userInfo.nickname) {
       updatedData.nickname = editedUserInfo.nickname;
     }
-    if (editedUserInfo.mbti !== userInfo?.mbti) {
+
+    if (editedUserInfo.mbti !== userInfo.mbti) {
       updatedData.mbti = editedUserInfo.mbti;
     }
-    if (selectedImage) {
+
+    if (selectedImage !== null) {
       updatedData.profileImage = selectedImage;
     }
 
@@ -75,8 +89,9 @@ const UserInfoEdit: React.FC = () => {
 
     try {
       await patchProfileInfo(updatedData);
+      console.log('보낸 데이터: ', updatedData);
       window.alert('프로필 정보가 수정되었습니다.');
-      nav('/mypage');
+      window.location.reload();
     } catch (error) {
       console.error('프로필 수정 중 오류 발생:', error);
     }
@@ -143,11 +158,9 @@ const UserInfoEdit: React.FC = () => {
         title="회원정보 수정"
       />
       <S.Container>
+        {/* 🔥 프로필 이미지 미리보기 적용 */}
         <S.ProfileWrapper onClick={() => setIsModalOpen(true)}>
-          <S.ProfileImage
-            src={userInfo?.profileImageUrl || ProfileIcon}
-            alt="profile"
-          />
+          <S.ProfileImage src={previewImage || ProfileIcon} alt="profile" />
           <S.EditIconWrapper>
             <S.EditIcon src={editIcon} alt="edit-profile" />
           </S.EditIconWrapper>
@@ -180,7 +193,7 @@ const UserInfoEdit: React.FC = () => {
         </S.ButtonContainer>
       </S.Container>
 
-      {/* 프로필 사진 수정 모달 */}
+      {/* 🔥 프로필 사진 수정 모달 */}
       <ActionModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -194,7 +207,7 @@ const UserInfoEdit: React.FC = () => {
               fileInput.onchange = (e) => {
                 const file = (e.target as HTMLInputElement).files?.[0];
                 if (file) {
-                  setSelectedImage(file);
+                  handleProfileImageChange(file);
                 }
               };
               fileInput.click();
@@ -204,7 +217,7 @@ const UserInfoEdit: React.FC = () => {
           {
             label: '기본 이미지로 변경',
             onClick: () => {
-              setSelectedImage(null);
+              handleProfileImageChange(null);
               setIsModalOpen(false);
             },
             type: 'delete',

@@ -13,11 +13,11 @@ export const patchProfileInfo = async (
 ): Promise<patchProfileData> => {
   const formData = new FormData();
 
-  // nickname, mbti가 있는 경우 JSON Blob으로 추가
+  // 닉네임과 MBTI가 있는 경우만 추가 (수정된 필드만 포함)
   if (updatedData.nickname || updatedData.mbti) {
     const dataToSend = JSON.stringify({
-      nickname: updatedData.nickname || undefined,
-      mbti: updatedData.mbti || undefined,
+      ...(updatedData.nickname && { nickname: updatedData.nickname }),
+      ...(updatedData.mbti && { mbti: updatedData.mbti }),
     });
 
     formData.append(
@@ -26,9 +26,13 @@ export const patchProfileInfo = async (
     );
   }
 
-  // profileImage가 있으면 추가
-  if (updatedData.profileImage) {
-    formData.append('profileImage', updatedData.profileImage);
+  // 프로필 사진이 있을 경우 추가
+  if (updatedData.profileImage !== undefined) {
+    if (updatedData.profileImage === null) {
+      formData.append('profileImage', ''); // 빈 문자열을 추가
+    } else {
+      formData.append('profileImage', updatedData.profileImage);
+    }
   }
 
   const response = await defaultInstance.patch<{ result: patchProfileData }>(
