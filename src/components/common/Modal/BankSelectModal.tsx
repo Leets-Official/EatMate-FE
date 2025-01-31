@@ -18,7 +18,7 @@ const Bar = styled.div`
   height: 4px;
   background: #9a9a9a;
   border-radius: 2px;
-  margin: 0 auto 50px;
+  margin: 0 auto 40px;
 `;
 
 const Header = styled.div`
@@ -44,7 +44,7 @@ const ModalContainer = styled.div`
 `;
 
 const BankItem = styled.div`
-  padding: 20px;
+  padding: 15px;
   background: ${({ theme }) => theme.COLORS.white};
   border-radius: 10px;
   text-align: center;
@@ -55,7 +55,7 @@ const BankItem = styled.div`
 
   img {
     width: 70px;
-    height: 30px;
+    height: 20px;
   }
 `;
 

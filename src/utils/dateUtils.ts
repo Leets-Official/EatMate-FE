@@ -7,3 +7,12 @@ export const formatMeetingDate = (date: string) => {
 export const formatDateTime = (date: string): string => {
   return dayjs(date).format('MM/DD HH:mm');
 };
+
+export const extractMinutes = (isoString: string | null): number => {
+  if (!isoString) return 10;
+
+  const date = new Date(isoString);
+  if (isNaN(date.getTime())) return 10;
+
+  return date.getMinutes();
+};

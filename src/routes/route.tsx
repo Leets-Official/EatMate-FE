@@ -25,6 +25,7 @@ import SignupSuccess from '@/pages/signup/SignupSuccess';
 import Splash from '@/pages/Splash';
 import NotFound from '@/pages/Not-found';
 import AuthGuard from '@/components/common/AuthGuard';
+import ChatRoom from '@/pages/ChatRoom';
 import MeetingDetail from '@/pages/MeetingDetail';
 
 const router = createBrowserRouter([
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
     element: <Intro />,
   },
   {
-    path: '/oauth2/callback',
+    path: '/intro/oauth2/callback',
     element: <LoginCallback />,
   },
   {
@@ -81,6 +82,15 @@ const router = createBrowserRouter([
   {
     path: '/policy-details/:termId',
     element: <PolicyDetails />,
+  },
+  // {
+  //   path: '/meeting', //나중에 뒤에 모임 Id 추가로 넣을 예정
+  //   element: <MeetingDetail />,
+  // },
+
+  {
+    path: 'chatting',
+    element: <ChatRoom />,
   },
   {
     path: '/meeting/:meetingId',

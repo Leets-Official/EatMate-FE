@@ -88,6 +88,7 @@ const UserInfoEdit: React.FC = () => {
                 label={field.label}
                 value={field.value}
                 readOnly={field.readOnly}
+                keepBackground
               />
               {field.extra && field.extra}
             </InputWrapper>

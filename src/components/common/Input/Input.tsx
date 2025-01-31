@@ -20,6 +20,7 @@ interface InputProps {
   onClick?: () => void;
   readOnly?: boolean;
   isBankInput?: boolean;
+  keepBackground?: boolean;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -37,6 +38,7 @@ export const Input: React.FC<InputProps> = ({
   onClick,
   readOnly = false,
   isBankInput = false,
+  keepBackground,
 }) => {
   return (
     <InputWrapper style={{ marginTop: isBankInput ? '-30px' : '0px' }}>
@@ -52,6 +54,7 @@ export const Input: React.FC<InputProps> = ({
         onChange={onChange}
         onClick={onClick}
         readOnly={readOnly}
+        keepBackground={keepBackground}
       />
       {hasError && errorMessage && <InputErrorMessage message={errorMessage} />}
       {guideMessage && <InputGuide message={guideMessage} />}

@@ -21,9 +21,9 @@ const ScrollContainer = styled.div`
 
 const BackgroundItem = styled.div<{ isSelected: boolean }>`
   position: relative;
-  flex: 0 0 140px;
-  width: 144px;
-  height: 81px;
+  flex: 0 0 auto;
+  width: 164px;
+  height: 91px;
   overflow: hidden;
   cursor: pointer;
   box-sizing: border-box;
@@ -38,6 +38,13 @@ const BackgroundItem = styled.div<{ isSelected: boolean }>`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    aspect-ratio: 16 / 9;
+  }
+
+  &.contain {
+    img {
+      object-fit: contain;
+    }
   }
 `;
 
@@ -71,6 +78,7 @@ const BackgroundOption: React.FC<BackgroundOptionProps> = ({ onChange }) => {
       onChange('backgroundImage', file);
     }
   };
+
   const handleSelect = (id: number) => {
     setError(null);
     setSelectedId(id);
