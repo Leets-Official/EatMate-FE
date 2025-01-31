@@ -85,6 +85,15 @@ export const LeaveButton: Story = {
   },
 };
 
+export const MenuButton: Story = {
+  args: {
+    title: '무슨무슨모임',
+    showBackButton: true,
+    subText: undefined,
+    isMenu: true,
+  },
+};
+
 export const OnlyBackButton: Story = {
   args: {
     showBackButton: true,
