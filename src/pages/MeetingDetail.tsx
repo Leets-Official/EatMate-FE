@@ -7,7 +7,7 @@ import MailIcon from '@/assets/images/ic_invite_mail.svg';
 import MeetingGuidModal from '@/components/common/Modal/MeetingGuideModal';
 import { flexCenter } from '@/styles/CommonStyle';
 import ParticipantsList from '@/components/MeetingDetail/ParticipantsList';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getMeetingDetailApi } from '@/apis/meetings/getMeeting';
 import Loading from '@/components/common/Loading';
 
@@ -72,6 +72,7 @@ const MeetingDetail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { meetingId } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const navi = useNavigate();
 
   useEffect(() => {
     const fetchMeetingDetail = async () => {
@@ -101,7 +102,11 @@ const MeetingDetail = () => {
 
   const handleEdit = () => {
     console.log('수정하기 클릭');
-    // 수정 관련 로직 수행
+    if (meetingData?.meetingType === 'OFFLINE') {
+      navi('/meeting/create/offline');
+    } else {
+      navi('/meeting/create/delivery');
+    }
   };
 
   const handleJoin = () => {
