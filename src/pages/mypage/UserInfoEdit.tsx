@@ -1,18 +1,20 @@
 import Header from '@/components/common/Header/Header';
 import { useNavigate } from 'react-router-dom';
-import { mockData } from '@/pages/mypage/MyPage';
 import * as S from '@/styles/mypage/userInfoEdit.styled';
 import { Input } from '@/components/common/Input/Input';
 import Button from '@/components/common/Button/Button';
 import { InputWrapper } from '@/components/common/Input/styles';
 import editIcon from '@/assets/images/ic_edit_camera.svg';
 import googleIcon from '@/assets/images/GoogleIcon.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ActionModal from '@/components/common/Modal/ActionModal';
+import { getProfileInfo, ProfileData } from '@/apis/profile/getProfile';
+import { ProfileIcon } from '@/styles/SignUp/IntroPage.styled';
 
 const UserInfoEdit: React.FC = () => {
   const nav = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState<ProfileData | null>(null);
 
   const handleProfileClick = () => {
     setIsModalOpen(true);
@@ -25,7 +27,7 @@ const UserInfoEdit: React.FC = () => {
   const inputFields = [
     {
       label: '아이디',
-      value: mockData.id,
+      value: userInfo?.email || '',
       readOnly: true,
       marginBottom: '-10px',
       extra: (
@@ -37,35 +39,51 @@ const UserInfoEdit: React.FC = () => {
     },
     {
       label: '닉네임',
-      value: mockData.nickName,
+      value: userInfo?.nickname || '',
       readOnly: false,
       marginBottom: '-30px',
     },
     {
       label: '학번',
-      value: mockData.studentId,
+      value: userInfo?.studentNumber || '',
       readOnly: true,
       marginBottom: '-30px',
     },
     {
       label: '전화번호',
-      value: mockData.phoneNumber,
+      value: userInfo?.phoneNumber || '',
       readOnly: true,
       marginBottom: '-30px',
     },
     {
       label: 'MBTI',
-      value: mockData.mbti,
+      value: userInfo?.mbti || '',
       readOnly: false,
       marginBottom: '-30px',
     },
     {
       label: '생년월일',
-      value: mockData.birthday,
+      value: userInfo?.birthDate?.year
+        ? `${userInfo.birthDate.year}.${userInfo.birthDate.month}.${userInfo.birthDate.day}`
+        : '정보 없음',
       readOnly: true,
       marginBottom: '0px',
     },
   ];
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const data = await getProfileInfo();
+        console.log('받아온 유저 데이터: ', data);
+        setUserInfo(data);
+      } catch (error) {
+        console.error('프로필 정보를 불러오는 중 오류 발생:', error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   return (
     <div>
@@ -76,7 +94,10 @@ const UserInfoEdit: React.FC = () => {
       />
       <S.Container>
         <S.ProfileWrapper onClick={handleProfileClick}>
-          <S.ProfileImage src={mockData.profileImg} alt="profile" />
+          <S.ProfileImage
+            src={userInfo?.profileImageUrl || ProfileIcon}
+            alt="profile"
+          />
           <S.EditIconWrapper>
             <S.EditIcon src={editIcon} alt="edit-profile" />
           </S.EditIconWrapper>

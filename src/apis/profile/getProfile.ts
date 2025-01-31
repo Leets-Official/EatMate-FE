@@ -7,9 +7,11 @@ export interface ProfileData {
   nickname: string;
   studentNumber: number | null;
   mbti: string | null;
-  year: number | null;
-  month: number | null;
-  day: number | null;
+  birthDate: {
+    year: number | null;
+    month: number | null;
+    day: number | null;
+  };
   gender: string;
   phoneNumber: string;
   profileImageUrl?: string;
