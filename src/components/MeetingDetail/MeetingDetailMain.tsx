@@ -49,26 +49,26 @@ const Divider = styled.div`
   background-color: #f9f9fc;
   margin: 20px 0;
 `;
-interface MeetingDetailMainProps {
-  meetingType: string;
+interface MeetingData {
   title: string;
+  meetingType: string;
   description: string;
   gender: string;
   location: string;
-  placeName: string;
   time: string;
   chatTime: string;
+  isOwner: boolean;
 }
 
-const MeetingDetailMain: React.FC<MeetingDetailMainProps> = ({
+const MeetingDetailMain: React.FC<MeetingData> = ({
   meetingType,
   title,
   description,
   gender,
   location,
-  placeName,
   time,
   chatTime,
+  isOwner,
 }) => {
   console.log(meetingType);
   return (
@@ -79,7 +79,6 @@ const MeetingDetailMain: React.FC<MeetingDetailMainProps> = ({
       <MeetingInfo
         gender={gender}
         location={location}
-        placeName={placeName}
         time={time}
         chatTime={chatTime}
       />

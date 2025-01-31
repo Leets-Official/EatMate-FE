@@ -29,12 +29,19 @@ export const meetingInfoContents: MeetingInfoContent[] = [
   {
     icon: CalendarIcon,
     alt: '캘린더 아이콘',
-    title: (time: string): React.ReactNode => (
-      <>
-        {time.split(' ')[0]} <br /> {time.split(' ')[1]}
-      </>
-    ),
+    title: (time: string): React.ReactNode => {
+      if (!time || !time.includes(' ')) {
+        return '시간 정보 없음';
+      }
+      const [date, clock] = time.split(' ');
+      return (
+        <>
+          {date} <br /> {clock}
+        </>
+      );
+    },
   },
+
   {
     icon: ChatIcon,
     alt: '채팅 아이콘',

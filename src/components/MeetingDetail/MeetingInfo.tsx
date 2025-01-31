@@ -6,7 +6,6 @@ import { meetingInfoContents } from '@/constants/meetingInfoContents';
 interface MeetingInfoProps {
   gender: string;
   location: string;
-  placeName: string;
   time: string;
   chatTime: string;
 }
@@ -47,7 +46,6 @@ const Icon = styled.img`
 const MeetingInfo: React.FC<MeetingInfoProps> = ({
   gender,
   location,
-  placeName,
   time,
   chatTime,
 }) => {
@@ -56,7 +54,7 @@ const MeetingInfo: React.FC<MeetingInfoProps> = ({
       {meetingInfoContents.map((item, index) => (
         <InfoItem key={index}>
           <Icon src={item.icon} alt={item.alt} />
-          <InfoTitle>{item.title(gender, location, placeName, time)}</InfoTitle>
+          <InfoTitle>{item.title(gender, location, time)}</InfoTitle>
           {item.highlightedText && (
             <HighlightedText>{item.highlightedText(chatTime)}</HighlightedText>
           )}

@@ -9,6 +9,8 @@ import { flexCenter } from '@/styles/CommonStyle';
 import ParticipantsList from '@/components/MeetingDetail/ParticipantsList';
 import defaultInstance from '@/apis/axiosInstance';
 import { useParams } from 'react-router-dom';
+import { getMeetingDetailApi } from '@/apis/meetings/getMeeting';
+import Loading from '@/components/common/Loading';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -48,12 +50,11 @@ const ToastMessage = styled.div<{ show: boolean }>`
   transition: opacity 0.3s ease-in-out;
 `;
 interface MeetingData {
-  title: string;
+  meetingName: string;
   meetingType: string;
-  description: string;
-  gender: string;
+  meetingDescription: string;
+  genderRestriction: string;
   location: string;
-  placeName: string;
   time: string;
   chatTime: string;
   isOwner: boolean;
@@ -71,20 +72,22 @@ const MeetingDetail = () => {
   const [showToast, setShowToast] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { meetingId } = useParams();
-
-  const fetchMeetingDetail = async () => {
-    try {
-      const response = await defaultInstance.get(`/api/meetings/${meetingId}`);
-      setMeetingData(response.data);
-    } catch (error) {
-      console.error('Failed to fetch meeting details:', error);
-      alert('모임 정보를 불러오는데 실패했습니다.');
-    }
-  };
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const fetchMeetingDetail = async () => {
+      try {
+        const data = await getMeetingDetailApi(meetingId);
+        setMeetingData(data);
+      } catch (error) {
+        alert('모임 정보를 불러오는데 실패했습니다.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     fetchMeetingDetail();
-  }, []);
+  }, [meetingId]);
 
   const handleInviteClick = () => {
     setShowToast(true);
@@ -106,11 +109,16 @@ const MeetingDetail = () => {
     console.log('참여하기 클릭');
     // 참여 관련 로직 수행
   };
+  console.log(meetingData);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Container>
       <Header
-        title={meetingData?.title || ' '}
+        title={meetingData?.meetingName || ' '}
         showBackButton={true}
         onBackClick={() => console.log('뒤로가기 클릭')}
         isJoin={meetingData?.isOwner}
@@ -120,13 +128,13 @@ const MeetingDetail = () => {
         <div>
           <MeetingDetailMain
             meetingType={meetingData?.meetingType}
-            title={meetingData?.title}
-            description={meetingData?.description}
-            gender={meetingData?.gender}
+            title={meetingData?.meetingName}
+            description={meetingData?.meetingDescription}
+            gender={meetingData?.genderRestriction}
             location={meetingData?.location}
-            placeName={meetingData?.placeName}
             time={meetingData?.time}
-            chatTime={meetingData?.chatTime}
+            chatTime="n분"
+            isOwner={meetingData?.isOwner}
           />
           <ParticipantsList participants={meetingData?.participants || []} />
         </div>

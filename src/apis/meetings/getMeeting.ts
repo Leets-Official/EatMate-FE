@@ -70,3 +70,8 @@ export const getOfflineMeetingApi = () => {
 
   return { fetchMeetings };
 };
+
+export const getMeetingDetailApi = async (meetingId: string) => {
+  const response = await defaultInstance.get(`/api/meetings/${meetingId}`);
+  return response.data;
+};
