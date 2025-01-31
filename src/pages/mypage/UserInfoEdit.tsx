@@ -75,7 +75,7 @@ const UserInfoEdit: React.FC = () => {
 
     try {
       await patchProfileInfo(updatedData);
-      console.log('프로필 수정 성공');
+      window.alert('프로필 정보가 수정되었습니다.');
       nav('/mypage');
     } catch (error) {
       console.error('프로필 수정 중 오류 발생:', error);

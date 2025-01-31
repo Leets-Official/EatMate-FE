@@ -1,11 +1,11 @@
 import defaultInstance from '../axiosInstance';
 
-const PATH = 'api/profile';
+const PATH = '/api/profile';
 
 export interface patchProfileData {
   nickname?: string;
   mbti?: string;
-  profileImage: File | null;
+  profileImage?: File | null;
 }
 
 export const patchProfileInfo = async (
@@ -13,18 +13,28 @@ export const patchProfileInfo = async (
 ): Promise<patchProfileData> => {
   const formData = new FormData();
 
-  if (updatedData.nickname) {
-    formData.append('nickname', updatedData.nickname);
+  // nickname, mbti가 있는 경우 JSON Blob으로 추가
+  if (updatedData.nickname || updatedData.mbti) {
+    const dataToSend = JSON.stringify({
+      nickname: updatedData.nickname || undefined,
+      mbti: updatedData.mbti || undefined,
+    });
+
+    formData.append(
+      'data',
+      new Blob([dataToSend], { type: 'application/json' })
+    );
   }
-  if (updatedData.mbti) {
-    formData.append('mbti', updatedData.mbti);
-  }
+
+  // profileImage가 있으면 추가
   if (updatedData.profileImage) {
     formData.append('profileImage', updatedData.profileImage);
   }
+
   const response = await defaultInstance.patch<{ result: patchProfileData }>(
     `${PATH}/myinfo`,
     formData
   );
+
   return response.data.result;
 };
