@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 import { flexColumn } from '@/styles/CommonStyle';
@@ -49,13 +50,22 @@ const MeetingInfo: React.FC<MeetingInfoProps> = ({
   time,
   chatTime,
 }) => {
-  console.log(time);
   return (
     <InfoContainer>
       {meetingInfoContents.map((item, index) => (
         <InfoItem key={index}>
           <Icon src={item.icon} alt={item.alt} />
-          <InfoTitle>{item.title(gender, location, time)}</InfoTitle>
+          <InfoTitle>
+            {item.alt === '참가자 아이콘'
+              ? item.title(gender)
+              : item.alt === '위치 아이콘'
+                ? item.title(location)
+                : item.alt === '캘린더 아이콘'
+                  ? item.title(time)
+                  : item.alt === '채팅 아이콘'
+                    ? item.title()
+                    : null}
+          </InfoTitle>
           {item.highlightedText && (
             <HighlightedText>{item.highlightedText(chatTime)}</HighlightedText>
           )}
