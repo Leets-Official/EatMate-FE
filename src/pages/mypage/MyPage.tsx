@@ -56,7 +56,7 @@ const MyPage: React.FC = () => {
           <S.EditIcon src={editIcon} alt="edit" />
         </S.ProfileWrapper>
         <S.TextContainer>
-          <S.Text fontSize="md">{profileData.nickname}</S.Text>
+          <S.Text fontSize="lg">{profileData.nickname}</S.Text>
           <S.Text fontSize="sm">가천대학교 {profileData.studentNumber}</S.Text>
         </S.TextContainer>
       </S.ProfileContainer>
