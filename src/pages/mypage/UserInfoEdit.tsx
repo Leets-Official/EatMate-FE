@@ -10,18 +10,76 @@ import { useEffect, useState } from 'react';
 import ActionModal from '@/components/common/Modal/ActionModal';
 import { getProfileInfo, ProfileData } from '@/apis/profile/getProfile';
 import { ProfileIcon } from '@/styles/SignUp/IntroPage.styled';
+import {
+  patchProfileData,
+  patchProfileInfo,
+} from '@/apis/profile/patchProfile';
 
 const UserInfoEdit: React.FC = () => {
   const nav = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInfo, setUserInfo] = useState<ProfileData | null>(null);
+  const [editedUserInfo, setEditedUserInfo] = useState({
+    nickname: '',
+    mbti: '',
+  });
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
-  const handleProfileClick = () => {
-    setIsModalOpen(true);
+  const handleInputChange = (
+    field: 'nickname' | 'mbti',
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setEditedUserInfo((prev) => ({
+      ...prev,
+      [field]: e.target.value,
+    }));
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const data = await getProfileInfo();
+        console.log('받아온 유저 데이터: ', data);
+        setUserInfo(data);
+        setEditedUserInfo({
+          nickname: data.nickname || '',
+          mbti: data.mbti || '',
+        });
+      } catch (error) {
+        console.error('프로필 정보를 불러오는 중 오류 발생:', error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  const handleSubmit = async () => {
+    const updatedData: patchProfileData = {
+      profileImage: null,
+    };
+
+    if (editedUserInfo.nickname !== userInfo?.nickname) {
+      updatedData.nickname = editedUserInfo.nickname;
+    }
+    if (editedUserInfo.mbti !== userInfo?.mbti) {
+      updatedData.mbti = editedUserInfo.mbti;
+    }
+    if (selectedImage) {
+      updatedData.profileImage = selectedImage;
+    }
+
+    if (Object.keys(updatedData).length === 0) {
+      console.log('변경된 정보 없음. 요청 안 보냄.');
+      return;
+    }
+
+    try {
+      await patchProfileInfo(updatedData);
+      console.log('프로필 수정 성공');
+      nav('/mypage');
+    } catch (error) {
+      console.error('프로필 수정 중 오류 발생:', error);
+    }
   };
 
   const inputFields = [
@@ -39,9 +97,12 @@ const UserInfoEdit: React.FC = () => {
     },
     {
       label: '닉네임',
-      value: userInfo?.nickname || '',
+      value: editedUserInfo.nickname,
       readOnly: false,
       marginBottom: '-30px',
+      onChange: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      ) => handleInputChange('nickname', e),
     },
     {
       label: '학번',
@@ -57,9 +118,12 @@ const UserInfoEdit: React.FC = () => {
     },
     {
       label: 'MBTI',
-      value: userInfo?.mbti || '',
+      value: editedUserInfo.mbti,
       readOnly: false,
       marginBottom: '-30px',
+      onChange: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      ) => handleInputChange('mbti', e),
     },
     {
       label: '생년월일',
@@ -71,29 +135,15 @@ const UserInfoEdit: React.FC = () => {
     },
   ];
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const data = await getProfileInfo();
-        console.log('받아온 유저 데이터: ', data);
-        setUserInfo(data);
-      } catch (error) {
-        console.error('프로필 정보를 불러오는 중 오류 발생:', error);
-      }
-    };
-
-    fetchProfile();
-  }, []);
-
   return (
     <div>
       <Header
         onBackClick={() => nav(-1)}
         showBackButton
-        title="회원정보 수정 "
+        title="회원정보 수정"
       />
       <S.Container>
-        <S.ProfileWrapper onClick={handleProfileClick}>
+        <S.ProfileWrapper onClick={() => setIsModalOpen(true)}>
           <S.ProfileImage
             src={userInfo?.profileImageUrl || ProfileIcon}
             alt="profile"
@@ -102,6 +152,7 @@ const UserInfoEdit: React.FC = () => {
             <S.EditIcon src={editIcon} alt="edit-profile" />
           </S.EditIconWrapper>
         </S.ProfileWrapper>
+
         <S.FormContainer>
           {inputFields.map((field, index) => (
             <InputWrapper key={index} marginBottom={field.marginBottom}>
@@ -110,40 +161,57 @@ const UserInfoEdit: React.FC = () => {
                 value={field.value}
                 readOnly={field.readOnly}
                 keepBackground
+                onChange={field.onChange}
               />
               {field.extra && field.extra}
             </InputWrapper>
           ))}
         </S.FormContainer>
+
         <S.ButtonContainer>
-          <Button variant="primary" size="lg" rounded="sm">
+          <Button
+            variant="primary"
+            size="lg"
+            rounded="sm"
+            onClick={handleSubmit}
+          >
             확인
           </Button>
         </S.ButtonContainer>
       </S.Container>
 
+      {/* 프로필 사진 수정 모달 */}
       <ActionModal
         isOpen={isModalOpen}
-        onClose={closeModal}
+        onClose={() => setIsModalOpen(false)}
         actions={[
           {
             label: '앨범에서 선택',
             onClick: () => {
-              console.log('사진 변경 클릭');
-              closeModal();
+              const fileInput = document.createElement('input');
+              fileInput.type = 'file';
+              fileInput.accept = 'image/*';
+              fileInput.onchange = (e) => {
+                const file = (e.target as HTMLInputElement).files?.[0];
+                if (file) {
+                  setSelectedImage(file);
+                }
+              };
+              fileInput.click();
+              setIsModalOpen(false);
             },
           },
           {
             label: '기본 이미지로 변경',
             onClick: () => {
-              console.log('기본 이미지로 변경 클릭');
-              closeModal();
+              setSelectedImage(null);
+              setIsModalOpen(false);
             },
             type: 'delete',
           },
           {
             label: '닫기',
-            onClick: closeModal,
+            onClick: () => setIsModalOpen(false),
           },
         ]}
       />

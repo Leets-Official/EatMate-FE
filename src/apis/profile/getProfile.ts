@@ -1,4 +1,4 @@
-import defaultInstance from '../axiosInstance';
+import defaultInstance from '@/apis/axiosInstance';
 
 const PATH = '/api/profile';
 
