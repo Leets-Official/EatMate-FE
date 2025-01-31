@@ -4,6 +4,7 @@ import styled from 'styled-components';
 export const StyledInput = styled.input<{
   hasError?: boolean;
   readOnly?: boolean;
+  keepBackground?: boolean;
 }>`
   width: 100%;
   padding: 10px;
@@ -21,8 +22,12 @@ export const StyledInput = styled.input<{
     border-color: ${({ theme }) => theme.COLORS.main};
     outline: none;
   }
-  background-color: ${({ readOnly }) => (readOnly ? '#e9e9e9' : 'transparent')};
+  background-color: ${({ readOnly, keepBackground }) =>
+    readOnly ? (keepBackground ? '#e9e9e9' : 'transparent') : 'transparent'};
   color: ${({ readOnly }) => (readOnly ? '#848484' : '#000')};
+
+  cursor: ${({ readOnly, keepBackground }) =>
+    readOnly ? (keepBackground ? 'default' : 'pointer') : 'text'};
 `;
 
 export const Label = styled.div<{ hasError?: boolean }>`

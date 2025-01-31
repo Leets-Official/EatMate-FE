@@ -23,11 +23,12 @@ export interface DeliveryMeetingFormData {
   foodCategory: string;
   storeName: string;
   pickupLocation: string;
-  orderDeadline: string;
+  orderDeadline: number;
   accountNumber: string;
   bankName: string;
   backgroundImage: File | null;
 }
+
 const createFormData = (
   data: OfflineMeetingFormData | DeliveryMeetingFormData
 ): FormData => {
@@ -61,6 +62,7 @@ export const createOfflineMeeting = async (
   return await postFormData(`${PATH}/offline`, formData);
 };
 
+// 배달팟 모임 생성 API 호출
 export const createDeliveryMeeting = async (
   DeliveryCreateData: DeliveryMeetingFormData
 ) => {

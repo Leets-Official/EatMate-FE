@@ -3,7 +3,7 @@ import { useUserGender } from '@/hooks/useUserGender';
 import { useNavigate } from 'react-router-dom';
 import * as S from '@/styles/event/MeetingCreate.styled';
 import Button from '@/components/common/Button/Button';
-import { deliveryMeetingFormFields } from '@/constants/MeetingFields';
+import { deliveryMeetingFormFields } from '@/constants/MeetingFieldsConstants';
 import { Input } from '@/components/common/Input/Input';
 import BackgroundOption from '@/components/event/BackgroundOption';
 import { useInputHandler } from '@/hooks/useInputHandler';
@@ -13,20 +13,18 @@ import ParticipantOption from '@/components/event/ParticipantOption';
 import MenuCategoryOption from '@/components/event/MenuCategoryOption';
 import TimePicker from '@/components/event/TimePicker';
 import BankSelectModal from '@/components/common/Modal/BankSelectModal';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import {
+  createDeliveryMeeting,
+  DeliveryMeetingFormData,
+} from '@/apis/meetings/createMeeting';
+import { extractMinutes } from '@/utils/dateUtils';
 
 const DeliveryMeetingCreate: React.FC = () => {
   const nav = useNavigate();
   const userGender = useUserGender();
-
   const [selectedBank, setSelectedBank] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deliveryCategory, setDeliveryCategory] = useState('');
-
-  // 배달 목록 확인,,
-  useEffect(() => {
-    console.log(deliveryCategory);
-  }, [deliveryCategory]);
 
   const handleBankSelect = (bank: string) => {
     setSelectedBank(bank);
@@ -58,7 +56,22 @@ const DeliveryMeetingCreate: React.FC = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const buildFormData = (): DeliveryMeetingFormData => ({
+    meetingName: formData.meetingName,
+    meetingDescription: formData.meetingDescription,
+    genderRestriction: formData.genderRestriction,
+    isLimited: formData.isLimited,
+    maxParticipants: formData.isLimited ? formData.maxParticipants : null,
+    foodCategory: formData.foodCategory,
+    storeName: formData.storeName,
+    pickupLocation: formData.pickupLocation,
+    orderDeadline: extractMinutes(formData.orderDeadline),
+    accountNumber: formData.accountNumber,
+    bankName: formData.bankName,
+    backgroundImage: formData.backgroundImage,
+  });
+
+  const handleSubmit = async () => {
     if (
       validateForm([
         'meetingName',
@@ -69,10 +82,21 @@ const DeliveryMeetingCreate: React.FC = () => {
         'orderDeadline',
         'accountNumber',
         'bankName',
+        'foodCategory',
       ])
     ) {
-      console.log('배달팟 생성 데이터:', formData);
-      nav('/home');
+      try {
+        const formDataToSend: DeliveryMeetingFormData = buildFormData();
+        await createDeliveryMeeting(formDataToSend);
+        window.alert('배달팟 모임이 생성되었습니다.');
+        console.log('배달팟이 정상적으로 생성되었습니다.');
+        console.log('배달팟 생성 데이터:', formDataToSend);
+        nav('/home');
+      } catch (error) {
+        console.error(
+          error instanceof Error ? error.message : '오류가 발생했습니다.'
+        );
+      }
     } else {
       console.log('필수 입력값이 누락되었습니다.');
     }
@@ -120,7 +144,10 @@ const DeliveryMeetingCreate: React.FC = () => {
           }}
         />
 
-        <MenuCategoryOption onCategorySelect={setDeliveryCategory} />
+        <MenuCategoryOption
+          onCategorySelect={(value) => handleFormChange('foodCategory', value)}
+          showError={!!errors.foodCategory}
+        />
 
         {deliveryMeetingFormFields
           .filter((field) => !field.key.startsWith('meeting'))
@@ -146,6 +173,9 @@ const DeliveryMeetingCreate: React.FC = () => {
           value={selectedBank}
           isBankInput
           onClick={() => setIsModalOpen(true)}
+          hasError={errors.bankName}
+          readOnly
+          keepBackground={false}
         />
 
         {isModalOpen && (
