@@ -97,6 +97,16 @@ const MeetingDetail = () => {
     alert('모임에서 나갔습니다.');
   };
 
+  const handleEdit = () => {
+    console.log('수정하기 클릭');
+    // 수정 관련 로직 수행
+  };
+
+  const handleJoin = () => {
+    console.log('참여하기 클릭');
+    // 참여 관련 로직 수행
+  };
+
   return (
     <Container>
       <Header
@@ -132,12 +142,14 @@ const MeetingDetail = () => {
           <Icon src={MailIcon} alt="초대" />
           초대하기
         </Button>
-        {meetingData?.isOwner && (
-          <>
-            <Button size="sm" rounded="sm">
-              수정하기
-            </Button>
-          </>
+        {meetingData?.isOwner ? (
+          <Button size="sm" rounded="sm" onClick={handleEdit}>
+            수정하기
+          </Button>
+        ) : (
+          <Button size="sm" rounded="sm" onClick={handleJoin}>
+            참여하기
+          </Button>
         )}
       </ButtonContainer>
       {isModalOpen && (
