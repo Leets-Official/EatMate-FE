@@ -7,11 +7,10 @@ export const useProfileImage = (initialImage: string | null) => {
 
   const handleProfileImageChange = (file: File | null) => {
     if (file) {
-      setPreviewImage(URL.createObjectURL(file));
-      setProfileImageFile(file);
+      const objectURL = URL.createObjectURL(file);
+      setPreviewImage(objectURL);
     } else {
       setPreviewImage(null);
-      setProfileImageFile(null);
     }
   };
 

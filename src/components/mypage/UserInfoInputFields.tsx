@@ -5,15 +5,15 @@ import googleIcon from '@/assets/images/GoogleIcon.svg';
 
 interface UserInfoInputFieldsProps {
   userInfo: {
-    email?: string;
-    studentNumber?: string;
+    email?: string | null;
+    studentNumber?: number;
     phoneNumber?: string;
     birthDate?: {
-      year?: number;
-      month?: number;
-      day?: number;
+      year?: number | null;
+      month?: number | null;
+      day?: number | null;
     };
-  } | null;
+  };
   editedUserInfo: {
     nickname: string;
     mbti: string;

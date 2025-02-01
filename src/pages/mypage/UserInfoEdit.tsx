@@ -1,11 +1,8 @@
 import Header from '@/components/common/Header/Header';
 import { useNavigate } from 'react-router-dom';
 import * as S from '@/styles/mypage/userInfoEdit.styled';
-import { Input } from '@/components/common/Input/Input';
 import Button from '@/components/common/Button/Button';
-import { InputWrapper } from '@/components/common/Input/styles';
 import editIcon from '@/assets/images/ic_edit_camera.svg';
-import googleIcon from '@/assets/images/GoogleIcon.svg';
 import { useEffect, useState } from 'react';
 import ActionModal from '@/components/common/Modal/ActionModal';
 import { getProfileInfo, ProfileData } from '@/apis/profile/getProfile';
@@ -16,6 +13,7 @@ import {
 } from '@/apis/profile/patchProfile';
 import Loading from '@/components/common/Loading';
 import { useProfileImage } from '@/hooks/useProfileImage';
+import UserInfoInputFields from '@/components/mypage/UserInfoInputFields';
 
 const UserInfoEdit: React.FC = () => {
   const nav = useNavigate();
@@ -35,7 +33,7 @@ const UserInfoEdit: React.FC = () => {
     handleCloseModal,
     handleSelectPhoto,
     handleDeletePhoto,
-  } = useProfileImage(null);
+  } = useProfileImage(userInfo?.profileImageUrl || ProfileIcon);
 
   const handleInputChange = (
     field: 'nickname' | 'mbti',
@@ -106,59 +104,6 @@ const UserInfoEdit: React.FC = () => {
     }
   };
 
-  const inputFields = [
-    {
-      label: '아이디',
-      value: userInfo?.email || '',
-      readOnly: true,
-      marginBottom: '-10px',
-      extra: (
-        <S.GoogleText>
-          <S.GoogleIcon src={googleIcon} alt="google" />
-          <div>구글 로그인 사용중</div>
-        </S.GoogleText>
-      ),
-    },
-    {
-      label: '닉네임',
-      value: editedUserInfo.nickname,
-      readOnly: false,
-      marginBottom: '-30px',
-      onChange: (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      ) => handleInputChange('nickname', e),
-    },
-    {
-      label: '학번',
-      value: userInfo?.studentNumber || '',
-      readOnly: true,
-      marginBottom: '-30px',
-    },
-    {
-      label: '전화번호',
-      value: userInfo?.phoneNumber || '',
-      readOnly: true,
-      marginBottom: '-30px',
-    },
-    {
-      label: 'MBTI',
-      value: editedUserInfo.mbti,
-      readOnly: false,
-      marginBottom: '-30px',
-      onChange: (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      ) => handleInputChange('mbti', e),
-    },
-    {
-      label: '생년월일',
-      value: userInfo?.birthDate?.year
-        ? `${userInfo.birthDate.year}.${userInfo.birthDate.month}.${userInfo.birthDate.day}`
-        : '정보 없음',
-      readOnly: true,
-      marginBottom: '0px',
-    },
-  ];
-
   return (
     <div>
       <Header
@@ -174,21 +119,19 @@ const UserInfoEdit: React.FC = () => {
           </S.EditIconWrapper>
         </S.ProfileWrapper>
 
-        <S.FormContainer>
-          {inputFields.map((field, index) => (
-            <InputWrapper key={index} marginBottom={field.marginBottom}>
-              <Input
-                label={field.label}
-                value={field.value}
-                readOnly={field.readOnly}
-                keepBackground
-                onChange={field.onChange}
-              />
-              {field.extra && field.extra}
-            </InputWrapper>
-          ))}
-        </S.FormContainer>
-
+        <UserInfoInputFields
+          userInfo={{
+            ...userInfo,
+            studentNumber: userInfo?.studentNumber ?? 0,
+            birthDate: {
+              year: userInfo?.birthDate?.year ?? null,
+              month: userInfo?.birthDate?.month ?? null,
+              day: userInfo?.birthDate?.day ?? null,
+            },
+          }}
+          editedUserInfo={editedUserInfo}
+          handleInputChange={handleInputChange}
+        />
         <S.ButtonContainer>
           <Button
             variant="primary"
