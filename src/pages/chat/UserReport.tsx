@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import icArrowDown from '@/assets/images/ic_arrow_right.svg';
 import { Text } from '@/styles/mypage/mypage.styled';
+import { flexCenter } from '@/styles/CommonStyle';
+import HandIcon from '@/assets/images/ic_open hand.svg';
 
 const FaqWrapper = styled.div`
   padding: 20px;
@@ -26,6 +28,14 @@ const ReportText = styled.div`
   gap: 10px;
 `;
 
+const Description = styled.div`
+  ${flexCenter}
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  margin: 20px 0;
+  width: 100%;
+`;
+
 const ArrowIcon = styled.img`
   width: 14px;
   height: 14px;
@@ -39,6 +49,13 @@ const Divider = styled.div`
   background-color: #f9f9fc;
 `;
 
+const HandIconImg = styled.img`
+  ${flexCenter}
+  width: 100%;
+  height: 100px;
+  margin-bottom: 50px;
+`;
+
 const UserReport: React.FC = () => {
   const nav = useNavigate();
   const reportConstants = [
@@ -48,16 +65,18 @@ const UserReport: React.FC = () => {
     },
     {
       text: '성희롱을 해요',
-      reportType: '비밀번호는 구글 계정 설정에서만 변경하실 수 있어요.',
+      reportType: 'ㄴㄴ',
     },
     {
       text: '다른 문제가 있어요',
-      reportType: '비밀번호는 구글 계정 설정에서만 변경하실 수 있어요.',
+      reportType: 'ㄴㅇㅇ',
     },
   ];
   return (
     <>
       <Header onBackClick={() => nav(-1)} showBackButton title="사용자 신고" />
+      <Description>사용자를 신고하는 이유를 선택해주세요</Description>
+      <HandIconImg src={HandIcon} alt="손" />
       <FaqWrapper>
         {reportConstants.map((report) => (
           <div>
