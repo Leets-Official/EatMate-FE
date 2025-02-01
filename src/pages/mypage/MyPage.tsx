@@ -9,10 +9,10 @@ import { useEffect, useState } from 'react';
 import { getProfileInfo } from '@/apis/profile/getProfile';
 import Loading from '@/components/common/Loading';
 
-export const mockData = {
-  create: 1,
-  participation: 5,
-};
+// export const mockData = {
+//   create: 1,
+//   participation: 5,
+// };
 
 const MyPage: React.FC = () => {
   const nav = useNavigate();
@@ -69,7 +69,7 @@ const MyPage: React.FC = () => {
           <S.Text fontSize="sm">가천대학교 {profileData.studentNumber}</S.Text>
         </S.TextContainer>
       </S.ProfileContainer>
-      <S.MeetingContainer>
+      {/* <S.MeetingContainer>
         <S.MeetingItems>
           <S.Text color="main" fontSize="md">
             {mockData.create}
@@ -86,7 +86,7 @@ const MyPage: React.FC = () => {
             참여한 모임
           </S.Text>
         </S.MeetingItems>
-      </S.MeetingContainer>
+      </S.MeetingContainer> */}
       <S.MenuContainer>
         {mypageMenuItems.map((section, index) => (
           <S.SectionContainer key={index}>

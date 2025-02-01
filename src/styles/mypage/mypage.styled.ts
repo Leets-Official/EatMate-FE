@@ -10,7 +10,7 @@ import theme from '@/styles/theme';
 export const ButtonContainer = styled.div`
   padding: 20px;
   ${flexCenter}
-  margin-bottom: 70px;
+  margin-bottom: 50px;
 `;
 
 export const TitleContainer = styled.div`
@@ -83,7 +83,7 @@ export const Text = styled.div<{
 
 export const MenuContainer = styled.div`
   ${flexColumn}
-  padding: 20px 40px;
+  padding:40px;
   justify-content: center;
   gap: 30px;
 `;
