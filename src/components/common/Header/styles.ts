@@ -49,8 +49,8 @@ export const SubText = styled.span`
   cursor: pointer;
 
   img {
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
   }
 `;
 
