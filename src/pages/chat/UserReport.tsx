@@ -6,7 +6,7 @@ import { Text } from '@/styles/mypage/mypage.styled';
 import { flexCenter } from '@/styles/CommonStyle';
 import HandIcon from '@/assets/images/ic_open hand.svg';
 
-const FaqWrapper = styled.div`
+const Wrapper = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -77,7 +77,7 @@ const UserReport: React.FC = () => {
       <Header onBackClick={() => nav(-1)} showBackButton title="사용자 신고" />
       <Description>사용자를 신고하는 이유를 선택해주세요</Description>
       <HandIconImg src={HandIcon} alt="손" />
-      <FaqWrapper>
+      <Wrapper>
         {reportConstants.map((report) => (
           <div>
             <Divider />
@@ -92,7 +92,7 @@ const UserReport: React.FC = () => {
             </Container>
           </div>
         ))}
-      </FaqWrapper>
+      </Wrapper>
     </>
   );
 };
