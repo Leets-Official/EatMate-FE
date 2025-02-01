@@ -15,18 +15,28 @@ import {
   patchProfileInfo,
 } from '@/apis/profile/patchProfile';
 import Loading from '@/components/common/Loading';
+import { useProfileImage } from '@/hooks/useProfileImage';
 
 const UserInfoEdit: React.FC = () => {
   const nav = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInfo, setUserInfo] = useState<ProfileData | null>(null);
   const [editedUserInfo, setEditedUserInfo] = useState({
     nickname: '',
     mbti: '',
   });
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+
+  const {
+    isModalOpen,
+    previewImage,
+    handleProfileImageChange,
+    handleOpenModal,
+    handleCloseModal,
+    handleSelectPhoto,
+    handleDeletePhoto,
+  } = useProfileImage(null, (file) =>
+    setUserInfo((prev) => prev && { ...prev, profileImage: file })
+  );
 
   const handleInputChange = (
     field: 'nickname' | 'mbti',
@@ -36,16 +46,6 @@ const UserInfoEdit: React.FC = () => {
       ...prev,
       [field]: e.target.value,
     }));
-  };
-
-  const handleProfileImageChange = (file: File | null) => {
-    if (file) {
-      setSelectedImage(file);
-      setPreviewImage(URL.createObjectURL(file)); // 미리보기 URL 저장
-    } else {
-      setSelectedImage(null);
-      setPreviewImage(null);
-    }
   };
 
   useEffect(() => {
@@ -58,7 +58,9 @@ const UserInfoEdit: React.FC = () => {
           nickname: data.nickname || '',
           mbti: data.mbti || '',
         });
-        setPreviewImage(data.profileImageUrl || null);
+        handleProfileImageChange(
+          data.profileImageUrl ? new File([], data.profileImageUrl) : null
+        );
       } catch (error) {
         console.error('프로필 정보를 불러오는 중 오류 발생:', error);
       }
@@ -80,8 +82,8 @@ const UserInfoEdit: React.FC = () => {
       updatedData.mbti = editedUserInfo.mbti;
     }
 
-    if (selectedImage !== null) {
-      updatedData.profileImage = selectedImage;
+    if (userInfo.profileImageUrl) {
+      updatedData.profileImage = userInfo.profileImageUrl;
     }
 
     if (Object.keys(updatedData).length === 0) {
@@ -166,7 +168,7 @@ const UserInfoEdit: React.FC = () => {
         title="회원정보 수정"
       />
       <S.Container>
-        <S.ProfileWrapper onClick={() => setIsModalOpen(true)}>
+        <S.ProfileWrapper onClick={handleOpenModal}>
           <S.ProfileImage src={previewImage || ProfileIcon} alt="profile" />
           <S.EditIconWrapper>
             <S.EditIcon src={editIcon} alt="edit-profile" />
@@ -202,36 +204,15 @@ const UserInfoEdit: React.FC = () => {
 
       <ActionModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleCloseModal}
         actions={[
-          {
-            label: '앨범에서 선택',
-            onClick: () => {
-              const fileInput = document.createElement('input');
-              fileInput.type = 'file';
-              fileInput.accept = 'image/*';
-              fileInput.onchange = (e) => {
-                const file = (e.target as HTMLInputElement).files?.[0];
-                if (file) {
-                  handleProfileImageChange(file);
-                }
-              };
-              fileInput.click();
-              setIsModalOpen(false);
-            },
-          },
+          { label: '앨범에서 선택', onClick: handleSelectPhoto },
           {
             label: '기본 이미지로 변경',
-            onClick: () => {
-              handleProfileImageChange(null);
-              setIsModalOpen(false);
-            },
+            onClick: handleDeletePhoto,
             type: 'delete',
           },
-          {
-            label: '닫기',
-            onClick: () => setIsModalOpen(false),
-          },
+          { label: '닫기', onClick: handleCloseModal },
         ]}
       />
     </div>

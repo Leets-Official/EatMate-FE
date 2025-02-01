@@ -1,19 +1,17 @@
 import { useState } from 'react';
 
-export const useProfileImage = (
-  initialImage: string | null,
-  onImageChange: (file: File | null) => void
-) => {
+export const useProfileImage = (initialImage: string | null) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(initialImage);
+  const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
 
   const handleProfileImageChange = (file: File | null) => {
     if (file) {
       setPreviewImage(URL.createObjectURL(file));
-      onImageChange(file);
+      setProfileImageFile(file);
     } else {
       setPreviewImage(null);
-      onImageChange(null);
+      setProfileImageFile(null);
     }
   };
 
@@ -25,7 +23,6 @@ export const useProfileImage = (
     setIsModalOpen(false);
   };
 
-  // 파일 업로드
   const handleSelectPhoto = () => {
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
@@ -40,7 +37,6 @@ export const useProfileImage = (
     handleCloseModal();
   };
 
-  // 기본 이미지로 변경
   const handleDeletePhoto = () => {
     handleProfileImageChange(null);
     handleCloseModal();
@@ -49,6 +45,8 @@ export const useProfileImage = (
   return {
     isModalOpen,
     previewImage,
+    profileImageFile,
+    handleProfileImageChange,
     handleOpenModal,
     handleCloseModal,
     handleSelectPhoto,
