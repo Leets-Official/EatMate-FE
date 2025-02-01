@@ -28,6 +28,7 @@ import AuthGuard from '@/components/common/AuthGuard';
 import ChatRoom from '@/pages/chat/ChatRoom';
 import MeetingDetail from '@/pages/MeetingDetail';
 import UserProfile from '@/pages/chat/UserProfile';
+import UserReport from '@/pages/chat/UserReport';
 
 const router = createBrowserRouter([
   {
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
   {
     path: '/profile',
     element: <UserProfile />,
+  },
+  {
+    path: '/report',
+    element: <UserReport />,
   },
   {
     path: '/meeting/:meetingId',
