@@ -29,14 +29,13 @@ const UserInfoEdit: React.FC = () => {
   const {
     isModalOpen,
     previewImage,
+    profileImageFile,
     handleProfileImageChange,
     handleOpenModal,
     handleCloseModal,
     handleSelectPhoto,
     handleDeletePhoto,
-  } = useProfileImage(null, (file) =>
-    setUserInfo((prev) => prev && { ...prev, profileImage: file })
-  );
+  } = useProfileImage(null);
 
   const handleInputChange = (
     field: 'nickname' | 'mbti',
@@ -82,8 +81,8 @@ const UserInfoEdit: React.FC = () => {
       updatedData.mbti = editedUserInfo.mbti;
     }
 
-    if (userInfo.profileImageUrl) {
-      updatedData.profileImage = userInfo.profileImageUrl;
+    if (profileImageFile !== null) {
+      updatedData.profileImage = profileImageFile;
     }
 
     if (Object.keys(updatedData).length === 0) {
@@ -94,7 +93,7 @@ const UserInfoEdit: React.FC = () => {
     try {
       await patchProfileInfo(updatedData);
       console.log('보낸 데이터: ', updatedData);
-      window.alert('프로필 정보가 수정되었습니다.');
+      alert('프로필 정보가 수정되었습니다.');
       window.location.reload();
     } catch (error) {
       console.error('프로필 수정 중 오류 발생:', error);
