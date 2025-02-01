@@ -1,16 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const useProfileImage = (initialImage: string | null) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(initialImage);
   const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
 
+  useEffect(() => {
+    if (initialImage) {
+      setPreviewImage(initialImage);
+    }
+  }, [initialImage]);
+
   const handleProfileImageChange = (file: File | null) => {
     if (file) {
       const objectURL = URL.createObjectURL(file);
       setPreviewImage(objectURL);
+      setProfileImageFile(file);
     } else {
       setPreviewImage(null);
+      setProfileImageFile(null);
     }
   };
 

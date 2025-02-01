@@ -23,7 +23,6 @@ const UserInfoEdit: React.FC = () => {
     nickname: '',
     mbti: '',
   });
-
   const {
     isModalOpen,
     previewImage,
@@ -33,7 +32,7 @@ const UserInfoEdit: React.FC = () => {
     handleCloseModal,
     handleSelectPhoto,
     handleDeletePhoto,
-  } = useProfileImage(userInfo?.profileImageUrl || ProfileIcon);
+  } = useProfileImage(userInfo?.profileImageUrl || null);
 
   const handleInputChange = (
     field: 'nickname' | 'mbti',
@@ -55,9 +54,7 @@ const UserInfoEdit: React.FC = () => {
           nickname: data.nickname || '',
           mbti: data.mbti || '',
         });
-        handleProfileImageChange(
-          data.profileImageUrl ? new File([], data.profileImageUrl) : null
-        );
+        handleProfileImageChange(data.profileImageUrl || null);
       } catch (error) {
         console.error('프로필 정보를 불러오는 중 오류 발생:', error);
       }
@@ -79,7 +76,7 @@ const UserInfoEdit: React.FC = () => {
       updatedData.mbti = editedUserInfo.mbti;
     }
 
-    if (profileImageFile !== null) {
+    if (profileImageFile) {
       updatedData.profileImage = profileImageFile;
     }
 

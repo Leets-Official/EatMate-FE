@@ -14,7 +14,7 @@ export interface ProfileData {
   };
   gender: string;
   phoneNumber: string;
-  profileImageUrl?: string;
+  profileImageUrl: string | null;
 }
 
 export const getProfileInfo = async (): Promise<ProfileData> => {
