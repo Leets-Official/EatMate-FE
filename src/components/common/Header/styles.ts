@@ -40,8 +40,8 @@ export const Title = styled.div`
 `;
 
 export const SubText = styled.span`
-  margin-top: 4px;
-  font-size: 14px;
+  margin-top: 10px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   color: ${({ theme }) => theme.COLORS.textSecondary};
   display: flex;
   align-items: center;
