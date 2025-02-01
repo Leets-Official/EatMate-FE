@@ -3,6 +3,10 @@ import Header from '@/components/common/Header/Header';
 import { flexColumn, flexColumnCenter } from '@/styles/CommonStyle';
 import BlockIcon from '@/assets/images/ic_block.png';
 import ProfileImg from '@/assets/images/ic_participant1.svg';
+import ActionModal from '@/components/common/Modal/ActionModal';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import BlockModal from '@/components/common/Modal/BlockModal';
 
 const Container = styled.div`
   max-width: 390px;
@@ -57,6 +61,13 @@ const ExitButton = styled.img`
 `;
 
 const UserProfile = () => {
+  const navi = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
+  const handleBlock = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <Container>
       <Header
@@ -69,9 +80,35 @@ const UserProfile = () => {
         <Name>김민지</Name>
         <Divider />
         <ButtonContainer>
-          <ExitButton src={BlockIcon} alt="차단" />
+          <ExitButton onClick={handleBlock} src={BlockIcon} alt="차단" />
           차단
         </ButtonContainer>
+        {isModalOpen && (
+          <ActionModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            actions={[
+              {
+                label: '차단',
+                type: 'delete',
+                onClick: () => {
+                  setIsBlockModalOpen(true);
+                  setIsModalOpen(false);
+                },
+              },
+              {
+                label: '취소',
+                onClick: () => setIsModalOpen(false),
+              },
+            ]}
+          />
+        )}
+        {isBlockModalOpen && (
+          <BlockModal
+            isReport={false}
+            onClose={() => setIsBlockModalOpen(false)}
+          />
+        )}
       </CenterContainer>
     </Container>
   );
