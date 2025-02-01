@@ -14,9 +14,11 @@ import {
   patchProfileData,
   patchProfileInfo,
 } from '@/apis/profile/patchProfile';
+import Loading from '@/components/common/Loading';
 
 const UserInfoEdit: React.FC = () => {
   const nav = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userInfo, setUserInfo] = useState<ProfileData | null>(null);
   const [editedUserInfo, setEditedUserInfo] = useState({
@@ -45,7 +47,7 @@ const UserInfoEdit: React.FC = () => {
       setPreviewImage(null);
     }
   };
-  // ㅇㅇㅇㅇㅇㅇ
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -94,6 +96,12 @@ const UserInfoEdit: React.FC = () => {
       window.location.reload();
     } catch (error) {
       console.error('프로필 수정 중 오류 발생:', error);
+    } finally {
+      setIsLoading(false);
+    }
+
+    if (isLoading) {
+      return <Loading />;
     }
   };
 
@@ -158,7 +166,6 @@ const UserInfoEdit: React.FC = () => {
         title="회원정보 수정"
       />
       <S.Container>
-        {/* 🔥 프로필 이미지 미리보기 적용 */}
         <S.ProfileWrapper onClick={() => setIsModalOpen(true)}>
           <S.ProfileImage src={previewImage || ProfileIcon} alt="profile" />
           <S.EditIconWrapper>
@@ -193,7 +200,6 @@ const UserInfoEdit: React.FC = () => {
         </S.ButtonContainer>
       </S.Container>
 
-      {/* 🔥 프로필 사진 수정 모달 */}
       <ActionModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
