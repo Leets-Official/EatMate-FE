@@ -8,7 +8,7 @@ import MeetingGuidModal from '@/components/common/Modal/MeetingGuideModal';
 import { flexCenter } from '@/styles/CommonStyle';
 import ParticipantsList from '@/components/MeetingDetail/ParticipantsList';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getMeetingDetailApi } from '@/apis/meetings/getMeeting';
+import { getMeetingDetailApi, MeetingData } from '@/apis/meetings/getMeeting';
 import Loading from '@/components/common/Loading';
 
 const Container = styled.div`
@@ -48,24 +48,7 @@ const ToastMessage = styled.div<{ show: boolean }>`
   opacity: ${({ show }) => (show ? '1' : '0')};
   transition: opacity 0.3s ease-in-out;
 `;
-interface MeetingData {
-  meetingName: string;
-  meetingType: string;
-  meetingDescription: string;
-  genderRestriction: string;
-  location: string;
-  dueDateTime: string;
-  chatTime: string;
-  isOwner: boolean;
-  participants: Participant[];
-}
 
-interface Participant {
-  userId: number;
-  name: string;
-  isOwner: boolean;
-  isCurrentUser: boolean;
-}
 const MeetingDetail = () => {
   const [meetingData, setMeetingData] = useState<MeetingData | null>(null);
   const [showToast, setShowToast] = useState(false);
@@ -137,7 +120,7 @@ const MeetingDetail = () => {
         title={meetingData?.meetingName || ' '}
         showBackButton={true}
         onBackClick={() => console.log('뒤로가기 클릭')}
-        isJoin={meetingData?.isOwner}
+        isJoin={meetingData?.isCurrentUser}
         onLeaveClick={handleLeave}
       />
       {meetingData && (

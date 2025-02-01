@@ -50,21 +50,21 @@ const MeetingInfo: React.FC<MeetingInfoProps> = ({
   time,
   chatTime,
 }) => {
+  const titleProps: Record<string, any[]> = {
+    '참가자 아이콘': [gender],
+    '위치 아이콘': [location],
+    '캘린더 아이콘': [time],
+    '채팅 아이콘': [],
+  };
   return (
     <InfoContainer>
       {meetingInfoContents.map((item, index) => (
         <InfoItem key={index}>
           <Icon src={item.icon} alt={item.alt} />
           <InfoTitle>
-            {item.alt === '참가자 아이콘'
-              ? item.title(gender)
-              : item.alt === '위치 아이콘'
-                ? item.title(location)
-                : item.alt === '캘린더 아이콘'
-                  ? item.title(time)
-                  : item.alt === '채팅 아이콘'
-                    ? item.title()
-                    : null}
+            {item.alt in titleProps
+              ? item.title(...titleProps[item.alt])
+              : null}
           </InfoTitle>
           {item.highlightedText && (
             <HighlightedText>{item.highlightedText(chatTime)}</HighlightedText>

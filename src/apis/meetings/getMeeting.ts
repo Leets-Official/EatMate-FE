@@ -8,6 +8,26 @@ interface MeetingQueryParams {
   rangeLabel: string;
 }
 
+export interface MeetingData {
+  meetingName: string;
+  meetingType: string;
+  meetingDescription: string;
+  genderRestriction: string;
+  location: string;
+  dueDateTime: string;
+  chatTime: string;
+  isOwner: boolean;
+  isCurrentUser: boolean;
+  participants: Participant[];
+}
+
+interface Participant {
+  userId: number;
+  name: string;
+  isOwner: boolean;
+  isCurrentUser: boolean;
+}
+
 export const getOfflineMeetingApi = () => {
   const fetchMeetings = async ({
     deliveryCategory,

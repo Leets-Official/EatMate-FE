@@ -76,7 +76,7 @@ const BottomNavigation = () => {
       label: '참여모임',
       icon: participantsIcon,
       activeIcon: participantsIconActive,
-      path: '/participants',
+      path: '/participating-meetings',
     },
     {
       label: '마이페이지',
