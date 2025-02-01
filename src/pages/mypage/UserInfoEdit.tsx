@@ -54,9 +54,11 @@ const UserInfoEdit: React.FC = () => {
           nickname: data.nickname || '',
           mbti: data.mbti || '',
         });
-        handleProfileImageChange(data.profileImageUrl || null);
+        handleProfileImageChange(data.profileImageUrl);
       } catch (error) {
         console.error('프로필 정보를 불러오는 중 오류 발생:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -95,11 +97,11 @@ const UserInfoEdit: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-
-    if (isLoading) {
-      return <Loading />;
-    }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
