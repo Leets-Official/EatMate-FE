@@ -5,10 +5,18 @@ import BlockIcon from '@/assets/images/ic_block.png';
 import ProfileImg from '@/assets/images/ic_participant1.svg';
 
 const Container = styled.div`
-  ${flexColumnCenter}
+  max-width: 390px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   height: 100vh;
   width: 100%;
   background-color: #707070;
+`;
+
+const CenterContainer = styled.div`
+  ${flexColumnCenter}
+  margin-top: 50vh;
 `;
 
 const ProfileIcon = styled.img`
@@ -55,15 +63,16 @@ const UserProfile = () => {
         title={' '}
         showBackButton={true}
         onBackClick={() => console.log('뒤로가기 클릭')}
-        isJoin={true}
       />
-      <ProfileIcon src={ProfileImg} alt="프로필 이미지" />
-      <Name>김민지</Name>
-      <Divider />
-      <ButtonContainer>
-        <ExitButton src={BlockIcon} alt="차단" />
-        차단
-      </ButtonContainer>
+      <CenterContainer>
+        <ProfileIcon src={ProfileImg} alt="프로필 이미지" />
+        <Name>김민지</Name>
+        <Divider />
+        <ButtonContainer>
+          <ExitButton src={BlockIcon} alt="차단" />
+          차단
+        </ButtonContainer>
+      </CenterContainer>
     </Container>
   );
 };
