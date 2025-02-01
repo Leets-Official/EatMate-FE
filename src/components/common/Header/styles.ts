@@ -35,7 +35,7 @@ export const CenterContainer = styled.div`
 
 export const Title = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.lg};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.regular};
   color: ${({ theme }) => theme.COLORS.text};
 `;
 
