@@ -28,3 +28,4 @@ build/
 .env*.local
 .env
 *storybook.log
+.vercel
