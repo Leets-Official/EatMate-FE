@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import MockImage from '@/assets/images/ic_backImg_default1.svg';
 import MeetingInfo from '@/components/MeetingDetail/MeetingInfo';
-import ParticipantsList from '@/components/MeetingDetail/ParticipantsList';
 import MailIcon from '@/assets/images/ic_mail.svg';
+import { formatTimeWithMeridiem } from '@/utils/dateUtils';
 
 const Container = styled.div`
   width: 100%;
@@ -50,22 +50,21 @@ const Divider = styled.div`
   background-color: #f9f9fc;
   margin: 20px 0;
 `;
-interface MeetingDetailMainProps {
+interface MeetingData {
   title: string;
   description: string;
   gender: string;
   location: string;
-  placeName: string;
   time: string;
   chatTime: string;
+  isOwner: boolean;
 }
 
-const MeetingDetailMain: React.FC<MeetingDetailMainProps> = ({
+const MeetingDetailMain: React.FC<MeetingData> = ({
   title,
   description,
   gender,
   location,
-  placeName,
   time,
   chatTime,
 }) => {
@@ -77,8 +76,7 @@ const MeetingDetailMain: React.FC<MeetingDetailMainProps> = ({
       <MeetingInfo
         gender={gender}
         location={location}
-        placeName={placeName}
-        time={time}
+        time={formatTimeWithMeridiem(time)}
         chatTime={chatTime}
       />
       <Divider />
@@ -88,7 +86,6 @@ const MeetingDetailMain: React.FC<MeetingDetailMainProps> = ({
       </SectionTitle>
       <Description>{description}</Description>
       <Divider />
-      <ParticipantsList />
     </Container>
   );
 };

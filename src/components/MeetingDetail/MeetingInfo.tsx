@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 import { flexColumn } from '@/styles/CommonStyle';
@@ -6,7 +7,6 @@ import { meetingInfoContents } from '@/constants/meetingInfoContents';
 interface MeetingInfoProps {
   gender: string;
   location: string;
-  placeName: string;
   time: string;
   chatTime: string;
 }
@@ -47,16 +47,25 @@ const Icon = styled.img`
 const MeetingInfo: React.FC<MeetingInfoProps> = ({
   gender,
   location,
-  placeName,
   time,
   chatTime,
 }) => {
+  const titleProps: Record<string, any[]> = {
+    '참가자 아이콘': [gender],
+    '위치 아이콘': [location],
+    '캘린더 아이콘': [time],
+    '채팅 아이콘': [],
+  };
   return (
     <InfoContainer>
       {meetingInfoContents.map((item, index) => (
         <InfoItem key={index}>
           <Icon src={item.icon} alt={item.alt} />
-          <InfoTitle>{item.title(gender, location, placeName, time)}</InfoTitle>
+          <InfoTitle>
+            {item.alt in titleProps
+              ? item.title(...titleProps[item.alt])
+              : null}
+          </InfoTitle>
           {item.highlightedText && (
             <HighlightedText>{item.highlightedText(chatTime)}</HighlightedText>
           )}

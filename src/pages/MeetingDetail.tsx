@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button/Button';
 import Header from '@/components/common/Header/Header';
@@ -6,6 +6,10 @@ import MeetingDetailMain from '@/components/MeetingDetail/MeetingDetailMain';
 import MailIcon from '@/assets/images/ic_invite_mail.svg';
 import MeetingGuidModal from '@/components/common/Modal/MeetingGuideModal';
 import { flexCenter } from '@/styles/CommonStyle';
+import ParticipantsList from '@/components/MeetingDetail/ParticipantsList';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getMeetingDetailApi, MeetingData } from '@/apis/meetings/getMeeting';
+import Loading from '@/components/common/Loading';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -45,54 +49,94 @@ const ToastMessage = styled.div<{ show: boolean }>`
   transition: opacity 0.3s ease-in-out;
 `;
 
-const meetingMockData = {
-  title: '마라탕 맛나게 냠냠냠 ٩( ᐛ )و 모임',
-  description: `마라탕 레전드 찐맛집입니다.
-  맛도 좋고 정문 옆이라 자주 가는데 혼자 가기 뻘쭘해서 방 팝니다!`,
-  gender: '여자만',
-  location: '마라탕집',
-  placeName: '맛있겠어요점',
-  time: '오후 6시 10분',
-  chatTime: '30분',
-};
-
-interface MeetingDetailProps {
-  isOwner?: boolean;
-}
-
-const MeetingDetail = ({ isOwner }: MeetingDetailProps) => {
+const MeetingDetail = () => {
+  const [meetingData, setMeetingData] = useState<MeetingData | null>(null);
   const [showToast, setShowToast] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { meetingId } = useParams();
+  const [isLoading, setIsLoading] = useState(true);
+  const navi = useNavigate();
+
+  useEffect(() => {
+    const fetchMeetingDetail = async () => {
+      try {
+        const data = await getMeetingDetailApi(meetingId!);
+        setMeetingData(data);
+      } catch (error) {
+        alert('모임 정보를 불러오는데 실패했습니다.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMeetingDetail();
+  }, []);
 
   const handleInviteClick = () => {
-    setShowToast(true);
-    setTimeout(() => {
-      setShowToast(false);
-    }, 2000);
+    // 현재 페이지 URL 가져오기
+    const url = window.location.href;
+
+    // 클립보드에 URL 복사
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+        }, 2000);
+      })
+      .catch((err) => {
+        console.error('클립보드에 복사 실패:', err);
+        alert('링크 복사에 실패했습니다. 다시 시도해주세요.');
+      });
   };
 
   const handleLeave = () => {
     alert('모임에서 나갔습니다.');
+    // TODO: 채팅방 나가기 연결,,, 하면서 추가
   };
+
+  const handleEdit = () => {
+    console.log('수정하기 클릭');
+    if (meetingData?.meetingType === 'OFFLINE') {
+      navi('/meeting/create/offline');
+    } else {
+      navi('/meeting/create/delivery');
+    }
+  };
+
+  const handleJoin = () => {
+    console.log('참여하기 클릭');
+  };
+  console.log(meetingData);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Container>
       <Header
-        title=" "
+        title={meetingData?.meetingName || ' '}
         showBackButton={true}
         onBackClick={() => console.log('뒤로가기 클릭')}
-        isJoin={true}
+        isJoin={meetingData?.isCurrentUser}
         onLeaveClick={handleLeave}
       />
-      <MeetingDetailMain
-        title={meetingMockData.title}
-        description={meetingMockData.description}
-        gender={meetingMockData.gender}
-        location={meetingMockData.location}
-        placeName={meetingMockData.placeName}
-        time={meetingMockData.time}
-        chatTime={meetingMockData.chatTime}
-      />
+      {meetingData && (
+        <div>
+          <MeetingDetailMain
+            title={meetingData?.meetingName}
+            description={meetingData?.meetingDescription}
+            gender={meetingData?.genderRestriction}
+            location={meetingData?.location}
+            time={meetingData?.dueDateTime}
+            chatTime="n분"
+            isOwner={meetingData?.isOwner}
+          />
+          <ParticipantsList participants={meetingData?.participants || []} />
+        </div>
+      )}
 
       <ButtonContainer>
         <Button
@@ -104,14 +148,12 @@ const MeetingDetail = ({ isOwner }: MeetingDetailProps) => {
           <Icon src={MailIcon} alt="초대" />
           초대하기
         </Button>
-        {isOwner ? (
-          <>
-            <Button size="sm" rounded="sm">
-              수정하기
-            </Button>
-          </>
+        {meetingData?.isOwner ? (
+          <Button size="sm" rounded="sm" onClick={handleEdit}>
+            수정하기
+          </Button>
         ) : (
-          <Button size="sm" rounded="sm" onClick={() => setIsModalOpen(true)}>
+          <Button size="sm" rounded="sm" onClick={handleJoin}>
             참여하기
           </Button>
         )}
