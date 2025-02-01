@@ -3,9 +3,9 @@ import defaultInstance from '@/apis/axiosInstance';
 const PATH = '/api/profile';
 
 export interface ProfileData {
-  email: string;
-  nickname: string;
-  studentNumber: number | null;
+  email: string | null;
+  nickname: string | null;
+  studentNumber: number;
   mbti: string | null;
   birthDate: {
     year: number | null;
@@ -14,7 +14,7 @@ export interface ProfileData {
   };
   gender: string;
   phoneNumber: string;
-  profileImageUrl?: string;
+  profileImageUrl: string | null;
 }
 
 export const getProfileInfo = async (): Promise<ProfileData> => {
