@@ -11,17 +11,20 @@ export const useProfileImage = (initialImage: string | null) => {
     }
   }, [initialImage]);
 
-  const handleProfileImageChange = (file: File | null) => {
-    if (file) {
-      const objectURL = URL.createObjectURL(file);
+  const handleProfileImageChange = (fileOrUrl: File | string | null) => {
+    if (typeof fileOrUrl === 'string') {
+      setPreviewImage(fileOrUrl);
+      setProfileImageFile(null);
+    } else if (fileOrUrl) {
+      const objectURL = URL.createObjectURL(fileOrUrl);
       setPreviewImage(objectURL);
-      setProfileImageFile(file);
+      setProfileImageFile(fileOrUrl);
     } else {
+      // 기본 이미지 설정
       setPreviewImage(null);
       setProfileImageFile(null);
     }
   };
-
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
