@@ -18,7 +18,7 @@ interface MeetingListItemProps {
   maxParticipants: number;
   time: string;
   rightSection?: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Container = styled.div<{ isSelected: boolean }>`
