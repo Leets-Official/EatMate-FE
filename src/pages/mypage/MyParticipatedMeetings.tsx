@@ -8,6 +8,19 @@ import {
 import { useEffect, useState } from 'react';
 import Loading from '@/components/common/Loading';
 import MyMeetingItem from '@/components/mypage/MyMeetingItem';
+import Lottie from 'lottie-react';
+import BeerLottie from '@/assets/lotties/BeerLottie.json';
+import { flexColumnCenter } from '@/styles/CommonStyle';
+import styled from 'styled-components';
+
+export const EmptyStateContainer = styled.div`
+  ${flexColumnCenter}
+  gap: 20px;
+  height: 60vh;
+  text-align: center;
+  font-size: ${({ theme }) => theme.FONT_SIZE.lg};
+  color: ${({ theme }) => theme.COLORS.gray[300]};
+`;
 
 const MyParticipatedMeetings: React.FC = () => {
   const nav = useNavigate();
@@ -63,11 +76,22 @@ const MyParticipatedMeetings: React.FC = () => {
         showBackButton
         title="내가 참여한 모임"
       />
-      <ItemContainer>
-        {meetings.map((meeting) => (
-          <MyMeetingItem key={meeting.id} meeting={meeting} />
-        ))}
-      </ItemContainer>
+      {meetings.length === 0 ? (
+        <EmptyStateContainer>
+          <Lottie
+            animationData={BeerLottie}
+            loop={true}
+            style={{ width: 200, height: 200 }}
+          />
+          <div>참여한 모임이 없습니다!</div>
+        </EmptyStateContainer>
+      ) : (
+        <ItemContainer>
+          {meetings.map((meeting) => (
+            <MyMeetingItem key={meeting.id} meeting={meeting} />
+          ))}
+        </ItemContainer>
+      )}
     </div>
   );
 };

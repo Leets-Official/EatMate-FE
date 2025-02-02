@@ -7,6 +7,9 @@ import Loading from '@/components/common/Loading';
 import { getMyCreatedApi } from '@/apis/meetings/getMyMeeting';
 import { getMyMeetingParams } from '@/apis/meetings/getMyMeeting';
 import MyMeetingItem from '@/components/mypage/MyMeetingItem';
+import Lottie from 'lottie-react';
+import BeerLottie from '@/assets/lotties/BeerLottie.json';
+import { EmptyStateContainer } from './MyParticipatedMeetings';
 
 export const ItemContainer = styled.div`
   ${flexColumnCenter}
@@ -67,11 +70,22 @@ const MyCreatedMeetings: React.FC = () => {
         showBackButton
         title="내가 생성한 모임"
       />
-      <ItemContainer>
-        {meetings.map((meeting) => (
-          <MyMeetingItem key={meeting.id} meeting={meeting} />
-        ))}
-      </ItemContainer>
+      {meetings.length === 0 ? (
+        <EmptyStateContainer>
+          <Lottie
+            animationData={BeerLottie}
+            loop={true}
+            style={{ width: 200, height: 200 }}
+          />
+          <div>참여한 모임이 없습니다!</div>
+        </EmptyStateContainer>
+      ) : (
+        <ItemContainer>
+          {meetings.map((meeting) => (
+            <MyMeetingItem key={meeting.id} meeting={meeting} />
+          ))}
+        </ItemContainer>
+      )}
     </div>
   );
 };
