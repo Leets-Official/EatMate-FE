@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Header from '@/components/common/Header/Header';
 import Button from '@/components/common/Button/Button';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import BlockModal from '@/components/common/Modal/BlockModal';
 interface WarningTextProps {
   show: boolean;
@@ -53,8 +53,16 @@ const UserReportPost = () => {
   const [report, setReport] = useState('');
   const [isOverLimit, setIsOverLimit] = useState(false);
   const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
+  const [reportType, setReportType] = useState('');
 
+  const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.state && location.state.reportType) {
+      setReportType(location.state.reportType);
+    }
+  }, [location.state]);
 
   const handleReport = () => {
     if (report.length > 50) {
@@ -72,6 +80,19 @@ const UserReportPost = () => {
     setReport(event.target.value);
   };
 
+  const getTitleByReportType = () => {
+    switch (reportType) {
+      case 'OFFENSIVE':
+        return '욕설';
+      case 'HARASSMENT':
+        return '성희롱';
+      case 'OTHER':
+        return '기타';
+      default:
+        return '신고 유형 선택';
+    }
+  };
+
   return (
     <>
       <Header
@@ -80,7 +101,7 @@ const UserReportPost = () => {
         title="사용자 신고"
       />
       <Container>
-        <Title>욕설</Title>
+        <Title>{getTitleByReportType()}</Title>
         <StyledInput
           placeholder="신고 이유를 입력하세요. 500자 이내"
           value={report}

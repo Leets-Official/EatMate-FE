@@ -1,6 +1,6 @@
-import Header from '@/components/common/Header/Header';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Header from '@/components/common/Header/Header';
 import icArrowDown from '@/assets/images/ic_arrow_right.svg';
 import { Text } from '@/styles/mypage/mypage.styled';
 import { flexCenter } from '@/styles/CommonStyle';
@@ -56,8 +56,8 @@ const HandIconImg = styled.img`
   margin-bottom: 50px;
 `;
 
-const UserReport: React.FC = () => {
-  const navi = useNavigate();
+const UserReport = () => {
+  const navigate = useNavigate();
   const reportConstants = [
     {
       text: '욕설을 해요',
@@ -72,16 +72,25 @@ const UserReport: React.FC = () => {
       reportType: 'OTHER',
     },
   ];
+
+  const handleReportClick = (reportType: string) => {
+    navigate('/report/post', { state: { reportType } });
+  };
+
   return (
     <>
-      <Header onBackClick={() => navi(-1)} showBackButton title="사용자 신고" />
+      <Header
+        onBackClick={() => navigate(-1)}
+        showBackButton
+        title="사용자 신고"
+      />
       <Description>사용자를 신고하는 이유를 선택해주세요</Description>
       <HandIconImg src={HandIcon} alt="손" />
       <Wrapper>
-        {reportConstants.map((report) => (
-          <div>
+        {reportConstants.map((report, index) => (
+          <div key={index}>
             <Divider />
-            <Container onClick={() => navi('/report/post')}>
+            <Container onClick={() => handleReportClick(report.reportType)}>
               <ReportText>
                 <Text color="main" fontSize="md">
                   |
