@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import Loading from '@/components/common/Loading';
 import { getMyCreatedApi } from '@/apis/meetings/getMyMeeting';
 import { getMyMeetingParams } from '@/apis/meetings/getMyMeeting';
-import MeetingItem from '@/components/mypage/MyMeetingItem';
+import MyMeetingItem from '@/components/mypage/MyMeetingItem';
 
 export const ItemContainer = styled.div`
   ${flexColumnCenter}
@@ -69,7 +69,7 @@ const MyCreatedMeetings: React.FC = () => {
       />
       <ItemContainer>
         {meetings.map((meeting) => (
-          <MeetingItem key={meeting.id} meeting={meeting} />
+          <MyMeetingItem key={meeting.id} meeting={meeting} />
         ))}
       </ItemContainer>
     </div>

@@ -9,7 +9,7 @@ interface MeetingItemProps {
   meeting: any;
 }
 
-const MeetingItem: React.FC<MeetingItemProps> = ({ meeting }) => {
+const MyMeetingItem: React.FC<MeetingItemProps> = ({ meeting }) => {
   const nav = useNavigate();
 
   // 현재 시간과 dueDateTime 비교하여 만료 여부 확인
@@ -59,4 +59,4 @@ const MeetingItem: React.FC<MeetingItemProps> = ({ meeting }) => {
   );
 };
 
-export default MeetingItem;
+export default MyMeetingItem;
