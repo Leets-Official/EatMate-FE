@@ -6,20 +6,22 @@ import styled from 'styled-components';
 import { Text } from '@/styles/mypage/mypage.styled';
 import { flexColumn } from '@/styles/CommonStyle';
 import Button from '@/components/common/Button/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getBlockApi } from '@/apis/block/getBlock';
+import Loading from '@/components/common/Loading';
 
-const mockData = [
-  {
-    name: '무당벌레',
-    icon: profileImg1,
-    isBlocked: true,
-  },
-  {
-    name: '도토리',
-    icon: profileImg2,
-    isBlocked: true,
-  },
-];
+// const mockData = [
+//   {
+//     name: '무당벌레',
+//     icon: profileImg1,
+//     isBlocked: true,
+//   },
+//   {
+//     name: '도토리',
+//     icon: profileImg2,
+//     isBlocked: true,
+//   },
+// ];
 
 const Container = styled.div`
   ${flexColumn}
@@ -54,15 +56,39 @@ const UserIcon = styled.img`
 
 const ReportedUser: React.FC = () => {
   const nav = useNavigate();
-  const [users, setUsers] = useState(mockData);
+  // const [users, setUsers] = useState(mockData);
 
-  const toggleBlockStatus = (index: number) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user, idx) =>
-        idx === index ? { ...user, isBlocked: !user.isBlocked } : user
-      )
-    );
-  };
+  // const toggleBlockStatus = (index: number) => {
+  //   setUsers((prevUsers) =>
+  //     prevUsers.map((user, idx) =>
+  //       idx === index ? { ...user, isBlocked: !user.isBlocked } : user
+  //     )
+  //   );
+  // };
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [blocks] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchBlocks = async () => {
+      try {
+        const data = await getBlockApi();
+        console.log('차단내역 목록 데이터: ', data);
+      } catch (error) {
+        error instanceof Error
+          ? error.message
+          : '차단 내역을 불러오는 중 오류 발생';
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBlocks();
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -73,10 +99,10 @@ const ReportedUser: React.FC = () => {
       />
       <Container>
         <Text fontSize="smMd" fontWeight="light" color="gray">
-          친구 {users.length}
+          친구 {blocks.length}
         </Text>
         <UserList>
-          {users.map((user, index) => (
+          {blocks.map((user, index) => (
             <UserItem key={index}>
               <UserDetails>
                 <UserIcon src={user.icon} alt={user.name} />
@@ -88,7 +114,7 @@ const ReportedUser: React.FC = () => {
                 variant={user.isBlocked ? 'secondary-main' : 'secondary-white'}
                 size="xs"
                 rounded="lg"
-                onClick={() => toggleBlockStatus(index)}
+                // onClick={() => toggleBlockStatus(index)}
               >
                 {user.isBlocked ? '차단중' : '차단해제'}
               </Button>
