@@ -1,15 +1,12 @@
 import Header from '@/components/common/Header/Header';
-import MeetingListItem from '@/components/Home/MeetingListItem';
 import { flexColumnCenter } from '@/styles/CommonStyle';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import MealCover from '@/assets/images/ic_meal_cover.svg';
-import BeerCover from '@/assets/images/ic_beer_cover.svg';
-import DeliveryCover from '@/assets/images/ic_delivery_cover.svg';
 import { useEffect, useState } from 'react';
 import Loading from '@/components/common/Loading';
 import { getMyCreatedApi } from '@/apis/meetings/getMyMeeting';
 import { getMyMeetingParams } from '@/apis/meetings/getMyMeeting';
+import MeetingItem from '@/components/mypage/MyMeetingItem';
 
 export const ItemContainer = styled.div`
   ${flexColumnCenter}
@@ -26,10 +23,6 @@ const MyCreatedMeetings: React.FC = () => {
     lastDateTime: undefined,
     pageSize: 20,
   });
-
-  const handleNavigateToDetail = (meetingId: number) => {
-    nav(`/meeting/${meetingId}`);
-  };
 
   useEffect(() => {
     const fetchMeeting = async () => {
@@ -75,19 +68,8 @@ const MyCreatedMeetings: React.FC = () => {
         title="내가 생성한 모임"
       />
       <ItemContainer>
-        {meetings.map((meeting): any => (
-          <MeetingListItem
-            cover={meeting.meetingType || ''}
-            key={meeting.id}
-            title={meeting.meetingName}
-            description={meeting.description}
-            location={meeting.location}
-            participants={meeting.participantCount}
-            maxParticipants={meeting.maxParticipants}
-            time={meeting.time}
-            onClick={() => handleNavigateToDetail(meeting.meetingId)}
-            // rightSection={}
-          />
+        {meetings.map((meeting) => (
+          <MeetingItem key={meeting.id} meeting={meeting} />
         ))}
       </ItemContainer>
     </div>
