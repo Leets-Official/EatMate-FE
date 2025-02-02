@@ -70,11 +70,7 @@ const UserProfile = () => {
 
   return (
     <Container>
-      <Header
-        title={' '}
-        showBackButton={true}
-        onBackClick={() => console.log('뒤로가기 클릭')}
-      />
+      <Header title={' '} showBackButton={true} onBackClick={() => navi(-1)} />
       <CenterContainer>
         <ProfileIcon src={ProfileImg} alt="프로필 이미지" />
         <Name>김민지</Name>

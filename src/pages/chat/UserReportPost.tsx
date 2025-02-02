@@ -22,7 +22,7 @@ const Title = styled.h2`
 const StyledInput = styled.textarea`
   width: 100%;
   height: 150px;
-  margin: 20px 0;
+  margin: 20px 0 10px 0;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -45,7 +45,7 @@ const HelpText = styled.p`
 
 const WarningText = styled.p<WarningTextProps>`
   font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
-  color: red;
+  color: ${({ theme }) => theme.COLORS.error};
   margin-bottom: 10px;
   display: ${(props) => (props.show ? 'block' : 'none')};
 `;
@@ -56,7 +56,7 @@ const UserReportPost = () => {
   const [reportType, setReportType] = useState('');
 
   const location = useLocation();
-  const navigate = useNavigate();
+  const navi = useNavigate();
 
   useEffect(() => {
     if (location.state && location.state.reportType) {
@@ -73,11 +73,14 @@ const UserReportPost = () => {
     }
   };
 
-  const handleChange = (event: any) => {
-    if (event.target.value.length <= 50) {
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const input = event.target.value;
+    setReport(input);
+    if (input.length > 500) {
+      setIsOverLimit(true);
+    } else {
       setIsOverLimit(false);
     }
-    setReport(event.target.value);
   };
 
   const getTitleByReportType = () => {
@@ -95,11 +98,7 @@ const UserReportPost = () => {
 
   return (
     <>
-      <Header
-        onBackClick={() => navigate(-1)}
-        showBackButton
-        title="사용자 신고"
-      />
+      <Header onBackClick={() => navi(-1)} showBackButton title="사용자 신고" />
       <Container>
         <Title>{getTitleByReportType()}</Title>
         <StyledInput
@@ -107,7 +106,7 @@ const UserReportPost = () => {
           value={report}
           onChange={handleChange}
         />
-        <WarningText show={isOverLimit}>500자 이내로 입력하세요</WarningText>
+        <WarningText show={isOverLimit}>500자 이내로 입력하세요.</WarningText>
         <HelpText>
           이 항목으로 신고하면 서로의 모임 게시물이 보이지 않고, 서로 더 이상
           채팅을 할 수 없어요. (마이페이지 - 신고/차단 목록 에서 확인가능해요)
