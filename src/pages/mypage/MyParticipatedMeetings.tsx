@@ -2,7 +2,6 @@ import Header from '@/components/common/Header/Header';
 import MealCover from '@/assets/images/ic_meal_cover.svg';
 import BeerCover from '@/assets/images/ic_beer_cover.svg';
 import DeliveryCover from '@/assets/images/ic_delivery_cover.svg';
-
 import { useNavigate } from 'react-router-dom';
 import { ItemContainer } from './MyCreatedMeetings';
 import MeetingListItem from '@/components/Home/MeetingListItem';

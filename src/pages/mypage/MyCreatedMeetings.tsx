@@ -1,12 +1,15 @@
 import Header from '@/components/common/Header/Header';
 import MeetingListItem from '@/components/Home/MeetingListItem';
-import { flexColumn, flexColumnCenter } from '@/styles/CommonStyle';
+import { flexColumnCenter } from '@/styles/CommonStyle';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import MealCover from '@/assets/images/ic_meal_cover.svg';
 import BeerCover from '@/assets/images/ic_beer_cover.svg';
 import DeliveryCover from '@/assets/images/ic_delivery_cover.svg';
-
+import { useEffect, useState } from 'react';
+import Loading from '@/components/common/Loading';
+import { getMyCreatedApi } from '@/apis/meetings/getMyMeeting';
+import { getMyMeetingParams } from '@/apis/meetings/getMyMeeting';
 const CreatedMeetingData = [
   {
     id: 0,
@@ -51,6 +54,50 @@ export const ItemContainer = styled.div`
 
 const MyCreatedMeetings: React.FC = () => {
   const nav = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+  const [meetings, setMeetings] = useState<any[]>([]);
+  const [params, setParams] = useState<getMyMeetingParams>({
+    lastMeetingId: undefined,
+    lastDateTime: undefined,
+    pageSize: 20,
+  });
+
+  useEffect(() => {
+    const fetchMeeting = async () => {
+      try {
+        const data = await getMyCreatedApi(params);
+        console.log('내가 생성한 모임 데이터:', data);
+
+        setMeetings((prev) => {
+          const newMeetings = data.content.filter(
+            (meeting: { id: any }) =>
+              !prev.some((prevMeeting) => prevMeeting.id === meeting.id)
+          );
+          return [...prev, ...newMeetings];
+        });
+
+        if (data.cursorInfo) {
+          setParams({
+            lastMeetingId: data.cursorInfo.meetingId,
+            lastDateTime: data.cursorInfo.lastMeetingTime,
+            pageSize: 20,
+          });
+        }
+      } catch (error) {
+        error instanceof Error
+          ? error.message
+          : '내가 생성한 모임 데이터를 불러오는 중 오류 발생:';
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMeeting();
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div>
       <Header
@@ -59,17 +106,17 @@ const MyCreatedMeetings: React.FC = () => {
         title="내가 생성한 모임"
       />
       <ItemContainer>
-        {CreatedMeetingData.map((created) => (
+        {meetings.map((meeting): any => (
           <MeetingListItem
-            cover={created.cover}
-            key={created.id}
-            title={created.title}
-            description={created.description}
-            location={created.location}
-            participants={created.participants}
-            maxParticipants={created.maxParticipants}
-            time={created.time}
-            deliveryTime={created.deliveryTime}
+            // cover={created.meetingType || ''}
+            key={meeting.id}
+            title={meeting.meetingName}
+            description={meeting.description}
+            location={meeting.location}
+            participants={meeting.participantCount}
+            maxParticipants={meeting.maxParticipants}
+            time={meeting.time}
+            deliveryTime={meeting.deliveryTime}
           />
         ))}
       </ItemContainer>

@@ -2,7 +2,7 @@ import defaultInstance from '@/apis/axiosInstance';
 
 const PATH = '/api/meetings/my';
 
-interface getMyMeetingParams {
+export interface getMyMeetingParams {
   lastMeetingId?: number;
   lastDateTime?: string;
   pageSize: number;
@@ -19,3 +19,5 @@ export const getMyParticipatedApi = async (params: getMyMeetingParams) => {
   });
   return response.data.result;
 };
+
+// getMyParticipatingApi 나중에 추가
