@@ -5,6 +5,9 @@ import profileImg2 from '@/assets/images/ic_participant2.svg';
 import styled from 'styled-components';
 import { Text } from '@/styles/mypage/mypage.styled';
 import { flexColumn } from '@/styles/CommonStyle';
+import { useEffect, useState } from 'react';
+import { getReportApi } from '@/apis/report/getReport';
+import Loading from '@/components/common/Loading';
 
 const mockData = [
   {
@@ -42,6 +45,29 @@ export const UserIcon = styled.img`
 
 const ReportedUser: React.FC = () => {
   const nav = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+  const [reports] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchReports = async () => {
+      try {
+        const data = await getReportApi();
+        console.log('신고내역 목록 데이터: ', data);
+      } catch (error) {
+        error instanceof Error
+          ? error.message
+          : '신고 내역을 불러오는 중 오류 발생';
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchReports();
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div>
       <Header
@@ -51,14 +77,14 @@ const ReportedUser: React.FC = () => {
       />
       <Container>
         <Text fontSize="smMd" fontWeight="light" color="gray">
-          친구 {mockData.length}
+          친구 {reports.length}
         </Text>
         <UserList>
-          {mockData.map((user, index) => (
+          {reports.map((user, index) => (
             <UserItem key={index}>
-              <UserIcon src={user.icon} alt={user.name} />
+              <UserIcon src={user.profileImageUrl} alt="" />
               <Text fontSize="sm" fontWeight="regular">
-                {user.name}
+                {user.ReportedUserName}
               </Text>
             </UserItem>
           ))}

@@ -1,6 +1,6 @@
 import defaultInstance from '@/apis/axiosInstance';
 
-const PATH = 'api/notices';
+const PATH = '/api/notices';
 
 export interface getNoticeParams {
   pageNumber: number;
