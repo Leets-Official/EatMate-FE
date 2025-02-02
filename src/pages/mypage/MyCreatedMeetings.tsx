@@ -77,7 +77,7 @@ const MyCreatedMeetings: React.FC = () => {
             loop={true}
             style={{ width: 200, height: 200 }}
           />
-          <div>참여한 모임이 없습니다!</div>
+          <div>생성한 모임이 없습니다!</div>
         </EmptyStateContainer>
       ) : (
         <ItemContainer>
