@@ -65,12 +65,11 @@ const UserReportPost = () => {
   }, [location.state]);
 
   const handleReport = () => {
-    if (report.length > 50) {
-      setIsOverLimit(true);
-    } else {
-      console.log('Report submitted:', report);
-      setIsBlockModalOpen(true);
+    if (!report.trim()) {
+      alert('신고 사유를 입력하세요.');
+      return;
     }
+    setIsBlockModalOpen(true);
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {

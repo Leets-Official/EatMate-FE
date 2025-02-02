@@ -23,6 +23,9 @@ const ModalContainer = styled.div`
   text-align: center;
   width: 263px;
   height: 161px;
+    &:click {
+    event.stopPropagation();
+  }
 `;
 
 const Description = styled.div`
@@ -55,8 +58,13 @@ const BlockModal: React.FC<BlockModalProps> = ({ onClose, isReport }) => {
     }, 1500);
   };
 
+  const handleClose = () => {
+    if (!isSuccess) {
+      onClose();
+    }
+  };
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={handleClose}>
       <ModalContainer>
         {isSuccess ? (
           <>
