@@ -68,7 +68,7 @@ export const TextContainer = styled.div`
 export const Text = styled.div<{
   fontSize: keyof typeof theme.FONT_SIZE;
   fontWeight?: keyof typeof theme.FONT_WEIGHT;
-  color?: 'gray' | 'main';
+  color?: 'gray' | 'main' | 'white';
 }>`
   font-weight: ${({ theme, fontWeight = 'light' }) =>
     theme.FONT_WEIGHT[fontWeight]};
@@ -78,7 +78,9 @@ export const Text = styled.div<{
       ? '#858585'
       : color === 'main'
         ? theme.COLORS.main
-        : theme.COLORS.black};
+        : color === 'white'
+          ? theme.COLORS.white
+          : theme.COLORS.black};
 `;
 
 export const MenuContainer = styled.div`
