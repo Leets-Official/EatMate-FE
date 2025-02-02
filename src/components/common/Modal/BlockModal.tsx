@@ -12,6 +12,9 @@ const ModalOverlay = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   ${flexCenter}
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const ModalContainer = styled.div`
@@ -22,10 +25,7 @@ const ModalContainer = styled.div`
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 263px;
-  height: 161px;
-    &:click {
-    event.stopPropagation();
-  }
+  height: auto;
 `;
 
 const Description = styled.div`
@@ -50,6 +50,7 @@ interface BlockModalProps {
 
 const BlockModal: React.FC<BlockModalProps> = ({ onClose, isReport }) => {
   const [isSuccess, setIsSuccess] = useState(false);
+
   const handleBlock = () => {
     //TODO: 유저 차단 API 연결
     setIsSuccess(true);
@@ -58,17 +59,18 @@ const BlockModal: React.FC<BlockModalProps> = ({ onClose, isReport }) => {
     }, 1500);
   };
 
-  const handleClose = () => {
-    if (!isSuccess) {
+  const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget && !isSuccess) {
       onClose();
     }
   };
+
   return (
-    <ModalOverlay onClick={handleClose}>
+    <ModalOverlay onClick={handleOverlayClick}>
       <ModalContainer>
         {isSuccess ? (
           <>
-            <Icon
+            <img
               src={CheckIcon}
               alt="Success"
               style={{ marginBottom: '10px' }}
@@ -80,12 +82,18 @@ const BlockModal: React.FC<BlockModalProps> = ({ onClose, isReport }) => {
         ) : (
           <>
             <Description>
-              {isReport
-                ? '이 사용자를 신고하시겠습니까?'
-                : '이 사용자를 차단하시겠습니까?'}
+              {isReport ? (
+                '이 사용자를 신고하시겠습니까?'
+              ) : (
+                <>
+                  상대방의 모든 메시지가 <br />
+                  표시되지 않고 차단됩니다.
+                  <br />이 사용자를 차단하시겠습니까?
+                </>
+              )}
             </Description>
             <ButtonContainer>
-              <Button size="md" rounded="md" onClick={handleBlock}>
+              <Button size="xs" rounded="lg" onClick={handleBlock}>
                 확인
               </Button>
             </ButtonContainer>
