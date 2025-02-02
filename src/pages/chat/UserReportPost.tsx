@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Header from '@/components/common/Header/Header';
 import Button from '@/components/common/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import BlockModal from '@/components/common/Modal/BlockModal';
 interface WarningTextProps {
   show: boolean;
 }
@@ -12,10 +13,10 @@ const Container = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 18px;
-  color: #333;
+  font-size: ${({ theme }) => theme.FONT_SIZE.md};
   margin-top: 20px;
   text-align: center;
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.regular};
 `;
 
 const StyledInput = styled.textarea`
@@ -24,19 +25,26 @@ const StyledInput = styled.textarea`
   margin: 20px 0;
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 8px;
   resize: none;
   overflow: hidden;
+  &::placeholder {
+    color: ${({ theme }) => theme.COLORS.gray[200]};
+  }
+  &:focus {
+    border-color: ${({ theme }) => theme.COLORS.main};
+    outline: none;
+  }
 `;
 
 const HelpText = styled.p`
-  font-size: 12px;
-  color: #666;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  color: #707070;
   margin-bottom: 20px;
 `;
 
 const WarningText = styled.p<WarningTextProps>`
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
   color: red;
   margin-bottom: 10px;
   display: ${(props) => (props.show ? 'block' : 'none')};
@@ -44,15 +52,16 @@ const WarningText = styled.p<WarningTextProps>`
 const UserReportPost = () => {
   const [report, setReport] = useState('');
   const [isOverLimit, setIsOverLimit] = useState(false);
+  const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const handleReport = () => {
-    if (report.length > 500) {
+    if (report.length > 50) {
       setIsOverLimit(true);
     } else {
       console.log('Report submitted:', report);
-      // TODO: api 연결
-      navigate(-1);
+      setIsBlockModalOpen(true);
     }
   };
 
@@ -79,13 +88,19 @@ const UserReportPost = () => {
         />
         <WarningText show={isOverLimit}>500자 이내로 입력하세요</WarningText>
         <HelpText>
-          이 항목으로 신고하신 사건의 모임 게시물이 보이지 않고, 작성된 이상
-          참을 수 없어요. (마이페이지에서 신고/차단 목록에서 확인 가능합니다)
+          이 항목으로 신고하면 서로의 모임 게시물이 보이지 않고, 서로 더 이상
+          채팅을 할 수 없어요. (마이페이지 - 신고/차단 목록 에서 확인가능해요)
         </HelpText>
         <Button size="xl" rounded="md" onClick={handleReport}>
           신고하기
         </Button>
       </Container>
+      {isBlockModalOpen && (
+        <BlockModal
+          isReport={true}
+          onClose={() => setIsBlockModalOpen(false)}
+        />
+      )}
     </>
   );
 };

@@ -57,31 +57,31 @@ const HandIconImg = styled.img`
 `;
 
 const UserReport: React.FC = () => {
-  const nav = useNavigate();
+  const navi = useNavigate();
   const reportConstants = [
     {
       text: '욕설을 해요',
-      reportType: 'ㅇ',
+      reportType: 'OFFENSIVE',
     },
     {
       text: '성희롱을 해요',
-      reportType: 'ㄴㄴ',
+      reportType: 'HARASSMENT',
     },
     {
       text: '다른 문제가 있어요',
-      reportType: 'ㄴㅇㅇ',
+      reportType: 'OTHER',
     },
   ];
   return (
     <>
-      <Header onBackClick={() => nav(-1)} showBackButton title="사용자 신고" />
+      <Header onBackClick={() => navi(-1)} showBackButton title="사용자 신고" />
       <Description>사용자를 신고하는 이유를 선택해주세요</Description>
       <HandIconImg src={HandIcon} alt="손" />
       <Wrapper>
         {reportConstants.map((report) => (
           <div>
             <Divider />
-            <Container onClick={() => console.log('욕설')}>
+            <Container onClick={() => navi('/report/post')}>
               <ReportText>
                 <Text color="main" fontSize="md">
                   |
