@@ -10,19 +10,6 @@ import { useEffect, useState } from 'react';
 import { deleteBlockApi, getBlockApi } from '@/apis/block/getBlock';
 import Loading from '@/components/common/Loading';
 
-// const mockData = [
-//   {
-//     name: '무당벌레',
-//     icon: profileImg1,
-//     isBlocked: true,
-//   },
-//   {
-//     name: '도토리',
-//     icon: profileImg2,
-//     isBlocked: true,
-//   },
-// ];
-
 const Container = styled.div`
   ${flexColumn}
   padding: 20px;

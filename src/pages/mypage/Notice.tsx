@@ -2,11 +2,7 @@ import Header from '@/components/common/Header/Header';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Text } from '@/styles/mypage/mypage.styled';
-import {
-  getNoticeApi,
-  getNoticeParams,
-  getSingleNoticeApi,
-} from '@/apis/notice/getNotice';
+import { getNoticeApi, getNoticeParams } from '@/apis/notice/getNotice';
 import Loading from '@/components/common/Loading';
 import dayjs from 'dayjs';
 import { flexColumn } from '@/styles/CommonStyle';

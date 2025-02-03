@@ -1,24 +1,13 @@
 import Header from '@/components/common/Header/Header';
 import { useNavigate } from 'react-router-dom';
-import profileImg1 from '@/assets/images/ic_participant1.svg';
-import profileImg2 from '@/assets/images/ic_participant2.svg';
+// import profileImg1 from '@/assets/images/ic_participant1.svg';
+// import profileImg2 from '@/assets/images/ic_participant2.svg';
 import styled from 'styled-components';
 import { Text } from '@/styles/mypage/mypage.styled';
 import { flexColumn } from '@/styles/CommonStyle';
 import { useEffect, useState } from 'react';
 import { getReportApi } from '@/apis/report/getReport';
 import Loading from '@/components/common/Loading';
-
-const mockData = [
-  {
-    name: '무당벌레',
-    icon: profileImg1,
-  },
-  {
-    name: '도토리',
-    icon: profileImg2,
-  },
-];
 
 export const Container = styled.div`
   ${flexColumn}
