@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Header from '@/components/common/Header/Header';
 import Button from '@/components/common/Button/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BlockModal from '@/components/common/Modal/BlockModal';
-interface WarningTextProps {
-  show: boolean;
-}
+import { Input } from '@/components/common/Input/Input';
+import InputErrorMessage from '@/components/common/Input/InputErrorMessage';
+
 const Container = styled.div`
   padding: 20px;
   background-color: #ffffff;
+`;
+
+const PaddingConatiner = styled.div`
+  padding: 10px;
 `;
 
 const Title = styled.h2`
@@ -19,36 +23,12 @@ const Title = styled.h2`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.regular};
 `;
 
-const StyledInput = styled.textarea`
-  width: 100%;
-  height: 150px;
-  margin: 20px 0 10px 0;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  resize: none;
-  overflow: hidden;
-  &::placeholder {
-    color: ${({ theme }) => theme.COLORS.gray[200]};
-  }
-  &:focus {
-    border-color: ${({ theme }) => theme.COLORS.main};
-    outline: none;
-  }
-`;
-
 const HelpText = styled.p`
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   color: #707070;
-  margin-bottom: 20px;
+  margin: 10px 0 20px 0;
 `;
 
-const WarningText = styled.p<WarningTextProps>`
-  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
-  color: ${({ theme }) => theme.COLORS.error};
-  margin-bottom: 10px;
-  display: ${(props) => (props.show ? 'block' : 'none')};
-`;
 const UserReportPost = () => {
   const [report, setReport] = useState('');
   const [isOverLimit, setIsOverLimit] = useState(false);
@@ -56,10 +36,10 @@ const UserReportPost = () => {
   const [reportType, setReportType] = useState('');
 
   const location = useLocation();
-  const navi = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (location.state && location.state.reportType) {
+    if (location.state?.reportType) {
       setReportType(location.state.reportType);
     }
   }, [location.state]);
@@ -72,7 +52,9 @@ const UserReportPost = () => {
     setIsBlockModalOpen(true);
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const input = event.target.value;
     setReport(input);
     if (input.length > 500) {
@@ -97,19 +79,30 @@ const UserReportPost = () => {
 
   return (
     <>
-      <Header onBackClick={() => navi(-1)} showBackButton title="사용자 신고" />
+      <Header
+        onBackClick={() => navigate(-1)}
+        showBackButton
+        title="사용자 신고"
+      />
       <Container>
-        <Title>{getTitleByReportType()}</Title>
-        <StyledInput
-          placeholder="신고 이유를 입력하세요. 500자 이내"
-          value={report}
-          onChange={handleChange}
-        />
-        <WarningText show={isOverLimit}>500자 이내로 입력하세요.</WarningText>
-        <HelpText>
-          이 항목으로 신고하면 서로의 모임 게시물이 보이지 않고, 서로 더 이상
-          채팅을 할 수 없어요. (마이페이지 - 신고/차단 목록 에서 확인가능해요)
-        </HelpText>
+        <PaddingConatiner>
+          <Title>{getTitleByReportType()}</Title>
+          <Input
+            as="textarea"
+            placeholder="신고 이유를 입력하세요. 500자 이내"
+            value={report}
+            onChange={handleChange}
+            maxLength={500}
+            rows={5}
+          />
+          {isOverLimit && (
+            <InputErrorMessage message="500자 이내로 입력하세요." />
+          )}
+          <HelpText>
+            이 항목으로 신고하면 서로의 모임 게시물이 보이지 않고, 서로 더 이상
+            채팅을 할 수 없어요. (마이페이지 - 신고/차단 목록 에서 확인가능해요)
+          </HelpText>
+        </PaddingConatiner>
         <Button size="xl" rounded="md" onClick={handleReport}>
           신고하기
         </Button>

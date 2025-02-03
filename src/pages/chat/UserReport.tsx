@@ -3,21 +3,18 @@ import styled from 'styled-components';
 import Header from '@/components/common/Header/Header';
 import icArrowDown from '@/assets/images/ic_arrow_right.svg';
 import { Text } from '@/styles/mypage/mypage.styled';
-import { flexCenter } from '@/styles/CommonStyle';
+import { flexCenter, flexColumn, flexSpaceBetween } from '@/styles/CommonStyle';
 import HandIcon from '@/assets/images/ic_open hand.svg';
 
 const Wrapper = styled.div`
   padding: 20px;
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
 `;
 
 const Container = styled.div`
   padding: 15px 10px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  ${flexSpaceBetween}
 `;
 
 const ReportText = styled.div`

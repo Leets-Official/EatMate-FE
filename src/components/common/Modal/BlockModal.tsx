@@ -12,9 +12,6 @@ const ModalOverlay = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   ${flexCenter}
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const ModalContainer = styled.div`
@@ -37,10 +34,6 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 30px;
-`;
-
-const Icon = styled.img`
-  margin-top: 20px;
 `;
 
 interface BlockModalProps {
@@ -93,7 +86,7 @@ const BlockModal: React.FC<BlockModalProps> = ({ onClose, isReport }) => {
               )}
             </Description>
             <ButtonContainer>
-              <Button size="xs" rounded="lg" onClick={handleBlock}>
+              <Button size="sm" rounded="lg" onClick={handleBlock}>
                 확인
               </Button>
             </ButtonContainer>
