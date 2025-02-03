@@ -2,9 +2,15 @@ import Header from '@/components/common/Header/Header';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Text } from '@/styles/mypage/mypage.styled';
-import { getNoticeApi, getNoticeParams } from '@/apis/notice/getNotice';
+import {
+  getNoticeApi,
+  getNoticeParams,
+  getSingleNoticeApi,
+} from '@/apis/notice/getNotice';
 import Loading from '@/components/common/Loading';
 import dayjs from 'dayjs';
+import { flexColumn } from '@/styles/CommonStyle';
+import { Line } from '@/styles/SignUp/PolicyAgreement.styled';
 
 const NoticeWrapper = styled.div`
   padding: 20px;
@@ -21,6 +27,8 @@ const NoticeItem = styled.div`
 
 const DetailContainer = styled.div`
   padding: 20px;
+  ${flexColumn}
+  gap:20px;
 `;
 
 const Notice: React.FC = () => {
@@ -76,10 +84,11 @@ const Notice: React.FC = () => {
       />
       {selectedNotice ? (
         <DetailContainer>
-          <Text fontSize="smMd">{selectedNotice.title}</Text>
+          <Text fontSize="md">{selectedNotice.title}</Text>
           <Text fontSize="sm" color="gray">
-            {selectedNotice.date}
+            {selectedNotice.formattedDate}
           </Text>
+          <Line />
           <Text fontSize="sm">{selectedNotice.content}</Text>
         </DetailContainer>
       ) : (
