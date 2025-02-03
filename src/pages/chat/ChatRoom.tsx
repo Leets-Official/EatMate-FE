@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import sendIcon from '@/assets/images/ic_backImg_default1.svg';
+import sendIcon from '@/assets/images/ic_send.svg';
 import Header from '@/components/common/Header/Header';
 import ProfileIcon from '@/assets/images/ic_participant1.svg';
 import Notice from '@/components/chat/Notice';
