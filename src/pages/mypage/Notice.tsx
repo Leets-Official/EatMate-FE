@@ -86,7 +86,7 @@ const Notice: React.FC = () => {
         <DetailContainer>
           <Text fontSize="md">{selectedNotice.title}</Text>
           <Text fontSize="sm" color="gray">
-            {selectedNotice.formattedDate}
+            {selectedNotice.date}
           </Text>
           <Line />
           <Text fontSize="sm">{selectedNotice.content}</Text>

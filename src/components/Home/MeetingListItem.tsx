@@ -16,9 +16,10 @@ interface MeetingListItemProps {
   location: string;
   participants: number;
   maxParticipants: number;
-  time: string;
+  time: string | JSX.Element;
   rightSection?: string;
   onClick?: () => void;
+  isMyMeeting?: boolean;
 }
 
 const Container = styled.div<{ isSelected: boolean }>`
@@ -112,6 +113,25 @@ const RemainingTimeBadge = styled.div`
   }
 `;
 
+const MeetingTimeBadge = styled.div`
+  margin-top: 3px;
+  padding: 2px 8px;
+  ${flexAlignCenter}
+  gap: 3px;
+  color: #f3aa24;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  border-radius: 5px;
+  text-align: right;
+  background-color: #fdeed3;
+  white-space: nowrap;
+
+  img {
+    width: 14px;
+    height: 14px;
+  }
+`;
+
 const MeetingListItem: React.FC<MeetingListItemProps> = ({
   cover,
   isSelected = false,
@@ -123,6 +143,7 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
   time,
   rightSection,
   onClick,
+  isMyMeeting = false,
 }) => {
   const coverType =
     cover === 'meal' ? MealCover : cover === 'beer' ? BeerCover : DeliveryCover;
@@ -132,7 +153,9 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
   useEffect(() => {
     const calculateRemainingTime = () => {
       const now = dayjs();
-      const dueDate = dayjs(time);
+      const dueDate = typeof time === 'string' ? dayjs(time) : dayjs();
+
+      // const dueDate = dayjs(time);
 
       const diff = dueDate.diff(now, 'second');
       if (diff > 0) {
@@ -169,12 +192,16 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
         <TextContainer>
           <Title>{title}</Title>
           <Description>{description}</Description>
-          {cover === 'delivery' && (
-            <RemainingTimeBadge>
-              {' '}
-              <img src={Clock} alt="알람 아이콘" />
-              {remainingTime}
-            </RemainingTimeBadge>
+          {isMyMeeting ? (
+            <MeetingTimeBadge>{time}</MeetingTimeBadge>
+          ) : (
+            cover === 'delivery' && (
+              <RemainingTimeBadge>
+                {' '}
+                <img src={Clock} alt="알람 아이콘" />
+                {remainingTime}
+              </RemainingTimeBadge>
+            )
           )}
         </TextContainer>
       </MainContainer>
