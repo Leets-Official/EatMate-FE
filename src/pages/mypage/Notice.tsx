@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Text } from '@/styles/mypage/mypage.styled';
 import { getNoticeApi, getNoticeParams } from '@/apis/notice/getNotice';
 import Loading from '@/components/common/Loading';
+import dayjs from 'dayjs';
 
 const NoticeWrapper = styled.div`
   padding: 20px;
@@ -43,7 +44,13 @@ const Notice: React.FC = () => {
         const data = await getNoticeApi(params);
         console.log('공지사항 데이터:', data);
 
-        setNotices((prev) => [...prev, ...data.content]);
+        setNotices(
+          data.content.map((notice: any) => ({
+            ...notice,
+            formattedDate: dayjs(notice.createdAt).format('YYYY.MM.DD'),
+            title: `[공지] ${notice.title}`,
+          }))
+        );
       } catch (error) {
         console.error('공지사항 데이터를 불러오는 중 오류 발생:', error);
       } finally {
@@ -52,7 +59,7 @@ const Notice: React.FC = () => {
     };
 
     fetchNotices();
-  }, [params]);
+  }, []);
 
   if (isLoading) {
     return <Loading />;
@@ -79,12 +86,12 @@ const Notice: React.FC = () => {
         <NoticeWrapper>
           {notices.map((notice) => (
             <NoticeItem
-              key={notice.id}
+              key={notice.noticeId}
               onClick={() => setSelectedNotice(notice)}
             >
               <Text fontSize="smMd">{notice.title}</Text>
               <Text fontSize="sm" color="gray">
-                {notice.date}
+                {notice.formattedDate}
               </Text>
             </NoticeItem>
           ))}
