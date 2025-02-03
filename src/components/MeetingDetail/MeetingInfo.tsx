@@ -35,7 +35,7 @@ const InfoTitle = styled.div`
 
 const HighlightedText = styled.div`
   color: ${({ theme }) => theme.COLORS.main};
-  font-size: ${({ theme }) => theme.FONT_SIZE.xs};
+  font-size: 10px;
 `;
 
 const Icon = styled.img`

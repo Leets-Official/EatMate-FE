@@ -27,11 +27,11 @@ const Line = styled.div`
 
 const Badge = styled.div`
   position: absolute;
-  top: 90px;
-  right: 25px;
+  top: 88px;
+  right: 22px;
   background-color: ${({ theme }) => theme.COLORS.main};
   color: ${({ theme }) => theme.COLORS.white};
-  font-size: ${({ theme }) => theme.FONT_SIZE.xs};
+  font-size: 10px;
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   padding: 3px 8px;
   border-radius: 20px;
