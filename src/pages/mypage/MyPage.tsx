@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import editIcon from '@/assets/images/ic_edit_profile.svg';
 import { useEffect, useState } from 'react';
 import { getProfileInfo } from '@/apis/profile/getProfile';
+import Loading from '@/components/common/Loading';
 
 export const mockData = {
   create: 1,
@@ -15,6 +16,8 @@ export const mockData = {
 
 const MyPage: React.FC = () => {
   const nav = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+
   const [profileData, setProfileData] = useState<{
     nickname: string;
     studentNumber: string;
@@ -37,11 +40,17 @@ const MyPage: React.FC = () => {
         });
       } catch (error) {
         console.error('프로필 정보를 불러오는 중 오류 발생:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchProfile();
   }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>

@@ -25,8 +25,6 @@ export const ModalContainer = styled.div`
 
 export const ModalButton = styled.button<{ type: 'primary' | 'delete' }>`
   width: 100%;
-  border-top-right-radius: 16px;
-  border-top-left-radius: 16px;
   padding: 16px;
   font-size: ${({ theme }) => theme.FONT_SIZE.md};
   background: ${({ theme }) => theme.COLORS.gray[200]};
@@ -41,15 +39,5 @@ export const ModalButton = styled.button<{ type: 'primary' | 'delete' }>`
 
   &:not(:last-child) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  &:first-child {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
-
-  &:last-child {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
   }
 `;

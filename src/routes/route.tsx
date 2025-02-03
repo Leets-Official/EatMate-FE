@@ -25,8 +25,11 @@ import SignupSuccess from '@/pages/signup/SignupSuccess';
 import Splash from '@/pages/Splash';
 import NotFound from '@/pages/Not-found';
 import AuthGuard from '@/components/common/AuthGuard';
-import ChatRoom from '@/pages/ChatRoom';
+import ChatRoom from '@/pages/chat/ChatRoom';
 import MeetingDetail from '@/pages/MeetingDetail';
+import UserProfile from '@/pages/chat/UserProfile';
+import UserReport from '@/pages/chat/UserReport';
+import UserReportPost from '@/pages/chat/UserReportPost';
 
 const router = createBrowserRouter([
   {
@@ -87,6 +90,18 @@ const router = createBrowserRouter([
   {
     path: '/chatting',
     element: <ChatRoom />,
+  },
+  {
+    path: '/profile',
+    element: <UserProfile />,
+  },
+  {
+    path: '/report',
+    element: <UserReport />,
+  },
+  {
+    path: '/report/post',
+    element: <UserReportPost />,
   },
   {
     path: '/meeting/:meetingId',
