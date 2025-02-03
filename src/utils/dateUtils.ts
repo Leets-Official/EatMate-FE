@@ -23,6 +23,14 @@ export const extractMinutes = (isoString: string | null): number => {
 };
 
 export const formatTimeWithMeridiem = (dateTimeString: string): string => {
-  // '오후/오전 n시 n분' 형식으로 포맷팅
-  return dayjs(dateTimeString).format('A h시 m분');
+  const date = new Date(dateTimeString);
+  const hour = date.getHours();
+  const minute = date.getMinutes();
+  const meridiem = hour >= 12 ? '오후' : '오전';
+  const formattedHour = hour % 12 === 0 ? 12 : hour % 12;
+
+  const timeString =
+    minute === 0 ? `${formattedHour}시` : `${formattedHour}시 ${minute}분`;
+
+  return `${meridiem} ${timeString}`;
 };

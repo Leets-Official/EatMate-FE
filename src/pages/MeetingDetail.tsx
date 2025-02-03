@@ -120,7 +120,6 @@ const MeetingDetail = () => {
       <Header
         title={meetingData?.meetingName || ' '}
         showBackButton={true}
-        onBackClick={() => navi(-1)}
         isJoin={meetingData?.isCurrentUser}
         onLeaveClick={handleLeave}
       />

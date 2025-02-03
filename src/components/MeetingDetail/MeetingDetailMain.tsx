@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import MockImage from '@/assets/images/ic_backImg_default1.svg';
 import MeetingInfo from '@/components/MeetingDetail/MeetingInfo';
 import MailIcon from '@/assets/images/ic_mail.svg';
-import { formatTimeWithMeridiem } from '@/utils/dateUtils';
 
 const Container = styled.div`
   width: 100%;
@@ -76,7 +75,7 @@ const MeetingDetailMain: React.FC<MeetingData> = ({
       <MeetingInfo
         gender={gender}
         location={location}
-        time={formatTimeWithMeridiem(time)}
+        time={time}
         chatTime={chatTime}
       />
       <Divider />
