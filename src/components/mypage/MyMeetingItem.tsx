@@ -3,6 +3,13 @@ import MeetingListItem from '@/components/Home/MeetingListItem';
 import calenderIcon from '@/assets/images/ic_mypage_calendar.svg';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+
+const InactiveMeetingWrapper = styled.div`
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default;
+`;
 
 interface MeetingItemProps {
   meeting: any;
@@ -15,6 +22,7 @@ const MyMeetingItem: React.FC<MeetingItemProps> = ({ meeting }) => {
   const dueDate = dayjs(meeting.dueDateTime);
   const createdDate = dayjs(meeting.createdAt).format('YYYY년 M월 D일'); // 개설 날짜 변환
   const isExpired = dayjs().isAfter(dueDate); // 만료 여부 확인
+  const isInactive = meeting.meetingStatus === 'INACTIVE';
 
   useEffect(() => {
     if (
@@ -96,7 +104,23 @@ const MyMeetingItem: React.FC<MeetingItemProps> = ({ meeting }) => {
     }
   }
 
-  return (
+  return isInactive ? (
+    <InactiveMeetingWrapper>
+      <MeetingListItem
+        key={meeting.id}
+        cover={coverImage}
+        title={meeting.meetingName}
+        description={meeting.meetingDescription}
+        location={meeting.location}
+        participants={meeting.participantCount}
+        maxParticipants={meeting.maxParticipants ?? 10}
+        time={timeDisplay}
+        onClick={!isExpired ? () => nav(`/meeting/${meeting.id}`) : undefined}
+        rightSection={rightSection}
+        isMyMeeting
+      />
+    </InactiveMeetingWrapper>
+  ) : (
     <MeetingListItem
       key={meeting.id}
       cover={coverImage}
