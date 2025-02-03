@@ -67,13 +67,17 @@ const ReportedUser: React.FC = () => {
   // };
 
   const [isLoading, setIsLoading] = useState(true);
-  const [blocks] = useState<any[]>([]);
+  const [blocks, setBlocks] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchBlocks = async () => {
       try {
         const data = await getBlockApi();
         console.log('차단내역 목록 데이터: ', data);
+
+        if (data) {
+          setBlocks(data);
+        }
       } catch (error) {
         error instanceof Error
           ? error.message
@@ -103,11 +107,17 @@ const ReportedUser: React.FC = () => {
         </Text>
         <UserList>
           {blocks.map((user, index) => (
-            <UserItem key={index}>
+            <UserItem key={user.blockId}>
               <UserDetails>
-                <UserIcon src={user.icon} alt={user.name} />
+                <UserIcon
+                  src={
+                    user.profileImageUrl ||
+                    (index % 2 === 0 ? profileImg1 : profileImg2)
+                  }
+                  alt={user.blockedUserNickname}
+                />
                 <Text fontSize="sm" fontWeight="regular">
-                  {user.name}
+                  {user.blockedUserNickname}
                 </Text>
               </UserDetails>
               <Button
@@ -116,7 +126,7 @@ const ReportedUser: React.FC = () => {
                 rounded="lg"
                 // onClick={() => toggleBlockStatus(index)}
               >
-                {user.isBlocked ? '차단중' : '차단해제'}
+                {user.isBlocked ? '차단중' : '차단 해제'}
               </Button>
             </UserItem>
           ))}
