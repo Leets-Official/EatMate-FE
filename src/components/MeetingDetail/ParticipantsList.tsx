@@ -1,16 +1,16 @@
 import styled from 'styled-components';
-import CrownIcon from '@/assets/images/ic_crown_check.svg';
+// import CrownIcon from '@/assets/images/ic_crown_check.svg';
 import { flexCenter, flexColumn } from '@/styles/CommonStyle';
 import ParticipantIcon1 from '@/assets/images/ic_participant1.svg';
 import ParticipantIcon2 from '@/assets/images/ic_participant2.svg';
 import ParticipantIcon3 from '@/assets/images/ic_participant3.svg';
 import ParticipantIcon4 from '@/assets/images/ic_participant4.svg';
-
+import ParticipantIcon from '@/assets/images/ic_participant_people.svg';
 interface Participant {
   userId: number;
   name: string;
-  isHost?: boolean;
-  isMe?: boolean;
+  isCurrentUser?: boolean;
+  isOwner?: boolean;
 }
 
 interface ParticipantsListProps {
@@ -57,13 +57,13 @@ const ParticipantImage = styled.img`
   border-radius: 50%;
 `;
 
-const Crown = styled.img`
-  position: absolute;
-  top: -3px;
-  right: -3px;
-  width: 15px;
-  height: 15px;
-`;
+// const Crown = styled.img`
+//   position: absolute;
+//   top: -3px;
+//   right: -3px;
+//   width: 15px;
+//   height: 15px;
+// `;
 
 const ParticipantName = styled.div`
   margin-top: 6px;
@@ -85,13 +85,19 @@ const Badge = styled.div`
   ${flexCenter}
 `;
 
+const ParticipantIconImg = styled.img`
+  width: 14px;
+  height: 14px;
+  margin-bottom: 3px;
+`;
+
 const ParticipantsList: React.FC<ParticipantsListProps> = ({
   participants,
 }) => {
   return (
     <Container>
       <Title>
-        <span>👥</span> 참여 중인 인원
+        <ParticipantIconImg src={ParticipantIcon} /> 참여 중인 인원
       </Title>
       <ParticipantsContainer>
         {participants.map((participant) => (
@@ -104,9 +110,9 @@ const ParticipantsList: React.FC<ParticipantsListProps> = ({
               }
               alt={participant.name}
             />
-            {participant.isHost && <Crown src={CrownIcon} alt="방장" />}
+            {/* {participant.isOwner && <Crown src={CrownIcon} alt="방장" />} */}
             <ParticipantName>
-              {participant.isMe && <Badge>나</Badge>}
+              {participant.isCurrentUser && <Badge>나</Badge>}
               <span>{participant.name}</span>
             </ParticipantName>
           </ParticipantWrapper>

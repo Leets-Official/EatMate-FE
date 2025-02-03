@@ -23,11 +23,11 @@ const Title = styled.h1`
 `;
 
 const SectionTitle = styled.div`
-  font-size: 16px;
-  font-weight: 600;
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   margin: 20px 0 0 31px;
   color: ${({ theme }) => theme.COLORS.black};
 `;
@@ -42,6 +42,7 @@ const Description = styled.p`
 const Icon = styled.img`
   width: 18px;
   height: 18px;
+  margin-bottom: 2px;
 `;
 const Divider = styled.div`
   width: 100%;
@@ -49,6 +50,16 @@ const Divider = styled.div`
   background-color: #f9f9fc;
   margin: 20px 0;
 `;
+
+const LineConatainer = styled.div`
+  padding: 0 25px;
+`;
+
+const Line = styled.div`
+  border-bottom: 2px solid #e0e0e0;
+  margin: 20px 0;
+`;
+
 interface MeetingData {
   title: string;
   description: string;
@@ -78,7 +89,9 @@ const MeetingDetailMain: React.FC<MeetingData> = ({
         time={time}
         chatTime={chatTime}
       />
-      <Divider />
+      <LineConatainer>
+        <Line />
+      </LineConatainer>
       <SectionTitle>
         <Icon src={MailIcon} alt="설명 아이콘" />
         모임 설명
