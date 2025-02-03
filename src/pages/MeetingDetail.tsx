@@ -107,6 +107,7 @@ const MeetingDetail = () => {
 
   const handleJoin = () => {
     console.log('참여하기 클릭');
+    setIsModalOpen(true);
   };
   console.log(meetingData);
 
@@ -119,7 +120,7 @@ const MeetingDetail = () => {
       <Header
         title={meetingData?.meetingName || ' '}
         showBackButton={true}
-        onBackClick={() => console.log('뒤로가기 클릭')}
+        onBackClick={() => navi(-1)}
         isJoin={meetingData?.isCurrentUser}
         onLeaveClick={handleLeave}
       />
