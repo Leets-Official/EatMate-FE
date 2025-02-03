@@ -177,7 +177,6 @@ const ChatRoom = () => {
       <Header
         title="모임 제목"
         showBackButton={true}
-        onBackClick={() => console.log('뒤로가기 클릭')}
         isMenu={true}
         onMenuClick={handleMenu}
       />

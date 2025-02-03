@@ -92,13 +92,7 @@ const OfflineMeetingCreate: React.FC = () => {
 
   return (
     <div>
-      <Header
-        onBackClick={() => {
-          nav(-1);
-        }}
-        showBackButton
-        title="모임 만들기"
-      />
+      <Header showBackButton title="모임 만들기" />
       <S.ContentPadding>
         {offlineMeetingFormFields.map((field) =>
           field.key !== 'meetingPlace' ? (

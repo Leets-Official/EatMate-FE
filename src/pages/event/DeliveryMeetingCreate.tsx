@@ -103,13 +103,7 @@ const DeliveryMeetingCreate: React.FC = () => {
   };
   return (
     <div>
-      <Header
-        onBackClick={() => {
-          nav(-1);
-        }}
-        showBackButton
-        title="배달팟 만들기"
-      />
+      <Header showBackButton title="배달팟 만들기" />
       <S.ContentPadding>
         {deliveryMeetingFormFields
           .filter((field) => field.key.startsWith('meeting'))
