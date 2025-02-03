@@ -47,7 +47,6 @@ const MainContainer = styled.div`
 const IconWrapper = styled.div`
   border-radius: 50%;
   ${flexCenter}
-  flex-shrink: 0;
   margin-top: 5px;
 `;
 
@@ -67,9 +66,12 @@ const Description = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   color: ${({ theme }) => theme.COLORS.gray[300]};
   line-height: 1.4;
-  white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  word-wrap: break-word;
 `;
 
 const InfoContainer = styled.div`
@@ -84,7 +86,6 @@ const InfoContainer = styled.div`
 const Location = styled.div`
   ${flexAlignCenter}
   gap: 4px;
-  flex-shrink: 1;
   margin-right: auto;
 `;
 
@@ -94,6 +95,20 @@ const Participants = styled.div`
 `;
 
 const RemainingTimeBadge = styled.div`
+  margin-top: 3px;
+  padding: 2px 8px;
+  ${flexAlignCenter}
+  gap: 3px;
+  color: ${({ theme }) => theme.COLORS.main};
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  border-radius: 5px;
+  text-align: right;
+  background-color: #fbded0;
+  display: inline-flex;
+`;
+
+const RightSectionBadge = styled.div`
   margin-top: 3px;
   padding: 2px 8px;
   ${flexAlignCenter}
@@ -160,23 +175,28 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
     return () => clearInterval(timer);
   }, [time]);
 
+  const formattedDescription =
+    description.length > 30 ? `${description.slice(0, 30)}...` : description;
+
   return (
     <Container isSelected={isSelected} onClick={onClick}>
       <MainContainer>
         <IconWrapper>
           <img src={coverType} alt="모임 아이콘" width="65" height="65" />
         </IconWrapper>
-        <TextContainer>
-          <Title>{title}</Title>
-          <Description>{description}</Description>
+
+        <div>
+          <TextContainer>
+            <Title>{title}</Title>
+            <Description>{formattedDescription}</Description>
+          </TextContainer>
           {cover === 'delivery' && (
             <RemainingTimeBadge>
-              {' '}
               <img src={Clock} alt="알람 아이콘" />
               {remainingTime}
             </RemainingTimeBadge>
           )}
-        </TextContainer>
+        </div>
       </MainContainer>
       <InfoContainer>
         <Location>
@@ -187,9 +207,9 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
           <PersonIcon />
           {participants}/{maxParticipants}
         </Participants>
-        <RemainingTimeBadge>
+        <RightSectionBadge>
           {rightSection ? rightSection : `n분 전 대화`}
-        </RemainingTimeBadge>
+        </RightSectionBadge>
       </InfoContainer>
     </Container>
   );
