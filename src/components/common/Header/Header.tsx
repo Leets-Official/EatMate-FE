@@ -3,6 +3,8 @@ import mainLogo from '@/assets/images/EatMate_main_Logo.svg';
 import backArrow from '@/assets/images/backButton.svg';
 import rightArrow from '@/assets/images/ic_arrow_right.svg';
 import menu from '@/assets/images/ic_menu.svg';
+import { useNavigate } from 'react-router-dom';
+
 interface HeaderProps {
   title?: string;
   showLogo?: boolean;
@@ -26,10 +28,16 @@ const Header: React.FC<HeaderProps> = ({
   isMenu = false,
   onMenuClick,
 }) => {
+  const navigate = useNavigate();
+  // 기본 뒤로 가기 함수
+  const handleBackClick = () => {
+    navigate(-1);
+  };
+
   return (
     <S.HeaderContainer>
       {showBackButton && (
-        <S.BackButton onClick={onBackClick}>
+        <S.BackButton onClick={onBackClick || handleBackClick}>
           <img src={backArrow} alt="뒤로가기" />
         </S.BackButton>
       )}
