@@ -70,8 +70,7 @@ const Input = styled.input`
   }
 `;
 
-const SendButton = styled.button`
-  background: url(${sendIcon}) no-repeat center;
+const SendButton = styled.img`
   border: none;
   width: 27px;
   height: 27px;
@@ -210,7 +209,7 @@ const ChatRoom = () => {
           onKeyPress={handleKeyPress}
           placeholder="메시지 입력"
         />
-        <SendButton onClick={handleSendMessage} />
+        <SendButton src={sendIcon} onClick={handleSendMessage} />
       </InputContainer>
       {isChatModalOpen && (
         <ChatModal

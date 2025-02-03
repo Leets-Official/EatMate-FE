@@ -41,7 +41,8 @@ const Description = styled.div`
 `;
 
 const UserContainer = styled.div`
-  ${flexCenter}
+  display: flex;
+  align-items: center;
   margin: 10px 0;
   gap: 5px;
 `;
@@ -55,7 +56,7 @@ const ParticipantImage = styled.img`
 const UserName = styled.span`
   font-size: 16px;
   color: #333;
-  flex-grow: 1;
+  margin-left: 5px;
 `;
 
 const Badge = styled.div`
@@ -119,9 +120,9 @@ const ChatModal: React.FC<ChatModalProps> = ({ onClose, onExit }) => {
           {participants.map((user) => (
             <UserContainer key={user.name}>
               <ParticipantImage src={user.image} alt={user.name} />
+              <UserName>{user.name}</UserName>
               {user.isHost && <Crown src={CrownIcon} alt="방장" />}
               {user.isMe && <Badge>나</Badge>}
-              <UserName>{user.name}</UserName>
             </UserContainer>
           ))}
         </div>
