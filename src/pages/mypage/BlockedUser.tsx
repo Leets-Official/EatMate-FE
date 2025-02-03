@@ -7,7 +7,7 @@ import { Text } from '@/styles/mypage/mypage.styled';
 import { flexColumn } from '@/styles/CommonStyle';
 import Button from '@/components/common/Button/Button';
 import { useEffect, useState } from 'react';
-import { getBlockApi } from '@/apis/block/getBlock';
+import { deleteBlockApi, getBlockApi } from '@/apis/block/getBlock';
 import Loading from '@/components/common/Loading';
 
 // const mockData = [
@@ -56,16 +56,6 @@ const UserIcon = styled.img`
 
 const ReportedUser: React.FC = () => {
   const nav = useNavigate();
-  // const [users, setUsers] = useState(mockData);
-
-  // const toggleBlockStatus = (index: number) => {
-  //   setUsers((prevUsers) =>
-  //     prevUsers.map((user, idx) =>
-  //       idx === index ? { ...user, isBlocked: !user.isBlocked } : user
-  //     )
-  //   );
-  // };
-
   const [isLoading, setIsLoading] = useState(true);
   const [blocks, setBlocks] = useState<any[]>([]);
 
@@ -89,6 +79,24 @@ const ReportedUser: React.FC = () => {
 
     fetchBlocks();
   }, []);
+
+  const handleUnblockUser = async (memberId: number, nickname: string) => {
+    const confirmUnblock = window.confirm(
+      `${nickname}님을 차단 해제하시겠어요?`
+    );
+    if (!confirmUnblock) return;
+
+    try {
+      await deleteBlockApi({ memberId });
+      setBlocks((prev) =>
+        prev.filter((user) => user.blockedMemberId !== memberId)
+      );
+      alert(`${nickname}님의 차단이 해제되었습니다.`);
+    } catch (error) {
+      console.error('차단 해제 중 오류 발생: ', error);
+      alert(`${nickname}님의 차단 해제에 실패했습니다.`);
+    }
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -124,9 +132,14 @@ const ReportedUser: React.FC = () => {
                 variant={user.isBlocked ? 'secondary-main' : 'secondary-white'}
                 size="xs"
                 rounded="lg"
-                // onClick={() => toggleBlockStatus(index)}
+                onClick={() =>
+                  handleUnblockUser(
+                    user.blockedMemberId,
+                    user.blockedUserNickname
+                  )
+                }
               >
-                {user.isBlocked ? '차단중' : '차단 해제'}
+                차단 해제
               </Button>
             </UserItem>
           ))}
