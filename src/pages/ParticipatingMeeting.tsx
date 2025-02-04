@@ -1,10 +1,10 @@
-import React from 'react';
 import styled from 'styled-components';
 import BeverageIcon from '@/assets/images/ic_beverage.svg';
 import MealIcon from '@/assets/images/ic_meal.svg';
 import DeliveryIcon from '@/assets/images/ic_delivery.svg';
 import LocoIcon from '@/assets/images/EatMate_main_Logo.svg';
 import { formatTimeWithMeridiem } from '@/utils/dateUtils';
+import { flexColumn, flexColumnCenter } from '@/styles/CommonStyle';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -16,8 +16,7 @@ const Container = styled.div`
 const Banner = styled.div`
   padding: 20px;
   text-align: center;
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: center;
 `;
 
@@ -46,7 +45,7 @@ const BannerTitle = styled.div`
 
 const Description = styled.div`
   color: #636363;
-  font-size: 14px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
   margin-top: 10px;
   word-wrap: break-word;
   white-space: normal;
@@ -60,16 +59,23 @@ const BadgeContainer = styled.div`
 `;
 
 const Badge = styled.div`
-  background-color: white;
+  background-color: ${({ theme }) => theme.COLORS.white};
   color: #f3aa24;
-  font-size: 12px;
-  font-weight: light;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   padding: 3px 8px;
   border-radius: 5px;
   display: flex;
   align-items: center;
   white-space: nowrap;
   z-index: 10;
+`;
+
+const MeetingList = styled.div`
+  background-color: ${({ theme }) => theme.COLORS.white};
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  ${flexColumnCenter}
 `;
 const mockData = {
   meetingType: 'delivery',
@@ -133,6 +139,9 @@ const ParticipatingMeeting = () => {
           {`${mockData.meetingName}`} 약속이 있어요
         </Description>
       </Banner>
+      <MeetingList>
+        <div>sdf</div>
+      </MeetingList>
     </Container>
   );
 };
