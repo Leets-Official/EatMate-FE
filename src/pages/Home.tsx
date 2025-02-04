@@ -82,13 +82,18 @@ const Home = () => {
     setSelectedTabId(id);
   };
 
+  // 제목 포맷팅 함수
+  const formatNoticeTitle = (title: string) => {
+    return title.length > 15 ? `${title.substring(0, 15)}...` : title;
+  };
+
   if (isLoading) {
     return <Loading />;
   }
 
   return (
     <Container>
-      <Header subText={latestNotice} />
+      <Header subText={formatNoticeTitle(latestNotice)} />
       <Line />
       <Badge>배달비가 부담될 때</Badge>
       <Tabs

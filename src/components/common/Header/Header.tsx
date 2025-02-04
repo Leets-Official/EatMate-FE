@@ -33,6 +33,9 @@ const Header: React.FC<HeaderProps> = ({
   const handleBackClick = () => {
     navigate(-1);
   };
+  const handleNotice = () => {
+    navigate('/mypage/notice');
+  };
 
   return (
     <S.HeaderContainer>
@@ -48,7 +51,7 @@ const Header: React.FC<HeaderProps> = ({
           <S.Title>{title}</S.Title>
         ) : null}
         {subText && (
-          <S.SubText>
+          <S.SubText onClick={handleNotice}>
             {subText} <img src={rightArrow} alt="오른쪽 화살표" />
           </S.SubText>
         )}
