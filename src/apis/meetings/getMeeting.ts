@@ -95,3 +95,25 @@ export const getMeetingDetailApi = async (meetingId: string) => {
   const response = await defaultInstance.get(`/api/meetings/${meetingId}`);
   return response.data.result;
 };
+
+export const patchOfflineMeetingApi = async (
+  meetingId: string,
+  updatedData: Record<string, any>
+) => {
+  const response = await defaultInstance.patch(
+    `/api/meetings/${meetingId}/offline`,
+    updatedData
+  );
+  return response.data.result;
+};
+
+export const patchDeliveryMeetingApi = async (
+  meetingId: string,
+  updatedData: Record<string, any>
+) => {
+  const response = await defaultInstance.patch(
+    `/api/meetings/${meetingId}/delivery`,
+    updatedData
+  );
+  return response.data.result;
+};

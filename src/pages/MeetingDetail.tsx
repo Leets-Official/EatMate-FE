@@ -97,12 +97,14 @@ const MeetingDetail = () => {
   };
 
   const handleEdit = () => {
-    console.log('수정하기 클릭');
-    if (meetingData?.meetingType === 'OFFLINE') {
-      navi('/meeting/create/offline');
-    } else {
-      navi('/meeting/create/delivery');
-    }
+    if (!meetingData) return;
+
+    const editPath =
+      meetingData.meetingType === 'OFFLINE'
+        ? `/meeting/create/offline/${meetingId}`
+        : `/meeting/create/delivery/${meetingId}`;
+
+    navi(editPath, { state: { meetingData } });
   };
 
   const handleJoin = () => {

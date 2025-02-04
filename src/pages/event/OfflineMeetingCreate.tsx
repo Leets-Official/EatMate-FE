@@ -6,7 +6,7 @@ import InputGuide from '@/components/common/Input/InputGuide';
 import BackgroundOption from '@/components/event/BackgroundOption';
 import GenderOption from '@/components/event/GenderOption';
 import ParticipantOption from '@/components/event/ParticipantOption';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useInputHandler } from '@/hooks/useInputHandler';
 import {
   createOfflineMeeting,
@@ -17,38 +17,53 @@ import { useUserGender } from '@/hooks/useUserGender';
 import { offlineMeetingFormFields } from '@/constants/MeetingFieldsConstants';
 import { formatMeetingDate } from '@/utils/dateUtils';
 import TimePicker from '@/components/event/TimePicker';
+import { patchOfflineMeetingApi } from '@/apis/meetings/getMeeting';
 
 const OfflineMeetingCreate: React.FC = () => {
   const nav = useNavigate();
+  const userGender = useUserGender();
   const location = useLocation();
 
-  const userGender = useUserGender();
+  const { meetingId } = useParams(); // 모임 수정 모드인지 확인
+  const isEditMode = Boolean(meetingId); // 모임 수정 모드 여부
 
-  const { formData, errors, handleChange, validateForm } = useInputHandler({
-    meetingName: '',
-    meetingDescription: '',
-    isLimited: false,
-    maxParticipants: null,
-    meetingPlace: '',
-    meetingDate: '',
-    genderRestriction: '',
-    offlineMeetingCategory: '',
-    backgroundImage: null as File | string | null,
-  });
+  const { formData, errors, handleChange, validateForm, setFormData } =
+    useInputHandler({
+      meetingName: '',
+      meetingDescription: '',
+      isLimited: false,
+      maxParticipants: null,
+      meetingPlace: '',
+      meetingDate: '',
+      genderRestriction: '',
+      offlineMeetingCategory: '',
+      backgroundImage: null as File | string | null,
+    });
 
   useEffect(() => {
     console.log('location 값: ', location);
-    if (location.state?.category) {
-      handleChange('offlineMeetingCategory', location.state.category);
+    if (isEditMode && location.state?.meetingData) {
+      const meeting = location.state.meetingData;
+      setFormData({
+        meetingName: meeting.meetingName,
+        meetingDescription: meeting.meetingDescription,
+        isLimited: meeting.isLimited,
+        maxParticipants: meeting.maxParticipants ?? 10, // null이면 기본값 10
+        meetingPlace: meeting.meetingPlace,
+        meetingDate: meeting.meetingDate,
+        genderRestriction: meeting.genderRestriction,
+        offlineMeetingCategory: meeting.offlineMeetingCategory,
+        backgroundImage: meeting.backgroundImage,
+      });
     }
-  }, [location.state?.category]);
+  }, [isEditMode, location.state?.meetingData]);
 
   const handleFormChange = (key: string, value: any) => {
     handleChange(key, value);
 
     // isLimited가 false이면 maxParticipants를 null 로 설정
     if (key === 'isLimited' && !value) {
-      handleChange('maxParticipants', null);
+      handleChange('maxParticipants', 10);
     }
   };
 
@@ -57,7 +72,7 @@ const OfflineMeetingCreate: React.FC = () => {
     meetingDescription: formData.meetingDescription,
     genderRestriction: formData.genderRestriction,
     isLimited: formData.isLimited,
-    maxParticipants: formData.isLimited ? formData.maxParticipants : null,
+    maxParticipants: formData.isLimited ? formData.maxParticipants : 10,
     meetingPlace: formData.meetingPlace,
     meetingDate: formatMeetingDate(formData.meetingDate),
     offlineMeetingCategory: formData.offlineMeetingCategory,
@@ -75,10 +90,14 @@ const OfflineMeetingCreate: React.FC = () => {
     ) {
       try {
         const formDataToSend: OfflineMeetingFormData = buildFormData();
-        console.log('모임생성 데이터: ', formDataToSend);
-
-        await createOfflineMeeting(formDataToSend);
-        console.log('오프라인 모임이 정상적으로 생성되었습니다.');
+        console.log('모임 데이터: ', formDataToSend);
+        if (isEditMode) {
+          await patchOfflineMeetingApi(meetingId!, formDataToSend);
+          alert('오프라인 모임이 수정되었습니다.');
+        } else {
+          await createOfflineMeeting(formDataToSend);
+          alert('오프라인 모임이 생성되었습니다.');
+        }
         nav('/home');
       } catch (error) {
         console.error(
@@ -97,7 +116,7 @@ const OfflineMeetingCreate: React.FC = () => {
           nav(-1);
         }}
         showBackButton
-        title="모임 만들기"
+        title={isEditMode ? '모임 수정하기' : '모임 만들기'}
       />
       <S.ContentPadding>
         {offlineMeetingFormFields.map((field) =>
@@ -158,7 +177,7 @@ const OfflineMeetingCreate: React.FC = () => {
         )}
 
         <Button variant="primary" size="lg" rounded="md" onClick={handleSubmit}>
-          모임 만들기
+          {isEditMode ? '모임 수정하기' : '모임 만들기'}
         </Button>
       </S.ContentPadding>
     </div>

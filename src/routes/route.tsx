@@ -76,11 +76,11 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: '/meeting/create/offline',
+    path: '/meeting/create/offline/:meetingId?',
     element: <OfflineMeetingCreate />,
   },
   {
-    path: '/meeting/create/delivery',
+    path: '/meeting/create/delivery/:meetingId?',
     element: <DeliveryMeetingCreate />,
   },
   {
