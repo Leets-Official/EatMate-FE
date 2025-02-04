@@ -21,8 +21,9 @@ const MyMeetingItem: React.FC<MeetingItemProps> = ({ meeting }) => {
 
   const dueDate = dayjs(meeting.dueDateTime);
   const createdDate = dayjs(meeting.createdAt).format('YYYY년 M월 D일'); // 개설 날짜 변환
-  const isExpired = dayjs().isAfter(dueDate); // 만료 여부 확인
   const isInactive = meeting.meetingStatus === 'INACTIVE';
+
+  const isClickable = !isInactive;
 
   useEffect(() => {
     if (
@@ -115,7 +116,7 @@ const MyMeetingItem: React.FC<MeetingItemProps> = ({ meeting }) => {
         participants={meeting.participantCount}
         maxParticipants={meeting.maxParticipants ?? 10}
         time={timeDisplay}
-        onClick={!isExpired ? () => nav(`/meeting/${meeting.id}`) : undefined}
+        onClick={isClickable ? () => nav(`/meeting/${meeting.id}`) : undefined}
         rightSection={rightSection}
         isMyMeeting
       />
@@ -130,7 +131,7 @@ const MyMeetingItem: React.FC<MeetingItemProps> = ({ meeting }) => {
       participants={meeting.participantCount}
       maxParticipants={meeting.maxParticipants ?? 10}
       time={timeDisplay}
-      onClick={!isExpired ? () => nav(`/meeting/${meeting.id}`) : undefined}
+      onClick={isClickable ? () => nav(`/meeting/${meeting.id}`) : undefined}
       rightSection={rightSection}
       isMyMeeting
     />

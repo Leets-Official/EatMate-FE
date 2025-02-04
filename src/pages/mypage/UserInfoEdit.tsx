@@ -81,10 +81,6 @@ const UserInfoEdit: React.FC = () => {
     if (profileImageFile) {
       updatedData.profileImage = profileImageFile;
     }
-    // else if (previewImage) {
-    //   // 기존 프로필 이미지 URL을 유지하도록 설정
-    //   updatedData.profileImage = previewImage;
-    // }
 
     if (Object.keys(updatedData).length === 0) {
       console.log('변경된 정보 없음. 요청 안 보냄.');
