@@ -104,7 +104,7 @@ const MeetingDetail = () => {
         ? `/meeting/create/offline/${meetingId}`
         : `/meeting/create/delivery/${meetingId}`;
 
-    navi(editPath, { state: { meetingData } });
+    navi(editPath);
   };
 
   const handleJoin = () => {

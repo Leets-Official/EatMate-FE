@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTimePicker } from '@/hooks/useTimePicker';
 import * as S from '@/styles/event/TimePicker.styled';
 
@@ -7,6 +7,7 @@ interface TimePickerProps {
   onChange: (date: string) => void;
   showDatePicker?: boolean;
   additionalText?: string;
+  initialValue?: string;
 }
 
 const TimePicker: React.FC<TimePickerProps> = ({
@@ -14,6 +15,7 @@ const TimePicker: React.FC<TimePickerProps> = ({
   onChange,
   showDatePicker = true,
   additionalText,
+  initialValue,
 }) => {
   const {
     dateItems,
@@ -29,6 +31,21 @@ const TimePicker: React.FC<TimePickerProps> = ({
     hourRef,
     minuteRef,
   } = useTimePicker(onChange, showDatePicker);
+
+  // 초기값이 있을 경우 해당 값으로 세팅
+  useEffect(() => {
+    if (initialValue && !selectedDate) {
+      const date = new Date(initialValue);
+      const formattedDate = `${date.getMonth() + 1}월 ${date.getDate()}일`;
+      const formattedHour = String(date.getHours()).padStart(2, '0');
+      const formattedMinute = String(date.getMinutes()).padStart(2, '0');
+
+      setSelectedDate(formattedDate);
+      setSelectedHour(formattedHour);
+      setSelectedMinute(formattedMinute);
+    }
+  }, [initialValue]);
+
   interface PickerItem {
     key: string;
     items: string[];

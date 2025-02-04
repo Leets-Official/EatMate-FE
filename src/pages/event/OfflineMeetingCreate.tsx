@@ -17,7 +17,10 @@ import { useUserGender } from '@/hooks/useUserGender';
 import { offlineMeetingFormFields } from '@/constants/MeetingFieldsConstants';
 import { formatMeetingDate } from '@/utils/dateUtils';
 import TimePicker from '@/components/event/TimePicker';
-import { patchOfflineMeetingApi } from '@/apis/meetings/getMeeting';
+import {
+  getMeetingDetailApi,
+  patchOfflineMeetingApi,
+} from '@/apis/meetings/getMeeting';
 
 const OfflineMeetingCreate: React.FC = () => {
   const nav = useNavigate();
@@ -42,21 +45,44 @@ const OfflineMeetingCreate: React.FC = () => {
 
   useEffect(() => {
     console.log('location 값: ', location);
-    if (isEditMode && location.state?.meetingData) {
-      const meeting = location.state.meetingData;
-      setFormData({
-        meetingName: meeting.meetingName,
-        meetingDescription: meeting.meetingDescription,
-        isLimited: meeting.isLimited,
-        maxParticipants: meeting.maxParticipants ?? 10, // null이면 기본값 10
-        meetingPlace: meeting.meetingPlace,
-        meetingDate: meeting.meetingDate,
-        genderRestriction: meeting.genderRestriction,
-        offlineMeetingCategory: meeting.offlineMeetingCategory,
-        backgroundImage: meeting.backgroundImage,
-      });
-    }
-  }, [isEditMode, location.state?.meetingData]);
+    console.log('meetingId 값: ', meetingId);
+
+    const fetchMeetingData = async () => {
+      if (isEditMode && meetingId) {
+        try {
+          const data = await getMeetingDetailApi(meetingId);
+          console.log('불러온 모임 데이터:', data);
+          setFormData((prev) => ({
+            meetingName: data.meetingName,
+            meetingDescription: data.meetingDescription,
+            isLimited: data.isLimited,
+            maxParticipants: data.maxParticipants ?? 10, // null이면 기본값 10
+            meetingPlace: data.location,
+            meetingDate: formatMeetingDate(data.dueDateTime),
+            genderRestriction: data.genderRestriction,
+            offlineMeetingCategory: prev.offlineMeetingCategory,
+            backgroundImage: data.backgroundImage,
+          }));
+        } catch (error) {
+          console.error('모임 정보를 불러오는 중 오류 발생:', error);
+        }
+      } else {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() + 30);
+
+        setFormData((prev) => ({
+          ...prev,
+          offlineMeetingCategory: prev.offlineMeetingCategory,
+        }));
+      }
+    };
+
+    fetchMeetingData();
+  }, [isEditMode, meetingId]);
+
+  useEffect(() => {
+    console.log('업데이트된 formData:', formData);
+  }, [formData]);
 
   const handleFormChange = (key: string, value: any) => {
     handleChange(key, value);
@@ -123,6 +149,7 @@ const OfflineMeetingCreate: React.FC = () => {
           field.key !== 'meetingPlace' ? (
             <Input
               key={field.key}
+              value={formData[field.key] || ''}
               label={field.label}
               as={field.as}
               placeholder={field.placeholder}
@@ -157,6 +184,7 @@ const OfflineMeetingCreate: React.FC = () => {
           <TimePicker
             label="약속 시간"
             onChange={(value) => handleFormChange('meetingDate', value)}
+            initialValue={isEditMode ? formData.meetingDate : undefined}
           />
         </S.WheelPickerContainer>
 
@@ -171,6 +199,7 @@ const OfflineMeetingCreate: React.FC = () => {
                 guideMessage={field.guideMessage}
                 hasError={errors[field.key]}
                 errorMessage={field.errorMessage}
+                value={formData[field.key] || ''}
                 onChange={(e) => handleFormChange(field.key, e.target.value)}
               />
             )
