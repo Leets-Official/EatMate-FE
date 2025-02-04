@@ -155,8 +155,6 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
       const now = dayjs();
       const dueDate = typeof time === 'string' ? dayjs(time) : dayjs();
 
-      // const dueDate = dayjs(time);
-
       const diff = dueDate.diff(now, 'second');
       if (diff > 0) {
         const hours = Math.floor(diff / 3600);
