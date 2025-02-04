@@ -7,6 +7,7 @@ import ClockIcon from '@/assets/images/ic_clock_line.svg';
 import ChatIcon from '@/assets/images/ic_chat.svg';
 import { formatTimeWithMeridiem } from '@/utils/dateUtils';
 import { flexColumn } from '@/styles/CommonStyle';
+import useRemainingTime from '@/hooks/useRemainingTime';
 
 interface MeetingInfoProps {
   gender: string;
@@ -87,13 +88,13 @@ const MeetingInfo: React.FC<MeetingInfoProps> = ({
       alt: meetingType === 'DELIVERY' ? '시계 아이콘' : '캘린더 아이콘',
       title:
         meetingType === 'DELIVERY' ? (
-          <div>{formatTimeWithMeridiem(time)} </div>
+          <div>후 주문 마감</div>
         ) : (
           <div>{formatTimeWithMeridiem(time)}</div>
         ),
       DeliveryText:
         meetingType === 'DELIVERY'
-          ? () => `${chatTime} 후 주문 마감`
+          ? () => `${useRemainingTime(time)}`
           : undefined,
     },
     {
