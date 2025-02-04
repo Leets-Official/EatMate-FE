@@ -35,13 +35,13 @@ export const CenterContainer = styled.div`
 
 export const Title = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.lg};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.bold};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.regular};
   color: ${({ theme }) => theme.COLORS.text};
 `;
 
 export const SubText = styled.span`
-  margin-top: 4px;
-  font-size: 14px;
+  margin-top: 10px;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   color: ${({ theme }) => theme.COLORS.textSecondary};
   display: flex;
   align-items: center;
@@ -49,8 +49,8 @@ export const SubText = styled.span`
   cursor: pointer;
 
   img {
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
   }
 `;
 

@@ -16,9 +16,10 @@ interface MeetingListItemProps {
   location: string;
   participants: number;
   maxParticipants: number;
-  time: string;
+  time: string | JSX.Element;
   rightSection?: string;
-  onClick: () => void;
+  onClick?: () => void;
+  isMyMeeting?: boolean;
 }
 
 const Container = styled.div<{ isSelected: boolean }>`
@@ -111,7 +112,6 @@ const Badge = styled.div<{ marginLeft?: string }>`
 
 const MeetingListItem: React.FC<MeetingListItemProps> = ({
   cover,
-  isSelected = false,
   title,
   description,
   location,
@@ -120,16 +120,18 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
   time,
   rightSection,
   onClick,
+  isMyMeeting = false,
 }) => {
   const coverType =
     cover === 'meal' ? MealCover : cover === 'beer' ? BeerCover : DeliveryCover;
-  const remainingTime = useRemainingTime(time);
+  const remainingTime =
+    typeof time === 'string' ? useRemainingTime(time) : null;
 
   const formattedDescription =
     description.length > 30 ? `${description.slice(0, 30)}...` : description;
 
   return (
-    <Container isSelected={isSelected} onClick={onClick}>
+    <Container isSelected={isMyMeeting} onClick={onClick}>
       <MainContainer>
         <IconWrapper>
           <img src={coverType} alt="모임 아이콘" width="65" height="65" />
