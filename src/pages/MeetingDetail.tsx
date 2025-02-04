@@ -133,6 +133,7 @@ const MeetingDetail = () => {
             time={meetingData?.dueDateTime}
             chatTime="n분"
             isOwner={meetingData?.isOwner}
+            meetingType={meetingData?.meetingType}
           />
           <ParticipantsList participants={meetingData?.participants || []} />
         </div>

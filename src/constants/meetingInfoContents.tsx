@@ -2,6 +2,7 @@ import React from 'react';
 import PeopleIcon from '@/assets/images/ic_people_line.svg';
 import LocationIcon from '@/assets/images/ic_locate.svg';
 import CalendarIcon from '@/assets/images/ic_calendar.svg';
+import ClockIcon from '@/assets/images/ic_clock_line.svg';
 import ChatIcon from '@/assets/images/ic_chat.svg';
 import { formatTimeWithMeridiem } from '@/utils/dateUtils';
 

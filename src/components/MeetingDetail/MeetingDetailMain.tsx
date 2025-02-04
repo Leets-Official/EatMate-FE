@@ -68,6 +68,7 @@ interface MeetingData {
   time: string;
   chatTime: string;
   isOwner: boolean;
+  meetingType: string;
 }
 
 const MeetingDetailMain: React.FC<MeetingData> = ({
@@ -77,6 +78,7 @@ const MeetingDetailMain: React.FC<MeetingData> = ({
   location,
   time,
   chatTime,
+  meetingType,
 }) => {
   return (
     <Container>
@@ -88,6 +90,7 @@ const MeetingDetailMain: React.FC<MeetingData> = ({
         location={location}
         time={time}
         chatTime={chatTime}
+        meetingType={meetingType}
       />
       <LineConatainer>
         <Line />

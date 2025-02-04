@@ -94,7 +94,7 @@ const Participants = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
 `;
 
-const RemainingTimeBadge = styled.div`
+const Badge = styled.div<{ marginLeft?: string }>`
   margin-top: 3px;
   padding: 2px 8px;
   ${flexAlignCenter}
@@ -106,25 +106,7 @@ const RemainingTimeBadge = styled.div`
   text-align: right;
   background-color: #fbded0;
   display: inline-flex;
-`;
-
-const RightSectionBadge = styled.div`
-  margin-top: 3px;
-  padding: 2px 8px;
-  ${flexAlignCenter}
-  gap: 3px;
-  color: ${({ theme }) => theme.COLORS.main};
-  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
-  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
-  border-radius: 5px;
-  text-align: right;
-  background-color: #fbded0;
-  white-space: nowrap;
-
-  img {
-    width: 14px;
-    height: 14px;
-  }
+  margin-left: ${({ marginLeft }) => marginLeft || '0'};
 `;
 
 const MeetingListItem: React.FC<MeetingListItemProps> = ({
@@ -191,10 +173,10 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
             <Description>{formattedDescription}</Description>
           </TextContainer>
           {cover === 'delivery' && (
-            <RemainingTimeBadge>
+            <Badge marginLeft="10px">
               <img src={Clock} alt="알람 아이콘" />
               {remainingTime}
-            </RemainingTimeBadge>
+            </Badge>
           )}
         </div>
       </MainContainer>
@@ -207,9 +189,7 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
           <PersonIcon />
           {participants}/{maxParticipants}
         </Participants>
-        <RightSectionBadge>
-          {rightSection ? rightSection : `n분 전 대화`}
-        </RightSectionBadge>
+        <Badge>{rightSection ? rightSection : `n분 전 대화`}</Badge>
       </InfoContainer>
     </Container>
   );
