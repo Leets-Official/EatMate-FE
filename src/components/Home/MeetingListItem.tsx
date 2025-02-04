@@ -110,6 +110,21 @@ const Badge = styled.div<{ marginLeft?: string }>`
   margin-left: ${({ marginLeft }) => marginLeft || '0'};
 `;
 
+const MeetingBadge = styled.div`
+  margin-top: 3px;
+  padding: 2px 8px;
+  ${flexAlignCenter}
+  gap: 3px;
+  color: #f3aa24;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  border-radius: 5px;
+  text-align: right;
+  background-color: #fdeed3;
+  white-space: nowrap;
+  display: inline-flex;
+`;
+
 const MeetingListItem: React.FC<MeetingListItemProps> = ({
   cover,
   title,
@@ -142,11 +157,16 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
             <Title>{title}</Title>
             <Description>{formattedDescription}</Description>
           </TextContainer>
-          {cover === 'delivery' && (
-            <Badge marginLeft="10px">
-              <img src={Clock} alt="알람 아이콘" />
-              {remainingTime}
-            </Badge>
+          {isMyMeeting ? (
+            <MeetingBadge>{time}</MeetingBadge>
+          ) : (
+            cover === 'delivery' && (
+              <Badge>
+                {' '}
+                <img src={Clock} alt="알람 아이콘" />
+                {remainingTime}
+              </Badge>
+            )
           )}
         </div>
       </MainContainer>
