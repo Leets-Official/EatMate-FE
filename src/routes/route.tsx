@@ -14,7 +14,6 @@ import DeliveryMeetingCreate from '@/pages/event/DeliveryMeetingCreate';
 import MyPage from '@/pages/mypage/MyPage';
 import MyCreatedMeetings from '@/pages/mypage/MyCreatedMeetings';
 import MyParticipatedMeetings from '@/pages/mypage/MyParticipatedMeetings';
-import ReportedUser from '@/pages/mypage/ReportedUser';
 import BlockedUser from '@/pages/mypage/BlockedUser';
 import Notice from '@/pages/mypage/Notice';
 import UserInfoEdit from '@/pages/mypage/UserInfoEdit';
@@ -126,7 +125,6 @@ const router = createBrowserRouter([
   },
   { path: '/mypage/notice', element: <Notice /> },
   { path: '/mypage/notice/:noticeId', element: <NoticeDetail /> },
-  { path: '/mypage/reported-users', element: <ReportedUser /> },
   { path: '/mypage/blocked-users', element: <BlockedUser /> },
   { path: '/mypage/help', element: <Faq /> },
 ]);

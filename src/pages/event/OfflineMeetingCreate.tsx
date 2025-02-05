@@ -61,8 +61,8 @@ const OfflineMeetingCreate: React.FC = () => {
             meetingDescription: data.meetingDescription,
             meetingPlace: data.location,
             meetingDate: formatMeetingDate(data.dueDateTime),
-            offlineMeetingCategory: 'MEAL',
-            // data.offlineMeetingCategory || prev.offlineMeetingCategory,
+            offlineMeetingCategory:
+              data.offlineMeetingCategory || prev.offlineMeetingCategory,
             backgroundImage: data.backgroundImage,
           }));
         } catch (error) {

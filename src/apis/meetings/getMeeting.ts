@@ -1,4 +1,5 @@
 import defaultInstance from '@/apis/axiosInstance';
+import { OfflineMeetingFormData } from './createMeeting';
 
 interface MeetingQueryParams {
   deliveryCategory?: string;
@@ -98,9 +99,9 @@ export const getMeetingDetailApi = async (meetingId: string) => {
 
 export const patchOfflineMeetingApi = async (
   meetingId: string,
-  updatedData: Record<string, any>
+  updatedData: OfflineMeetingFormData
 ) => {
-  const response = await defaultInstance.patch(
+  const response = await defaultInstance.put(
     `/api/meetings/${meetingId}/offline`,
     updatedData
   );

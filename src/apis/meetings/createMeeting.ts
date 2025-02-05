@@ -29,7 +29,7 @@ export interface DeliveryMeetingFormData {
   backgroundImage: File | null;
 }
 
-const createFormData = (
+export const createFormData = (
   data: OfflineMeetingFormData | DeliveryMeetingFormData
 ): FormData => {
   const formData = new FormData();
