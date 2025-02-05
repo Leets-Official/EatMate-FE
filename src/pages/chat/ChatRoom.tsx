@@ -196,16 +196,23 @@ const ChatRoom = () => {
                   <S.ProfileText>
                     {userProfile
                       ? `${userProfile.nickname} | ${userProfile.mbti}`
-                      : 'Loading...'}
+                      : 'Loading'}
                   </S.ProfileText>
                 </S.ProfileContainer>
                 <S.MessageContent isMine={msg.senderId === myId}>
-                  <S.TimeStamp isMine={msg.senderId === myId}>
-                    {formatTime(msg.regDate)}
-                  </S.TimeStamp>
+                  {msg.senderId === myId && (
+                    <S.TimeStamp isMine={msg.senderId === myId}>
+                      {formatTime(msg.regDate)}
+                    </S.TimeStamp>
+                  )}
                   <S.MessageBox isMine={msg.senderId === myId}>
                     {msg.content}
                   </S.MessageBox>
+                  {msg.senderId !== myId && (
+                    <S.TimeStamp isMine={msg.senderId === myId}>
+                      {formatTime(msg.regDate)}
+                    </S.TimeStamp>
+                  )}
                 </S.MessageContent>
               </S.Message>
             );
