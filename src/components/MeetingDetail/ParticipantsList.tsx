@@ -1,29 +1,19 @@
 import styled from 'styled-components';
 // import CrownIcon from '@/assets/images/ic_crown_check.svg';
 import { flexCenter, flexColumn } from '@/styles/CommonStyle';
-import ParticipantIcon1 from '@/assets/images/ic_participant1.svg';
-import ParticipantIcon2 from '@/assets/images/ic_participant2.svg';
-import ParticipantIcon3 from '@/assets/images/ic_participant3.svg';
-import ParticipantIcon4 from '@/assets/images/ic_participant4.svg';
+import ParticipantDefaultIcon from '@/assets/images/ic_participant1.svg';
 import ParticipantIcon from '@/assets/images/ic_participant_people.svg';
 interface Participant {
   userId: number;
   name: string;
   isCurrentUser?: boolean;
   isOwner?: boolean;
+  userProfileImage: string;
 }
 
 interface ParticipantsListProps {
   participants: Participant[];
 }
-
-// 이미지 배열
-const participantImages = [
-  ParticipantIcon1,
-  ParticipantIcon2,
-  ParticipantIcon3,
-  ParticipantIcon4,
-];
 
 const Container = styled.div`
   margin: 20px 0 0 31px;
@@ -103,11 +93,7 @@ const ParticipantsList: React.FC<ParticipantsListProps> = ({
         {participants.map((participant) => (
           <ParticipantWrapper key={participant.userId}>
             <ParticipantImage
-              src={
-                participantImages[
-                  Math.floor(Math.random() * participantImages.length)
-                ]
-              }
+              src={participant.userProfileImage || ParticipantDefaultIcon}
               alt={participant.name}
             />
             {/* {participant.isOwner && <Crown src={CrownIcon} alt="방장" />} */}
