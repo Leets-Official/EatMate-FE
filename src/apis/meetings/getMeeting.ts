@@ -19,6 +19,7 @@ export interface MeetingData {
   isOwner: boolean;
   isCurrentUser: boolean;
   chatRoomId: number;
+  backgroundImage: string;
   participants: Participant[];
 }
 
@@ -27,6 +28,7 @@ interface Participant {
   name: string;
   isOwner: boolean;
   isCurrentUser: boolean;
+  userProfileImage: string;
 }
 
 export const getOfflineMeetingApi = () => {

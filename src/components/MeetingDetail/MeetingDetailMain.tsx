@@ -72,6 +72,7 @@ interface MeetingData {
   isOwner: boolean;
   chatRoomId: number;
   meetingType: string;
+  backgroundImage: string;
 }
 
 const MeetingDetailMain: React.FC<MeetingData> = ({
@@ -83,6 +84,7 @@ const MeetingDetailMain: React.FC<MeetingData> = ({
   chatTime,
   chatRoomId,
   meetingType,
+  backgroundImage,
 }) => {
   useEffect(() => {
     if (chatRoomId) {
@@ -91,7 +93,7 @@ const MeetingDetailMain: React.FC<MeetingData> = ({
   }, [chatRoomId]);
   return (
     <Container>
-      <ImgContainer src={MockImage} alt="메인 이미지" />
+      <ImgContainer src={backgroundImage || MockImage} alt="메인 이미지" />
 
       <Title>{title}</Title>
       <MeetingInfo

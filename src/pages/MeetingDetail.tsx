@@ -113,7 +113,7 @@ const MeetingDetail = () => {
   if (isLoading) {
     return <Loading />;
   }
-  console.log('상세', meetingId);
+  console.log('상세', meetingData);
 
   return (
     <Container>
@@ -135,6 +135,7 @@ const MeetingDetail = () => {
             isOwner={meetingData?.isOwner}
             chatRoomId={meetingData?.chatRoomId}
             meetingType={meetingData?.meetingType}
+            backgroundImage={meetingData?.backgroundImage}
           />
           <ParticipantsList participants={meetingData?.participants || []} />
         </div>
