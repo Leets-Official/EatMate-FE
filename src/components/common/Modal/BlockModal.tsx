@@ -41,13 +41,13 @@ const ButtonContainer = styled.div`
 interface BlockModalProps {
   onClose: () => void;
   isReport: boolean;
-  memberId: string;
+  memberId?: string;
 }
 
 const BlockModal: React.FC<BlockModalProps> = ({
   onClose,
   isReport,
-  memberId,
+  memberId = '',
 }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const navi = useNavigate();
@@ -102,7 +102,11 @@ const BlockModal: React.FC<BlockModalProps> = ({
               <Button
                 size="sm"
                 rounded="lg"
-                onClick={() => handleBlock(memberId)}
+                onClick={() => {
+                  if (!isReport) {
+                    handleBlock(memberId);
+                  }
+                }}
               >
                 확인
               </Button>
