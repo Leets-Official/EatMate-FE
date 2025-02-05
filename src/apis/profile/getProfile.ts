@@ -17,6 +17,13 @@ export interface ProfileData {
   profileImageUrl: string | null;
 }
 
+export interface MemberData {
+  memberId: number;
+  profileImageUrl: string;
+  nickname: string;
+  mbti: string;
+}
+
 export const getProfileInfo = async (): Promise<ProfileData> => {
   const response = await defaultInstance.get<{ result: ProfileData }>(
     PATH + '/myinfo'
@@ -26,8 +33,8 @@ export const getProfileInfo = async (): Promise<ProfileData> => {
 
 export const getUserProfileInfo = async (
   memberId: number
-): Promise<ProfileData> => {
-  const response = await defaultInstance.get<{ result: ProfileData }>(
+): Promise<MemberData> => {
+  const response = await defaultInstance.get<{ result: MemberData }>(
     PATH + `/info/${memberId}`
   );
   return response.data.result;

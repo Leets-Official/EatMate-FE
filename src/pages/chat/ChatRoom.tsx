@@ -11,6 +11,7 @@ import useWebSocket from '@/hooks/useWebSocket';
 import { formatTime, formatTimeWithMeridiem } from '@/utils/dateUtils';
 import { ChatRoomDetails, getChatApi } from '@/apis/chat/getChatData';
 import Loading from '@/components/common/Loading';
+import { getUserProfileInfo, MemberData } from '@/apis/profile/getProfile';
 
 const ChatContainer = styled.div`
   ${flexColumn}
@@ -133,6 +134,7 @@ const ChatRoom = () => {
   const [isChatModalOpen, setChatModalOpen] = useState(false);
   const [isChatExitModalOpen, setChatExitModalOpen] = useState(false);
 
+  // 채팅방 날짜 설정
   const [today, setToday] = useState(new Date());
 
   useEffect(() => {
@@ -156,6 +158,32 @@ const ChatRoom = () => {
     const days = ['일', '월', '화', '수', '목', '금', '토'];
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 (${days[date.getDay()]})`;
   };
+
+  // 상대 유저 정보 설정
+  const [userProfiles, setUserProfiles] = useState<{
+    [key: number]: MemberData;
+  }>({});
+
+  const fetchUserProfile = async (memberId: number) => {
+    if (!userProfiles[memberId]) {
+      // 캐싱된 정보가 없는 경우에만 API 호출
+      try {
+        const profileInfo = await getUserProfileInfo(memberId);
+        setUserProfiles((prev) => ({ ...prev, [memberId]: profileInfo }));
+      } catch (error) {
+        console.error('Failed to fetch user profile:', error);
+      }
+    }
+  };
+
+  // 메시지 렌더링 시 사용자 정보 불러오기
+  useEffect(() => {
+    messages?.chattingMessage?.forEach((msg) => {
+      if (msg.senderId && msg.content !== null) {
+        fetchUserProfile(msg.senderId);
+      }
+    });
+  }, [messages]);
 
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
@@ -235,6 +263,8 @@ const ChatRoom = () => {
 
   if (!chatRoomDetails) return <Loading />;
 
+  console.log('정보', getUserProfileInfo(myId));
+
   return (
     <ChatContainer>
       <Header
@@ -262,22 +292,32 @@ const ChatRoom = () => {
       <MessagesList>
         {messages?.chattingMessage
           ?.filter((msg) => msg.content !== null)
-          .map((msg, index) => (
-            <Message key={index} isMine={msg.senderId === myId}>
-              <ProfileContainer isMine={msg.senderId === myId}>
-                <ProfileImg src={ProfileIcon} alt="User Image" />
-                <ProfileText>{'이름 | ISFP'}</ProfileText>
-              </ProfileContainer>
-              <MessageContent isMine={msg.senderId === myId}>
-                <TimeStamp isMine={msg.senderId === myId}>
-                  {formatTime(msg.regDate)}
-                </TimeStamp>
-                <MessageBox isMine={msg.senderId === myId}>
-                  {msg.content}
-                </MessageBox>
-              </MessageContent>
-            </Message>
-          ))}
+          .map((msg, index) => {
+            const userProfile = userProfiles[msg.senderId];
+            return (
+              <Message key={index} isMine={msg.senderId === myId}>
+                <ProfileContainer isMine={msg.senderId === myId}>
+                  <ProfileImg
+                    src={userProfile?.profileImageUrl || ProfileIcon}
+                    alt={userProfile?.nickname || 'User Image'}
+                  />
+                  <ProfileText>
+                    {userProfile
+                      ? `${userProfile.nickname} | ${userProfile.mbti}`
+                      : 'Loading...'}
+                  </ProfileText>
+                </ProfileContainer>
+                <MessageContent isMine={msg.senderId === myId}>
+                  <TimeStamp isMine={msg.senderId === myId}>
+                    {formatTime(msg.regDate)}
+                  </TimeStamp>
+                  <MessageBox isMine={msg.senderId === myId}>
+                    {msg.content}
+                  </MessageBox>
+                </MessageContent>
+              </Message>
+            );
+          })}
       </MessagesList>
 
       <InputContainer>
