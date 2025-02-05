@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import MockImage from '@/assets/images/ic_backImg_default1.svg';
 import MeetingInfo from '@/components/MeetingDetail/MeetingInfo';
 import MailIcon from '@/assets/images/ic_mail.svg';
-import { formatTimeWithMeridiem } from '@/utils/dateUtils';
 import { useEffect } from 'react';
 
 const Container = styled.div`

@@ -62,13 +62,6 @@ const MeetingInfo: React.FC<MeetingInfoProps> = ({
   chatTime,
   meetingType,
 }) => {
-  const titleProps: Record<string, any[]> = {
-    '참가자 아이콘': [gender],
-    '위치 아이콘': [location],
-    '캘린더 아이콘': [time],
-    '채팅 아이콘': [],
-  };
-
   const navi = useNavigate();
 
   const handleChat = () => {

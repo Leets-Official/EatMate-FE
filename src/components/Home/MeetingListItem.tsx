@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import LocateIcon from '@/assets/images/ic_locate.svg?react';
 import PersonIcon from '@/assets/images/ic_person.svg?react';
