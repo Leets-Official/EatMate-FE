@@ -93,6 +93,8 @@ const MeetingList = ({ cover }: { cover: string }) => {
     navigate(`/meeting/${meetingId}`);
   };
 
+  console.log(meetingData);
+
   return (
     <Container>
       {cover === 'delivery' ? (
@@ -138,6 +140,7 @@ const MeetingList = ({ cover }: { cover: string }) => {
               maxParticipants={meeting.maxParticipants}
               time={meeting.dueDateTime}
               onClick={() => handleNavigateToDetail(meeting.meetingId)}
+              lastChatAt={meeting.lastChatAt}
             />
           ))
         )}

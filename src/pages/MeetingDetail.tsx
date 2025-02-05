@@ -131,7 +131,7 @@ const MeetingDetail = () => {
             gender={meetingData?.genderRestriction}
             location={meetingData?.location}
             time={meetingData?.dueDateTime}
-            chatTime="n분"
+            lastChatAt={meetingData?.lastChatAt}
             isOwner={meetingData?.isOwner}
             chatRoomId={meetingData?.chatRoomId}
             meetingType={meetingData?.meetingType}

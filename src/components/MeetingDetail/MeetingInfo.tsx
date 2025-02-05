@@ -5,7 +5,7 @@ import LocationIcon from '@/assets/images/ic_locate.svg';
 import CalendarIcon from '@/assets/images/ic_calendar.svg';
 import ClockIcon from '@/assets/images/ic_clock_line.svg';
 import ChatIcon from '@/assets/images/ic_chat.svg';
-import { formatTimeWithMeridiem } from '@/utils/dateUtils';
+import { calculateTimeAgo, formatTimeWithMeridiem } from '@/utils/dateUtils';
 import { flexColumn } from '@/styles/CommonStyle';
 import { useNavigate } from 'react-router-dom';
 import useRemainingTime from '@/hooks/useRemainingTime';
@@ -14,8 +14,8 @@ interface MeetingInfoProps {
   gender: string;
   location: string;
   time: string;
-  chatTime: string;
   meetingType: string;
+  lastChatAt: string;
 }
 
 const InfoContainer = styled.div`
@@ -59,8 +59,8 @@ const MeetingInfo: React.FC<MeetingInfoProps> = ({
   gender,
   location,
   time,
-  chatTime,
   meetingType,
+  lastChatAt,
 }) => {
   const navi = useNavigate();
 
@@ -108,7 +108,7 @@ const MeetingInfo: React.FC<MeetingInfoProps> = ({
       icon: ChatIcon,
       alt: '채팅 아이콘',
       title: <div>채팅</div>,
-      ChatText: () => `${chatTime} 전 대화`,
+      ChatText: () => `${calculateTimeAgo(lastChatAt)} 대화`,
     },
   ];
 

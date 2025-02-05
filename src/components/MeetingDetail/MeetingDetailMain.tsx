@@ -67,11 +67,11 @@ interface MeetingData {
   gender: string;
   location: string;
   time: string;
-  chatTime: string;
   isOwner: boolean;
   chatRoomId: number;
   meetingType: string;
   backgroundImage: string;
+  lastChatAt: string;
 }
 
 const MeetingDetailMain: React.FC<MeetingData> = ({
@@ -80,10 +80,10 @@ const MeetingDetailMain: React.FC<MeetingData> = ({
   gender,
   location,
   time,
-  chatTime,
   chatRoomId,
   meetingType,
   backgroundImage,
+  lastChatAt,
 }) => {
   useEffect(() => {
     if (chatRoomId) {
@@ -99,8 +99,8 @@ const MeetingDetailMain: React.FC<MeetingData> = ({
         gender={gender}
         location={location}
         time={time}
-        chatTime={chatTime}
         meetingType={meetingType}
+        lastChatAt={lastChatAt}
       />
       <LineConatainer>
         <Line />

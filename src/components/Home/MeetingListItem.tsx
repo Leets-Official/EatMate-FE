@@ -8,6 +8,7 @@ import DeliveryCover from '@/assets/images/ic_delivery_cover.svg';
 import Clock from '@/assets/images/ic_clock.svg';
 import { flexAlignCenter, flexCenter, flexColumn } from '@/styles/CommonStyle';
 import useRemainingTime from '@/hooks/useRemainingTime';
+import { calculateTimeAgo } from '@/utils/dateUtils';
 interface MeetingListItemProps {
   cover: string;
   isSelected?: boolean;
@@ -20,6 +21,7 @@ interface MeetingListItemProps {
   rightSection?: string;
   onClick?: () => void;
   isMyMeeting?: boolean;
+  lastChatAt: string;
 }
 
 const Container = styled.div<{ isSelected: boolean }>`
@@ -136,6 +138,7 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
   rightSection,
   onClick,
   isMyMeeting = false,
+  lastChatAt,
 }) => {
   const coverType =
     cover === 'meal' ? MealCover : cover === 'beer' ? BeerCover : DeliveryCover;
@@ -179,7 +182,15 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
           <PersonIcon />
           {participants}/{maxParticipants}
         </Participants>
-        <Badge>{rightSection ? rightSection : `n분 전 대화`}</Badge>
+        {lastChatAt === null ? (
+          <div></div>
+        ) : (
+          <Badge>
+            {rightSection
+              ? rightSection
+              : `${calculateTimeAgo(lastChatAt)} 대화`}
+          </Badge>
+        )}
       </InfoContainer>
     </Container>
   );

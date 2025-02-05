@@ -20,6 +20,7 @@ export interface MeetingData {
   isCurrentUser: boolean;
   chatRoomId: number;
   backgroundImage: string;
+  lastChatAt: string;
   participants: Participant[];
 }
 
