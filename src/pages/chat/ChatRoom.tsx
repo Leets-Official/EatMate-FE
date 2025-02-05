@@ -231,7 +231,7 @@ const ChatRoom = () => {
     }
   }, [messages]);
 
-  console.log(chatRoomDetails);
+  console.log(messages);
 
   if (!chatRoomDetails) return <Loading />;
 

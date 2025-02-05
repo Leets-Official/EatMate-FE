@@ -23,3 +23,12 @@ export const getProfileInfo = async (): Promise<ProfileData> => {
   );
   return response.data.result;
 };
+
+export const getUserProfileInfo = async (
+  memberId: number
+): Promise<ProfileData> => {
+  const response = await defaultInstance.get<{ result: ProfileData }>(
+    PATH + `/info/${memberId}`
+  );
+  return response.data.result;
+};
