@@ -134,6 +134,7 @@ const MeetingDetail = () => {
             time={meetingData?.dueDateTime}
             chatTime="n분"
             isOwner={meetingData?.isOwner}
+            chatRoomId={meetingData?.chatRoomId}
           />
           <ParticipantsList participants={meetingData?.participants || []} />
         </div>
@@ -163,7 +164,6 @@ const MeetingDetail = () => {
         <MeetingGuidModal
           meetingType={meetingData?.meetingType}
           isCurrentUser={meetingData?.isCurrentUser}
-          chatRoomId={meetingData?.chatRoomId}
           meetingId={meetingId}
           onClose={() => setIsModalOpen(false)}
         />

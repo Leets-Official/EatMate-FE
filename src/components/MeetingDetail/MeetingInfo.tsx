@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { flexColumn } from '@/styles/CommonStyle';
 import { meetingInfoContents } from '@/constants/meetingInfoContents';
+import { useNavigate } from 'react-router-dom';
 
 interface MeetingInfoProps {
   gender: string;
@@ -56,10 +57,22 @@ const MeetingInfo: React.FC<MeetingInfoProps> = ({
     '캘린더 아이콘': [time],
     '채팅 아이콘': [],
   };
+
+  const navi = useNavigate();
+
+  const handleChat = () => {
+    navi('/chatting');
+  };
+
   return (
     <InfoContainer>
       {meetingInfoContents.map((item, index) => (
-        <InfoItem key={index}>
+        <InfoItem
+          key={index}
+          onClick={() => {
+            if (item.alt === '채팅 아이콘') handleChat();
+          }}
+        >
           <Icon src={item.icon} alt={item.alt} />
           <InfoTitle>
             {item.alt in titleProps

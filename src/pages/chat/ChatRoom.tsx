@@ -77,7 +77,7 @@ const ChatRoom = () => {
     });
   }, [messages]);
 
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  // const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
   const openChatModal = () => setChatModalOpen(true);
   const closeChatModal = () => setChatModalOpen(false);
@@ -132,7 +132,7 @@ const ChatRoom = () => {
     const fetchChatRoomDetails = async () => {
       try {
         const result = await getChatApi(roomId);
-        setChatMessages(result.result.chats);
+        //setChatMessages(result.result.chats);
         setChatRoomDetails(result.result);
       } catch (error) {
         console.error('Failed to fetch chat room details:', error);
@@ -142,14 +142,14 @@ const ChatRoom = () => {
     fetchChatRoomDetails();
   }, [roomId]);
 
-  useEffect(() => {
-    if (messages?.chattingMessage) {
-      setChatMessages((prevMessages) => [
-        ...prevMessages,
-        ...messages.chattingMessage,
-      ]);
-    }
-  }, [messages]);
+  // useEffect(() => {
+  //   if (messages?.chattingMessage) {
+  //     setChatMessages((prevMessages) => [
+  //       ...prevMessages,
+  //       ...messages.chattingMessage,
+  //     ]);
+  //   }
+  // }, [messages]);
 
   console.log(messages);
 

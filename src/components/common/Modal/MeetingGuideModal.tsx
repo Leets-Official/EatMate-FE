@@ -67,7 +67,6 @@ const ButtonContainer = styled.div`
 
 interface MeetingGuidModalProps {
   onClose: () => void;
-  chatRoomId: number;
   isCurrentUser: boolean;
   meetingType: string;
   meetingId: string;
@@ -75,7 +74,6 @@ interface MeetingGuidModalProps {
 
 const MeetingGuidModal: React.FC<MeetingGuidModalProps> = ({
   onClose,
-  chatRoomId,
   isCurrentUser,
   meetingType,
   meetingId,
@@ -86,15 +84,6 @@ const MeetingGuidModal: React.FC<MeetingGuidModalProps> = ({
   };
 
   const navi = useNavigate();
-
-  console.log('가이드 모달', meetingId);
-
-  // chatRoomId 변경 시 localStorage에 저장
-  useEffect(() => {
-    if (chatRoomId) {
-      localStorage.setItem('chatRoomId', chatRoomId.toString());
-    }
-  }, [chatRoomId]);
 
   const handleCheck = async () => {
     try {
