@@ -22,7 +22,7 @@ const Splash: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       nav('/intro');
-    }, 4000);
+    }, 3500);
 
     return () => clearTimeout(timer);
   }, [nav]);
