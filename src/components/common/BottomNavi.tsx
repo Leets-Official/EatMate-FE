@@ -62,7 +62,7 @@ const BottomNavigation = () => {
     const path = location.pathname;
     const tabIndex = {
       '/home': 0,
-      '/participants': 1,
+      '/participating-meetings': 1,
       '/mypage': 2,
     }[path];
     if (tabIndex !== undefined) {
