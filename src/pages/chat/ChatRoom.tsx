@@ -51,33 +51,6 @@ const ChatRoom = () => {
     const days = ['일', '월', '화', '수', '목', '금', '토'];
     return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 (${days[date.getDay()]})`;
   };
-
-  // 상대 유저 정보 설정
-  const [userProfiles, setUserProfiles] = useState<{
-    [key: number]: MemberData;
-  }>({});
-
-  const fetchUserProfile = async (memberId: number) => {
-    if (!userProfiles[memberId]) {
-      // 캐싱된 정보가 없는 경우에만 API 호출
-      try {
-        const profileInfo = await getUserProfileInfo(memberId);
-        setUserProfiles((prev) => ({ ...prev, [memberId]: profileInfo }));
-      } catch (error) {
-        console.error('Failed to fetch user profile:', error);
-      }
-    }
-  };
-
-  // 메시지 렌더링 시 사용자 정보 불러오기
-  useEffect(() => {
-    messages?.chattingMessage?.forEach((msg) => {
-      if (msg.senderId && msg.content !== null) {
-        fetchUserProfile(msg.senderId);
-      }
-    });
-  }, [messages]);
-
   // const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
   const openChatModal = () => setChatModalOpen(true);
@@ -152,11 +125,9 @@ const ChatRoom = () => {
   //   }
   // }, [messages]);
 
-  console.log(messages);
+  console.log('채팅', chatRoomDetails?.participants);
 
   if (!chatRoomDetails) return <Loading />;
-
-  console.log('정보', getUserProfileInfo(myId));
 
   return (
     <S.ChatContainer>
@@ -186,7 +157,11 @@ const ChatRoom = () => {
         {messages?.chattingMessage
           ?.filter((msg) => msg.content !== null)
           .map((msg, index) => {
-            const userProfile = userProfiles[msg.senderId];
+            // 참여자 목록에서 메시지 발신자의 프로필을 찾음
+            const userProfile = chatRoomDetails?.participants.find(
+              (participant) => participant.memberId === msg.senderId
+            );
+
             return (
               <S.Message key={index} isMine={msg.senderId === myId}>
                 <S.ProfileContainer isMine={msg.senderId === myId}>
