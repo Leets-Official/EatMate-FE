@@ -8,7 +8,7 @@ import ChatModal from '@/components/common/Modal/ChatModal';
 import ChatExitModal from '@/components/common/Modal/ChatExitModal';
 import { flexColumn } from '@/styles/CommonStyle';
 import useWebSocket from '@/hooks/useWebSocket';
-import { formatTime } from '@/utils/dateUtils';
+import { formatTime, formatTimeWithMeridiem } from '@/utils/dateUtils';
 import { ChatRoomDetails, getChatApi } from '@/apis/chat/getChatData';
 import Loading from '@/components/common/Loading';
 
@@ -207,7 +207,21 @@ const ChatRoom = () => {
         isMenu={true}
         onMenuClick={handleMenu}
       />
-      <Notice type="meeting" place="마라탕 맛잇겟엉점" details="13시 30분" />
+      {chatRoomDetails.deliveryNotice === null ? (
+        <Notice
+          type="meeting"
+          place={chatRoomDetails.offlineNotice.store}
+          details={formatTimeWithMeridiem(chatRoomDetails.offlineNotice.time)}
+        />
+      ) : (
+        <Notice
+          type="delivery"
+          place={chatRoomDetails.deliveryNotice.store}
+          details={chatRoomDetails.deliveryNotice.bank}
+          extraInfo={chatRoomDetails.deliveryNotice.pickup}
+        />
+      )}
+
       <DateContainer>2025년 01월 14일 (화)</DateContainer>
       <MessagesList>
         {messages?.chattingMessage?.map((msg, index) => (
