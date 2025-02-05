@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { flexColumn } from '@/styles/CommonStyle';
-import sendIcon from '@/assets/images/ic_backImg_default1.svg';
 
 export const ChatContainer = styled.div`
   ${flexColumn}
@@ -64,8 +63,7 @@ export const Input = styled.input`
   }
 `;
 
-export const SendButton = styled.button`
-  background: url(${sendIcon}) no-repeat center;
+export const SendButton = styled.img`
   border: none;
   width: 27px;
   height: 27px;

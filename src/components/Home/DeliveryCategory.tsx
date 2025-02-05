@@ -64,8 +64,15 @@ const DeliveryCategory: React.FC<DeliveryCategoryProps> = ({
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
 
   const handleItemClick = (item: (typeof deliveryItems)[0]) => {
-    setSelectedItem(item.id);
-    onCategorySelect(item.category);
+    if (selectedItem === item.id) {
+      // 이미 선택된 아이템을 다시 클릭했을 때, 선택 취소
+      setSelectedItem(null);
+      onCategorySelect('');
+    } else {
+      // 새로운 아이템을 선택했을 때
+      setSelectedItem(item.id);
+      onCategorySelect(item.category);
+    }
   };
 
   return (

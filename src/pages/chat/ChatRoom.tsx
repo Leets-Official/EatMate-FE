@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '@/components/common/Header/Header';
 import ProfileIcon from '@/assets/images/ic_participant1.svg';
+import sendIcon from '@/assets/images/ic_send.svg';
 import Notice from '@/components/chat/Notice';
 import ChatModal from '@/components/common/Modal/ChatModal';
 import ChatExitModal from '@/components/common/Modal/ChatExitModal';
@@ -226,7 +227,11 @@ const ChatRoom = () => {
           onKeyPress={handleKeyPress}
           placeholder="메시지 입력"
         />
-        <S.SendButton onClick={handleSendMessage} />
+        <S.SendButton
+          src={sendIcon}
+          alt="전송 버튼"
+          onClick={handleSendMessage}
+        />
       </S.InputContainer>
       {isChatModalOpen && (
         <ChatModal
