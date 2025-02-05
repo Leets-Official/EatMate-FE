@@ -6,20 +6,9 @@ import styled from 'styled-components';
 import { Text } from '@/styles/mypage/mypage.styled';
 import { flexColumn } from '@/styles/CommonStyle';
 import Button from '@/components/common/Button/Button';
-import { useState } from 'react';
-
-const mockData = [
-  {
-    name: '무당벌레',
-    icon: profileImg1,
-    isBlocked: true,
-  },
-  {
-    name: '도토리',
-    icon: profileImg2,
-    isBlocked: true,
-  },
-];
+import { useEffect, useState } from 'react';
+import { deleteBlockApi, getBlockApi } from '@/apis/block/getBlock';
+import Loading from '@/components/common/Loading';
 
 const Container = styled.div`
   ${flexColumn}
@@ -54,15 +43,51 @@ const UserIcon = styled.img`
 
 const ReportedUser: React.FC = () => {
   const nav = useNavigate();
-  const [users, setUsers] = useState(mockData);
+  const [isLoading, setIsLoading] = useState(true);
+  const [blocks, setBlocks] = useState<any[]>([]);
 
-  const toggleBlockStatus = (index: number) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user, idx) =>
-        idx === index ? { ...user, isBlocked: !user.isBlocked } : user
-      )
+  useEffect(() => {
+    const fetchBlocks = async () => {
+      try {
+        const data = await getBlockApi();
+        console.log('차단내역 목록 데이터: ', data);
+
+        if (data) {
+          setBlocks(data);
+        }
+      } catch (error) {
+        error instanceof Error
+          ? error.message
+          : '차단 내역을 불러오는 중 오류 발생';
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchBlocks();
+  }, []);
+
+  const handleUnblockUser = async (memberId: number, nickname: string) => {
+    const confirmUnblock = window.confirm(
+      `${nickname}님을 차단 해제하시겠어요?`
     );
+    if (!confirmUnblock) return;
+
+    try {
+      await deleteBlockApi({ memberId });
+      setBlocks((prev) =>
+        prev.filter((user) => user.blockedMemberId !== memberId)
+      );
+      alert(`${nickname}님의 차단이 해제되었습니다.`);
+    } catch (error) {
+      console.error('차단 해제 중 오류 발생: ', error);
+      alert(`${nickname}님의 차단 해제에 실패했습니다.`);
+    }
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -73,24 +98,35 @@ const ReportedUser: React.FC = () => {
       />
       <Container>
         <Text fontSize="smMd" fontWeight="light" color="gray">
-          친구 {users.length}
+          친구 {blocks.length}
         </Text>
         <UserList>
-          {users.map((user, index) => (
-            <UserItem key={index}>
+          {blocks.map((user, index) => (
+            <UserItem key={user.blockId}>
               <UserDetails>
-                <UserIcon src={user.icon} alt={user.name} />
+                <UserIcon
+                  src={
+                    user.profileImageUrl ||
+                    (index % 2 === 0 ? profileImg1 : profileImg2)
+                  }
+                  alt={user.blockedUserNickname}
+                />
                 <Text fontSize="sm" fontWeight="regular">
-                  {user.name}
+                  {user.blockedUserNickname}
                 </Text>
               </UserDetails>
               <Button
                 variant={user.isBlocked ? 'secondary-main' : 'secondary-white'}
                 size="xs"
                 rounded="lg"
-                onClick={() => toggleBlockStatus(index)}
+                onClick={() =>
+                  handleUnblockUser(
+                    user.blockedMemberId,
+                    user.blockedUserNickname
+                  )
+                }
               >
-                {user.isBlocked ? '차단중' : '차단해제'}
+                차단 해제
               </Button>
             </UserItem>
           ))}

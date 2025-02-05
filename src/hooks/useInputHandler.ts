@@ -32,5 +32,5 @@ export const useInputHandler = (initialState: FormState) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  return { formData, errors, handleChange, validateForm };
+  return { formData, errors, handleChange, validateForm, setFormData };
 };

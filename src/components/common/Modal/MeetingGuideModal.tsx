@@ -1,8 +1,13 @@
-import React from 'react';
 import styled from 'styled-components';
 import HandIcon from '@/assets/images/ic_open hand.svg';
 import Button from '@/components/common/Button/Button';
 import { flexCenter } from '@/styles/CommonStyle';
+import { useNavigate } from 'react-router-dom';
+import defaultInstance from '@/apis/axiosInstance';
+import {
+  enterDeliveryChatRoom,
+  enterOfflineChatRoom,
+} from '@/apis/meetings/enterChatRoom';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -61,9 +66,61 @@ const ButtonContainer = styled.div`
 
 interface MeetingGuidModalProps {
   onClose: () => void;
+  isCurrentUser: boolean;
+  meetingType: string;
+  meetingId: string;
 }
 
-const MeetingGuidModal: React.FC<MeetingGuidModalProps> = ({ onClose }) => {
+const MeetingGuidModal: React.FC<MeetingGuidModalProps> = ({
+  onClose,
+  isCurrentUser,
+  meetingType,
+  meetingId,
+}) => {
+  const getMyId = async () => {
+    const response = await defaultInstance.get(`/api/profile/myinfo`);
+    return response.data.result.memberId;
+  };
+
+  const navi = useNavigate();
+
+  const handleCheck = async () => {
+    try {
+      const myId = await getMyId();
+      localStorage.setItem('myId', myId.toString());
+
+      // 현재 사용자가 채팅방 창조자가 아닌 경우, 적절한 채팅방 입장 처리
+      if (!isCurrentUser) {
+        const roomId = parseInt(meetingId, 10);
+        enterChatRoom(meetingType, roomId)
+          .then(() => {
+            navi('/chatting');
+          })
+          .catch((error) => {
+            console.error('채팅방 입장 실패:', error);
+          });
+      } else {
+        navi('/chatting');
+      }
+    } catch (error) {
+      console.error('채팅방 입장 처리 중 에러 발생:', error);
+    } finally {
+      onClose();
+    }
+  };
+
+  // 채팅방 입장
+
+  async function enterChatRoom(meetingType: string, roomId: number) {
+    const response =
+      meetingType === 'DELIVERY'
+        ? await enterDeliveryChatRoom(roomId)
+        : await enterOfflineChatRoom(roomId);
+
+    console.log(`${meetingType} chat room entered:`, response);
+    return response;
+  }
+
   return (
     <ModalOverlay>
       <ModalContainer>
@@ -93,7 +150,7 @@ const MeetingGuidModal: React.FC<MeetingGuidModalProps> = ({ onClose }) => {
             variant="secondary-main"
             size="xs"
             rounded="lg"
-            onClick={onClose}
+            onClick={handleCheck}
           >
             확인했어요
           </Button>

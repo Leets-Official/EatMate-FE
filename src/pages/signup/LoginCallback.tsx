@@ -9,8 +9,8 @@ const LoginCallback: React.FC = () => {
   useEffect(() => {
     const handleLoginResponse = async () => {
       try {
-        // 로딩중 확인하려고 추가함
-        await new Promise((resolve) => setTimeout(resolve, 3000));
+        // 로딩중 2초
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         const response = await getUserInfo();
 
         if (!response) {
@@ -18,7 +18,7 @@ const LoginCallback: React.FC = () => {
           nav('/intro');
           return;
         }
-        console.log('API 응답: ', response);
+        console.log('사용자 인증정보 : ', response);
         const { role } = response;
 
         // Role에 따라 페이지 이동

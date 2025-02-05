@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTimePicker } from '@/hooks/useTimePicker';
 import * as S from '@/styles/event/TimePicker.styled';
 
@@ -7,6 +7,7 @@ interface TimePickerProps {
   onChange: (date: string) => void;
   showDatePicker?: boolean;
   additionalText?: string;
+  initialValue?: string;
 }
 
 const TimePicker: React.FC<TimePickerProps> = ({
@@ -14,6 +15,7 @@ const TimePicker: React.FC<TimePickerProps> = ({
   onChange,
   showDatePicker = true,
   additionalText,
+  initialValue,
 }) => {
   const {
     dateItems,
@@ -29,6 +31,35 @@ const TimePicker: React.FC<TimePickerProps> = ({
     hourRef,
     minuteRef,
   } = useTimePicker(onChange, showDatePicker);
+
+  // 초기값이 있을 경우 해당 값으로 세팅
+  useEffect(() => {
+    if (initialValue && !selectedDate) {
+      // ✅ 최초 렌더링 시에만 실행
+      const date = new Date(initialValue);
+      const today = new Date();
+
+      // ✅ 날짜 차이를 계산하여 "오늘", "내일", "3일 후" 등의 형식 유지
+      const daysDiff = Math.floor(
+        (date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+      );
+
+      let formattedDate = '오늘';
+      if (daysDiff === 1) {
+        formattedDate = '내일';
+      } else if (daysDiff > 1) {
+        formattedDate = `${daysDiff}일 후`;
+      }
+
+      const formattedHour = String(date.getHours()).padStart(2, '0');
+      const formattedMinute = String(date.getMinutes()).padStart(2, '0');
+
+      setSelectedDate(formattedDate);
+      setSelectedHour(formattedHour);
+      setSelectedMinute(formattedMinute);
+    }
+  }, [initialValue]); // initialValue가 변경될 때만 실행
+
   interface PickerItem {
     key: string;
     items: string[];

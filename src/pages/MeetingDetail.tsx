@@ -97,29 +97,31 @@ const MeetingDetail = () => {
   };
 
   const handleEdit = () => {
-    console.log('수정하기 클릭');
-    if (meetingData?.meetingType === 'OFFLINE') {
-      navi('/meeting/create/offline');
-    } else {
-      navi('/meeting/create/delivery');
-    }
+    if (!meetingData) return;
+
+    const editPath =
+      meetingData.meetingType === 'OFFLINE'
+        ? `/meeting/create/offline/${meetingId}`
+        : `/meeting/create/delivery/${meetingId}`;
+
+    navi(editPath);
   };
 
   const handleJoin = () => {
     console.log('참여하기 클릭');
+    setIsModalOpen(true);
   };
-  console.log(meetingData);
 
   if (isLoading) {
     return <Loading />;
   }
+  console.log('상세', meetingData);
 
   return (
     <Container>
       <Header
         title={meetingData?.meetingName || ' '}
         showBackButton={true}
-        onBackClick={() => console.log('뒤로가기 클릭')}
         isJoin={meetingData?.isCurrentUser}
         onLeaveClick={handleLeave}
       />
@@ -131,8 +133,11 @@ const MeetingDetail = () => {
             gender={meetingData?.genderRestriction}
             location={meetingData?.location}
             time={meetingData?.dueDateTime}
-            chatTime="n분"
+            lastChatAt={meetingData?.lastChatAt}
             isOwner={meetingData?.isOwner}
+            chatRoomId={meetingData?.chatRoomId}
+            meetingType={meetingData?.meetingType}
+            backgroundImage={meetingData?.backgroundImage}
           />
           <ParticipantsList participants={meetingData?.participants || []} />
         </div>
@@ -158,8 +163,13 @@ const MeetingDetail = () => {
           </Button>
         )}
       </ButtonContainer>
-      {isModalOpen && (
-        <MeetingGuidModal onClose={() => setIsModalOpen(false)} />
+      {isModalOpen && meetingData?.chatRoomId && meetingId && (
+        <MeetingGuidModal
+          meetingType={meetingData?.meetingType}
+          isCurrentUser={meetingData?.isCurrentUser}
+          meetingId={meetingId}
+          onClose={() => setIsModalOpen(false)}
+        />
       )}
       <ToastMessage show={showToast}>모임링크가 복사되었어요!</ToastMessage>
     </Container>

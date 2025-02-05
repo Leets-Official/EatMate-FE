@@ -5,7 +5,7 @@ const PATH = '/api/profile';
 export interface patchProfileData {
   nickname?: string;
   mbti?: string;
-  profileImage?: File | null;
+  profileImage?: File | string | null;
 }
 
 export const patchProfileInfo = async (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import LocateIcon from '@/assets/images/ic_locate.svg?react';
 import PersonIcon from '@/assets/images/ic_person.svg?react';
@@ -7,33 +7,31 @@ import BeerCover from '@/assets/images/ic_beer_cover.svg';
 import DeliveryCover from '@/assets/images/ic_delivery_cover.svg';
 import Clock from '@/assets/images/ic_clock.svg';
 import { flexAlignCenter, flexCenter, flexColumn } from '@/styles/CommonStyle';
-import dayjs from 'dayjs';
+import useRemainingTime from '@/hooks/useRemainingTime';
+import { calculateTimeAgo } from '@/utils/dateUtils';
 interface MeetingListItemProps {
   cover: string;
-  isSelected?: boolean;
   title: string;
   description: string;
   location: string;
   participants: number;
   maxParticipants: number;
-  time: string;
+  time: string | JSX.Element;
   rightSection?: string;
-  onClick: () => void;
+  onClick?: () => void;
+  isMyMeeting?: boolean;
+  lastChatAt?: string;
 }
 
-const Container = styled.div<{ isSelected: boolean }>`
+const Container = styled.div`
   width: 334px;
   border-radius: 12px;
   padding: 13px;
   ${flexColumn}
   align-items: flex-start;
   background-color: ${({ theme }) => theme.COLORS.white};
-  border: 1px solid
-    ${({ isSelected, theme }) => (isSelected ? theme.COLORS.main : '#E0E0E0')};
-  box-shadow: ${({ isSelected }) =>
-    isSelected
-      ? '0 4px 10px rgba(0, 0, 0, 0.2)'
-      : '0 2px 6px rgba(0, 0, 0, 0.1)'};
+  border: 1px solid '#E0E0E0';
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   gap: 12px;
 `;
@@ -47,7 +45,6 @@ const MainContainer = styled.div`
 const IconWrapper = styled.div`
   border-radius: 50%;
   ${flexCenter}
-  flex-shrink: 0;
   margin-top: 5px;
 `;
 
@@ -67,9 +64,12 @@ const Description = styled.div`
   font-size: ${({ theme }) => theme.FONT_SIZE.sm};
   color: ${({ theme }) => theme.COLORS.gray[300]};
   line-height: 1.4;
-  white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  word-wrap: break-word;
 `;
 
 const InfoContainer = styled.div`
@@ -84,7 +84,6 @@ const InfoContainer = styled.div`
 const Location = styled.div`
   ${flexAlignCenter}
   gap: 4px;
-  flex-shrink: 1;
   margin-right: auto;
 `;
 
@@ -93,7 +92,7 @@ const Participants = styled.div`
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
 `;
 
-const RemainingTimeBadge = styled.div`
+const Badge = styled.div<{ marginLeft?: string }>`
   margin-top: 3px;
   padding: 2px 8px;
   ${flexAlignCenter}
@@ -104,17 +103,28 @@ const RemainingTimeBadge = styled.div`
   border-radius: 5px;
   text-align: right;
   background-color: #fbded0;
-  white-space: nowrap;
+  display: inline-flex;
+  margin-left: ${({ marginLeft }) => marginLeft || '0'};
+`;
 
-  img {
-    width: 14px;
-    height: 14px;
-  }
+const MeetingBadge = styled.div`
+  margin-top: 3px;
+  padding: 2px 8px;
+  ${flexAlignCenter}
+  gap: 3px;
+  color: #f3aa24;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
+  border-radius: 5px;
+  text-align: right;
+  background-color: #fdeed3;
+  white-space: nowrap;
+  display: inline-flex;
+  margin-left: 8px;
 `;
 
 const MeetingListItem: React.FC<MeetingListItemProps> = ({
   cover,
-  isSelected = false,
   title,
   description,
   location,
@@ -123,60 +133,45 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
   time,
   rightSection,
   onClick,
+  isMyMeeting = false,
+  lastChatAt,
 }) => {
   const coverType =
     cover === 'meal' ? MealCover : cover === 'beer' ? BeerCover : DeliveryCover;
+  const remainingTime =
+    typeof time === 'string' ? useRemainingTime(time) : null;
 
-  const [remainingTime, setRemainingTime] = useState<string>('');
+  const formattedDescription =
+    description.length > 30 ? `${description.slice(0, 30)}...` : description;
 
-  useEffect(() => {
-    const calculateRemainingTime = () => {
-      const now = dayjs();
-      const dueDate = dayjs(time);
-
-      const diff = dueDate.diff(now, 'second');
-      if (diff > 0) {
-        const hours = Math.floor(diff / 3600);
-        const minutes = Math.floor((diff % 3600) / 60);
-        const seconds = diff % 60;
-
-        if (hours > 0) {
-          setRemainingTime(
-            `${hours.toString().padStart(2, '0')}시간 ${minutes.toString().padStart(2, '0')}분`
-          );
-        } else {
-          setRemainingTime(
-            `${minutes.toString().padStart(2, '0')}분 ${seconds.toString().padStart(2, '0')}초`
-          );
-        }
-      } else {
-        setRemainingTime('시간이 만료되었습니다');
-      }
-    };
-
-    calculateRemainingTime();
-    const timer = setInterval(calculateRemainingTime, 1000);
-
-    return () => clearInterval(timer);
-  }, [time]);
+  const lastChatTime = lastChatAt
+    ? calculateTimeAgo(lastChatAt)
+    : '최근 대화 없음';
 
   return (
-    <Container isSelected={isSelected} onClick={onClick}>
+    <Container onClick={onClick}>
       <MainContainer>
         <IconWrapper>
           <img src={coverType} alt="모임 아이콘" width="65" height="65" />
         </IconWrapper>
-        <TextContainer>
-          <Title>{title}</Title>
-          <Description>{description}</Description>
-          {cover === 'delivery' && (
-            <RemainingTimeBadge>
-              {' '}
-              <img src={Clock} alt="알람 아이콘" />
-              {remainingTime}
-            </RemainingTimeBadge>
+
+        <div>
+          <TextContainer>
+            <Title>{title}</Title>
+            <Description>{formattedDescription}</Description>
+          </TextContainer>
+          {isMyMeeting ? (
+            <MeetingBadge>{time}</MeetingBadge>
+          ) : (
+            cover === 'delivery' && (
+              <Badge marginLeft="8px">
+                {' '}
+                <img src={Clock} alt="알람 아이콘" />
+                {remainingTime}
+              </Badge>
+            )
           )}
-        </TextContainer>
+        </div>
       </MainContainer>
       <InfoContainer>
         <Location>
@@ -187,9 +182,11 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
           <PersonIcon />
           {participants}/{maxParticipants}
         </Participants>
-        <RemainingTimeBadge>
-          {rightSection ? rightSection : `n분 전 대화`}
-        </RemainingTimeBadge>
+        {lastChatAt === null ? (
+          <div></div>
+        ) : (
+          <Badge>{rightSection ? rightSection : `${lastChatTime} 대화`}</Badge>
+        )}
       </InfoContainer>
     </Container>
   );

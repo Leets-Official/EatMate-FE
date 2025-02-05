@@ -10,7 +10,7 @@ import {
   Text,
   TitleItem,
 } from '@/styles/SignUp/PolicyAgreement.styled';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const headerItems = [
   {
@@ -24,12 +24,7 @@ const headerItems = [
 ];
 
 const PolicyDetails: React.FC = () => {
-  const nav = useNavigate();
   const { termId } = useParams<{ termId: string }>();
-
-  const onClickToBack = () => {
-    nav(-1);
-  };
 
   const selectedHeader = headerItems.find((item) => item.id === termId);
   const term = policyConstants.find(
@@ -39,11 +34,7 @@ const PolicyDetails: React.FC = () => {
   return (
     <div>
       {selectedHeader && (
-        <Header
-          showBackButton={true}
-          title={selectedHeader.title}
-          onBackClick={onClickToBack}
-        />
+        <Header showBackButton={true} title={selectedHeader.title} />
       )}
       <Line />
       <Container>

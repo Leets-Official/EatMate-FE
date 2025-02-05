@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import MockImage from '@/assets/images/ic_backImg_default1.svg';
 import MeetingInfo from '@/components/MeetingDetail/MeetingInfo';
 import MailIcon from '@/assets/images/ic_mail.svg';
-import { formatTimeWithMeridiem } from '@/utils/dateUtils';
+import { useEffect } from 'react';
 
 const Container = styled.div`
   width: 100%;
@@ -24,11 +24,11 @@ const Title = styled.h1`
 `;
 
 const SectionTitle = styled.div`
-  font-size: 16px;
-  font-weight: 600;
+  font-size: ${({ theme }) => theme.FONT_SIZE.smMd};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   margin: 20px 0 0 31px;
   color: ${({ theme }) => theme.COLORS.black};
 `;
@@ -43,6 +43,7 @@ const Description = styled.p`
 const Icon = styled.img`
   width: 18px;
   height: 18px;
+  margin-bottom: 2px;
 `;
 const Divider = styled.div`
   width: 100%;
@@ -50,14 +51,27 @@ const Divider = styled.div`
   background-color: #f9f9fc;
   margin: 20px 0;
 `;
+
+const LineConatainer = styled.div`
+  padding: 0 25px;
+`;
+
+const Line = styled.div`
+  border-bottom: 2px solid #e0e0e0;
+  margin: 20px 0;
+`;
+
 interface MeetingData {
   title: string;
   description: string;
   gender: string;
   location: string;
   time: string;
-  chatTime: string;
   isOwner: boolean;
+  chatRoomId: number;
+  meetingType: string;
+  backgroundImage: string;
+  lastChatAt: string;
 }
 
 const MeetingDetailMain: React.FC<MeetingData> = ({
@@ -66,20 +80,31 @@ const MeetingDetailMain: React.FC<MeetingData> = ({
   gender,
   location,
   time,
-  chatTime,
+  chatRoomId,
+  meetingType,
+  backgroundImage,
+  lastChatAt,
 }) => {
+  useEffect(() => {
+    if (chatRoomId) {
+      localStorage.setItem('chatRoomId', chatRoomId.toString());
+    }
+  }, [chatRoomId]);
   return (
     <Container>
-      <ImgContainer src={MockImage} alt="메인 이미지" />
+      <ImgContainer src={backgroundImage || MockImage} alt="메인 이미지" />
 
       <Title>{title}</Title>
       <MeetingInfo
         gender={gender}
         location={location}
-        time={formatTimeWithMeridiem(time)}
-        chatTime={chatTime}
+        time={time}
+        meetingType={meetingType}
+        lastChatAt={lastChatAt}
       />
-      <Divider />
+      <LineConatainer>
+        <Line />
+      </LineConatainer>
       <SectionTitle>
         <Icon src={MailIcon} alt="설명 아이콘" />
         모임 설명
