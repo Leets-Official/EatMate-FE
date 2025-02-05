@@ -109,11 +109,11 @@ const MeetingDetail = () => {
     console.log('참여하기 클릭');
     setIsModalOpen(true);
   };
-  console.log(meetingData);
 
   if (isLoading) {
     return <Loading />;
   }
+  console.log('상세', meetingId);
 
   return (
     <Container>
@@ -159,9 +159,12 @@ const MeetingDetail = () => {
           </Button>
         )}
       </ButtonContainer>
-      {isModalOpen && meetingData?.chatRoomId && (
+      {isModalOpen && meetingData?.chatRoomId && meetingId && (
         <MeetingGuidModal
+          meetingType={meetingData?.meetingType}
+          isCurrentUser={meetingData?.isCurrentUser}
           chatRoomId={meetingData?.chatRoomId}
+          meetingId={meetingId}
           onClose={() => setIsModalOpen(false)}
         />
       )}

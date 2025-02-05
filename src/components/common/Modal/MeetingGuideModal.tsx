@@ -5,6 +5,10 @@ import Button from '@/components/common/Button/Button';
 import { flexCenter } from '@/styles/CommonStyle';
 import { useNavigate } from 'react-router-dom';
 import defaultInstance from '@/apis/axiosInstance';
+import {
+  enterDeliveryChatRoom,
+  enterOfflineChatRoom,
+} from '@/apis/meetings/enterChatRoom';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -64,11 +68,17 @@ const ButtonContainer = styled.div`
 interface MeetingGuidModalProps {
   onClose: () => void;
   chatRoomId: number;
+  isCurrentUser: boolean;
+  meetingType: string;
+  meetingId: string;
 }
 
 const MeetingGuidModal: React.FC<MeetingGuidModalProps> = ({
   onClose,
   chatRoomId,
+  isCurrentUser,
+  meetingType,
+  meetingId,
 }) => {
   const getMyId = async () => {
     const response = await defaultInstance.get(`/api/profile/myinfo`);
@@ -76,6 +86,8 @@ const MeetingGuidModal: React.FC<MeetingGuidModalProps> = ({
   };
 
   const navi = useNavigate();
+
+  console.log('가이드 모달', meetingId);
 
   // chatRoomId 변경 시 localStorage에 저장
   useEffect(() => {
@@ -85,18 +97,41 @@ const MeetingGuidModal: React.FC<MeetingGuidModalProps> = ({
   }, [chatRoomId]);
 
   const handleCheck = async () => {
-    const myId = await getMyId();
-    localStorage.setItem('myId', myId);
-    const storedChatRoomId = localStorage.getItem('chatRoomId');
+    try {
+      const myId = await getMyId();
+      localStorage.setItem('myId', myId.toString());
 
-    if (storedChatRoomId) {
-      navi('/chatting');
-    } else {
-      console.error('chatRoomId가 localStorage에 없음');
+      // 현재 사용자가 채팅방 창조자가 아닌 경우, 적절한 채팅방 입장 처리
+      if (!isCurrentUser) {
+        const roomId = parseInt(meetingId, 10);
+        enterChatRoom(meetingType, roomId)
+          .then(() => {
+            navi('/chatting');
+          })
+          .catch((error) => {
+            console.error('채팅방 입장 실패:', error);
+          });
+      } else {
+        navi('/chatting');
+      }
+    } catch (error) {
+      console.error('채팅방 입장 처리 중 에러 발생:', error);
+    } finally {
+      onClose();
     }
-
-    onClose();
   };
+
+  // 채팅방 입장
+
+  async function enterChatRoom(meetingType: string, roomId: number) {
+    const response =
+      meetingType === 'DELIVERY'
+        ? await enterDeliveryChatRoom(roomId)
+        : await enterOfflineChatRoom(roomId);
+
+    console.log(`${meetingType} chat room entered:`, response);
+    return response;
+  }
 
   return (
     <ModalOverlay>

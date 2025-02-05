@@ -30,7 +30,6 @@ import MeetingDetail from '@/pages/MeetingDetail';
 import UserProfile from '@/pages/chat/UserProfile';
 import UserReport from '@/pages/chat/UserReport';
 import UserReportPost from '@/pages/chat/UserReportPost';
-import TestChat from '@/pages/chatPage';
 
 const router = createBrowserRouter([
   {
@@ -119,6 +118,5 @@ const router = createBrowserRouter([
   { path: '/mypage/reported-users', element: <ReportedUser /> },
   { path: '/mypage/blocked-users', element: <BlockedUser /> },
   { path: '/mypage/help', element: <Faq /> },
-  { path: '/test', element: <TestChat /> },
 ]);
 export default router;

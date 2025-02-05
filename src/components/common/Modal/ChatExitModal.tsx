@@ -50,18 +50,17 @@ interface ChatExitModalProps {
 
 const ChatExitModal: React.FC<ChatExitModalProps> = ({ onClose, roomId }) => {
   const navigate = useNavigate();
-
   const handleExit = async () => {
-    console.log('나가기');
     try {
       const result = await exitChatRoom(roomId);
-      console.log(result);
-      if (result.success) {
+      if (result.data.success) {
+        console.log('채팅방 나가기 성공');
         navigate('/home');
-        onClose();
+      } else {
+        console.log('채팅방 나가기 실패', result);
       }
     } catch (error) {
-      console.error('Failed to exit chat room:', error);
+      console.error('채팅방 나가기 중 오류 발생:', error);
     }
   };
 
