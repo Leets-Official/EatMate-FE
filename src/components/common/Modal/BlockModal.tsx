@@ -64,6 +64,13 @@ const BlockModal: React.FC<BlockModalProps> = ({
       console.error('Error blocking user:', error);
     }
   };
+  const handleReport = () => {
+    setIsSuccess(true);
+    setTimeout(() => {
+      onClose();
+      navi('/home');
+    }, 1500);
+  };
 
   const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget && !isSuccess) {
@@ -105,6 +112,8 @@ const BlockModal: React.FC<BlockModalProps> = ({
                 onClick={() => {
                   if (!isReport) {
                     handleBlock(memberId);
+                  } else {
+                    handleReport();
                   }
                 }}
               >

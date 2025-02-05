@@ -11,6 +11,7 @@ import { ChatRoomDetails, getChatApi } from '@/apis/chat/getChatData';
 import Loading from '@/components/common/Loading';
 import * as S from '@/styles/chat/ChatRoom.styled';
 import { useNavigate } from 'react-router-dom';
+import { useLongPress } from 'use-long-press';
 
 interface ChatMessage {
   senderId: number;
@@ -133,6 +134,19 @@ const ChatRoom = () => {
     navi(`/profile/${senderId}`);
   };
 
+  const handleReport = React.useCallback(() => {
+    if (window.confirm('해당 메세지를 신고하시겠습니까?')) {
+      navi(`/report`);
+    }
+  }, []);
+
+  const onLongPress = useLongPress(handleReport, {
+    onStart: (event, meta) => console.log(event, meta),
+    threshold: 500,
+    captureEvent: true,
+    cancelOnMovement: false,
+  });
+
   if (!chatRoomDetails) return <Loading />;
 
   return (
@@ -169,7 +183,11 @@ const ChatRoom = () => {
             );
 
             return (
-              <S.Message key={index} isMine={msg.senderId === myId}>
+              <S.Message
+                key={index}
+                isMine={msg.senderId === myId}
+                {...onLongPress(index)}
+              >
                 <S.ProfileContainer isMine={msg.senderId === myId}>
                   <S.ProfileImg
                     src={userProfile?.profileImageUrl || ProfileIcon}
