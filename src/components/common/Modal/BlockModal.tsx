@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '@/components/common/Button/Button';
 import CheckIcon from '@/assets/images/ic_circle_check.svg';
 import { flexCenter } from '@/styles/CommonStyle';
+import { useNavigate } from 'react-router-dom';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -39,16 +40,22 @@ const ButtonContainer = styled.div`
 interface BlockModalProps {
   onClose: () => void;
   isReport: boolean;
+  memberId: string;
 }
 
-const BlockModal: React.FC<BlockModalProps> = ({ onClose, isReport }) => {
+const BlockModal: React.FC<BlockModalProps> = ({
+  onClose,
+  isReport,
+  memberId,
+}) => {
   const [isSuccess, setIsSuccess] = useState(false);
-
+  const navi = useNavigate();
   const handleBlock = () => {
     //TODO: 유저 차단 API 연결
     setIsSuccess(true);
     setTimeout(() => {
       onClose();
+      navi('/home');
     }, 1500);
   };
 
