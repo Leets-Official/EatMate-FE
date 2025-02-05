@@ -109,11 +109,11 @@ const MeetingDetail = () => {
     console.log('참여하기 클릭');
     setIsModalOpen(true);
   };
-  console.log(meetingData);
 
   if (isLoading) {
     return <Loading />;
   }
+  console.log('상세', meetingId);
 
   return (
     <Container>
@@ -134,6 +134,7 @@ const MeetingDetail = () => {
             time={meetingData?.dueDateTime}
             chatTime="n분"
             isOwner={meetingData?.isOwner}
+            chatRoomId={meetingData?.chatRoomId}
           />
           <ParticipantsList participants={meetingData?.participants || []} />
         </div>
@@ -159,8 +160,13 @@ const MeetingDetail = () => {
           </Button>
         )}
       </ButtonContainer>
-      {isModalOpen && (
-        <MeetingGuidModal onClose={() => setIsModalOpen(false)} />
+      {isModalOpen && meetingData?.chatRoomId && meetingId && (
+        <MeetingGuidModal
+          meetingType={meetingData?.meetingType}
+          isCurrentUser={meetingData?.isCurrentUser}
+          meetingId={meetingId}
+          onClose={() => setIsModalOpen(false)}
+        />
       )}
       <ToastMessage show={showToast}>모임링크가 복사되었어요!</ToastMessage>
     </Container>

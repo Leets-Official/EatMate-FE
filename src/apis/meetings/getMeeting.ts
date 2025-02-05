@@ -18,6 +18,7 @@ export interface MeetingData {
   chatTime: string;
   isOwner: boolean;
   isCurrentUser: boolean;
+  chatRoomId: number;
   participants: Participant[];
 }
 

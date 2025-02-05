@@ -3,6 +3,7 @@ import MockImage from '@/assets/images/ic_backImg_default1.svg';
 import MeetingInfo from '@/components/MeetingDetail/MeetingInfo';
 import MailIcon from '@/assets/images/ic_mail.svg';
 import { formatTimeWithMeridiem } from '@/utils/dateUtils';
+import { useEffect } from 'react';
 
 const Container = styled.div`
   width: 100%;
@@ -58,6 +59,7 @@ interface MeetingData {
   time: string;
   chatTime: string;
   isOwner: boolean;
+  chatRoomId: number;
 }
 
 const MeetingDetailMain: React.FC<MeetingData> = ({
@@ -67,7 +69,13 @@ const MeetingDetailMain: React.FC<MeetingData> = ({
   location,
   time,
   chatTime,
+  chatRoomId,
 }) => {
+  useEffect(() => {
+    if (chatRoomId) {
+      localStorage.setItem('chatRoomId', chatRoomId.toString());
+    }
+  }, [chatRoomId]);
   return (
     <Container>
       <ImgContainer src={MockImage} alt="메인 이미지" />

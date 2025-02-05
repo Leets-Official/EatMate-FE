@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button/Button';
 import { flexCenter } from '@/styles/CommonStyle';
+import { exitChatRoom } from '@/apis/chat/exitChatRoom';
+import { useNavigate } from 'react-router-dom';
+
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -42,9 +45,24 @@ const ButtonContainer = styled.div`
 
 interface ChatExitModalProps {
   onClose: () => void;
+  roomId: number;
 }
 
-const ChatExitModal: React.FC<ChatExitModalProps> = ({ onClose }) => {
+const ChatExitModal: React.FC<ChatExitModalProps> = ({ onClose, roomId }) => {
+  const navi = useNavigate();
+  const handleExit = async () => {
+    try {
+      const result = await exitChatRoom(roomId);
+      if (result.data.success) {
+        navi('/home');
+      } else {
+        console.log('채팅방 나가기 실패', result);
+      }
+    } catch (error) {
+      console.error('채팅방 나가기 중 오류 발생:', error);
+    }
+  };
+
   return (
     <ModalOverlay>
       <ModalContainer>
@@ -59,7 +77,7 @@ const ChatExitModal: React.FC<ChatExitModalProps> = ({ onClose }) => {
             variant="secondary-white"
             size="xs"
             rounded="lg"
-            onClick={onClose}
+            onClick={handleExit}
           >
             네, 나갈게요
           </Button>
