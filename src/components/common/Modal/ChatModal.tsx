@@ -1,10 +1,5 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
 import CrownIcon from '@/assets/images/ic_crown_check.svg';
-import ParticipantIcon1 from '@/assets/images/ic_participant1.svg';
-import ParticipantIcon2 from '@/assets/images/ic_participant2.svg';
-import ParticipantIcon3 from '@/assets/images/ic_participant3.svg';
-import ParticipantIcon4 from '@/assets/images/ic_participant4.svg';
 import { flexCenter, flexColumn } from '@/styles/CommonStyle';
 import ExitIcon from '@/assets/images/ic_exit.svg';
 
