@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Button from '@/components/common/Button/Button';
 import CheckIcon from '@/assets/images/ic_circle_check.svg';
 import { flexCenter } from '@/styles/CommonStyle';
+import { useNavigate } from 'react-router-dom';
+import { createBlockApi } from '@/apis/block/createBlock';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -39,16 +41,34 @@ const ButtonContainer = styled.div`
 interface BlockModalProps {
   onClose: () => void;
   isReport: boolean;
+  memberId?: string;
 }
 
-const BlockModal: React.FC<BlockModalProps> = ({ onClose, isReport }) => {
+const BlockModal: React.FC<BlockModalProps> = ({
+  onClose,
+  isReport,
+  memberId = '',
+}) => {
   const [isSuccess, setIsSuccess] = useState(false);
-
-  const handleBlock = () => {
-    //TODO: 유저 차단 API 연결
+  const navi = useNavigate();
+  const handleBlock = async (memberId: string) => {
+    try {
+      const result = await createBlockApi(memberId);
+      console.log('Block success:', result);
+      setIsSuccess(true);
+      setTimeout(() => {
+        onClose();
+        navi('/home');
+      }, 1500);
+    } catch (error) {
+      console.error('Error blocking user:', error);
+    }
+  };
+  const handleReport = () => {
     setIsSuccess(true);
     setTimeout(() => {
       onClose();
+      navi('/home');
     }, 1500);
   };
 
@@ -86,7 +106,17 @@ const BlockModal: React.FC<BlockModalProps> = ({ onClose, isReport }) => {
               )}
             </Description>
             <ButtonContainer>
-              <Button size="sm" rounded="lg" onClick={handleBlock}>
+              <Button
+                size="sm"
+                rounded="lg"
+                onClick={() => {
+                  if (!isReport) {
+                    handleBlock(memberId);
+                  } else {
+                    handleReport();
+                  }
+                }}
+              >
                 확인
               </Button>
             </ButtonContainer>
