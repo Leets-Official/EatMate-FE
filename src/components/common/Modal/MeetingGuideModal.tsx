@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import HandIcon from '@/assets/images/ic_open hand.svg';
 import Button from '@/components/common/Button/Button';
