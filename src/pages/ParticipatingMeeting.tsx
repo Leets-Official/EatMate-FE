@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import {
   getMyMeetingParams,
   getMyParticipatingApi,
+  getMyUpcomingMeetingsApi,
 } from '@/apis/meetings/getMyMeeting';
 import Loading from '@/components/common/Loading';
 import FloatingPostButton from '@/components/common/FloatingPostButton';
@@ -108,38 +109,18 @@ const mockData = {
   isOwn: true,
 };
 
+interface BannerData {
+  meetingLocation: string;
+  meetingTime: string;
+  nickname: string;
+  offlineMeetingCategory: 'MEAL' | 'BEVERAGE';
+  type: 'OFFLINE' | 'DELIVERY';
+}
+
 const ParticipatingMeeting = () => {
-  const getMeetingDetails = () => {
-    const category = mockData.offlineMeetingCategory;
-    let badge = '';
-    let iconSrc = '';
-
-    switch (mockData.meetingType) {
-      case 'delivery':
-        badge = '배달팟';
-        iconSrc = DeliveryIcon;
-        break;
-      case 'offline':
-        if (category === 'MEAL') {
-          badge = '밥약';
-          iconSrc = MealIcon;
-        } else if (category === 'BEVERAGE') {
-          badge = '술약';
-          iconSrc = BeverageIcon;
-        }
-        break;
-      default:
-        iconSrc = '';
-        break;
-    }
-
-    return { badge, iconSrc };
-  };
-
-  const { badge, iconSrc } = getMeetingDetails();
   const [meetings, setMeetings] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const [bannerData, setBannerData] = useState<BannerData | null>(null);
   const [params, setParams] = useState<getMyMeetingParams>({
     lastMeetingId: undefined,
     lastDateTime: undefined,
@@ -150,7 +131,9 @@ const ParticipatingMeeting = () => {
     const fetchMeeting = async () => {
       try {
         const data = await getMyParticipatingApi(params);
-        console.log('내가 생성한 모임 데이터:', data);
+
+        const bannerData = await getMyUpcomingMeetingsApi();
+        setBannerData(bannerData);
 
         setMeetings((prev) => {
           const newMeetings = data.content.filter(
@@ -179,7 +162,30 @@ const ParticipatingMeeting = () => {
     fetchMeeting();
   }, []);
 
+  const getMeetingDetails = () => {
+    let badge = '';
+    let iconSrc = '';
+    if (bannerData?.type === 'DELIVERY') {
+      badge = '배달팟';
+      iconSrc = DeliveryIcon;
+    } else {
+      if (bannerData?.offlineMeetingCategory === 'MEAL') {
+        badge = '밥약';
+        iconSrc = MealIcon;
+      } else {
+        badge = '술약';
+        iconSrc = BeverageIcon;
+      }
+    }
+    return { badge, iconSrc };
+  };
+
+  const { badge, iconSrc } = getMeetingDetails();
+
   if (isLoading) return <Loading />;
+  const time = bannerData?.meetingTime
+    ? formatTimeWithMeridiem(bannerData.meetingTime)
+    : undefined;
 
   return (
     <Container>
@@ -192,11 +198,10 @@ const ParticipatingMeeting = () => {
           {mockData.isOwn && <Badge>내가 주최한 모임</Badge>}
           {badge && <Badge>{badge}</Badge>}
         </BadgeContainer>
-        <BannerTitle>안녕하세요 00님</BannerTitle>
+        <BannerTitle>안녕하세요 {`${bannerData?.nickname}`}님</BannerTitle>
         <Description>
-          {`${formatTimeWithMeridiem(mockData.dueDateTime)}`}에{' '}
-          {`${mockData.location}`}에서 <br />
-          {`${mockData.meetingName}`} 약속이 있어요
+          {`${time}`}에{`${bannerData?.meetingLocation}`}에서 <br />
+          {`${bannerData?.nickname}`} 약속이 있어요
         </Description>
       </Banner>
       <MeetingList>

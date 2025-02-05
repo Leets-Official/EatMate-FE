@@ -26,3 +26,8 @@ export const getMyParticipatingApi = async (params: getMyMeetingParams) => {
   });
   return response.data.result;
 };
+
+export const getMyUpcomingMeetingsApi = async () => {
+  const response = await defaultInstance.get(`${PATH}/upcoming`);
+  return response.data.result;
+};
