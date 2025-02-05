@@ -337,7 +337,9 @@ const ChatRoom = () => {
           onClose={() => setChatModalOpen(false)}
         />
       )}
-      {isChatExitModalOpen && <ChatExitModal onClose={closeChatExitModal} />}
+      {isChatExitModalOpen && (
+        <ChatExitModal roomId={roomId} onClose={closeChatExitModal} />
+      )}
     </ChatContainer>
   );
 };

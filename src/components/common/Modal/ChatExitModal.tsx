@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '@/components/common/Button/Button';
 import { flexCenter } from '@/styles/CommonStyle';
+import { patchChatRoom } from '@/apis/chat/patchChatRoom';
+import { useNavigate } from 'react-router-dom';
+
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -42,9 +45,26 @@ const ButtonContainer = styled.div`
 
 interface ChatExitModalProps {
   onClose: () => void;
+  roomId: number;
 }
 
-const ChatExitModal: React.FC<ChatExitModalProps> = ({ onClose }) => {
+const ChatExitModal: React.FC<ChatExitModalProps> = ({ onClose, roomId }) => {
+  const navigate = useNavigate();
+
+  const handleExit = async () => {
+    console.log('나가기');
+    try {
+      const result = await patchChatRoom(roomId);
+      console.log(result);
+      if (result.success) {
+        navigate('/home');
+        onClose();
+      }
+    } catch (error) {
+      console.error('Failed to exit chat room:', error);
+    }
+  };
+
   return (
     <ModalOverlay>
       <ModalContainer>
@@ -59,7 +79,7 @@ const ChatExitModal: React.FC<ChatExitModalProps> = ({ onClose }) => {
             variant="secondary-white"
             size="xs"
             rounded="lg"
-            onClick={onClose}
+            onClick={handleExit}
           >
             네, 나갈게요
           </Button>
