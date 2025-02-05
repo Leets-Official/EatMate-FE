@@ -133,6 +133,30 @@ const ChatRoom = () => {
   const [isChatModalOpen, setChatModalOpen] = useState(false);
   const [isChatExitModalOpen, setChatExitModalOpen] = useState(false);
 
+  const [today, setToday] = useState(new Date());
+
+  useEffect(() => {
+    const now = new Date();
+    const nextMidnight = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1
+    );
+    const msUntilMidnight = nextMidnight.getTime() - now.getTime();
+
+    const timer = setTimeout(() => {
+      setToday(new Date()); // 자정이 되면 날짜 업데이트
+    }, msUntilMidnight);
+
+    return () => clearTimeout(timer); // 컴포넌트 unmount 시 타이머 제거
+  }, [today]);
+
+  // 날짜를 "YYYY년 MM월 DD일 (D)" 형식으로 포맷
+  const formatDate = (date: any) => {
+    const days = ['일', '월', '화', '수', '목', '금', '토'];
+    return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 (${days[date.getDay()]})`;
+  };
+
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
   const openChatModal = () => setChatModalOpen(true);
@@ -234,7 +258,7 @@ const ChatRoom = () => {
         />
       )}
 
-      <DateContainer>2025년 01월 14일 (화)</DateContainer>
+      <DateContainer>{formatDate(today)}</DateContainer>
       <MessagesList>
         {messages?.chattingMessage
           ?.filter((msg) => msg.content !== null)

@@ -45,13 +45,17 @@ const useWebSocket = (roomId: number | null) => {
             client.subscribe(`/topic/chat.${roomId}`, (message: any) => {
               console.log('새로운 메시지 수신:', JSON.parse(message.body));
               const receivedMessage = JSON.parse(message.body);
-              setMessages((prev) => ({
-                ...prev,
-                chattingMessage: [
-                  ...(prev?.chattingMessage || []),
-                  receivedMessage,
-                ],
-              }));
+
+              // 메시지 유형 확인 후 적절한 처리 수행
+              if (receivedMessage.messageType !== 'SUBSCRIBE_SUCCESS') {
+                setMessages((prev) => ({
+                  ...prev,
+                  chattingMessage: [
+                    ...(prev?.chattingMessage || []),
+                    receivedMessage,
+                  ],
+                }));
+              }
             });
 
             console.log(messages, 'socket');
