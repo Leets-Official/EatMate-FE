@@ -331,6 +331,8 @@ const ChatRoom = () => {
       </InputContainer>
       {isChatModalOpen && (
         <ChatModal
+          title={chatRoomDetails.meetingName}
+          participants={chatRoomDetails.participants}
           onExit={openChatExitModal}
           onClose={() => setChatModalOpen(false)}
         />

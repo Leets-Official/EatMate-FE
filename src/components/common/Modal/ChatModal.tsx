@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import CrownIcon from '@/assets/images/ic_crown_check.svg';
 import ParticipantIcon1 from '@/assets/images/ic_participant1.svg';
@@ -88,19 +88,28 @@ const ExitButton = styled.button`
   cursor: pointer;
 `;
 
-const participants = [
-  { name: '가족', image: ParticipantIcon1, isMe: true, isHost: false },
-  { name: '친인미', image: ParticipantIcon2, isMe: false, isHost: true },
-  { name: '모둠멜론', image: ParticipantIcon3, isMe: false, isHost: false },
-  { name: '황아정', image: ParticipantIcon4, isMe: false, isHost: false },
-];
+interface Participant {
+  memberId: number;
+  nickname: string;
+  mbti: string;
+  profileImageUrl: string;
+  role: string;
+  isMine: boolean;
+}
 
 interface ChatModalProps {
   onClose: () => void;
   onExit: () => void;
+  participants: Participant[];
+  title: string;
 }
 
-const ChatModal: React.FC<ChatModalProps> = ({ onClose, onExit }) => {
+const ChatModal: React.FC<ChatModalProps> = ({
+  onClose,
+  onExit,
+  participants,
+  title,
+}) => {
   const handleOverlayClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
@@ -113,15 +122,20 @@ const ChatModal: React.FC<ChatModalProps> = ({ onClose, onExit }) => {
     <Overlay onClick={handleOverlayClick}>
       <ModalContainer>
         <div>
-          <Title>마라탕 맛집 평가하기</Title>
-          <Description>n명 참여중</Description>
+          <Title>{title}</Title>
+          <Description>{participants.length}명 참여중</Description>
           <Divider />
           {participants.map((user) => (
-            <UserContainer key={user.name}>
-              <ParticipantImage src={user.image} alt={user.name} />
-              {user.isHost && <Crown src={CrownIcon} alt="방장" />}
-              {user.isMe && <Badge>나</Badge>}
-              <UserName>{user.name}</UserName>
+            <UserContainer key={user.nickname}>
+              <ParticipantImage
+                src={user.profileImageUrl}
+                alt={user.nickname}
+              />
+              {user.role !== 'PARTICIPANT' && (
+                <Crown src={CrownIcon} alt="방장" />
+              )}
+              {user.isMine && <Badge>나</Badge>}
+              <UserName>{user.nickname}</UserName>
             </UserContainer>
           ))}
         </div>
