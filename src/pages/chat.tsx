@@ -37,7 +37,6 @@ const useWebSocket = (roomId: number | null) => {
         console.log('WebSocket 연결중');
         const ws = new WebSocket(`${baseUrl}/ws/chat`);
         const client = Stomp.over(ws);
-        // client.debug = (msg) => console.log(msg); // STOMP 디버그 메시지 활성화
 
         client.connect(
           {},
@@ -86,7 +85,7 @@ const useWebSocket = (roomId: number | null) => {
     (message: ChatMessageFromClient) => {
       if (stompClientRef.current?.connected) {
         stompClientRef.current.send(
-          `/pub/chat/${roomId}`,
+          `/pub/chat.${roomId}`,
           {},
           JSON.stringify(message)
         );

@@ -10,7 +10,7 @@ interface ChatMessage {
 }
 
 const TestChat = () => {
-  const roomId = 103; // 이 예제에서는 하드코딩된 채팅방 ID를 사용합니다.
+  const roomId = 123; // 이 예제에서는 하드코딩된 채팅방 ID를 사용합니다.
   const { sendMessage, messages, disconnect } = useWebSocket(roomId);
   const [newMessage, setNewMessage] = useState('');
 
@@ -18,6 +18,8 @@ const TestChat = () => {
     const response = await defaultInstance.get(`/api/profile/myinfo`);
     return response.data.result.memberId;
   };
+
+  //  console.log(getMyId());
   // 채팅방에서 메시지 전송 처리
   const handleSendMessage = async () => {
     // async 키워드 추가
@@ -57,10 +59,7 @@ const TestChat = () => {
       <h1>채팅방</h1>
       <div>
         {messages?.chattingMessage.map((msg, index) => (
-          <div key={index}>
-            <strong>{msg.senderId}:</strong> {msg.content}{' '}
-            <small>{msg.regDate}</small>
-          </div>
+          <div key={index}>연결 성공</div>
         ))}
       </div>
       <input
