@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import HandIcon from '@/assets/images/ic_open hand.svg';
 import Button from '@/components/common/Button/Button';
 import { flexCenter } from '@/styles/CommonStyle';
+import { useNavigate } from 'react-router-dom';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -64,6 +65,11 @@ interface MeetingGuidModalProps {
 }
 
 const MeetingGuidModal: React.FC<MeetingGuidModalProps> = ({ onClose }) => {
+  const navi = useNavigate();
+  const handleCheck = () => {
+    navi('/chatting');
+    onClose();
+  };
   return (
     <ModalOverlay>
       <ModalContainer>
@@ -93,7 +99,7 @@ const MeetingGuidModal: React.FC<MeetingGuidModalProps> = ({ onClose }) => {
             variant="secondary-main"
             size="xs"
             rounded="lg"
-            onClick={onClose}
+            onClick={handleCheck}
           >
             확인했어요
           </Button>

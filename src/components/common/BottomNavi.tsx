@@ -8,6 +8,7 @@ import participantsIconActive from '@/assets/images/ic_people_color.svg';
 import myPageIcon from '@/assets/images/ic_navi_logo.svg';
 import mypageIconActive from '@/assets/images/ic_navi_logo_color.svg';
 import theme from '@/styles/theme';
+import { flexColumn } from '@/styles/CommonStyle';
 
 const NavContainer = styled.div`
   position: fixed;
@@ -28,8 +29,7 @@ const NavContainer = styled.div`
 
 const NavItem = styled.div<{ isActive: boolean }>`
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  ${flexColumn}
   align-items: center;
   gap: 4px;
   cursor: pointer;
@@ -44,8 +44,8 @@ const NavItem = styled.div<{ isActive: boolean }>`
           color: ${theme.COLORS.gray[300]};
         `}
 
-  font-size: 12px;
-  font-weight: bold;
+  font-size: ${({ theme }) => theme.FONT_SIZE.sm};
+  font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
 `;
 
 const Icon = styled.img`

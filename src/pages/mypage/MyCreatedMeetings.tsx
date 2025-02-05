@@ -1,47 +1,68 @@
 import Header from '@/components/common/Header/Header';
-// import MeetingListItem from '@/components/Home/MeetingListItem';
-import { flexColumn } from '@/styles/CommonStyle';
+import { flexColumnCenter } from '@/styles/CommonStyle';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
-// const CreatedMeetingData = [
-//   {
-//     id: 0,
-//     title: '마라탕 맛나게 냠냠냠 (ง •̀_•́)ง 모임',
-//     description:
-//       '마라탕 레전드 찐맛집입니다. 맛도 좋고 정문 옆이라 자주 가는데 혼자가기 빠끔하고 카메라모드로 시켜먹고 싶어서 방 팝니다!',
-//     location: '마라탕집 인메이트점',
-//     participants: '8/10',
-//     time: '배달팟',
-//   },
-//   {
-//     id: 1,
-//     title: '피자 주문합니다.',
-//     description: '같이 주문해요.',
-//     location: '도미노 피자 가천대점',
-//     participants: '4/10',
-//     time: '배달팟',
-//   },
-//   {
-//     id: 2,
-//     title: '시험 끝! 축하 밥약 모임 🎉',
-//     description:
-//       '시험 끝났으니 스트레스 풀 겸 맛있는 밥 같이 먹어요! 스트레스도 날려버립시다!',
-//     location: '소쿠리소',
-//     participants: '6/10',
-//     deliveryTime: '23분 20초',
-//     time: '배달팟',
-//   },
-// ];
+import { useEffect, useState } from 'react';
+import Loading from '@/components/common/Loading';
+import { getMyCreatedApi } from '@/apis/meetings/getMyMeeting';
+import { getMyMeetingParams } from '@/apis/meetings/getMyMeeting';
+import MyMeetingItem from '@/components/mypage/MyMeetingItem';
+import Lottie from 'lottie-react';
+import BeerLottie from '@/assets/lotties/BeerLottie.json';
+import { EmptyStateContainer } from './MyParticipatedMeetings';
 
 export const ItemContainer = styled.div`
-  ${flexColumn}
+  ${flexColumnCenter}
   gap: 20px;
   padding: 10px;
 `;
 
 const MyCreatedMeetings: React.FC = () => {
   const nav = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+  const [meetings, setMeetings] = useState<any[]>([]);
+  const [params, setParams] = useState<getMyMeetingParams>({
+    lastMeetingId: undefined,
+    lastDateTime: undefined,
+    pageSize: 20,
+  });
+
+  useEffect(() => {
+    const fetchMeeting = async () => {
+      try {
+        const data = await getMyCreatedApi(params);
+        console.log('내가 생성한 모임 데이터:', data);
+
+        setMeetings((prev) => {
+          const newMeetings = data.content.filter(
+            (meeting: { id: any }) =>
+              !prev.some((prevMeeting) => prevMeeting.id === meeting.id)
+          );
+          return [...prev, ...newMeetings];
+        });
+
+        if (data.cursorInfo) {
+          setParams({
+            lastMeetingId: data.cursorInfo.meetingId,
+            lastDateTime: data.cursorInfo.lastMeetingTime,
+            pageSize: 20,
+          });
+        }
+      } catch (error) {
+        error instanceof Error
+          ? error.message
+          : '내가 생성한 모임 데이터를 불러오는 중 오류 발생:';
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMeeting();
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div>
       <Header
@@ -49,20 +70,22 @@ const MyCreatedMeetings: React.FC = () => {
         showBackButton
         title="내가 생성한 모임"
       />
-      <ItemContainer>
-        {/* {CreatedMeetingData.map((created) => (
-          <MeetingListItem
-            //   cover={cover}
-            key={created.id}
-            title={created.title}
-            description={created.description}
-            location={created.location}
-            participants={created.participants}
-            time={created.time}
-            deliveryTime={created.deliveryTime}
+      {meetings.length === 0 ? (
+        <EmptyStateContainer>
+          <Lottie
+            animationData={BeerLottie}
+            loop={true}
+            style={{ width: 200, height: 200 }}
           />
-        ))} */}
-      </ItemContainer>
+          <div>생성한 모임이 없습니다!</div>
+        </EmptyStateContainer>
+      ) : (
+        <ItemContainer>
+          {meetings.map((meeting) => (
+            <MyMeetingItem key={meeting.id} meeting={meeting} />
+          ))}
+        </ItemContainer>
+      )}
     </div>
   );
 };
