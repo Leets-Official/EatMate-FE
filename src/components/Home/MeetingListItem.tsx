@@ -125,6 +125,7 @@ const MeetingBadge = styled.div`
   background-color: #fdeed3;
   white-space: nowrap;
   display: inline-flex;
+  margin-left: 8px;
 `;
 
 const MeetingListItem: React.FC<MeetingListItemProps> = ({
@@ -168,7 +169,7 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
             <MeetingBadge>{time}</MeetingBadge>
           ) : (
             cover === 'delivery' && (
-              <Badge>
+              <Badge marginLeft="8px">
                 {' '}
                 <img src={Clock} alt="알람 아이콘" />
                 {remainingTime}

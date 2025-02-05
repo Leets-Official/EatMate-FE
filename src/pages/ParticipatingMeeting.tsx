@@ -60,6 +60,12 @@ const Description = styled.div`
   white-space: normal;
 `;
 
+const ListTitle = styled.div`
+  font-size: ${({ theme }) => theme.FONT_SIZE.md};
+  margin: 10px 0 0 25px;
+  align-self: start;
+`;
+
 const BadgeContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -86,7 +92,7 @@ const MeetingList = styled.div`
   border-top-right-radius: 15px;
   ${flexColumnCenter}
   gap: 20px;
-  padding: 10px;
+  padding: 20px 10px 10px 10px;
 `;
 const mockData = {
   meetingType: 'delivery',
@@ -194,6 +200,7 @@ const ParticipatingMeeting = () => {
         </Description>
       </Banner>
       <MeetingList>
+        <ListTitle>참여 중인 모임</ListTitle>
         {meetings.map((meeting) => (
           <MyMeetingItem key={meeting.id} meeting={meeting} />
         ))}
