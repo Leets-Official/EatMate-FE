@@ -133,6 +133,8 @@ const ChatRoom = () => {
   const [isChatModalOpen, setChatModalOpen] = useState(false);
   const [isChatExitModalOpen, setChatExitModalOpen] = useState(false);
 
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+
   const openChatModal = () => setChatModalOpen(true);
   const closeChatModal = () => setChatModalOpen(false);
 
@@ -186,6 +188,7 @@ const ChatRoom = () => {
     const fetchChatRoomDetails = async () => {
       try {
         const result = await getChatApi(roomId);
+        setChatMessages(result.result.chats);
         setChatRoomDetails(result.result);
       } catch (error) {
         console.error('Failed to fetch chat room details:', error);
@@ -194,6 +197,15 @@ const ChatRoom = () => {
 
     fetchChatRoomDetails();
   }, [roomId]);
+
+  useEffect(() => {
+    if (messages?.chattingMessage) {
+      setChatMessages((prevMessages) => [
+        ...prevMessages,
+        ...messages.chattingMessage,
+      ]);
+    }
+  }, [messages]);
 
   console.log(chatRoomDetails);
 
@@ -224,23 +236,26 @@ const ChatRoom = () => {
 
       <DateContainer>2025년 01월 14일 (화)</DateContainer>
       <MessagesList>
-        {messages?.chattingMessage?.map((msg, index) => (
-          <Message key={index} isMine={msg.senderId === myId}>
-            <ProfileContainer isMine={msg.senderId === myId}>
-              <ProfileImg src={ProfileIcon} alt="User Image" />
-              <ProfileText>{'이름 | ISFP'}</ProfileText>
-            </ProfileContainer>
-            <MessageContent isMine={msg.senderId === myId}>
-              <TimeStamp isMine={msg.senderId === myId}>
-                {formatTime(msg.regDate)}
-              </TimeStamp>
-              <MessageBox isMine={msg.senderId === myId}>
-                {msg.content}
-              </MessageBox>
-            </MessageContent>
-          </Message>
-        ))}
+        {messages?.chattingMessage
+          ?.filter((msg) => msg.content !== null)
+          .map((msg, index) => (
+            <Message key={index} isMine={msg.senderId === myId}>
+              <ProfileContainer isMine={msg.senderId === myId}>
+                <ProfileImg src={ProfileIcon} alt="User Image" />
+                <ProfileText>{'이름 | ISFP'}</ProfileText>
+              </ProfileContainer>
+              <MessageContent isMine={msg.senderId === myId}>
+                <TimeStamp isMine={msg.senderId === myId}>
+                  {formatTime(msg.regDate)}
+                </TimeStamp>
+                <MessageBox isMine={msg.senderId === myId}>
+                  {msg.content}
+                </MessageBox>
+              </MessageContent>
+            </Message>
+          ))}
       </MessagesList>
+
       <InputContainer>
         <Input
           value={inputText}
