@@ -132,7 +132,6 @@ const MeetingList = ({ cover }: { cover: string }) => {
             <MeetingListItem
               cover={cover}
               key={meeting.meetingId}
-              isSelected={false}
               title={meeting.meetingName}
               description={meeting.meetingDescription}
               location={meeting.location}
