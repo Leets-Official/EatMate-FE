@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import 'dayjs/locale/ko';
+import { addMinutes, format } from 'date-fns';
 
 dayjs.extend(customParseFormat);
 dayjs.locale('ko');
@@ -37,4 +38,10 @@ export const formatTimeWithMeridiem = (dateTimeString: string): string => {
     minute === 0 ? `${formattedHour}시` : `${formattedHour}시 ${minute}분`;
 
   return `${meridiem} ${timeString}`;
+};
+
+export const formatOrderDeadline = (minutes: number): string => {
+  const now = new Date(); // 현재 날짜 및 시간
+  const futureDate = addMinutes(now, minutes); // 현재 시간에 minutes 추가
+  return format(futureDate, "yyyy-MM-dd'T'HH:mm:ss"); // ISO 형식 변환
 };

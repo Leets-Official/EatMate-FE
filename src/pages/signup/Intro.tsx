@@ -16,7 +16,6 @@ const profileIcons = [
 
 const onClickToLogin = () => {
   const baseUrl = import.meta.env.VITE_BASE_URL;
-
   const googleOAuthUrl = `${baseUrl}/oauth2/authorization/google`;
   window.location.href = googleOAuthUrl;
 };

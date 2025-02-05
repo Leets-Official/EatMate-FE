@@ -49,7 +49,11 @@ const BackgroundItem = styled.div<{ isSelected: boolean }>`
 `;
 
 interface BackgroundOptionProps {
-  onChange: (key: string, value: File | null) => void;
+  onChange: (
+    key: string,
+    value: File | string | null,
+    backgroundType: string
+  ) => void;
 }
 
 const BackgroundOption: React.FC<BackgroundOptionProps> = ({ onChange }) => {
@@ -58,9 +62,9 @@ const BackgroundOption: React.FC<BackgroundOptionProps> = ({ onChange }) => {
   const [error, setError] = useState<string | null>(null);
 
   const backImgs = [
-    { id: 1, src: defaultBgImg1 },
-    { id: 2, src: defaultBgImg2 },
-    { id: 3, src: SelectBgImg },
+    { id: 1, src: defaultBgImg1, type: 'DEFAULT_IMAGE_1' },
+    { id: 2, src: defaultBgImg2, type: 'DEFAULT_IMAGE_2' },
+    { id: 3, src: SelectBgImg, type: 'CUSTOM' },
   ];
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,7 +79,7 @@ const BackgroundOption: React.FC<BackgroundOptionProps> = ({ onChange }) => {
       const fileUrl = URL.createObjectURL(file);
       setUploadedImg(fileUrl);
       setSelectedId(3);
-      onChange('backgroundImage', file);
+      onChange('backgroundImage', file, 'CUSTOM');
     }
   };
 
@@ -83,9 +87,20 @@ const BackgroundOption: React.FC<BackgroundOptionProps> = ({ onChange }) => {
     setError(null);
     setSelectedId(id);
 
-    if (id === 3) {
+    let backgroundImageType = '';
+
+    if (id === 1) {
+      backgroundImageType = 'DEFAULT_IMAGE_1';
+    } else if (id === 2) {
+      backgroundImageType = 'DEFAULT_IMAGE_2';
+    } else if (id === 3) {
+      backgroundImageType = 'CUSTOM';
       document.getElementById('file-upload')?.click();
-    } else onChange('backgroundImage', null);
+    }
+
+    // 기본 이미지 선택 시 backgroundImage를 null로 설정
+    const selectedImage = id === 3 ? null : null;
+    onChange('backgroundImage', selectedImage, backgroundImageType);
   };
 
   return (
