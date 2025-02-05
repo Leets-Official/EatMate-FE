@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import CrownIcon from '@/assets/images/ic_crown_check.svg';
 import { flexCenter, flexColumn } from '@/styles/CommonStyle';
 import ExitIcon from '@/assets/images/ic_exit.svg';
-
+import UserIcon from '@/assets/images/ic_participant1.svg';
 const Overlay = styled.div`
   position: fixed;
   top: 0;
@@ -123,9 +123,10 @@ const ChatModal: React.FC<ChatModalProps> = ({
           {participants.map((user) => (
             <UserContainer key={user.nickname}>
               <ParticipantImage
-                src={user.profileImageUrl}
-                alt={user.nickname}
+                src={user.profileImageUrl || UserIcon}
+                alt={user.nickname || '유저'}
               />
+
               {user.role !== 'PARTICIPANT' && (
                 <Crown src={CrownIcon} alt="방장" />
               )}
