@@ -19,11 +19,7 @@ import {
   DeliveryMeetingFormData,
   patchDeliveryMeetingApi,
 } from '@/apis/meetings/createMeeting';
-import {
-  extractMinutes,
-  formatMeetingDate,
-  formatOrderDeadline,
-} from '@/utils/dateUtils';
+import { formatOrderDeadline } from '@/utils/dateUtils';
 import { getMeetingDetailApi } from '@/apis/meetings/getMeeting';
 
 const DeliveryMeetingCreate: React.FC = () => {

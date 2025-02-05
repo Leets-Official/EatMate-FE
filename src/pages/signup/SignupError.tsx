@@ -1,4 +1,3 @@
-import CryingGIF from '@/assets/images/ic_crying.gif';
 import Header from '@/components/common/Header/Header';
 
 const SignupError: React.FC = () => {
