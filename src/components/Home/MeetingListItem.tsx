@@ -21,7 +21,7 @@ interface MeetingListItemProps {
   rightSection?: string;
   onClick?: () => void;
   isMyMeeting?: boolean;
-  lastChatAt: string;
+  lastChatAt?: string;
 }
 
 const Container = styled.div<{ isSelected: boolean }>`
@@ -148,6 +148,10 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
   const formattedDescription =
     description.length > 30 ? `${description.slice(0, 30)}...` : description;
 
+  const lastChatTime = lastChatAt
+    ? calculateTimeAgo(lastChatAt)
+    : '최근 대화 없음';
+
   return (
     <Container isSelected={isMyMeeting} onClick={onClick}>
       <MainContainer>
@@ -185,11 +189,7 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
         {lastChatAt === null ? (
           <div></div>
         ) : (
-          <Badge>
-            {rightSection
-              ? rightSection
-              : `${calculateTimeAgo(lastChatAt)} 대화`}
-          </Badge>
+          <Badge>{rightSection ? rightSection : `${lastChatTime} 대화`}</Badge>
         )}
       </InfoContainer>
     </Container>
