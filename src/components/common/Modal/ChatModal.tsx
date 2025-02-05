@@ -36,7 +36,8 @@ const Description = styled.div`
 `;
 
 const UserContainer = styled.div`
-  ${flexCenter}
+  display: flex;
+  align-items: center;
   margin: 10px 0;
   gap: 5px;
 `;
@@ -50,7 +51,7 @@ const ParticipantImage = styled.img`
 const UserName = styled.span`
   font-size: 16px;
   color: #333;
-  flex-grow: 1;
+  margin-left: 5px;
 `;
 
 const Badge = styled.div`

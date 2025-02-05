@@ -45,3 +45,31 @@ export const formatOrderDeadline = (minutes: number): string => {
   const futureDate = addMinutes(now, minutes); // 현재 시간에 minutes 추가
   return format(futureDate, "yyyy-MM-dd'T'HH:mm:ss"); // ISO 형식 변환
 };
+
+export const calculateTimeAgo = (datetime: string) => {
+  const date = new Date(datetime);
+  const now = new Date();
+  const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+  let interval = seconds / 31536000;
+
+  if (interval > 1) {
+    return `${Math.floor(interval)}년 전`;
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return `${Math.floor(interval)}개월 전`;
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return `${Math.floor(interval)}일 전`;
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return `${Math.floor(interval)}시간 전`;
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return `${Math.floor(interval)}분 전`;
+  }
+  return `${Math.floor(seconds)}초 전`;
+};

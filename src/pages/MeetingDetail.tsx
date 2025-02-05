@@ -115,14 +115,13 @@ const MeetingDetail = () => {
   if (isLoading) {
     return <Loading />;
   }
-  console.log('상세', meetingId);
+  console.log('상세', meetingData);
 
   return (
     <Container>
       <Header
         title={meetingData?.meetingName || ' '}
         showBackButton={true}
-        onBackClick={() => navi(-1)}
         isJoin={meetingData?.isCurrentUser}
         onLeaveClick={handleLeave}
       />
@@ -134,9 +133,11 @@ const MeetingDetail = () => {
             gender={meetingData?.genderRestriction}
             location={meetingData?.location}
             time={meetingData?.dueDateTime}
-            chatTime="n분"
+            lastChatAt={meetingData?.lastChatAt}
             isOwner={meetingData?.isOwner}
             chatRoomId={meetingData?.chatRoomId}
+            meetingType={meetingData?.meetingType}
+            backgroundImage={meetingData?.backgroundImage}
           />
           <ParticipantsList participants={meetingData?.participants || []} />
         </div>

@@ -164,9 +164,6 @@ const OfflineMeetingCreate: React.FC = () => {
   return (
     <div>
       <Header
-        onBackClick={() => {
-          nav(-1);
-        }}
         showBackButton
         title={isEditMode ? '모임 수정하기' : '모임 만들기'}
       />

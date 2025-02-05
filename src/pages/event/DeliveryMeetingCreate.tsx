@@ -163,9 +163,6 @@ const DeliveryMeetingCreate: React.FC = () => {
   return (
     <div>
       <Header
-        onBackClick={() => {
-          nav(-1);
-        }}
         showBackButton
         title={isEditMode ? '배달팟 수정하기' : '배달팟 만들기'}
       />
