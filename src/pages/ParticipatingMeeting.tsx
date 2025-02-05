@@ -95,26 +95,15 @@ const MeetingList = styled.div`
   gap: 20px;
   padding: 20px 10px 10px 10px;
 `;
-const mockData = {
-  meetingType: 'delivery',
-  id: 1,
-  meetingName: '칵테일 마시기',
-  meetingStatus: 'ACTIVE',
-  maxParticipants: 10,
-  offlineMeetingCategory: 'BEVERAGE',
-  createdAt: '2025-02-03T16:02:30.622Z',
-  location: '가천 칵테일 바',
-  dueDateTime: '2025-02-03T18:20:00.000Z',
-  participantCount: 3,
-  isOwn: true,
-};
-
 interface BannerData {
+  id: number;
   meetingLocation: string;
+  meetingName: string;
   meetingTime: string;
   nickname: string;
   offlineMeetingCategory: 'MEAL' | 'BEVERAGE';
   type: 'OFFLINE' | 'DELIVERY';
+  isOwn: boolean;
 }
 
 const ParticipatingMeeting = () => {
@@ -131,9 +120,8 @@ const ParticipatingMeeting = () => {
     const fetchMeeting = async () => {
       try {
         const data = await getMyParticipatingApi(params);
-
-        const bannerData = await getMyUpcomingMeetingsApi();
-        setBannerData(bannerData);
+        const bannerDataResponse = await getMyUpcomingMeetingsApi();
+        setBannerData(bannerDataResponse.upcomingMeetingResponseDto);
 
         setMeetings((prev) => {
           const newMeetings = data.content.filter(
@@ -151,9 +139,7 @@ const ParticipatingMeeting = () => {
           });
         }
       } catch (error) {
-        error instanceof Error
-          ? error.message
-          : '내가 생성한 모임 데이터를 불러오는 중 오류 발생:';
+        console.error('Error fetching meeting data:', error);
       } finally {
         setIsLoading(false);
       }
@@ -187,6 +173,8 @@ const ParticipatingMeeting = () => {
     ? formatTimeWithMeridiem(bannerData.meetingTime)
     : undefined;
 
+  console.log(bannerData);
+
   return (
     <Container>
       <Banner>
@@ -195,13 +183,13 @@ const ParticipatingMeeting = () => {
         </LogoContainer>
         <BannerImage src={iconSrc} alt={`${badge} 이미지`} />
         <BadgeContainer>
-          {mockData.isOwn && <Badge>내가 주최한 모임</Badge>}
+          {bannerData?.isOwn && <Badge>내가 주최한 모임</Badge>}
           {badge && <Badge>{badge}</Badge>}
         </BadgeContainer>
-        <BannerTitle>안녕하세요 {`${bannerData?.nickname}`}님</BannerTitle>
+        <BannerTitle>안녕하세요 {bannerData?.nickname}님</BannerTitle>
         <Description>
-          {`${time}`}에{`${bannerData?.meetingLocation}`}에서 <br />
-          {`${bannerData?.nickname}`} 약속이 있어요
+          {time}에 {bannerData?.meetingLocation}에서 <br />
+          {bannerData?.meetingName} 약속이 있어요
         </Description>
       </Banner>
       <MeetingList>
