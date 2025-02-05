@@ -113,21 +113,23 @@ const UserProfile = () => {
           onClose={() => setIsModalOpen(false)}
           actions={[
             {
-              label: 'Block',
+              label: '차단',
+              type: 'delete',
               onClick: () => {
                 setIsBlockModalOpen(true);
                 setIsModalOpen(false);
               },
             },
             {
-              label: 'Cancel',
+              label: '취소',
               onClick: () => setIsModalOpen(false),
             },
           ]}
         />
       )}
-      {isBlockModalOpen && (
+      {isBlockModalOpen && memberId && (
         <BlockModal
+          memberId={memberId}
           isReport={false}
           onClose={() => setIsBlockModalOpen(false)}
         />
