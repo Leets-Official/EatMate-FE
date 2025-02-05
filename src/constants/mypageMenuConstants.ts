@@ -1,8 +1,7 @@
 import CreatedMeetingIcon from '@/assets/images/ic_my_create.svg';
 import ParticipatedMeetingIcon from '@/assets/images/ic_my_participate.svg';
 import NoticeIcon from '@/assets/images/ic_my_notice.svg';
-import ReportedUserIcon from '@/assets/images/ic_my_check.svg';
-import BlockedUserIcon from '@/assets/images/ic_my_block.svg';
+import BlockedUserIcon from '@/assets/images/ic_my_check.svg';
 import FAQIcon from '@/assets/images/ic_my_faq.svg';
 import TermsIcon from '@/assets/images/ic_my_pin.svg';
 import PrivacyIcon from '@/assets/images/ic_my_search.svg';
@@ -30,11 +29,6 @@ export const mypageMenuItems = [
         icon: NoticeIcon,
         label: '공지사항',
         path: '/mypage/notice',
-      },
-      {
-        icon: ReportedUserIcon,
-        label: '신고한 사용자 관리',
-        path: '/mypage/reported-users',
       },
       {
         icon: BlockedUserIcon,

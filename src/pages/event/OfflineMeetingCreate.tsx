@@ -11,16 +11,14 @@ import { useInputHandler } from '@/hooks/useInputHandler';
 import {
   createOfflineMeeting,
   OfflineMeetingFormData,
+  patchOfflineMeetingApi,
 } from '@/apis/meetings/createMeeting';
 import { useEffect } from 'react';
 import { useUserGender } from '@/hooks/useUserGender';
 import { offlineMeetingFormFields } from '@/constants/MeetingFieldsConstants';
 import { formatMeetingDate } from '@/utils/dateUtils';
 import TimePicker from '@/components/event/TimePicker';
-import {
-  getMeetingDetailApi,
-  patchOfflineMeetingApi,
-} from '@/apis/meetings/getMeeting';
+import { getMeetingDetailApi } from '@/apis/meetings/getMeeting';
 
 const OfflineMeetingCreate: React.FC = () => {
   const nav = useNavigate();
@@ -81,12 +79,21 @@ const OfflineMeetingCreate: React.FC = () => {
     console.log('업데이트된 formData:', formData);
   }, [formData]);
 
-  const handleFormChange = (key: string, value: any) => {
+  const handleFormChange = (
+    key: string,
+    value: any,
+    backgroundImageType?: string
+  ) => {
     handleChange(key, value);
 
-    // isLimited가 false이면 maxParticipants를 null 로 설정
+    //  isLimited가 false이면 maxParticipants를 10으로 설정
     if (key === 'isLimited' && !value) {
       handleChange('maxParticipants', 10);
+    }
+
+    //  배경 이미지 선택 처리
+    if (key === 'backgroundImage' && backgroundImageType) {
+      handleChange('backgroundImageType', backgroundImageType);
     }
   };
 
@@ -97,8 +104,13 @@ const OfflineMeetingCreate: React.FC = () => {
       meetingPlace: formData.meetingPlace,
       meetingDate: formatMeetingDate(formData.meetingDate),
       offlineMeetingCategory: formData.offlineMeetingCategory,
-      backgroundImage: formData.backgroundImage,
+      backgroundImageType: formData.backgroundImageType,
+      backgroundImage: null,
     };
+
+    if (formData.backgroundImageType === 'CUSTOM' && formData.backgroundImage) {
+      baseFormData.backgroundImage = formData.backgroundImage;
+    }
 
     // 모임 생성 시 모든 필드 포함
     if (!isEditMode) {
@@ -107,6 +119,7 @@ const OfflineMeetingCreate: React.FC = () => {
         isLimited: formData.isLimited,
         maxParticipants: formData.maxParticipants,
         genderRestriction: formData.genderRestriction,
+        backgroundImageType: formData.backgroundImageType,
       };
     }
 
@@ -174,7 +187,12 @@ const OfflineMeetingCreate: React.FC = () => {
           ) : null
         )}
 
-        <BackgroundOption onChange={handleFormChange} />
+        <BackgroundOption
+          onChange={(key, value, backgroundImageType) => {
+            handleFormChange(key, value, backgroundImageType);
+          }}
+        />
+
         <InputGuide
           message="모임 배경 화면에 들어갈 사진을 골라주세요."
           margin="15px"

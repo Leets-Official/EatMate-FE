@@ -11,7 +11,8 @@ export interface OfflineMeetingFormData {
   meetingPlace: string;
   meetingDate: string;
   offlineMeetingCategory: string; // 밥약인지 술약인지
-  backgroundImage: File | null;
+  backgroundImage?: File | null;
+  backgroundImageType: string;
 }
 
 export interface DeliveryMeetingFormData {
@@ -23,10 +24,11 @@ export interface DeliveryMeetingFormData {
   foodCategory: string;
   storeName: string;
   pickupLocation: string;
-  orderDeadline: number;
+  orderDeadline: string;
   accountNumber: string;
   bankName: string;
-  backgroundImage: File | null;
+  backgroundImage?: File | null;
+  backgroundImageType: string;
 }
 
 export const createFormData = (
@@ -72,11 +74,25 @@ export const createDeliveryMeeting = async (
 
 export const patchDeliveryMeetingApi = async (
   meetingId: string,
+  updatedData: DeliveryMeetingFormData
+) => {
+  const formData = createFormData(updatedData);
+  const response = await defaultInstance.put(
+    `/api/meetings/${meetingId}/delivery`,
+    formData
+  );
+  return response.data.result;
+};
+
+export const patchOfflineMeetingApi = async (
+  meetingId: string,
   updatedData: OfflineMeetingFormData
 ) => {
-  const response = await defaultInstance.patch(
-    `/api/meetings/${meetingId}/delivery`,
-    updatedData
+  const formData = createFormData(updatedData);
+
+  const response = await defaultInstance.put(
+    `/api/meetings/${meetingId}/offline`,
+    formData
   );
   return response.data.result;
 };
