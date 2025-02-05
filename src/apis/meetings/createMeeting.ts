@@ -5,13 +5,14 @@ const PATH = '/api/meetings';
 export interface OfflineMeetingFormData {
   meetingName: string;
   meetingDescription: string;
-  genderRestriction: string;
-  isLimited: boolean;
-  maxParticipants: number | null;
+  genderRestriction?: string;
+  isLimited?: boolean;
+  maxParticipants?: number | null;
   meetingPlace: string;
   meetingDate: string;
   offlineMeetingCategory: string; // 밥약인지 술약인지
-  backgroundImage: File | null;
+  backgroundImage?: File | null;
+  backgroundImageType: string;
 }
 
 export interface DeliveryMeetingFormData {
@@ -23,13 +24,14 @@ export interface DeliveryMeetingFormData {
   foodCategory: string;
   storeName: string;
   pickupLocation: string;
-  orderDeadline: number;
+  orderDeadline: string;
   accountNumber: string;
   bankName: string;
-  backgroundImage: File | null;
+  backgroundImage?: File | null;
+  backgroundImageType: string;
 }
 
-const createFormData = (
+export const createFormData = (
   data: OfflineMeetingFormData | DeliveryMeetingFormData
 ): FormData => {
   const formData = new FormData();
@@ -68,4 +70,29 @@ export const createDeliveryMeeting = async (
 ) => {
   const formData = createFormData(DeliveryCreateData);
   return await postFormData(`${PATH}/delivery`, formData);
+};
+
+export const patchDeliveryMeetingApi = async (
+  meetingId: string,
+  updatedData: DeliveryMeetingFormData
+) => {
+  const formData = createFormData(updatedData);
+  const response = await defaultInstance.put(
+    `/api/meetings/${meetingId}/delivery`,
+    formData
+  );
+  return response.data.result;
+};
+
+export const patchOfflineMeetingApi = async (
+  meetingId: string,
+  updatedData: OfflineMeetingFormData
+) => {
+  const formData = createFormData(updatedData);
+
+  const response = await defaultInstance.put(
+    `/api/meetings/${meetingId}/offline`,
+    formData
+  );
+  return response.data.result;
 };

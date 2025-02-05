@@ -5,8 +5,7 @@ import { Text } from '@/styles/mypage/mypage.styled';
 import { getNoticeApi, getNoticeParams } from '@/apis/notice/getNotice';
 import Loading from '@/components/common/Loading';
 import dayjs from 'dayjs';
-import { flexColumn } from '@/styles/CommonStyle';
-import { Line } from '@/styles/SignUp/PolicyAgreement.styled';
+import { useNavigate } from 'react-router-dom';
 
 const NoticeWrapper = styled.div`
   padding: 20px;
@@ -16,42 +15,31 @@ const NoticeItem = styled.div`
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 12px;
-  border: 1px solid ${({ theme }) => theme.COLORS.gray[100]};
+  border: 1px solid ${({ theme }) => theme.COLORS.gray[300]};
   background-color: ${({ theme }) => theme.COLORS.white};
   cursor: pointer;
 `;
 
-const DetailContainer = styled.div`
-  padding: 20px;
-  ${flexColumn}
-  gap:20px;
-`;
-
 const Notice: React.FC = () => {
-  const [selectedNotice, setSelectedNotice] = useState<{
-    id: number;
-    title: string;
-    date: string;
-    content: string;
-  } | null>(null);
-
-  const [notices, setNotices] = useState<any[]>([]);
+  const nav = useNavigate();
+  const [notices, setNotice] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [params] = useState<getNoticeParams>({
     pageNumber: 0,
     pageSize: 20,
   });
 
+  // 공지사항 목록 가져오기
   useEffect(() => {
     const fetchNotices = async () => {
       try {
         const data = await getNoticeApi(params);
         console.log('공지사항 데이터:', data);
 
-        setNotices(
+        setNotice(
           data.content.map((notice: any) => ({
-            ...notice,
-            formattedDate: dayjs(notice.createdAt).format('YYYY.MM.DD'),
+            id: notice.noticeId,
+            date: dayjs(notice.createdAt).format('YYYY.MM.DD'),
             title: `[공지] ${notice.title}`,
           }))
         );
@@ -71,37 +59,20 @@ const Notice: React.FC = () => {
 
   return (
     <div>
-      <Header
-        onBackClick={() =>
-          selectedNotice ? setSelectedNotice(null) : window.history.back()
-        }
-        showBackButton
-        title="공지사항"
-      />
-      {selectedNotice ? (
-        <DetailContainer>
-          <Text fontSize="md">{selectedNotice.title}</Text>
-          <Text fontSize="sm" color="gray">
-            {selectedNotice.date}
-          </Text>
-          <Line />
-          <Text fontSize="sm">{selectedNotice.content}</Text>
-        </DetailContainer>
-      ) : (
-        <NoticeWrapper>
-          {notices.map((notice) => (
-            <NoticeItem
-              key={notice.noticeId}
-              onClick={() => setSelectedNotice(notice)}
-            >
-              <Text fontSize="smMd">{notice.title}</Text>
-              <Text fontSize="sm" color="gray">
-                {notice.formattedDate}
-              </Text>
-            </NoticeItem>
-          ))}
-        </NoticeWrapper>
-      )}
+      <Header onBackClick={() => nav(-1)} showBackButton title="공지사항" />
+      <NoticeWrapper>
+        {notices.map((notice) => (
+          <NoticeItem
+            key={notice.id}
+            onClick={() => nav(`/mypage/notice/${notice.id}`)}
+          >
+            <Text fontSize="smMd">{notice.title}</Text>
+            <Text fontSize="sm" color="gray">
+              {notice.date}
+            </Text>
+          </NoticeItem>
+        ))}
+      </NoticeWrapper>
     </div>
   );
 };
