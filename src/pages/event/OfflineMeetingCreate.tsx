@@ -59,13 +59,10 @@ const OfflineMeetingCreate: React.FC = () => {
           setFormData((prev) => ({
             meetingName: data.meetingName,
             meetingDescription: data.meetingDescription,
-            isLimited: data.isLimited,
-            maxParticipants: data.maxParticipants ?? 10, // null이면 기본값 10
             meetingPlace: data.location,
             meetingDate: formatMeetingDate(data.dueDateTime),
-            genderRestriction: data.genderRestriction,
-            offlineMeetingCategory:
-              data.offlineMeetingCategory || prev.offlineMeetingCategory,
+            offlineMeetingCategory: 'MEAL',
+            // data.offlineMeetingCategory || prev.offlineMeetingCategory,
             backgroundImage: data.backgroundImage,
           }));
         } catch (error) {
@@ -93,27 +90,43 @@ const OfflineMeetingCreate: React.FC = () => {
     }
   };
 
-  const buildFormData = (): OfflineMeetingFormData => ({
-    meetingName: formData.meetingName,
-    meetingDescription: formData.meetingDescription,
-    genderRestriction: formData.genderRestriction,
-    isLimited: formData.isLimited,
-    maxParticipants: formData.isLimited ? formData.maxParticipants : 10,
-    meetingPlace: formData.meetingPlace,
-    meetingDate: formatMeetingDate(formData.meetingDate),
-    offlineMeetingCategory: formData.offlineMeetingCategory,
-    backgroundImage: formData.backgroundImage,
-  });
+  const buildFormData = (): OfflineMeetingFormData => {
+    const baseFormData = {
+      meetingName: formData.meetingName,
+      meetingDescription: formData.meetingDescription,
+      meetingPlace: formData.meetingPlace,
+      meetingDate: formatMeetingDate(formData.meetingDate),
+      offlineMeetingCategory: formData.offlineMeetingCategory,
+      backgroundImage: formData.backgroundImage,
+    };
+
+    // 모임 생성 시 모든 필드 포함
+    if (!isEditMode) {
+      return {
+        ...baseFormData,
+        isLimited: formData.isLimited,
+        maxParticipants: formData.maxParticipants,
+        genderRestriction: formData.genderRestriction,
+      };
+    }
+
+    // 모임 수정 시 일부 필드 제거
+    return baseFormData;
+  };
+
   const handleSubmit = async () => {
-    if (
-      validateForm([
-        'meetingName',
-        'meetingDescription',
-        'meetingPlace',
-        'offlineMeetingCategory',
-        'genderRestriction',
-      ])
-    ) {
+    const requiredFields = [
+      'meetingName',
+      'meetingDescription',
+      'meetingPlace',
+      'offlineMeetingCategory',
+    ];
+
+    if (!isEditMode) {
+      requiredFields.push('genderRestriction');
+    }
+
+    if (validateForm(requiredFields)) {
       try {
         const formDataToSend: OfflineMeetingFormData = buildFormData();
         console.log('모임 데이터: ', formDataToSend);
@@ -214,5 +227,4 @@ const OfflineMeetingCreate: React.FC = () => {
     </div>
   );
 };
-
 export default OfflineMeetingCreate;

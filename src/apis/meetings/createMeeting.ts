@@ -5,9 +5,9 @@ const PATH = '/api/meetings';
 export interface OfflineMeetingFormData {
   meetingName: string;
   meetingDescription: string;
-  genderRestriction: string;
-  isLimited: boolean;
-  maxParticipants: number | null;
+  genderRestriction?: string;
+  isLimited?: boolean;
+  maxParticipants?: number | null;
   meetingPlace: string;
   meetingDate: string;
   offlineMeetingCategory: string; // 밥약인지 술약인지
@@ -68,4 +68,15 @@ export const createDeliveryMeeting = async (
 ) => {
   const formData = createFormData(DeliveryCreateData);
   return await postFormData(`${PATH}/delivery`, formData);
+};
+
+export const patchDeliveryMeetingApi = async (
+  meetingId: string,
+  updatedData: OfflineMeetingFormData
+) => {
+  const response = await defaultInstance.patch(
+    `/api/meetings/${meetingId}/delivery`,
+    updatedData
+  );
+  return response.data.result;
 };

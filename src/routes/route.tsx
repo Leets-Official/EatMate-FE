@@ -50,6 +50,10 @@ const router = createBrowserRouter([
     element: <LoginCallback />,
   },
   {
+    path: '/intro/oauth2/invalid-account',
+    element: <SignupSuccess />,
+  },
+  {
     path: '/signup',
     element: (
       <AuthGuard>
