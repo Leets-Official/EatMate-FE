@@ -4,6 +4,7 @@ import Button from '@/components/common/Button/Button';
 import CheckIcon from '@/assets/images/ic_circle_check.svg';
 import { flexCenter } from '@/styles/CommonStyle';
 import { useNavigate } from 'react-router-dom';
+import { createBlockApi } from '@/apis/block/createBlock';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -50,13 +51,18 @@ const BlockModal: React.FC<BlockModalProps> = ({
 }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const navi = useNavigate();
-  const handleBlock = () => {
-    //TODO: 유저 차단 API 연결
-    setIsSuccess(true);
-    setTimeout(() => {
-      onClose();
-      navi('/home');
-    }, 1500);
+  const handleBlock = async (memberId: string) => {
+    try {
+      const result = await createBlockApi(memberId);
+      console.log('Block success:', result);
+      setIsSuccess(true);
+      setTimeout(() => {
+        onClose();
+        navi('/home');
+      }, 1500);
+    } catch (error) {
+      console.error('Error blocking user:', error);
+    }
   };
 
   const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -93,7 +99,11 @@ const BlockModal: React.FC<BlockModalProps> = ({
               )}
             </Description>
             <ButtonContainer>
-              <Button size="sm" rounded="lg" onClick={handleBlock}>
+              <Button
+                size="sm"
+                rounded="lg"
+                onClick={() => handleBlock(memberId)}
+              >
                 확인
               </Button>
             </ButtonContainer>
