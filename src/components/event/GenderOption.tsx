@@ -38,12 +38,17 @@ const RadioInput = styled.input<{ hasError?: boolean }>`
       border-radius: 50%;
     }
   }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
 const RadioOption = styled.label`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
+  margin-bottom: 10px;
   cursor: pointer;
 `;
 
@@ -55,51 +60,52 @@ interface GenderOptionProps {
   userGender: 'MALE' | 'FEMALE';
   onChange: (value: 'ALL' | 'MALE' | 'FEMALE') => void;
   showError?: boolean;
+  disabled?: boolean;
 }
 
 const GenderOption: React.FC<GenderOptionProps> = ({
   userGender,
   onChange,
   showError = false,
+  disabled = false,
 }) => {
   const [selectedOption, setSelectedOption] = useState<'ALL' | 'SAME' | null>(
     null
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (disabled) return;
     const newValue = e.target.value as 'ALL' | 'SAME';
     setSelectedOption(newValue);
     onChange(newValue === 'SAME' ? userGender : 'ALL');
     console.log('선택된 성별 : ', newValue);
   };
 
+  const options = [
+    { id: 'gender-all', value: 'ALL', label: '모두 참여 가능해요' },
+    { id: 'gender-same', value: 'SAME', label: '같은 성별만 참여 가능해요' },
+  ];
+
   return (
     <GenderContainer>
       <Label hasError={showError}>성별 제한</Label>
-      <RadioOption htmlFor="gender-all">
-        <RadioInput
-          id="gender-all"
-          type="radio"
-          name="gender"
-          value="ALL"
-          checked={selectedOption === 'ALL'}
-          onChange={handleChange}
-          hasError={showError}
-        />
-        <RadioLabel>모두 참여 가능해요</RadioLabel>
-      </RadioOption>
-      <RadioOption htmlFor="gender-same">
-        <RadioInput
-          id="gender-same"
-          type="radio"
-          name="gender"
-          value="SAME"
-          checked={selectedOption === 'SAME'}
-          onChange={handleChange}
-          hasError={showError}
-        />
-        <RadioLabel>같은 성별만 참여 가능해요</RadioLabel>
-      </RadioOption>
+      <div style={disabled ? { pointerEvents: 'none', opacity: 0.5 } : {}}>
+        {options.map(({ id, value, label }) => (
+          <RadioOption key={id} htmlFor={id}>
+            <RadioInput
+              id={id}
+              type="radio"
+              name="gender"
+              value={value}
+              checked={selectedOption === value}
+              onChange={handleChange}
+              hasError={showError}
+              disabled={disabled}
+            />
+            <RadioLabel>{label}</RadioLabel>
+          </RadioOption>
+        ))}
+      </div>
       {showError && <InputErrorMessage message="성별 제한을 선택해주세요." />}
     </GenderContainer>
   );

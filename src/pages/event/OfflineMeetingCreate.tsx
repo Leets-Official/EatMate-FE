@@ -47,6 +47,10 @@ const OfflineMeetingCreate: React.FC = () => {
     console.log('location 값: ', location);
     console.log('meetingId 값: ', meetingId);
 
+    if (location.state?.category) {
+      handleChange('offlineMeetingCategory', location.state.category);
+    }
+
     const fetchMeetingData = async () => {
       if (isEditMode && meetingId) {
         try {
@@ -60,7 +64,8 @@ const OfflineMeetingCreate: React.FC = () => {
             meetingPlace: data.location,
             meetingDate: formatMeetingDate(data.dueDateTime),
             genderRestriction: data.genderRestriction,
-            offlineMeetingCategory: prev.offlineMeetingCategory,
+            offlineMeetingCategory:
+              data.offlineMeetingCategory || prev.offlineMeetingCategory,
             backgroundImage: data.backgroundImage,
           }));
         } catch (error) {
@@ -69,16 +74,11 @@ const OfflineMeetingCreate: React.FC = () => {
       } else {
         const now = new Date();
         now.setMinutes(now.getMinutes() + 30);
-
-        setFormData((prev) => ({
-          ...prev,
-          offlineMeetingCategory: prev.offlineMeetingCategory,
-        }));
       }
     };
 
     fetchMeetingData();
-  }, [isEditMode, meetingId]);
+  }, [isEditMode, meetingId, location.state?.category]);
 
   useEffect(() => {
     console.log('업데이트된 formData:', formData);
@@ -171,6 +171,7 @@ const OfflineMeetingCreate: React.FC = () => {
           userGender={(userGender as 'MALE' | 'FEMALE') || 'MALE'}
           onChange={(value) => handleFormChange('genderRestriction', value)}
           showError={!!errors.genderRestriction}
+          disabled={isEditMode}
         />
 
         <ParticipantOption
@@ -178,6 +179,7 @@ const OfflineMeetingCreate: React.FC = () => {
             handleFormChange('isLimited', isLimited);
             handleFormChange('maxParticipants', maxParticipants);
           }}
+          disabled={isEditMode}
         />
 
         <S.WheelPickerContainer>
