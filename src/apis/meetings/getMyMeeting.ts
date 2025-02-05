@@ -20,4 +20,9 @@ export const getMyParticipatedApi = async (params: getMyMeetingParams) => {
   return response.data.result;
 };
 
-// getMyParticipatingApi 나중에 추가
+export const getMyParticipatingApi = async (params: getMyMeetingParams) => {
+  const response = await defaultInstance.get(`${PATH}/participating`, {
+    params,
+  });
+  return response.data.result;
+};

@@ -5,6 +5,15 @@ import DeliveryIcon from '@/assets/images/ic_delivery.svg';
 import LocoIcon from '@/assets/images/EatMate_main_Logo.svg';
 import { formatTimeWithMeridiem } from '@/utils/dateUtils';
 import { flexColumn, flexColumnCenter } from '@/styles/CommonStyle';
+import MyMeetingItem from '@/components/mypage/MyMeetingItem';
+import { useEffect, useState } from 'react';
+import {
+  getMyMeetingParams,
+  getMyParticipatingApi,
+} from '@/apis/meetings/getMyMeeting';
+import Loading from '@/components/common/Loading';
+import FloatingPostButton from '@/components/common/FloatingPostButton';
+import BottomNavigation from '@/components/common/BottomNavi';
 
 const Container = styled.div`
   margin: 0 auto;
@@ -76,6 +85,8 @@ const MeetingList = styled.div`
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   ${flexColumnCenter}
+  gap: 20px;
+  padding: 10px;
 `;
 const mockData = {
   meetingType: 'delivery',
@@ -120,6 +131,49 @@ const ParticipatingMeeting = () => {
   };
 
   const { badge, iconSrc } = getMeetingDetails();
+  const [meetings, setMeetings] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [params, setParams] = useState<getMyMeetingParams>({
+    lastMeetingId: undefined,
+    lastDateTime: undefined,
+    pageSize: 20,
+  });
+
+  useEffect(() => {
+    const fetchMeeting = async () => {
+      try {
+        const data = await getMyParticipatingApi(params);
+        console.log('내가 생성한 모임 데이터:', data);
+
+        setMeetings((prev) => {
+          const newMeetings = data.content.filter(
+            (meeting: { id: any }) =>
+              !prev.some((prevMeeting) => prevMeeting.id === meeting.id)
+          );
+          return [...prev, ...newMeetings];
+        });
+
+        if (data.cursorInfo) {
+          setParams({
+            lastMeetingId: data.cursorInfo.meetingId,
+            lastDateTime: data.cursorInfo.lastMeetingTime,
+            pageSize: 20,
+          });
+        }
+      } catch (error) {
+        error instanceof Error
+          ? error.message
+          : '내가 생성한 모임 데이터를 불러오는 중 오류 발생:';
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMeeting();
+  }, []);
+
+  if (isLoading) return <Loading />;
 
   return (
     <Container>
@@ -140,8 +194,12 @@ const ParticipatingMeeting = () => {
         </Description>
       </Banner>
       <MeetingList>
-        <div>sdf</div>
+        {meetings.map((meeting) => (
+          <MyMeetingItem key={meeting.id} meeting={meeting} />
+        ))}
       </MeetingList>
+      <FloatingPostButton />
+      <BottomNavigation />
     </Container>
   );
 };
