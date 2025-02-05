@@ -7,6 +7,7 @@ import ClockIcon from '@/assets/images/ic_clock_line.svg';
 import ChatIcon from '@/assets/images/ic_chat.svg';
 import { formatTimeWithMeridiem } from '@/utils/dateUtils';
 import { flexColumn } from '@/styles/CommonStyle';
+import { useNavigate } from 'react-router-dom';
 import useRemainingTime from '@/hooks/useRemainingTime';
 
 interface MeetingInfoProps {
@@ -61,6 +62,19 @@ const MeetingInfo: React.FC<MeetingInfoProps> = ({
   chatTime,
   meetingType,
 }) => {
+  const titleProps: Record<string, any[]> = {
+    '참가자 아이콘': [gender],
+    '위치 아이콘': [location],
+    '캘린더 아이콘': [time],
+    '채팅 아이콘': [],
+  };
+
+  const navi = useNavigate();
+
+  const handleChat = () => {
+    navi('/chatting');
+  };
+
   // 조건에 따라 meetingInfoContents 배열을 동적으로 변경
   const getMeetingInfoContents = () => [
     {
@@ -110,7 +124,12 @@ const MeetingInfo: React.FC<MeetingInfoProps> = ({
   return (
     <InfoContainer>
       {meetingInfoContents.map((item, index) => (
-        <InfoItem key={index}>
+        <InfoItem
+          key={index}
+          onClick={() => {
+            if (item.alt === '채팅 아이콘') handleChat();
+          }}
+        >
           <Icon src={item.icon} alt={item.alt} />
           {item.DeliveryText && (
             <DeliveryText>{item.DeliveryText()}</DeliveryText>

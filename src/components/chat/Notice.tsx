@@ -48,7 +48,7 @@ const Notice: React.FC<NoticeProps> = ({ type, place, details, extraInfo }) => (
         {type === 'delivery' ? '배달가게' : '장소'}: {place}
       </Title>
       <Title>
-        {type === 'delivery' ? `주문번호: ${details}` : `시간: ${details}`}
+        {type === 'delivery' ? `계좌번호: ${details}` : `시간: ${details}`}
       </Title>
       {extraInfo && <Title>픽업장소: {extraInfo}</Title>}
     </TextContainer>
