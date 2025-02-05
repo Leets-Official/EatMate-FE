@@ -268,7 +268,7 @@ const ChatRoom = () => {
   return (
     <ChatContainer>
       <Header
-        title="모임 제목"
+        title={chatRoomDetails.meetingName}
         showBackButton={true}
         isMenu={true}
         onMenuClick={handleMenu}

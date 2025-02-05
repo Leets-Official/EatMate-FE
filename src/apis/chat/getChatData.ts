@@ -28,6 +28,7 @@ export interface ChatRoomDetails {
   chats: Chat[];
   participants: Participant[];
   deliveryNotice: DeliveryNotice;
+  meetingName: string;
   offlineNotice: any; // 적절한 타입 지정이 필요할 수 있습니다.
   pageNumber: number;
   isLast: boolean;
