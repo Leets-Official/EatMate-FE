@@ -9,6 +9,8 @@ import ChatExitModal from '@/components/common/Modal/ChatExitModal';
 import { flexColumn } from '@/styles/CommonStyle';
 import useWebSocket from '@/hooks/useWebSocket';
 import { formatTime } from '@/utils/dateUtils';
+import { ChatRoomDetails, getChatApi } from '@/apis/chat/getChatData';
+import Loading from '@/components/common/Loading';
 
 const ChatContainer = styled.div`
   ${flexColumn}
@@ -176,6 +178,26 @@ const ChatRoom = () => {
       disconnect();
     };
   }, [disconnect]);
+
+  const [chatRoomDetails, setChatRoomDetails] =
+    useState<ChatRoomDetails | null>(null);
+
+  useEffect(() => {
+    const fetchChatRoomDetails = async () => {
+      try {
+        const result = await getChatApi(roomId);
+        setChatRoomDetails(result.result);
+      } catch (error) {
+        console.error('Failed to fetch chat room details:', error);
+      }
+    };
+
+    fetchChatRoomDetails();
+  }, [roomId]);
+
+  console.log(chatRoomDetails);
+
+  if (!chatRoomDetails) return <Loading />;
 
   return (
     <ChatContainer>
