@@ -9,8 +9,8 @@ import useWebSocket from '@/hooks/useWebSocket';
 import { formatTime, formatTimeWithMeridiem } from '@/utils/dateUtils';
 import { ChatRoomDetails, getChatApi } from '@/apis/chat/getChatData';
 import Loading from '@/components/common/Loading';
-import { getUserProfileInfo, MemberData } from '@/apis/profile/getProfile';
 import * as S from '@/styles/chat/ChatRoom.styled';
+import { useNavigate } from 'react-router-dom';
 
 interface ChatMessage {
   senderId: number;
@@ -26,6 +26,8 @@ const ChatRoom = () => {
   const [inputText, setInputText] = useState('');
   const [isChatModalOpen, setChatModalOpen] = useState(false);
   const [isChatExitModalOpen, setChatExitModalOpen] = useState(false);
+
+  const navi = useNavigate();
 
   // 채팅방 날짜 설정
   const [today, setToday] = useState(new Date());
@@ -127,6 +129,10 @@ const ChatRoom = () => {
 
   console.log('채팅', chatRoomDetails?.participants);
 
+  const handleUserBlock = (senderId: number) => {
+    navi(`/profile/${senderId}`);
+  };
+
   if (!chatRoomDetails) return <Loading />;
 
   return (
@@ -168,6 +174,7 @@ const ChatRoom = () => {
                   <S.ProfileImg
                     src={userProfile?.profileImageUrl || ProfileIcon}
                     alt={userProfile?.nickname || 'User Image'}
+                    onClick={() => handleUserBlock(msg.senderId)}
                   />
                   <S.ProfileText>
                     {userProfile
