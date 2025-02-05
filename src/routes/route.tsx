@@ -31,6 +31,7 @@ import UserProfile from '@/pages/chat/UserProfile';
 import UserReport from '@/pages/chat/UserReport';
 import UserReportPost from '@/pages/chat/UserReportPost';
 import NoticeDetail from '@/pages/mypage/NoticeDetail';
+import ParticipatingMeeting from '@/pages/ParticipatingMeeting';
 
 const router = createBrowserRouter([
   {
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
   {
     path: '/chatting',
     element: <ChatRoom />,
+  },
+  {
+    path: '/participating-meetings',
+    element: <ParticipatingMeeting />,
   },
   {
     path: '/profile',

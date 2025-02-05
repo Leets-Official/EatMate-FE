@@ -47,7 +47,7 @@ const RadioInput = styled.input<{ hasError?: boolean }>`
 const RadioOption = styled.label`
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   margin-bottom: 10px;
   cursor: pointer;
 `;

@@ -8,7 +8,6 @@ import editIcon from '@/assets/images/ic_edit_profile.svg';
 import { useEffect, useState } from 'react';
 import { getProfileInfo } from '@/apis/profile/getProfile';
 import Loading from '@/components/common/Loading';
-import TimePicker from '@/components/event/TimePickerTest';
 
 const MyPage: React.FC = () => {
   const nav = useNavigate();
