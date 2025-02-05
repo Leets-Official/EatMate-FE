@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import HandIcon from '@/assets/images/ic_open hand.svg';
 import Button from '@/components/common/Button/Button';
 import { flexCenter } from '@/styles/CommonStyle';
 import { useNavigate } from 'react-router-dom';
+import defaultInstance from '@/apis/axiosInstance';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -62,14 +63,41 @@ const ButtonContainer = styled.div`
 
 interface MeetingGuidModalProps {
   onClose: () => void;
+  chatRoomId: number;
 }
 
-const MeetingGuidModal: React.FC<MeetingGuidModalProps> = ({ onClose }) => {
+const MeetingGuidModal: React.FC<MeetingGuidModalProps> = ({
+  onClose,
+  chatRoomId,
+}) => {
+  const getMyId = async () => {
+    const response = await defaultInstance.get(`/api/profile/myinfo`);
+    return response.data.result.memberId;
+  };
+
   const navi = useNavigate();
-  const handleCheck = () => {
-    navi('/chatting');
+
+  // chatRoomId 변경 시 localStorage에 저장
+  useEffect(() => {
+    if (chatRoomId) {
+      localStorage.setItem('chatRoomId', chatRoomId.toString());
+    }
+  }, [chatRoomId]);
+
+  const handleCheck = async () => {
+    const myId = await getMyId();
+    localStorage.setItem('myId', myId);
+    const storedChatRoomId = localStorage.getItem('chatRoomId');
+
+    if (storedChatRoomId) {
+      navi('/chatting');
+    } else {
+      console.error('chatRoomId가 localStorage에 없음');
+    }
+
     onClose();
   };
+
   return (
     <ModalOverlay>
       <ModalContainer>

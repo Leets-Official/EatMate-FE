@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import sendIcon from '@/assets/images/ic_backImg_default1.svg';
 import Header from '@/components/common/Header/Header';
@@ -7,6 +7,8 @@ import Notice from '@/components/chat/Notice';
 import ChatModal from '@/components/common/Modal/ChatModal';
 import ChatExitModal from '@/components/common/Modal/ChatExitModal';
 import { flexColumn } from '@/styles/CommonStyle';
+import useWebSocket from '@/hooks/useWebSocket';
+import { formatTime } from '@/utils/dateUtils';
 
 const ChatContainer = styled.div`
   ${flexColumn}
@@ -114,22 +116,17 @@ const DateContainer = styled.div`
   margin: 0px auto;
 `;
 
-interface IMessage {
-  id: number;
-  text: string;
-  isMine: boolean;
-  time: string;
+interface ChatMessage {
+  senderId: number;
+  content: string;
+  chatRoomId: number;
+  regDate: string;
 }
 
 const ChatRoom = () => {
-  const [messages, setMessages] = useState<IMessage[]>([
-    {
-      id: 1,
-      text: '안녕하세요~ 18시 10분에 만나요.',
-      isMine: false,
-      time: '오전 5:45',
-    },
-  ]);
+  const roomId = parseInt(localStorage.getItem('chatRoomId') || '0', 10);
+  const myId = parseInt(localStorage.getItem('myId') || '0', 10);
+  const { messages, sendMessage, disconnect } = useWebSocket(roomId);
   const [inputText, setInputText] = useState('');
   const [isChatModalOpen, setChatModalOpen] = useState(false);
   const [isChatExitModalOpen, setChatExitModalOpen] = useState(false);
@@ -144,22 +141,23 @@ const ChatRoom = () => {
 
   const closeChatExitModal = () => setChatExitModalOpen(false);
 
-  const handleSendMessage = () => {
-    if (inputText.trim()) {
-      const newMessage = {
-        id: messages.length + 1,
-        text: inputText,
-        isMine: true,
-        time: new Date().toLocaleTimeString('ko-KR', {
-          hour: '2-digit',
-          minute: '2-digit',
-        }),
-      };
-      setMessages([...messages, newMessage]);
-      setInputText('');
-    }
+  const handleSendMessage = async () => {
+    const now = new Date();
+    // UTC에서 9시간을 더해 KST로 변환
+    now.setHours(now.getHours() + 9);
+
+    const message: ChatMessage = {
+      senderId: myId,
+      content: inputText,
+      chatRoomId: roomId,
+      regDate: now.toISOString(),
+    };
+
+    sendMessage(message);
+    setInputText('');
   };
 
+  console.log(new Date().toISOString());
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(event.target.value);
   };
@@ -173,32 +171,36 @@ const ChatRoom = () => {
   const handleMenu = () => {
     openChatModal();
   };
+  useEffect(() => {
+    return () => {
+      disconnect();
+    };
+  }, [disconnect]);
+
   return (
     <ChatContainer>
       <Header
         title="모임 제목"
         showBackButton={true}
-        onBackClick={() => console.log('뒤로가기 클릭')}
         isMenu={true}
         onMenuClick={handleMenu}
       />
       <Notice type="meeting" place="마라탕 맛잇겟엉점" details="13시 30분" />
       <DateContainer>2025년 01월 14일 (화)</DateContainer>
       <MessagesList>
-        {messages.map((msg) => (
-          <Message key={msg.id} isMine={msg.isMine}>
-            <ProfileContainer isMine={msg.isMine}>
+        {messages?.chattingMessage?.map((msg, index) => (
+          <Message key={index} isMine={msg.senderId === myId}>
+            <ProfileContainer isMine={msg.senderId === myId}>
               <ProfileImg src={ProfileIcon} alt="User Image" />
               <ProfileText>{'이름 | ISFP'}</ProfileText>
             </ProfileContainer>
-            <MessageContent isMine={msg.isMine}>
-              {msg.isMine && (
-                <TimeStamp isMine={msg.isMine}>{msg.time}</TimeStamp>
-              )}
-              <MessageBox isMine={msg.isMine}>{msg.text}</MessageBox>
-              {!msg.isMine && (
-                <TimeStamp isMine={msg.isMine}>{msg.time}</TimeStamp>
-              )}
+            <MessageContent isMine={msg.senderId === myId}>
+              <TimeStamp isMine={msg.senderId === myId}>
+                {formatTime(msg.regDate)}
+              </TimeStamp>
+              <MessageBox isMine={msg.senderId === myId}>
+                {msg.content}
+              </MessageBox>
             </MessageContent>
           </Message>
         ))}

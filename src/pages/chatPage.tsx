@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import useWebSocket from './chat';
+import useWebSocket from '../hooks/useWebSocket';
 import defaultInstance from '@/apis/axiosInstance';
 
 interface ChatMessage {
@@ -11,19 +11,13 @@ interface ChatMessage {
 
 const TestChat = () => {
   const roomId = 123; // 이 예제에서는 하드코딩된 채팅방 ID를 사용합니다.
+  const myId = parseInt(localStorage.getItem('myId') || '0', 10);
   const { sendMessage, messages, disconnect } = useWebSocket(roomId);
   const [newMessage, setNewMessage] = useState('');
-
-  const getMyId = async () => {
-    const response = await defaultInstance.get(`/api/profile/myinfo`);
-    return response.data.result.memberId;
-  };
 
   //  console.log(getMyId());
   // 채팅방에서 메시지 전송 처리
   const handleSendMessage = async () => {
-    // async 키워드 추가
-    const myId = await getMyId(); // senderId 값을 가져오기 위해 await 사용
     const message: ChatMessage = {
       senderId: myId, // 비동기적으로 가져온 ID 할당
       content: newMessage,

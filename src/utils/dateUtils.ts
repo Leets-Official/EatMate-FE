@@ -13,6 +13,10 @@ export const formatDateTime = (date: string): string => {
   return dayjs(date).format('MM/DD HH:mm');
 };
 
+export const formatTime = (date: string): string => {
+  return dayjs(date).format('HH:mm');
+};
+
 export const extractMinutes = (isoString: string | null): number => {
   if (!isoString) return 10;
 

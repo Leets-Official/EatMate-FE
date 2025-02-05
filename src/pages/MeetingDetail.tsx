@@ -159,8 +159,11 @@ const MeetingDetail = () => {
           </Button>
         )}
       </ButtonContainer>
-      {isModalOpen && (
-        <MeetingGuidModal onClose={() => setIsModalOpen(false)} />
+      {isModalOpen && meetingData?.chatRoomId && (
+        <MeetingGuidModal
+          chatRoomId={meetingData?.chatRoomId}
+          onClose={() => setIsModalOpen(false)}
+        />
       )}
       <ToastMessage show={showToast}>모임링크가 복사되었어요!</ToastMessage>
     </Container>

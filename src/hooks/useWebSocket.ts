@@ -44,14 +44,7 @@ const useWebSocket = (roomId: number | null) => {
             console.log('클라이언트 연결 성공');
             client.subscribe(`/topic/chat.${roomId}`, (message: any) => {
               console.log('새로운 메시지 수신:', JSON.parse(message.body));
-              try {
-                const parsedMessage = JSON.parse(message.body);
-                console.log('Processed message:', parsedMessage);
-                // 나머지 로직
-              } catch (error) {
-                console.error('Error parsing message:', message, error);
-              }
-              const receivedMessage = JSON.parse(message.body).result;
+              const receivedMessage = JSON.parse(message.body);
               setMessages((prev) => ({
                 ...prev,
                 chattingMessage: [
@@ -60,6 +53,8 @@ const useWebSocket = (roomId: number | null) => {
                 ],
               }));
             });
+
+            console.log(messages, 'socket');
           },
           (error: any) => {
             console.error('WebSocket 연결 실패:', error);
