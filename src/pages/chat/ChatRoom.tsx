@@ -141,7 +141,7 @@ const ChatRoom = () => {
   }, []);
 
   const onLongPress = useLongPress(handleReport, {
-    onStart: (event: any, metssssa: any) => console.log(event, meta),
+    onStart: (event: any, meta: any) => console.log(event, meta),
     threshold: 500,
     captureEvent: true,
     cancelOnMovement: false,
