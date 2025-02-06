@@ -164,7 +164,7 @@ const RangeSlider = ({
         )}
         disabled={!isEnabled}
       />
-      {isCheck && (
+      {/* {isCheck && (
         <CheckboxWrapper onClick={handleCheckboxChange}>
           <CheckboxIcon
             src={isEnabled ? unCheckIcon : checkIcon}
@@ -172,7 +172,7 @@ const RangeSlider = ({
           />
           참여인원 상관 없어요
         </CheckboxWrapper>
-      )}
+      )} */}
     </SliderContainer>
   );
 };

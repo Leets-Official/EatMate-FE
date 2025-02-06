@@ -19,8 +19,9 @@ import {
   DeliveryMeetingFormData,
   patchDeliveryMeetingApi,
 } from '@/apis/meetings/createMeeting';
-import { formatOrderDeadline } from '@/utils/dateUtils';
+import { extractMinutes, formatOrderDeadline } from '@/utils/dateUtils';
 import { getMeetingDetailApi } from '@/apis/meetings/getMeeting';
+import { differenceInMinutes, parseISO } from 'date-fns';
 
 const DeliveryMeetingCreate: React.FC = () => {
   const nav = useNavigate();
@@ -60,13 +61,18 @@ const DeliveryMeetingCreate: React.FC = () => {
           const data = await getMeetingDetailApi(meetingId);
           console.log('불러온 배달팟 데이터:', data);
 
+          const remainingMinutes = differenceInMinutes(
+            parseISO(data.dueDateTime),
+            new Date()
+          );
+
           setFormData((prev) => ({
             ...prev,
             meetingName: data.meetingName,
             meetingDescription: data.meetingDescription,
             storeName: data.storeName,
             pickupLocation: data.location,
-            orderDeadline: data.orderDeadline,
+            orderDeadline: data.dueDateTime,
             accountNumber: data.accountNumber,
             bankName: data.bankName,
             foodCategory: data.foodCategory,
@@ -93,8 +99,8 @@ const DeliveryMeetingCreate: React.FC = () => {
     if (key === 'isLimited' && !value) {
       handleChange('maxParticipants', 10);
     }
-
-    if (key === 'backgroundImage' && backgroundImageType) {
+    if (key === 'backgroundImage') {
+      handleChange('backgroundImage', value);
       handleChange('backgroundImageType', backgroundImageType || 'CUSTOM');
     }
   };
@@ -109,11 +115,18 @@ const DeliveryMeetingCreate: React.FC = () => {
       foodCategory: formData.foodCategory,
       storeName: formData.storeName,
       pickupLocation: formData.pickupLocation,
-      orderDeadline: formatOrderDeadline(parseInt(formData.orderDeadline)),
+      // orderDeadline:
+      //   typeof formData.orderDeadline === 'number'
+      //     ? formatOrderDeadline(formData.orderDeadline)
+      //     : formData.orderDeadline,
+      orderDeadline: extractMinutes(formData.orderDeadline),
       accountNumber: formData.accountNumber,
       bankName: formData.bankName,
       backgroundImageType: formData.backgroundImageType,
-      backgroundImage: null,
+      backgroundImage:
+        formData.backgroundImageType === 'CUSTOM'
+          ? formData.backgroundImage
+          : null,
     };
 
     if (formData.backgroundImageType === 'CUSTOM' && formData.backgroundImage) {
@@ -183,9 +196,9 @@ const DeliveryMeetingCreate: React.FC = () => {
             />
           ))}
         <BackgroundOption
-          onChange={(key, value, backgroundType) => {
+          onChange={(key, value, backgroundImageType) => {
             handleFormChange(key, value);
-            handleFormChange('backgroundType', backgroundType);
+            handleFormChange('backgroundImageType', backgroundImageType);
           }}
         />
 

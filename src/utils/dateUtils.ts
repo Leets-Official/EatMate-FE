@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import 'dayjs/locale/ko';
 import { addMinutes, format } from 'date-fns';
+import { differenceInMinutes, parseISO } from 'date-fns';
 
 dayjs.extend(customParseFormat);
 dayjs.locale('ko');
@@ -72,4 +73,12 @@ export const calculateTimeAgo = (datetime: string) => {
     return `${Math.floor(interval)}분 전`;
   }
   return `${Math.floor(seconds)}초 전`;
+};
+
+// 서버에서 받은 `dueDateTime`과 현재 시간 차이를 분 단위로 반환
+
+export const extractMinutesDifference = (dueDateTime: string): number => {
+  const dueDate = parseISO(dueDateTime);
+  const now = new Date();
+  return Math.max(differenceInMinutes(dueDate, now), 0); // 음수 방지
 };
