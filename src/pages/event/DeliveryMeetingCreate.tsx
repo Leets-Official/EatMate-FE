@@ -19,9 +19,9 @@ import {
   DeliveryMeetingFormData,
   patchDeliveryMeetingApi,
 } from '@/apis/meetings/createMeeting';
-import { extractMinutes, formatOrderDeadline } from '@/utils/dateUtils';
+import { extractMinutes } from '@/utils/dateUtils';
 import { getMeetingDetailApi } from '@/apis/meetings/getMeeting';
-import { differenceInMinutes, parseISO } from 'date-fns';
+// import { differenceInMinutes, parseISO } from 'date-fns';
 
 const DeliveryMeetingCreate: React.FC = () => {
   const nav = useNavigate();
@@ -61,10 +61,10 @@ const DeliveryMeetingCreate: React.FC = () => {
           const data = await getMeetingDetailApi(meetingId);
           console.log('불러온 배달팟 데이터:', data);
 
-          const remainingMinutes = differenceInMinutes(
-            parseISO(data.dueDateTime),
-            new Date()
-          );
+          // const remainingMinutes = differenceInMinutes(
+          //   parseISO(data.dueDateTime),
+          //   new Date()
+          // );
 
           setFormData((prev) => ({
             ...prev,
