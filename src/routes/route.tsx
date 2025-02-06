@@ -101,7 +101,7 @@ const router = createBrowserRouter([
     element: <ParticipatingMeeting />,
   },
   {
-    path: '/profile',
+    path: '/profile/:memberId',
     element: <UserProfile />,
   },
   {

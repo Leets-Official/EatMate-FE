@@ -1,12 +1,13 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Header from '@/components/common/Header/Header';
-import { flexColumn, flexColumnCenter } from '@/styles/CommonStyle';
 import BlockIcon from '@/assets/images/ic_block.png';
-import ProfileImg from '@/assets/images/ic_participant1.svg';
+import ProfileImg from '@/assets/images/ic_participant1.svg'; // Default profile image
 import ActionModal from '@/components/common/Modal/ActionModal';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import BlockModal from '@/components/common/Modal/BlockModal';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getUserProfileInfo, MemberData } from '@/apis/profile/getProfile';
+import { flexColumn } from '@/styles/CommonStyle';
 
 const Container = styled.div`
   max-width: 390px;
@@ -19,7 +20,10 @@ const Container = styled.div`
 `;
 
 const CenterContainer = styled.div`
-  ${flexColumnCenter}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin-top: 50vh;
 `;
 
@@ -28,7 +32,6 @@ const ProfileIcon = styled.img`
   height: 100px;
   border-radius: 50%;
   border: 5px solid ${({ theme }) => theme.COLORS.white};
-  margin-top: 150px;
 `;
 
 const Name = styled.div`
@@ -46,6 +49,8 @@ const Divider = styled.div`
 
 const ButtonContainer = styled.div`
   ${flexColumn}
+  gap: 5px;
+  margin-top: 10px;
   color: #b6b6b6;
   font-size: ${({ theme }) => theme.FONT_SIZE.md};
   font-weight: ${({ theme }) => theme.FONT_WEIGHT.light};
@@ -54,58 +59,81 @@ const ButtonContainer = styled.div`
 const ExitButton = styled.img`
   width: 32px;
   height: 32px;
-  border: none;
   cursor: pointer;
-  margin: 26px 0 5px 0;
-  background: transparent;
 `;
 
 const UserProfile = () => {
-  const navi = useNavigate();
+  const navigate = useNavigate();
+  const { memberId } = useParams<{ memberId?: string }>();
+  const [profileData, setProfileData] = useState<MemberData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBlockModalOpen, setIsBlockModalOpen] = useState(false);
+
   const handleBlock = () => {
     setIsModalOpen(true);
   };
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (memberId) {
+        try {
+          const data = await getUserProfileInfo(parseInt(memberId, 10));
+          setProfileData(data);
+        } catch (error) {
+          console.error('Error fetching profile data:', error);
+        }
+      }
+    };
+
+    fetchProfile();
+  }, [memberId]);
+
   return (
     <Container>
-      <Header title={' '} showBackButton={true} onBackClick={() => navi(-1)} />
+      <Header title=" " showBackButton onBackClick={() => navigate(-1)} />
       <CenterContainer>
-        <ProfileIcon src={ProfileImg} alt="프로필 이미지" />
-        <Name>김민지</Name>
+        <ProfileIcon
+          src={profileData?.profileImageUrl || ProfileImg}
+          alt="Profile Image"
+        />
+        <Name>
+          {profileData
+            ? `${profileData.nickname} | ${profileData.mbti}`
+            : 'Loading...'}
+        </Name>
         <Divider />
         <ButtonContainer>
-          <ExitButton onClick={handleBlock} src={BlockIcon} alt="차단" />
+          <ExitButton src={BlockIcon} alt="Block User" onClick={handleBlock} />
           차단
         </ButtonContainer>
-        {isModalOpen && (
-          <ActionModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            actions={[
-              {
-                label: '차단',
-                type: 'delete',
-                onClick: () => {
-                  setIsBlockModalOpen(true);
-                  setIsModalOpen(false);
-                },
-              },
-              {
-                label: '취소',
-                onClick: () => setIsModalOpen(false),
-              },
-            ]}
-          />
-        )}
-        {isBlockModalOpen && (
-          <BlockModal
-            isReport={false}
-            onClose={() => setIsBlockModalOpen(false)}
-          />
-        )}
       </CenterContainer>
+      {isModalOpen && (
+        <ActionModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          actions={[
+            {
+              label: '차단',
+              type: 'delete',
+              onClick: () => {
+                setIsBlockModalOpen(true);
+                setIsModalOpen(false);
+              },
+            },
+            {
+              label: '취소',
+              onClick: () => setIsModalOpen(false),
+            },
+          ]}
+        />
+      )}
+      {isBlockModalOpen && memberId && (
+        <BlockModal
+          memberId={memberId}
+          isReport={false}
+          onClose={() => setIsBlockModalOpen(false)}
+        />
+      )}
     </Container>
   );
 };

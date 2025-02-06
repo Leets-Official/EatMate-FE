@@ -25,12 +25,13 @@ const InfoContainer = styled.div`
   margin-top: 36px;
 `;
 
-const InfoItem = styled.div`
+const InfoItem = styled.div<{ isChatIcon?: boolean }>`
   ${flexColumn}
   align-items: center;
   font-size: 14px;
   min-width: 80px;
   text-align: center;
+  cursor: ${({ isChatIcon }) => (isChatIcon ? 'pointer' : 'default')};
 `;
 
 const InfoTitle = styled.div`
@@ -119,6 +120,7 @@ const MeetingInfo: React.FC<MeetingInfoProps> = ({
       {meetingInfoContents.map((item, index) => (
         <InfoItem
           key={index}
+          isChatIcon={item.alt === '채팅 아이콘'}
           onClick={() => {
             if (item.alt === '채팅 아이콘') handleChat();
           }}
@@ -128,7 +130,9 @@ const MeetingInfo: React.FC<MeetingInfoProps> = ({
             <DeliveryText>{item.DeliveryText()}</DeliveryText>
           )}
           <InfoTitle>{item.title}</InfoTitle>
-          {item.ChatText && <ChatText>{item.ChatText()}</ChatText>}
+          {item.ChatText && lastChatAt && (
+            <ChatText>{item.ChatText()}</ChatText>
+          )}
         </InfoItem>
       ))}
     </InfoContainer>

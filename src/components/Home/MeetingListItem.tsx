@@ -11,7 +11,6 @@ import useRemainingTime from '@/hooks/useRemainingTime';
 import { calculateTimeAgo } from '@/utils/dateUtils';
 interface MeetingListItemProps {
   cover: string;
-  isSelected?: boolean;
   title: string;
   description: string;
   location: string;
@@ -24,19 +23,15 @@ interface MeetingListItemProps {
   lastChatAt?: string;
 }
 
-const Container = styled.div<{ isSelected: boolean }>`
+const Container = styled.div`
   width: 334px;
   border-radius: 12px;
   padding: 13px;
   ${flexColumn}
   align-items: flex-start;
   background-color: ${({ theme }) => theme.COLORS.white};
-  border: 1px solid
-    ${({ isSelected, theme }) => (isSelected ? theme.COLORS.main : '#E0E0E0')};
-  box-shadow: ${({ isSelected }) =>
-    isSelected
-      ? '0 4px 10px rgba(0, 0, 0, 0.2)'
-      : '0 2px 6px rgba(0, 0, 0, 0.1)'};
+  border: 1px solid '#E0E0E0';
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   gap: 12px;
 `;
@@ -125,6 +120,7 @@ const MeetingBadge = styled.div`
   background-color: #fdeed3;
   white-space: nowrap;
   display: inline-flex;
+  margin-left: 8px;
 `;
 
 const MeetingListItem: React.FC<MeetingListItemProps> = ({
@@ -153,7 +149,7 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
     : '최근 대화 없음';
 
   return (
-    <Container isSelected={isMyMeeting} onClick={onClick}>
+    <Container onClick={onClick}>
       <MainContainer>
         <IconWrapper>
           <img src={coverType} alt="모임 아이콘" width="65" height="65" />
@@ -168,7 +164,7 @@ const MeetingListItem: React.FC<MeetingListItemProps> = ({
             <MeetingBadge>{time}</MeetingBadge>
           ) : (
             cover === 'delivery' && (
-              <Badge>
+              <Badge marginLeft="8px">
                 {' '}
                 <img src={Clock} alt="알람 아이콘" />
                 {remainingTime}
